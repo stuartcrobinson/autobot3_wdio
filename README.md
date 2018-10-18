@@ -13,6 +13,20 @@ npm run wdio -- --mochaOpts.grep "Login"
 
 notes:
 
+to run NOT in headless mode, comment out this stuff in wdio.conf.js:
+
+
+        chromeOptions: {
+            args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
+            binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+        }
+
+i cloned this repo into a fresh directory and everything worked for me, so it should work for you assuming your node and npm are relatively up to date?
+
+
+
+TODOS:
+
 logging needs a lot of work.  going to update it so the html reports are printed at the end of all test completion.
 
 need to write better demo tests.
