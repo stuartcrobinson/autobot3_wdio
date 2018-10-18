@@ -2,6 +2,7 @@ password.txt
 log
 log/*
 livy/*
+file.txt
 
 # https://github.com/webdriverio/webdriverio/blob/master/.gitignore
 

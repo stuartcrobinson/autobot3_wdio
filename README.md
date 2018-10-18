@@ -10,6 +10,7 @@ then
 
 ``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --mochaOpts.grep "Login"``
 
+(alternatively, you can just save that echoed string to file.txt beforehand)
 
 notes:
 
