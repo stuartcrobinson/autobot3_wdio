@@ -8,10 +8,10 @@ export { Page } from './support/Page';
 
 
 /******************************** config *************************************/
-export let options;
+let _options;
 
 if (existsSync('file.txt')) {
-    options = yargsParse(stringArgv(readFileSync('file.txt')));
+    _options = yargsParse(stringArgv(readFileSync('file.txt')));
 }
 else {
     let argv = stringArgv(browser.options.key);
@@ -19,8 +19,9 @@ else {
     for (let i = 0; i < argv.length; i++) {
         argv[i] = '--' + argv[i]
     }
-    options = yargsParse(argv);
+    _options = yargsParse(argv);
 }
+export const options = _options;
 
 
 // /******************************** browser ************************************/
