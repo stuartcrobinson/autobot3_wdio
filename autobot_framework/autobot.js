@@ -1,4 +1,5 @@
-import { readFileSync } from 'fs';
+// @ts-check
+import { readFileSync, existsSync } from 'fs';
 import stringArgv from 'string-argv';
 import yargsParse from 'yargs-parser';
 import { Livy } from './support/Livy';
@@ -7,7 +8,19 @@ export { Page } from './support/Page';
 
 
 /******************************** config *************************************/
-export let options = yargsParse(stringArgv(readFileSync('file.txt')));
+export let options;
+
+if (existsSync('file.txt')) {
+    options = yargsParse(stringArgv(readFileSync('file.txt')));
+}
+else {
+    let argv = stringArgv(browser.options.key);
+
+    for (let i = 0; i < argv.length; i++) {
+        argv[i] = '--' + argv[i]
+    }
+    options = yargsParse(argv);
+}
 
 
 // /******************************** browser ************************************/
@@ -43,5 +56,7 @@ beforeEach(function () {
 before(function () {
     const filePath = this.test.parent.suites[0].tests[0].file
     livy.initialize(filePath);
+
+    // @ts-ignore
     global.livy = livy;
 });
