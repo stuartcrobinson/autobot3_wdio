@@ -4,7 +4,7 @@ import yargsParse from 'yargs-parser';
 import { Livy } from './support/Livy';
 export { AbElement } from './support/AbElement';
 export { Page } from './support/Page';
-export { fxName, Tools } from './support/Tools';
+
 
 /******************************** config *************************************/
 export let options = yargsParse(stringArgv(readFileSync('file.txt')));

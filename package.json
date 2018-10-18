@@ -4,7 +4,8 @@
   "description": "wdio fresh start, going to try to use es6 in tests and wdio.conf.js file",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && ./node_modules/.bin/wdio $ARGS"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +30,18 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "@types/webdriverio": "^4.10.5",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
+    "eslint": "^5.7.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-webdriverio": "^1.0.1",
+    "prettier": "^1.14.3",
     "wdio-chromedriver-service": "^0.1.3",
     "wdio-mocha-framework": "^0.6.3",
     "wdio-selenium-standalone-service": "0.0.10"
