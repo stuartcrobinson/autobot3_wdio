@@ -16,6 +16,10 @@ OR
 
 (alternatively, you can just save that echoed string to file.txt beforehand)
 
+as a live Ai tool, i'm imagining that we'll have a saved config file with a list of different user accounts with different permission levels for different levels of testing.
+
+the nice thing about mocha is that you can run subsets of tests using "grep."  so certain tests could be tagged to run only for admin accounts, etc.  
+
 notes:
 
 to run NOT in headless mode, comment out this stuff in wdio.conf.js:
@@ -25,8 +29,6 @@ to run NOT in headless mode, comment out this stuff in wdio.conf.js:
             args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
             binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
         }
-
-i cloned this repo into a fresh directory and everything worked for me, so it should work for you assuming your node and npm are relatively up to date?
 
 
 
