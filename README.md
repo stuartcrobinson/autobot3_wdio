@@ -22,7 +22,7 @@ the nice thing about mocha is that you can run subsets of tests using "grep."  s
 
 notes:
 
-to run NOT in headless mode, comment out this stuff in wdio.conf.js:
+- to run NOT in headless mode, comment out this stuff in wdio.conf.js:
 
 
         chromeOptions: {
@@ -30,6 +30,7 @@ to run NOT in headless mode, comment out this stuff in wdio.conf.js:
             binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
         }
 
+- if you're using iTerm2, you can command-click on files in the stack trace to load in your defaul js editor
 
 
 TODOS:
