@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && ./node_modules/.bin/wdio $ARGS"
+    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && ./node_modules/.bin/wdio"
   },
   "author": "",
   "license": "ISC",
