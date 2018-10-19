@@ -25,6 +25,15 @@ export const options = _options;
 
 
 // /******************************** browser ************************************/
+/**
+ * Should this method be in the Page parent class, so that we always make sure all the critical elements have finished loaded first?
+ * 
+ * Yeah probably.  You might want to check to see if something exists or not on a fully-loaded page.  Can't always rely on waiting for a given target.
+ * 
+ * TODO - move this to Page
+ * 
+ * @param {String} url 
+ */
 export function loadPage(url) {
     browser.url(url);
 }

@@ -2,7 +2,7 @@
 import { AbElement } from '../../../../autobot_framework/autobot';
 
 
-class SettingsDropdownComp extends AbElement {
+class SettingsDropdownComp extends AbElement  {
   constructor() {
     const container = new AbElement('//div[contains(@class, "ws-sidebar__account-menu--open")]');
 

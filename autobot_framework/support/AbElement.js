@@ -1,13 +1,10 @@
 // @ts-check
 import { livy } from '../autobot';
+import { ElementContainer } from './ElementContainer';
 
 function getParentFromStack(stack) {
-  // console.log("stack");
-  // console.log(stack);
   const line = stack.split(' at ')[2];
 
-  // console.log("line");
-  // console.log(line);
   const endPart = line.split('src/support/')[1];
   const result = endPart.split('.js')[0];
   return result;
@@ -21,15 +18,17 @@ function logAndWait(message, waiteeSelector) {
   livy.setMouseoverEventScreenshotFunction(screenshotId);
 }
 
-// interface IFirst{
-//   first:number;
-// }
-
-export class AbElement {
+/**
+ * WebElement wrapper - allows for:
+ * 1.  custom actions (click, hover, etc) to wait for target before attempting action.  
+ * 2.  custom logging per relevant action
+ */
+export class AbElement extends ElementContainer {
   /**
      * @param {String} selector - xpath or css selector
      */
   constructor(selector) {
+    super();
     this.selector = selector;
     try {
       this.parentString = getParentFromStack(new Error().stack);
@@ -39,25 +38,11 @@ export class AbElement {
     this.isLoadCriterion = false;
   }
 
-  /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
-  nameElements() {
-    for (const propName in this) {
-      const propValue = this[propName];
-      if (propValue instanceof AbElement) {
-        // TODO what's the point here ... oh for outputting right?
-        // @ts-ignore
-        propValue.stuartname = propName;
-      }
-    }
-  }
-
-
   tagAsLoadCriterion() {
     this.isLoadCriterion = true;
     return this;
   }
-
-
+  
   getWebElement() {
     return browser.element(this.selector);
   }

@@ -1,24 +1,11 @@
 // @ts-check
-
 import { AbElement } from '../autobot';
+import { ElementContainer } from './ElementContainer';
 
-export class Page {
-  // waitForStableDom(timeoutInMillis = 10000) {
-  //   Tools.waitForStableDom(timeoutInMillis);
-  // }
-
-  // TODO combine this with the other nameElements
-  /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
-  nameElements() {
-    for (const propName in this) {
-      const propValue = this[propName];
-      if (propValue instanceof AbElement) {
-        // @ts-ignore
-        propValue.stuartname = propName;
-      }
-    }
-  }
-
+/**
+ * Parent class for a Page Object.  
+ */
+export class Page extends ElementContainer {
   get loadCriteriaElements() {
     const abElements = [];
 

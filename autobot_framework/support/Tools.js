@@ -3,6 +3,10 @@
 
 /** ****************************** tools *********************************** */
 
+/*
+This file contains tools that I'm not sure where else to put.  Maybe should be split into browser-related tools like "waitForStableDom" and "getFullDom", vs utility functions like fxName
+*/
+
 const currTime = () => new Date().getTime();
 
 

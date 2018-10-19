@@ -149,13 +149,6 @@ export class Livy {
   getEventScreenshotsDir() {
     return `${this.getReportDir()}/${getEventScreenshotsDirName()}`;
   }
-  // getErrorScreenshotsDir() {
-  //   return this.getReportDir() + '/errorScreenshots';
-  // }
-
-  // livy.getErrorScreenshotFile(); //testCaseSpacelessName
-
-  // getEventDomFileAbsPath
 
 
   getEventDomFileAbsPath(id) {
