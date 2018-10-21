@@ -1,35 +1,29 @@
 // @ts-check
-import { AbElement } from '../autobot';
-import { ElementContainer } from './ElementContainer';
+import { Component } from './Component';
+import { options } from '../autobot';
 
 /**
- * Parent class for a Page Object.  
+ * Parent class for a Page Object.
  */
-export class Page extends ElementContainer {
-  get loadCriteriaElements() {
-    const abElements = [];
+export class Page extends Component {
+  // maybe this should have url sometimes?  what's the difference in a page and a component ...
 
-    for (const propName in this) {
-      const propValue = this[propName];
-      if (propValue instanceof AbElement && propValue.isLoadCriterion) {
-        abElements.push(propValue);
-      }
+  // page: url
+
+  /**
+   *
+   * @param {String} urlPath starts with "/" https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+   */
+  constructor(urlPath = undefined) {
+    if (urlPath && !urlPath.startsWith('/')) {
+      throw new Error('urlPath should start with forward slash (/)');
     }
-    return abElements;
+    super();
+    this.urlPath = urlPath;
   }
 
-  waitForLoad() {
-    for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-      const element = this.loadCriteriaElements[i];
-      element.waitForExist(12000);
-    }
-  }
-
-  isLoaded() {
-    for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-      const element = this.loadCriteriaElements[i];
-      element.getWebElement();
-    }
-    return true;
+  load() {
+    browser.url(options.url + this.urlPath);
+    super.waitForLoad();
   }
 }

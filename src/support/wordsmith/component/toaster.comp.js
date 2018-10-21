@@ -18,10 +18,10 @@ export const toaster = new class Toaster extends AbElement {
   }
 
   close() {
-    // console.log("about to click xCloseIcon! " + this.xCloseIcon)
-
+    this.waitForExist();
     this.xCloseIcon.click();
     this.xCloseIcon.waitForNotExist();
+    this.waitForNotExist();
   }
 
   getMessage() {

@@ -1,6 +1,9 @@
 // @ts-check
+import colors from 'colors/safe';
 import { livy } from '../autobot';
-import { ElementContainer } from './ElementContainer';
+/* eslint import/no-cycle: "off" */
+import { Component } from './Component';
+
 
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
@@ -10,8 +13,16 @@ function getParentFromStack(stack) {
   return result;
 }
 
-function logAndWait(message, waiteeSelector) {
-  const screenshotId = livy.logAction(message);
+// function logAndWait(message, waiteeSelector) {
+//   const screenshotId = livy.logAction2(message);
+//   if (waiteeSelector) {
+//     browser.waitForExist(waiteeSelector);
+//   }
+//   livy.setMouseoverEventScreenshotFunction(screenshotId);
+// }
+
+function logAndWait2(messages, waiteeSelector) {
+  const screenshotId = livy.logAction2(messages);
   if (waiteeSelector) {
     browser.waitForExist(waiteeSelector);
   }
@@ -20,10 +31,11 @@ function logAndWait(message, waiteeSelector) {
 
 /**
  * WebElement wrapper - allows for:
- * 1.  custom actions (click, hover, etc) to wait for target before attempting action.  
+ * 1.  custom actions (click, hover, etc) to wait for target before attempting action.
  * 2.  custom logging per relevant action
+ * 3.  child web elements
  */
-export class AbElement extends ElementContainer {
+export class AbElement extends Component {
   /**
      * @param {String} selector - xpath or css selector
      */
@@ -38,11 +50,16 @@ export class AbElement extends ElementContainer {
     this.isLoadCriterion = false;
   }
 
+  setName(name) {
+    this.stuartname = name;
+    return this;
+  }
+
   tagAsLoadCriterion() {
     this.isLoadCriterion = true;
     return this;
   }
-  
+
   getWebElement() {
     return browser.element(this.selector);
   }
@@ -60,9 +77,15 @@ export class AbElement extends ElementContainer {
   click() {
     // livy.logAction('Click: ' + this.selector);
     // browser.waitForExist(this.selector);
+    // this.logAction2({ text: 'PASS', style: colors.green.bold });
 
-    logAndWait(`Click: ${this.selector}`,
-      this.selector);
+    logAndWait2([
+      { text: 'Click ', style: colors.bold },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector}`, style: colors.gray }],
+    this.selector);
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
+    //   this.selector);
     browser.click(this.selector);
   }
 
@@ -70,20 +93,32 @@ export class AbElement extends ElementContainer {
     // livy.logAction('Hover: ' + this.selector);
     // browser.waitForExist(this.selector);
 
-    logAndWait(`Hover: ${this.selector}`,
-      this.selector);
+    logAndWait2([
+      { text: 'Hover ', style: colors.bold },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector}`, style: colors.gray }],
+    this.selector);
     browser.moveToObject(this.selector);
   }
 
-  click_waitForChange(indicatorSelector) {
+  click_waitForChange(indicatorSelector = '//body') {
     const initialIndicatorElementHtml = browser.element(indicatorSelector).getHTML();
 
     // livy.logAction('click: ' + this.selector + ', then wait for change in: ' + indicatorSelector);
     // browser.waitForExist(this.selector);
 
 
-    logAndWait(`Click: ${this.selector}, then wait for change in: ${indicatorSelector}`,
-      this.selector);
+    logAndWait2([
+      { text: 'Click ', style: colors.bold },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector} `, style: colors.gray },
+      { text: 'then wait for change in ' },
+      { text: indicatorSelector, style: colors.gray }],
+    this.selector);
+
+
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for change in: ${indicatorSelector}`,
+    //   this.selector);
 
     browser.click(this.selector);
 
@@ -107,8 +142,24 @@ export class AbElement extends ElementContainer {
 
     // livy.logAction('Click: ' + this.selector + ', then wait for element to exist: ' + indicatorSelector);
     // browser.waitForExist(this.selector);
-    logAndWait(`Click: ${this.selector}, then wait for element to exist: ${indicatorSelector}`,
-      this.selector);
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to exist: ${indicatorSelector}`,
+    //   this.selector);
+
+
+    logAndWait2([
+      { text: 'Click ', style: colors.bold },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector} `, style: colors.gray },
+      { text: 'then wait for element to exist: ' },
+      { text: indicatorSelector, style: colors.gray }],
+    this.selector);
+
+
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to exist: ${indicatorSelector}`,
+    //   this.selector);
+
+
+    // this.logAction2({ text: 'PASS', style: colors.green.bold });
 
     browser.click(this.selector);
 
@@ -133,8 +184,18 @@ export class AbElement extends ElementContainer {
     // livy.logAction('Click: ' + this.selector + ', then wait for element to disappear: ' + indicatorSelector);
     // browser.waitForExist(this.selector);
 
-    logAndWait(`Click: ${this.selector}, then wait for element to disappear: ${indicatorSelector}`,
-      this.selector);
+
+    logAndWait2([
+      { text: 'Click ', style: colors.bold },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector} `, style: colors.gray },
+      { text: 'then wait for element to disappear: ' },
+      { text: indicatorSelector, style: colors.gray }],
+    this.selector);
+
+
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to disappear: ${indicatorSelector}`,
+    //   this.selector);
     browser.click(this.selector);
 
     const init = new Date().getTime();
@@ -152,14 +213,34 @@ export class AbElement extends ElementContainer {
 
 
   setValue(value) {
-    // livy.logAction('Set value of [' + this.selector + '] to [' + value + ']');
-    // browser.waitForExist(this.selector);
+    logAndWait2([
+      { text: 'Set value ', style: colors.bold },
+      { text: 'of ' },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector} `, style: colors.gray },
+      { text: `to "${value}"` }],
+    this.selector);
 
-    logAndWait(`Set value of [${this.selector}] to [${value}]`,
-      this.selector);
+
+    // logAndWait(`Set value of [${this.selector}] to [${value}]`,
+    //   this.selector);
 
     browser.setValue(this.selector, value);
   }
+
+
+  uploadFile(filePath) {
+    logAndWait2([
+      { text: 'Upload file ', style: colors.bold },
+      { text: `${filePath} `, style: colors.italic },
+      { text: 'to ' },
+      { text: `${this.stuartname} `, style: colors.italic },
+      { text: `${this.selector} `, style: colors.gray }],
+    this.selector);
+
+    browser.chooseFile(this.selector, filePath);
+  }
+
 
   waitForNotExist(timeoutInMillis = 1000) {
     browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);

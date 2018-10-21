@@ -4,12 +4,12 @@ const fs = require('fs');
 const stringArgv = require('string-argv');
 const yargsParse = require('yargs-parser');
 
-console.log(`file contents!!!! ${fs.readFileSync('file.txt')}`);
+// console.log(`file contents!!!! ${fs.readFileSync('file.txt')}`);
 
-const argv = stringArgv(fs.readFileSync('file.txt'));
+// const argv = stringArgv(fs.readFileSync('file.txt'));
 
-const options = yargsParse(argv);
-console.log(options);
+// const options = yargsParse(argv);
+// console.log(options);
 
 
 describe('cli args describe', () => {

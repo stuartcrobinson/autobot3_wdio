@@ -1,6 +1,7 @@
 // @ts-check
 import { AbElement, Page, loadPage } from '../../../../autobot_framework/autobot';
-import { toaster } from '../component/toaster';
+import { toaster } from '../component/toaster.comp';
+import { dashboardPage } from './dashboard.page';
 
 export const loginPage = new class Login extends Page {
   constructor() {
@@ -13,11 +14,16 @@ export const loginPage = new class Login extends Page {
     super.nameElements();
   }
 
-  logIn(email, password, url) {
+  attemptLogIn(email, password, url) {
     loadPage(url);
-
     this.emailInput.setValue(email);
     this.passwordInput.setValue(password);
     this.logInButton.click();
+  }
+
+  /** Logs in and waits for Dashboard page to load. */
+  logIn(email, password, url) {
+    this.attemptLogIn(email, password, url)
+    dashboardPage.waitForLoad();
   }
 }();

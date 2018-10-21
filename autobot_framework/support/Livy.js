@@ -1,4 +1,6 @@
 // @ts-check
+/* eslint prefer-destructuring: "off" */
+
 
 import colors from 'colors/safe';
 import dateFormat from 'dateformat';
@@ -10,22 +12,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as Tools from './Tools';
 
-
-// var colors = require('colors/safe');
-// var dateFormat = require('dateformat');
-// var filenamify = require('filenamify');
-// var fs = require('fs');
-// var fs_extra = require('fs-extra');
-// var AllHtmlEntities = require('html-entities').AllHtmlEntities;
-// var os = require('os');
-// var Tools = require('../Tools');
-
-
 const entities = new AllHtmlEntities();
-// //////////
-
-// import {currentTest, currentSpec} from '../autobot';
-
 
 function passthrough(message) {
   return message;
@@ -46,9 +33,14 @@ function convertNpmColorsToCss(style) {
       htmlStyle += 'color:green;';
     } else if (styles.includes('blue')) {
       htmlStyle += 'color:blue;';
+    } else if (styles.includes('gray')) {
+      htmlStyle += 'color:gray;';
     }
     if (styles.includes('bold')) {
       htmlStyle += 'font-weight:bold;';
+    }
+    if (styles.includes('italic')) {
+      htmlStyle += 'font-style: italic;';
     }
   }
   return htmlStyle;
@@ -58,9 +50,6 @@ function getEventDomFileRelPath(id) {
   return `${getEventScreenshotsDirName()}/${id}.html`;
 }
 
-// function getScreenshotId(a, b, c) {
-//   return filenamify(`${a}_${b}_${c}`).replace(/ /g, '_');
-// }
 /**
      * TODO - rename to eventSnapshot instead of screenshot.   cos holding DOM also.
      */
@@ -74,12 +63,14 @@ function getEventScreenshotFileRelPath(id) {
 }
 export class Livy {
   /**
-     * do this per spec file.
+     * Called in global "before", once test's spec file path has been determined.
      * @param {String} specFile
      */
   initialize(specFile) {
     this.livyDoDisplay = true;
     this.livyDoSaveEventScreenshots = true;
+    this.isInTestCase = false;
+    this.hasPrintedNontestLine = false;
 
     const testParentDateTime = new Date();
 
@@ -94,7 +85,7 @@ export class Livy {
 
     let html = `<!doctype html><style>body{background-color:#f5f5f5}</style>${os.EOL}`;
 
-    html += '<img src="" id="image" style="position:fixed;top:0;right:0;width:45%;border:1px solid blue"/>';
+    html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
 
     html += `<h1>${this.specFilePath}</h1>`;
 
@@ -103,10 +94,32 @@ export class Livy {
 
 
   initializeNewTestCase(testCaseTitle, testParentTitle, testCaseFullTitle, testGrandparentsTitle) {
+    this.isInTestCase = true;
     this.testCaseTitle = testCaseTitle;
     this.testParentTitle = testParentTitle;
     this.testCaseFullTitle = testCaseFullTitle;
     this.testGrandparentsTitle = testGrandparentsTitle;
+    this.hasPrintedNontestLine = false;
+
+
+    console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
+    console.log('testCaseTitle');
+    console.log(testCaseTitle);
+    console.log('testParentTitle');
+    console.log(testParentTitle);
+    console.log('testCaseFullTitle');
+    console.log(testCaseFullTitle);
+    console.log('testGrandparentsTitle');
+    console.log(testGrandparentsTitle);
+  }
+
+  endNewTestCase() {
+    this.isInTestCase = false;
+    // this.testCaseTitle = undefined;
+    // this.testParentTitle = undefined;
+    // this.testCaseFullTitle = undefined;
+    // this.testGrandparentsTitle = undefined;
+    this.hasPrintedNontestLine = false;
   }
 
   // //////////////////////////////////////////////
@@ -178,8 +191,12 @@ export class Livy {
   }
 
 
-  getReportClickablePath() {
-    return `file://${path.resolve(this.getFile())}#${this.getSpacelessTestCaseFullTitle()}`;
+  get reportClickablePathWithHash() {
+    return `${this.reportClickablePath}#${this.getSpacelessTestCaseFullTitle()}`;
+  }
+
+  get reportClickablePath() {
+    return `file://${path.resolve(this.getFile())}`;
   }
 
   setMouseoverEventScreenshotFunction(screenshotId) {
@@ -207,49 +224,120 @@ export class Livy {
   }
 
 
-  logAction(inputMessage, inputStyle) {
-    let style = inputStyle;
-    let message = inputMessage;
+  // logAction(inputMessage, inputStyle) {
+  //   let style = inputStyle;
+  //   let message = inputMessage;
 
-    const htmlStyle = convertNpmColorsToCss(style);
+  //   const htmlStyle = convertNpmColorsToCss(style);
 
-    if (!style) {
-      style = passthrough;
-    }
+  //   if (!style) {
+  //     style = passthrough;
+  //   }
 
 
+  //   const testDateTime = new Date();
+
+  //   const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
+  //   const currDate = dateFormat(testDateTime, 'yyyymmdd');
+
+
+  //   if (!message) {
+  //     message = '';
+  //   }
+
+  //   if (!this.isInTestCase && !this.hasPrintedNontestLine) {
+  //     this.logWithoutPrefix('---------------------------------------------------------------------------------------');
+  //     this.hasPrintedNontestLine = true;
+  //   }
+
+  //   const screenshotId = dateFormat(new Date(), 'MMssl');
+
+
+  //   let html = '';
+  //   html += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" onclick="window.open('${getEventDomFileRelPath(screenshotId)}');">`;
+  //   html += entities.encode(`${currDate} ${currTime}> `);
+  //   html += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+  //   html += '</span><br/>';
+
+  //   fs.appendFileSync(this.getFile(), html + os.EOL);
+
+  //   if (this.livyDoDisplay) {
+  //     if (this.isInTestCase) {
+  //       // @ts-ignore
+  //       console.log(`${currTime} ${colors.gray(this.testGrandparentsTitle)} ${this.testParentTitle} ${colors.black.bold(`${this.testCaseTitle}> `)}${style(message)}`);
+  //     } else {
+  //       // message must be logged from outside a test (before or after?) so just preface message with spec full name
+  //       // @ts-ignore
+  //       console.log(`${currTime} ${colors.gray(this.getSpecFileDirName())}/${colors.black.bold(`${this.getSpecFileName()}> `)}${style(message)}`);
+  //     }
+  //   }
+  //   return screenshotId;
+  // }
+
+
+  logAction2(messageChunks) {
     const testDateTime = new Date();
 
     const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
     const currDate = dateFormat(testDateTime, 'yyyymmdd');
 
-
-    if (!message) {
-      message = '';
+    if (!this.isInTestCase && !this.hasPrintedNontestLine) {
+      this.logWithoutPrefix('---------------------------------------------------------------------------------------');
+      this.hasPrintedNontestLine = true;
     }
-
 
     const screenshotId = dateFormat(new Date(), 'MMssl');
 
+    let consoleBuilder = '';
 
-    let html = '';
-    html += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" onclick="window.open('${getEventDomFileRelPath(screenshotId)}');">`;
-    html += entities.encode(`${currDate} ${currTime}> `);
-    html += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
-    html += '</span><br/>';
 
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    let htmlBuilder = '';
+    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" onclick="window.open('${getEventDomFileRelPath(screenshotId)}');">`;
+    htmlBuilder += entities.encode(`${currDate} ${currTime}> `);
+
+
+    // console.log('messageChunks: ');
+    // console.log(messageChunks);
+
+    for (let i = 0; i < messageChunks.length; i++) {
+      const chunk = messageChunks[i];
+      let style = chunk.style;
+      let message = chunk.text;
+
+
+      // console.log('style: ');
+      // console.log(style);
+
+      // console.log('message: ');
+      // console.log(message);
+
+      const htmlStyle = convertNpmColorsToCss(style);
+
+      if (!style) {
+        style = passthrough;
+      }
+
+      if (!message) {
+        message = '';
+      }
+
+      htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+      consoleBuilder += `${style(message)}`;
+    }
+    htmlBuilder += '</span><br/>';
+    fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);
 
     if (this.livyDoDisplay) {
-      if (this.testCaseTitle) {
+      if (this.isInTestCase) {
         // @ts-ignore
-        console.log(`${currTime} ${colors.gray(this.testGrandparentsTitle)} ${this.testParentTitle} ${colors.black.bold(`${this.testCaseTitle}> `)}${style(message)}`);
+        console.log(`${currTime} ${colors.gray(`${this.testGrandparentsTitle} ${this.testParentTitle}`.trim())} ${this.testCaseTitle}> ${consoleBuilder}`);
       } else {
         // message must be logged from outside a test (before or after?) so just preface message with spec full name
         // @ts-ignore
-        console.log(`${currTime} ${colors.gray(this.getSpecFileDirName())}/${colors.black.bold(`${this.getSpecFileName()}> `)}${style(message)}`);
+        console.log(`${currTime} ${colors.gray(this.getSpecFileDirName())}/${this.getSpecFileName()}> ${consoleBuilder}`);
       }
     }
+
     return screenshotId;
   }
 
@@ -287,10 +375,8 @@ export class Livy {
 
   // run this before "it"
   logTestStart() {
-    this.logWithoutPrefix('---------------------------------------------------------------------------------------');
-
     fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
-
+    this.logWithoutPrefix('---------------------------------------------------------------------------------------');
     this.logWithoutPrefix(`Starting test: ${this.testGrandparentsTitle}`);
     this.logWithoutPrefix(`                         ${this.testParentTitle}`, colors.blue);
     // @ts-ignore
@@ -301,13 +387,13 @@ export class Livy {
 
   logPassed() {
     // @ts-ignore
-    const screenshotId = this.logAction('PASS', colors.green.bold);
+    const screenshotId = this.logAction2([{ text: 'PASS', style: colors.green.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
   logFailed(stack) {
     // @ts-ignore
-    const screenshotId = this.logAction('FAIL', colors.red.bold);
+    const screenshotId = this.logAction2({ text: 'FAIL', style: colors.red.bold });
     this.logReportError(stack);
     this.setMouseoverEventScreenshotFunction(screenshotId);
   }
@@ -327,9 +413,15 @@ export class Livy {
       this.logFailed(stack);
       browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
       this.logErrorImage();
+      console.log('\n\tTest case report:\n\t\t', this.reportClickablePathWithHash, '\n');
     }
     // const reportClickablePath = 'file://' + path.resolve(livy.getFile()) + '#' + livy.getSpacelessTestCaseFullTitle();
 
-    console.log('\n\tReport:\n\t\t', this.getReportClickablePath(), '\n');
+
+    this.endNewTestCase();
+  }
+
+  endSpec() {
+    fs.appendFileSync(this.getFile(), `</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>${os.EOL}`);
   }
 }

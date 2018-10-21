@@ -1,15 +1,13 @@
 // @ts-check
 import { AbElement } from '../../../../autobot_framework/autobot';
+import { loginPage } from '../page/login.page';
 
 
-class SettingsDropdownComp extends AbElement  {
+class SettingsDropdownComp extends AbElement {
   constructor() {
-    const container = new AbElement('//div[contains(@class, "ws-sidebar__account-menu--open")]');
-
-    super(container.selector);
+    super('//div[contains(@class, "ws-sidebar__account-menu--open")]');
 
     this.signOutLink = this.getChild('//span[text()="Sign Out"]');
-
     super.nameElements();
   }
 
@@ -24,15 +22,19 @@ class SettingsDropdownComp extends AbElement  {
 
 export const sidebar = new class SideBarComp extends AbElement {
   constructor() {
-    const container = new AbElement('//div[@class="ws-sidebar"]');
-
-    super(container.selector);
+    super('//div[@class="ws-sidebar"]');
     // this is where we make sure the sidebar is open. if not, click the header hamburger aka sidebar trigger button
 
     this.settingsLink = this.getChild('//div[text()="Settings"]');
 
     this.settingsMenu = new SettingsDropdownComp();
     super.nameElements();
+  }
+
+  signOut() {
+    this.settingsLink.hover();
+    this.settingsMenu.signOutLink.click();
+    loginPage.toaster_signedOutSuccessfully.close();
   }
 
   // get dashboardLink() { return this.get('//span[text()="Dashboard"]'); }
