@@ -275,6 +275,10 @@ export class Livy {
   // }
 
 
+  logMessage(message) {
+    return this.logAction2([{ text: message }]);
+  }
+
   logAction2(messageChunks) {
     const testDateTime = new Date();
 
@@ -304,25 +308,26 @@ export class Livy {
       let style = chunk.style;
       let message = chunk.text;
 
+      if (message) {
+        // console.log('style: ');
+        // console.log(style);
 
-      // console.log('style: ');
-      // console.log(style);
+        // console.log('message: ');
+        // console.log(message);
 
-      // console.log('message: ');
-      // console.log(message);
+        const htmlStyle = convertNpmColorsToCss(style);
 
-      const htmlStyle = convertNpmColorsToCss(style);
+        if (!style) {
+          style = passthrough;
+        }
 
-      if (!style) {
-        style = passthrough;
+        if (!message) {
+          message = '';
+        }
+
+        htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+        consoleBuilder += `${style(message)}`;
       }
-
-      if (!message) {
-        message = '';
-      }
-
-      htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
-      consoleBuilder += `${style(message)}`;
     }
     htmlBuilder += '</span><br/>';
     fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);

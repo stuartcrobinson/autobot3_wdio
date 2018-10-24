@@ -1,5 +1,5 @@
 // @ts-check
-import { AbElement } from '../../../../autobot_framework/autobot';
+import { AbElement } from '../../../../../autobot_framework/autobot';
 
 export const toaster = new class Toaster extends AbElement {
   constructor(message) {

@@ -1,6 +1,6 @@
 // @ts-check
 import colors from 'colors/safe';
-import { livy } from '../autobot';
+import { logAndWait2 } from '../autobot';
 /* eslint import/no-cycle: "off" */
 import { Component } from './Component';
 
@@ -13,21 +13,20 @@ function getParentFromStack(stack) {
   return result;
 }
 
-// function logAndWait(message, waiteeSelector) {
-//   const screenshotId = livy.logAction2(message);
-//   if (waiteeSelector) {
-//     browser.waitForExist(waiteeSelector);
-//   }
-//   livy.setMouseoverEventScreenshotFunction(screenshotId);
-// }
+/*
+considering pulling out all wdio-specific code from AbElement into a separate place
 
-function logAndWait2(messages, waiteeSelector) {
-  const screenshotId = livy.logAction2(messages);
-  if (waiteeSelector) {
-    browser.waitForExist(waiteeSelector);
-  }
-  livy.setMouseoverEventScreenshotFunction(screenshotId);
+like so:
+*/
+
+function getWebElements(selector) {
+  return $$(selector);
 }
+
+function getWebElement(selector) {
+  return $(selector);
+}
+
 
 /**
  * WebElement wrapper - allows for:
@@ -61,29 +60,44 @@ export class AbElement extends Component {
   }
 
   getWebElement() {
-    return browser.element(this.selector);
+    return getWebElement(this.selector);
   }
-  // get element() { return browser.element(this.selector); }
 
 
   getChild(selector) {
-    if ((this.selector.startsWith('//') && !selector.startsWith('//')) || (!this.selector.startsWith('//') && selector.startsWith('//'))) {
-      throw new Error(`Parent and child elements must have selectors of the same time. Parent: <${this.selector}>, Child: <${selector}>.`);
+    if (this.selector.startsWith('/') && selector.startsWith('/')) {
+      return new AbElement(this.selector + selector);
     }
-    return new AbElement(this.selector + selector);
+    if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
+      return new AbElement(`${this.selector} ${selector}`);
+    }
+
+    throw new Error(`Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`);
+  }
+
+  getChildren(selector) {
+    if (this.selector.startsWith('/') && selector.startsWith('/')) {
+      return getWebElements(this.selector + selector);
+    }
+    if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
+      return getWebElements(`${this.selector} ${selector}`);
+    }
+
+    throw new Error(`Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`);
   }
 
 
-  click() {
+  click(doLog = true) {
     // livy.logAction('Click: ' + this.selector);
     // browser.waitForExist(this.selector);
     // this.logAction2({ text: 'PASS', style: colors.green.bold });
-
-    logAndWait2([
-      { text: 'Click ', style: colors.bold },
-      { text: `${this.stuartname} `, style: colors.italic },
-      { text: `${this.selector}`, style: colors.gray }],
-    this.selector);
+    if (doLog) {
+      logAndWait2([
+        { text: 'Click ', style: colors.bold },
+        { text: `${this.stuartname} `, style: colors.italic },
+        { text: `${this.selector}`, style: colors.gray }],
+      this.selector);
+    }
     // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
     //   this.selector);
     browser.click(this.selector);

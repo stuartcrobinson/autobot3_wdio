@@ -2,12 +2,14 @@
 
 import { assert } from 'chai';
 import { options } from '../../autobot_framework/autobot';
-import { createAProjectPage } from '../support/wordsmith/page/createAProject.page';
-import { dashboardPage, loginPage } from '../support/wordsmith/pages';
+import { createAProjectPage } from '../support/wordsmith/misc/page/createAProject.page';
+import { loginPage } from '../support/wordsmith/misc/page/login.page';
+import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
 import Table from '../support/wordsmith/table';
 
 describe('Dashboard', () => {
   before(() => { loginPage.logIn(options.email, options.password, options.url); });
+
 
   it('"New Project" button loads the "Create a Project" input table page', () => {
     dashboardPage.newProjectButton.click();

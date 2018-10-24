@@ -1,8 +1,9 @@
 // @ts-check
 import { assert } from 'chai';
 import { options } from '../../autobot_framework/autobot';
-import { dashboardPage, loginPage } from '../support/wordsmith/pages';
-import { sidebar } from '../support/wordsmith/component/sideBar.comp';
+import { sidebar } from '../support/wordsmith/misc/component/sideBar.comp';
+import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
+import { loginPage } from '../support/wordsmith/misc/page/login.page';
 // import '../../autobot_framework/hooks/freshBrowsers';
 
 describe('Login', () => {

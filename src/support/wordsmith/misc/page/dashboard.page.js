@@ -1,6 +1,6 @@
 // @ts-check
-import { AbElement, Page } from '../../../../autobot_framework/autobot';
-import Table from '../table';
+import { AbElement, Page } from '../../../../../autobot_framework/autobot';
+import Table from '../../table';
 
 
 class DownloadsTable extends AbElement {

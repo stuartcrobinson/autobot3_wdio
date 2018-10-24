@@ -1,5 +1,5 @@
 // @ts-check
-import { AbElement, Page } from '../../../../autobot_framework/autobot';
+import { AbElement, Page } from '../../../../../autobot_framework/autobot';
 
 export const googlePage = new class Google extends Page {
   constructor() {

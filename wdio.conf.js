@@ -48,6 +48,11 @@ exports.config = {
     //   args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
     //   binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
     // }
+    //doesnt really work?
+    // chromeOptions: {
+      // args: ['--user-data-dir=/Users/stuartrobinson/Library/Application Support/Google/Chrome']
+      // args: ['--user-data-dir=/Users/stuartrobinson/NewChromeProfile']
+    // }
   }],
   //
   // ===================
@@ -133,7 +138,7 @@ exports.config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 30000,
+    timeout: 300000,
     compilers: ['js:@babel/register'],
     // grep: "with valid creds"
 

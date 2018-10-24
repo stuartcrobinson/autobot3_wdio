@@ -1,5 +1,5 @@
 // @ts-check
-import { AbElement, Page, loadPage } from '../../../../autobot_framework/autobot';
+import { AbElement, Page, loadPage } from  '../../../../../autobot_framework/autobot';
 import { toaster } from '../component/toaster.comp';
 import { dashboardPage } from './dashboard.page';
 

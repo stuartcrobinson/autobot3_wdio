@@ -1,5 +1,6 @@
 // @ts-check
-import { readFileSync, existsSync } from 'fs';
+import colors from 'colors/safe';
+import { existsSync, readFileSync } from 'fs';
 import stringArgv from 'string-argv';
 import yargsParse from 'yargs-parser';
 import { Livy } from './support/Livy';
@@ -23,6 +24,25 @@ else {
 }
 export const options = _options;
 
+/******** tools *******/
+
+export function logAndWait2(messages, waiteeSelector) {
+  const screenshotId = livy.logAction2(messages);
+  if (waiteeSelector) {
+    browser.waitForExist(waiteeSelector);
+  }
+  livy.setMouseoverEventScreenshotFunction(screenshotId);
+}
+
+export function log(messages) {
+  const screenshotId = livy.logAction2(messages);
+  livy.setMouseoverEventScreenshotFunction(screenshotId);
+}
+
+export function logMessage(message) {
+  const screenshotId = livy.logMessage(message);
+  livy.setMouseoverEventScreenshotFunction(screenshotId);
+}
 
 // /******************************** browser ************************************/
 /**
@@ -36,6 +56,28 @@ export const options = _options;
  */
 export function loadPage(url) {
   browser.url(url);
+}
+
+export const autobotBrowser = new class AutobotBrowser {
+
+
+  // logAndWait2([
+  //   { text: 'Click ', style: colors.bold },
+  //   { text: `${this.stuartname} `, style: colors.italic },
+  //   { text: `${this.selector}`, style: colors.gray }],
+  //   this.selector);
+  // // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
+  // //   this.selector);
+  // browser.click(this.selector);
+
+  keys(keysToType, doLog = true) {
+    if (doLog) {
+      log([
+        { text: 'Type ', style: colors.bold },
+        { text: keysToType, style: colors.italic }]);
+    }
+    browser.keys(keysToType);
+  }
 }
 
 /******************************** hooks **************************************/
