@@ -1,22 +1,8 @@
 // @ts-check
-import { AbElement } from '../../../../../../autobot_framework/autobot';
-import { EditDataComp } from '../editData.comp';
+import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
 
 // var cssToXPath = require('css-to-xpath');
 
-class EditDataDropdown extends AbElement {
-  constructor(selector) {
-    super(selector);
-    if (this.constructor === EditDataDropdown) {
-      throw new TypeError('Abstract class cannot be instantiated directly.');
-    }
-    this.setName(this.constructor.name)
-  }
-}
-
-function nthDropDownOptionFromButton(n) {
-  return ` + .dropdown-menu li:nth-of-type(${n})`;
-}
 
 class DecimalPlacesDropdown extends EditDataDropdown {
   constructor(dropdownButtonSelector) {
@@ -52,9 +38,6 @@ class ThousandsSeparatorDropdown extends EditDataDropdown {
   }
 }
 
-function nthDropdownButtonCssSelector(n) {
-  return `.input-container:nth-of-type(${n}) .dropdown button`
-}
 
 export const editDataNumberComp = new class EditDataNumberComp extends EditDataComp {
   constructor() {

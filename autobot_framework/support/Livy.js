@@ -10,7 +10,7 @@ import * as fs_extra from 'fs-extra';
 import { AllHtmlEntities } from 'html-entities';
 import * as os from 'os';
 import * as path from 'path';
-import * as Tools from './Tools';
+// import * as Tools from './Tools';
 
 const entities = new AllHtmlEntities();
 
@@ -63,12 +63,22 @@ function getEventScreenshotFileRelPath(id) {
 }
 export class Livy {
   /**
+   *
+   * @param {Boolean} doDisplay
+   * @param {Boolean} doSaveEventScreenshots
+   */
+  constructor(doDisplay = true, doSaveEventScreenshots = true) {
+    this.livyDoDisplay = doDisplay;
+    this.doSaveEventScreenshots = doSaveEventScreenshots;
+    console.log('doSaveEventScreenshots?');
+    console.log(doSaveEventScreenshots);
+  }
+
+  /**
      * Called in global "before", once test's spec file path has been determined.
      * @param {String} specFile
      */
   initialize(specFile) {
-    this.livyDoDisplay = true;
-    this.livyDoSaveEventScreenshots = true;
     this.isInTestCase = false;
     this.hasPrintedNontestLine = false;
 
@@ -200,12 +210,12 @@ export class Livy {
   }
 
   setMouseoverEventScreenshotFunction(screenshotId) {
-    if (this.livyDoSaveEventScreenshots) {
+    if (this.doSaveEventScreenshots) {
       // autobot.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId))
       browser.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId));
     }
 
-    fs.appendFileSync(this.getEventDomFileAbsPath(screenshotId), Tools.getFullDom() + os.EOL);
+    // fs.appendFileSync(this.getEventDomFileAbsPath(screenshotId), Tools.getFullDom() + os.EOL);
 
 
     let html = '';

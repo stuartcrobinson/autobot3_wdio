@@ -21,4 +21,8 @@ export const editorPage = new class Editor extends Page {
     super.nameElements();
   }
 
+  segmentWithText(text) {
+    return new AbElement(`//span[@data-text='true' and text()='${text}']`)
+  }
+
 }();

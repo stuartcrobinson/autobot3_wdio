@@ -3,9 +3,13 @@ import colors from 'colors/safe';
 import { existsSync, readFileSync } from 'fs';
 import stringArgv from 'string-argv';
 import yargsParse from 'yargs-parser';
+// import { assert } from 'chai';
+import { AbElement } from './support/AbElement';
 import { Livy } from './support/Livy';
 export { AbElement } from './support/AbElement';
 export { Page } from './support/Page';
+// import { AssertionError } from 'assert';
+
 
 
 /******************************** config *************************************/
@@ -23,6 +27,7 @@ else {
   _options = yargsParse(argv);
 }
 export const options = _options;
+
 
 /******** tools *******/
 
@@ -60,16 +65,6 @@ export function loadPage(url) {
 
 export const autobotBrowser = new class AutobotBrowser {
 
-
-  // logAndWait2([
-  //   { text: 'Click ', style: colors.bold },
-  //   { text: `${this.stuartname} `, style: colors.italic },
-  //   { text: `${this.selector}`, style: colors.gray }],
-  //   this.selector);
-  // // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
-  // //   this.selector);
-  // browser.click(this.selector);
-
   keys(keysToType, doLog = true) {
     if (doLog) {
       log([
@@ -80,11 +75,73 @@ export const autobotBrowser = new class AutobotBrowser {
   }
 }
 
+/******************************** assert **************************************/
+
+const defaultAutobotTimeoutMillis = 5000;
+export class AutobotAssert {
+
+  /**
+   * 
+   * @param {AbElement} abElement 
+   * @param {String} expected 
+   * @param {Number} timoutMillis 
+   */
+  static elementText(abElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
+    log([
+      { text: 'Assert ', style: colors.bold },
+      { text: `${abElement.stuartname}`, style: colors.italic },
+      { text: "'s text is " },
+      { text: expected, style: colors.italic },
+      { text: ` ${abElement.selector}`, style: colors.gray }]);
+
+    try {
+      browser.waitUntil(() => abElement.getWebElement().getText() === expected, timoutMillis);
+    } catch (err) {
+      console.log("original error:")
+      console.log(err)
+      throw new Error(`Element "${abElement.stuartname}"'s text is "${abElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${abElement.selector}`);
+    }
+
+    // assert.equal(abElement.getWebElement().getText(), expected);
+  }
+
+  /**
+   * 
+   * @param {AbElement} abElement 
+   * @param {Number} timoutMillis 
+   */
+  static elementExists(abElement, timoutMillis = defaultAutobotTimeoutMillis) {
+    log([
+      { text: 'Assert ', style: colors.bold },
+      { text: `${abElement.stuartname} `, style: colors.italic },
+      { text: "exists " },
+      { text: abElement.selector, style: colors.gray }]);
+    // browser.waitUntil(() => abElement.isExisting(), timoutMillis);
+    // assert(abElement.isExisting());
+
+
+    try {
+      browser.waitUntil(() => abElement.isExisting(), timoutMillis);
+    } catch (err) {
+      console.log("original error:")
+      console.log(err)
+      throw new Error(`Element "${abElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${abElement.selector}`);
+    }
+
+  }
+}
+
 /******************************** hooks **************************************/
 //these should be pulled out into a separate file and imported per test, since some tests might want unique before/after code
 export let driver;
 export let currentTest, currentSpec, currentTestCustom;
-export let livy = new Livy();
+
+console.log("options.noPics ? ?")
+console.log(options.noPics);
+console.log("options.noPics === true")
+console.log(options.noPics === true);
+export let livy = new Livy(true, options.noPics ? false : true);
+
 
 beforeEach(function () {
   // console.log('beforeeach1')
