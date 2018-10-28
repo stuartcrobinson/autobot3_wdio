@@ -52,3 +52,13 @@ wdio fresh start, going to try to use es6 in tests and wdio.conf.js file
 update - failed to get es6 working in wdio.conf file.  solution: passing in global object and using it's methods as defined in es6 files.
 
 note - tried and gave up on writing project in typescript.  it ruined the stack trace and also caused browsers to briefly open per test (even if not running that test), and i'm not sure why
+
+
+STYLE RULES
+
+*  at some point after running x = Autobot.httpRequestCreateProject_begin(...), you must run Autobot.httpRequestComplete(x);
+*  super.nameElements(); must be called at the end of every page object constructor
+*  do not call "browser" from tests.  must be wrapped in autobot functions for proper logging and error handling.
+*  all files must start with //@ts-check
+
+ 

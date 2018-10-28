@@ -1,14 +1,13 @@
 // @ts-check
 import { assert } from 'chai';
-import { options, livy } from '../../autobot_framework/autobot';
+import { Before, livy } from '../../autobot_framework/autobot';
 import { editorPage } from '../support/wordsmith/editor/editor.page';
 import { createAProjectPage } from '../support/wordsmith/misc/page/createAProject.page';
-import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
-import { loginPage } from '../support/wordsmith/misc/page/login.page';
 import { createAProjectUploadCsvPage } from '../support/wordsmith/misc/page/createAProjectUploadCsv.page';
+import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
 
 describe('Create a project', () => {
-  before(() => { loginPage.logIn(options.email, options.password, options.url); });
+  before(() => { Before.load.dashboard(); });
 
   it('from CSV upload', () => {
     dashboardPage.newProjectDropdown.click();
@@ -20,6 +19,7 @@ describe('Create a project', () => {
   });
 
   it('from input table', () => {
+    dashboardPage.load();
     dashboardPage.newProjectButton.click();
     createAProjectPage.populateTable();
     createAProjectPage.createProjectButton.click();

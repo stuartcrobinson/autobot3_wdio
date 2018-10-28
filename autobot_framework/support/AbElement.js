@@ -4,6 +4,8 @@ import { logAndWait2, abStyle } from '../autobot';
 /* eslint import/no-cycle: "off" */
 import { Component } from './Component';
 
+// const cssToXPath = require('css-to-xpath');
+
 
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
@@ -84,6 +86,14 @@ export class AbElement extends Component {
     throw new Error(`Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`);
   }
 
+  // spanWithText(text) {
+  //   if (this.selector.startsWith('/')) {
+  //     return this.getChild(this.selector + "//span[text()='" + text + "']");
+  //   }
+  //   if (!this.selector.startsWith('/')) {
+  //     return this.getChild(`${cssToXPath(this.selector)} ${selector}`);
+  //   }
+  // }
 
   click(doLog = true) {
     // livy.logAction('Click: ' + this.selector);
@@ -92,6 +102,22 @@ export class AbElement extends Component {
     if (doLog) {
       logAndWait2([
         { text: 'Click ', style: abStyle.verb },
+        { text: `${this.stuartname} `, style: abStyle.object },
+        { text: `${this.selector}`, style: abStyle.selector }],
+      this.selector);
+    }
+    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
+    //   this.selector);
+    browser.click(this.selector);
+  }
+
+  doubleClick(doLog = true) {
+    // livy.logAction('Click: ' + this.selector);
+    // browser.waitForExist(this.selector);
+    // this.logAction2({ text: 'PASS', style: colors.green.bold });
+    if (doLog) {
+      logAndWait2([
+        { text: 'Double-click ', style: abStyle.verb },
         { text: `${this.stuartname} `, style: abStyle.object },
         { text: `${this.selector}`, style: abStyle.selector }],
       this.selector);
@@ -250,7 +276,6 @@ export class AbElement extends Component {
     // }
   }
 
-
   setValue(value) {
     logAndWait2([
       { text: 'Set value ', style: abStyle.verb },
@@ -261,20 +286,24 @@ export class AbElement extends Component {
       { text: `${this.selector} `, style: abStyle.selector }],
     this.selector);
 
-
-    // logAndWait2([
-    //   { text: 'Click ', style: autobotSyles.verb },
-    //   { text: `${this.stuartname} `, style: autobotSyles.object },
-    //   { text: `${this.selector} `, style: autobotSyles.selector },
-    //   { text: 'then wait for element to disappear: ', style: autobotSyles.filler },
-    //   { text: indicatorSelector, style: autobotSyles.selector }],
-    //   this.selector);
-
-
-    // logAndWait(`Set value of [${this.selector}] to [${value}]`,
-    //   this.selector);
-
     browser.setValue(this.selector, value);
+  }
+
+
+  clickAndType(value) {
+    logAndWait2([
+      { text: 'Click ', style: abStyle.verb },
+      // { text: 'of ', style: abStyle.filler },
+      { text: this.stuartname, style: abStyle.object },
+      { text: ' and ', style: abStyle.filler },
+      { text: 'type ', style: abStyle.verb },
+      { text: value, style: abStyle.object },
+      { text: ` ${this.selector}`, style: abStyle.selector }],
+    this.selector);
+
+    browser.click(this.selector);
+
+    browser.keys(value);
   }
 
 

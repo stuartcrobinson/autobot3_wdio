@@ -22,6 +22,10 @@ export class Page extends Component {
     this.urlPath = urlPath;
   }
 
+
+  /**
+   * TODO -- first check to see if it's already loaded.  don't load if so.
+   */
   load() {
     browser.url(options.url + this.urlPath);
     super.waitForLoad();

@@ -1,4 +1,3 @@
-
 //@ts-check
 import axios from 'axios';
 
@@ -24,8 +23,13 @@ describe('requests describe', () => {
 
 
     console.log('before m');
-    let m = axios
+    let myAxiosPromise = axios
       .get('http://slowwly.robertomurray.co.uk/delay/4000/url/https://en.wikipedia.org/wiki/Spoon')
+
+
+    console.log('before m');
+    let myAxiosPromise2 = axios
+      .get('http://slowwly.robertomurray.co.uk/delay/3000/url/https://en.wikipedia.org/wiki/Spoon')
 
     console.log('before p');
     axios
@@ -55,6 +59,15 @@ describe('requests describe', () => {
         });
     });
 
+
+
+    //doesn't wait and doesn't print - BY ITSELF.  DOES PRINT even when browser.call comes later.  oh that's cos program's still running when .then() happens?
+    myAxiosPromise2.then(function (response) {
+      console.log('then m2: ' + response.status);
+      // return response.data.answer;
+    })
+
+
     let y = browser.call(function () {
       console.log('in y');
       return axios.get('https://yesno.wtf/api/')
@@ -69,13 +82,18 @@ describe('requests describe', () => {
     console.log('x: ' + x);
     console.log('y: ' + y);
 
+
+    //does wait and does print
     browser.call(function () {
 
-      return m.then(function (response) {
+      let myPromise = myAxiosPromise.then(function (response) {
         console.log('then m: ' + response.status);
         // return response.data.answer;
       })
+      return myPromise;
     });
+
+
 
     console.log('finished');
   });

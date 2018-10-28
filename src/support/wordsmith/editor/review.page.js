@@ -2,10 +2,35 @@
 import { AbElement, Page } from '../../../../autobot_framework/autobot';
 import { editorPageToolbar } from './toolbar.comp';
 
-export const editorPage = new class Editor extends Page {
+export const reviewPage = new class Review extends Page {
   constructor() {
     super();
-    this.toolbar = editorPageToolbar.tagAsLoadCriterion();
+    this.pageCountToggleLink = editorPageToolbar.tagAsLoadCriterion();
+
+
+    /*
+
+
+
+
+
+
+TODO start here-- model the "Show All" vs "10 per page" link somehow.  think of best name for this toggling link
+
+
+
+
+
+
+
+
+
+
+
+
+    */
+
+
 
     // this.insertDataButton = new AbElement('.btn-insert-data').tagAsLoadCriterion();
     // this.addSynonymButtom = new AbElement('.btn-synonym').tagAsLoadCriterion();

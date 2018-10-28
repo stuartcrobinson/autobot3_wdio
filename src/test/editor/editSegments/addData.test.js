@@ -1,43 +1,17 @@
 // @ts-check
-import { assert } from 'chai';
-import {
-  AutobotAssert,
-  autobotBrowser,
-  // livy,
-  options,
-} from '../../../autobot_framework/autobot';
-import { editorPage } from '../../support/wordsmith/editor/editor.page';
-import { editDataBooleanComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.comp';
-import { editDataDateComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataDate.comp';
-import { editDataTextComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataList.comp';
-import { editDataNumberComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
-import { editDataListComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
-import { editDataTimeComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
-import { header } from '../../support/wordsmith/misc/component/header.comp';
-// import { createAProjectUploadCsvPage } from '../support/wordsmith/misc/page/createAProjectUploadCsv.page';
-// import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
-import { loginPage } from '../../support/wordsmith/misc/page/login.page';
+import { AutobotAssert, autobotBrowser, Before } from '../../../../autobot_framework/autobot';
+import { editorPage } from '../../../support/wordsmith/editor/editor.page';
+import { editDataBooleanComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.comp';
+import { editDataDateComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataDate.comp';
+import { editDataTextComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataList.comp';
+import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
+import { editDataListComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
+import { editDataTimeComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
+import { header } from '../../../support/wordsmith/misc/component/header.comp';
 
 describe('Format and insert data var of type', () => {
-  before(() => { loginPage.logIn(options.email, options.password, options.url); });
 
-  before('create project', () => {
-    // dashboardPage.newProjectDropdown.click();
-    // dashboardPage.uploadCsvDropdownOption.click();
-    // createAProjectUploadCsvPage.nameYourProjectField.setValue(`Autobot ${livy.specDate} ${livy.specTime}`);
-    // createAProjectUploadCsvPage.fileUploadInput.uploadFile('./resources/eachDataType_date2.csv');
-    // editorPage.waitForLoad();
-
-    browser.url('https://wordsmith.automatedinsights.com/projects/qwerff_1/templates/awegasgfg-template/edit/editor');
-    // browser.url('https://wordsmith.automatedinsights.com/projects/qwerff_2/templates/awegasgfg-template/edit/editor');
-
-    // // console.log('before assert(editorPage.isLoaded()');
-
-
-    assert(editorPage.isLoaded(), 'Dashboard page should be loaded.');
-
-    // console.log('after assert(editorPage.isLoaded()');
-  });
+  before(() => { Before.load.newTemplateEditor(); });
 
   // done
   it('Number', () => {

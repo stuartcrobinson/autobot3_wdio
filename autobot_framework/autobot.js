@@ -9,8 +9,94 @@ import { Livy } from './support/Livy';
 export { AbElement } from './support/AbElement';
 export { Page } from './support/Page';
 // import { AssertionError } from 'assert';
+import axios, { AxiosPromise } from 'axios';
+import { loginPage } from '../src/support/wordsmith/misc/page/login.page';
+import { projectPage } from '../src/support/wordsmith/misc/page/project.page';
+import { editorPage } from '../src/support/wordsmith/editor/editor.page';
+import { assert } from 'chai';
 
 
+
+
+/* ******************************* wrapped *************************************/
+
+
+
+function getAxiosBody(projectName, projectData) {
+  return {
+    "data": {
+      "name": projectName,
+      "dataset": {
+        "format": "json",
+        "data": projectData
+      }
+    }
+  }
+}
+
+
+export class Autobot {
+
+  static getProjectUrlFromName(name) {
+    return `https://wordsmith.automatedinsights.com/projects/` + name;
+  }
+  /**
+   * 
+   * @param {String} x 
+   */
+  static makeSlugSafeName(x) {
+    let slugSafe = x;
+    slugSafe = slugSafe.replace(/[^\w-]/g, ' ');
+    slugSafe = slugSafe.replace(/\s\s+/g, ' ');
+    slugSafe = slugSafe.replace(/ /g, '-');
+    slugSafe = slugSafe.toLowerCase();
+    return slugSafe;
+  }
+
+  static httpRequestCreateProject_begin(name, data) {
+
+    const body = getAxiosBody(name, data);
+
+    return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
+  }
+
+  /**
+   * 
+   * @param {Object} body 
+   */
+  static httpRequestBegin(url, body) {
+    const axiosConfig = {
+      headers: {
+        'Authorization': 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
+        'User-Agent': 'Autobot',
+        'Content-Type': 'application/json'
+      },
+    };
+
+    console.log('posting')
+    return axios.post(url, body, axiosConfig)
+  }
+
+
+  /**
+   * 
+   * @param {AxiosPromise} axiosPromise 
+   */
+  static httpRequestComplete(axiosPromise) {
+
+    //does wait and does print
+    browser.call(function () {
+      return axiosPromise
+        .then(function (response) {
+          console.log('response status: ' + response.status);
+        })
+        .catch(function (error) {
+          throw new Error(error);   //trace is useful this way
+        });
+    });
+
+  }
+};
 
 /******************************** config *************************************/
 let _options;
@@ -105,7 +191,6 @@ export const autobotBrowser = new class AutobotBrowser {
     ]);
     browser.dragAndDrop(abEl1.selector, abEl2.selector);
   }
-
 }
 
 
@@ -178,10 +263,44 @@ export class AutobotAssert {
       throw new Error(`${targetDescription}: Expected:  "${value}". Actual: "${f()}"`);
     }
   }
-
-
-
 }
+
+//Hooks class
+
+/**
+ * Just syntax sugar to make "before" line more readable.  Good/bad idea?
+ * 
+ *   Named by the page on which the functions end.
+ */
+class Load {
+  dashboard() {
+    loginPage.logIn(options.email, options.password, options.url);
+  }
+  newTemplateEditor() {
+    const projectName = Autobot.makeSlugSafeName("Autobot Add Data" + livy.specDate + ' ' + livy.specTime);
+    let httpRequestPromise = Autobot.httpRequestCreateProject_begin(projectName, data);
+    loginPage.logIn(options.email, options.password, options.url);
+    Autobot.httpRequestComplete(httpRequestPromise);
+    browser.url(Autobot.getProjectUrlFromName(projectName));
+    projectPage.createNewTemplateButton.click_waitForNotExisting();
+    assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
+  }
+}
+/**
+ * "Before"-level hooks.  Named by the page on which the functions end.
+ */
+export class Before {
+  static get load() { return new Load(); }
+}
+
+// const projectName = Autobot.makeSlugSafeName("Autobot Add Data" + livy.specDate + ' ' + livy.specTime);
+// let httpRequestPromise = Autobot.httpRequestCreateProject_begin(projectName, data);
+// loginPage.logIn(options.email, options.password, options.url);
+// Autobot.httpRequestComplete(httpRequestPromise);
+// browser.url(Autobot.getProjectUrlFromName(projectName));
+// projectPage.createNewTemplateButton.click_waitForNotExisting();
+// assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
+
 
 /******************************** hooks **************************************/
 //these should be pulled out into a separate file and imported per test, since some tests might want unique before/after code
@@ -232,5 +351,17 @@ after(function () {
 });
 
 
+/* ****** data *****/
 
+// string, num, list, bool, date, time, truedata
+// anneau du Vic - Bilh, 100, "one,Two,tHREE", true, 2 / 1 / 1900, 1: 45 PM, 3
+
+export const data = [{
+  "string": "anneau du Vic-Bilh",
+  "num": 100,
+  "list": "one,Two,tHREE",
+  "bool": "true",
+  "date": "2/1/1900",
+  "time": "1:45 PM"
+}];
 

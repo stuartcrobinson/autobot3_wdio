@@ -1,58 +1,41 @@
 // @ts-check
-import { assert } from 'chai';
-import {
-  AutobotAssert,
-  // livy,
-  options,
-  autobotBrowser
-} from '../../../autobot_framework/autobot';
-import { editorPage } from '../../support/wordsmith/editor/editor.page';
-import { editDataNumberComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
-import { editSynonymComp } from '../../support/wordsmith/editor/segmentEditors/editSynonym.comp';
-import { header } from '../../support/wordsmith/misc/component/header.comp';
-import { loginPage } from '../../support/wordsmith/misc/page/login.page';
-import { editBranchComp } from '../../support/wordsmith/editor/segmentEditors/editBranch.comp';
+import { AutobotAssert, autobotBrowser, Before } from '../../../../autobot_framework/autobot';
+import { editorPage } from '../../../support/wordsmith/editor/editor.page';
+import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
+import { editBranchComp } from '../../../support/wordsmith/editor/segmentEditors/editBranch.comp';
+import { editSynonymComp } from '../../../support/wordsmith/editor/segmentEditors/editSynonym.comp';
+import { header } from '../../../support/wordsmith/misc/component/header.comp';
 
 describe('Add', () => {
-  before(() => { loginPage.logIn(options.email, options.password, options.url); });
-
-  before('create project', () => {
-    // dashboardPage.newProjectDropdown.click();
-    // dashboardPage.uploadCsvDropdownOption.click();
-    // createAProjectUploadCsvPage.nameYourProjectField.setValue(`Autobot ${livy.specDate} ${livy.specTime}`);
-    // createAProjectUploadCsvPage.fileUploadInput.uploadFile('./resources/eachDataType_date2.csv');
-    // editorPage.waitForLoad();
-
-    // browser.url('https://wordsmith.automatedinsights.com/projects/qwerff_1/templates/awegasgfg-template/edit/editor');
-    browser.url('https://wordsmith.automatedinsights.com/projects/qwerff_2/templates/awegasgfg-template/edit/editor');
-
-    // // console.log('before assert(editorPage.isLoaded()');
-
-
-    assert(editorPage.isLoaded(), 'Dashboard page should be loaded.');
-
-    // console.log('after assert(editorPage.isLoaded()');
-  });
+  before(() => { Before.load.newTemplateEditor(); });
 
   // done
   it('synonym', () => {
     editorPage.toolbar.addSynonymButton.click();
 
-    editSynonymComp.getNthSynonymBox(1).textInput.setValue('pancakes');
+    editSynonymComp.getNthSynonymBox(1).textInput.clickAndType('pancakes');
     AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
 
     editSynonymComp.addAnotherSynonymLink.click();
 
-    editSynonymComp.getNthSynonymBox(2).textInput.setValue('flapjacks');
+    editSynonymComp.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
     AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'flapjacks', 2000);
 
     editSynonymComp.addAnotherSynonymLink.click();
 
-    editSynonymComp.getNthSynonymBox(3).textInput.setValue('hotcakes');
+    editSynonymComp.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
     AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'hotcakes', 2000);
 
     editSynonymComp.getNthSynonymBox(3).xCloseButton.click_waitForNotExisting();
 
+    AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
+
+    //make sure highlight changes when click different synonym
+
+    editSynonymComp.getNthSynonymBox(2).click_waitForChange();
+    AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'flapjacks', 2000);
+
+    editSynonymComp.getNthSynonymBox(1).click_waitForChange();
     AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
 
     AutobotAssert.elementExists(header.savedDiv, 10000);
@@ -151,31 +134,6 @@ describe('Add', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
 
 
-
-
-
-    // editSynonymComp.getNthSynonymBox(1).textInput.setValue('pancakes');
-    // AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
-
-    // editSynonymComp.addAnotherSynonymLink.click();
-
-    // editSynonymComp.getNthSynonymBox(2).textInput.setValue('flapjacks');
-    // AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'flapjacks', 2000);
-
-    // editSynonymComp.addAnotherSynonymLink.click();
-
-    // editSynonymComp.getNthSynonymBox(3).textInput.setValue('hotcakes');
-    // AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'hotcakes', 2000);
-
-    // editSynonymComp.getNthSynonymBox(3).xCloseButton.click_waitForNotExisting();
-
-    // AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
-
-    // AutobotAssert.elementExists(header.savedDiv, 10000);
-
-    // editDataNumberComp.doneButton.click_waitForNotExisting();
-
-    // AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
   });
 
 

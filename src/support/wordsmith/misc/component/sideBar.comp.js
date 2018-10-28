@@ -27,6 +27,9 @@ export const sidebar = new class SideBarComp extends AbElement {
 
     this.settingsLink = this.getChild('//div[text()="Settings"]');
 
+    /** only in Editor sidebar.  clean up this? */
+    this.reviewLink = this.getChild('//a[@data-for="Review"]');
+
     this.settingsMenu = new SettingsDropdownComp();
     super.nameElements();
   }
