@@ -6,7 +6,7 @@ class SynonymBox extends AbElement{
   constructor(selector){
     super(selector);
     this.xCloseButton = this.getChild('.delete-button');
-    this.textInput = this.getChild('public-DraftEditor-content');
+    this.textInput = this.getChild('.public-DraftEditor-content');
     super.nameElements();
 
   }

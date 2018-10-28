@@ -14,6 +14,9 @@ export const editorPage = new class Editor extends Page {
 
     this.editorTextarea = new AbElement('.editor-textarea').tagAsLoadCriterion();
 
+    /** For waiting for editor to load after closing segment editors. */
+    this.editorOnlyElement = new AbElement('.narrative:not(.narrative--is-segment-selected)').tagAsLoadCriterion();
+
 
 
     // this.toaster_signedOutSuccessfully = toaster.withMessage('Signed out successfully.');
@@ -22,7 +25,50 @@ export const editorPage = new class Editor extends Page {
   }
 
   segmentWithText(text) {
-    return new AbElement(`//span[@data-text='true' and text()='${text}']`)
+    return new AbElement(`//span[@data-text='true' and text()='${text}']`).setName('text: "' + text + '"')
+  }
+
+  // this.dataInputTable
+  // .getChildren('.ws-input')
+  // .forEach((we, index) => {
+
+  //   const id = we.getAttribute("id")
+
+  //   new AbElement('//*[@id="' + id + '"]').click(false);
+
+  //   autobotBrowser.keys(we.getAttribute("placeholder"), false)
+  //   // browser.click('//*[@id="' + id + '"]')
+  //   // browser.keys(we.getAttribute("placeholder"))
+  // })
+
+
+  getLastSegmentText() {
+    // console.log("in getLastSegmentText");
+
+    const segmentsSpans = this.findWebElements('span[data-text="true"]');
+
+    // segmentsSpans.forEach((we, index) => {
+    //   console.log("segment span text: " + we.getText());
+    // })
+
+
+    return segmentsSpans[segmentsSpans.length - 1].getText();
+
+    // segmentsSpans.forEach((we, index) => {
+
+    // })
+
+    /*
+
+
+    find all these:
+    span[data-text='true']
+    and return the last one
+
+    note - can't pass an abelement cos we do'nt have precise selector for this.  have to get all WebElements and check the last one on the page
+
+    */
+    // return new AbElement(`//span[@data-text='true' and text()='${text}']`).setName('text: "' + text + '"')
   }
 
 }();

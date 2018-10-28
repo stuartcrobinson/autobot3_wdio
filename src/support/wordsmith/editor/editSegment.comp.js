@@ -12,7 +12,6 @@ export class EditSegmentComp extends AbElement {
     this.segmentPreview = this.getChild('.segment-preview').tagAsLoadCriterion();
     this.highlightedPreviewSpan = this.getChild('.highlight');
 
-
     //note: doneButton and backButton are the same element
     this.doneButton = this.getChild('.btn-primary').tagAsLoadCriterion();
     this.backButton = this.getChild('.back-button').tagAsLoadCriterion();

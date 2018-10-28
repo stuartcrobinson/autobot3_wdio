@@ -31,10 +31,21 @@ export const options = _options;
 
 /******** tools *******/
 
+export const abStyle = new class AutobotSyles {
+  constructor() {
+    this.verb = colors.italic;
+    this.object = colors.bold;
+    this.filler = colors.reset;
+    this.selector = colors.gray;
+  }
+}();
+
+
 export function logAndWait2(messages, waiteeSelector) {
   const screenshotId = livy.logAction2(messages);
   if (waiteeSelector) {
     browser.waitForExist(waiteeSelector);
+    // browser.waitForVisible(waiteeSelector);
   }
   livy.setMouseoverEventScreenshotFunction(screenshotId);
 }
@@ -68,12 +79,35 @@ export const autobotBrowser = new class AutobotBrowser {
   keys(keysToType, doLog = true) {
     if (doLog) {
       log([
-        { text: 'Type ', style: colors.bold },
-        { text: keysToType, style: colors.italic }]);
+        { text: 'Type ', style: abStyle.verb },
+        { text: keysToType, style: abStyle.object }]);
     }
     browser.keys(keysToType);
   }
+
+
+  /**
+   * 
+   * @param {AbElement} abEl1 
+   * @param {AbElement} abEl2 
+   */
+  dragAndDrop(abEl1, abEl2) {
+    log([
+      { text: 'Drag ', style: abStyle.verb },
+      { text: abEl1.stuartname, style: abStyle.object },
+      { text: ' to ', style: abStyle.filler },
+      { text: abEl2.stuartname, style: abStyle.object },
+      { text: ' [', style: abStyle.filler },
+      { text: abEl1.selector, style: abStyle.selector },
+      { text: '], [', style: abStyle.filler },
+      { text: abEl2.selector, style: abStyle.selector },
+      { text: ']', style: abStyle.filler },
+    ]);
+    browser.dragAndDrop(abEl1.selector, abEl2.selector);
+  }
+
 }
+
 
 /******************************** assert **************************************/
 
@@ -88,21 +122,20 @@ export class AutobotAssert {
    */
   static elementText(abElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
     log([
-      { text: 'Assert ', style: colors.bold },
-      { text: `${abElement.stuartname}`, style: colors.italic },
-      { text: "'s text is " },
-      { text: expected, style: colors.italic },
-      { text: ` ${abElement.selector}`, style: colors.gray }]);
+      { text: 'Assert ', style: abStyle.verb },
+      { text: `${abElement.stuartname}`, style: abStyle.object },
+      { text: "'s text is ", style: abStyle.filler },
+      { text: expected, style: abStyle.object },
+      { text: ` ${abElement.selector}`, style: abStyle.selector }]);
 
     try {
+      abElement.waitForExist();
       browser.waitUntil(() => abElement.getWebElement().getText() === expected, timoutMillis);
     } catch (err) {
       console.log("original error:")
       console.log(err)
       throw new Error(`Element "${abElement.stuartname}"'s text is "${abElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${abElement.selector}`);
     }
-
-    // assert.equal(abElement.getWebElement().getText(), expected);
   }
 
   /**
@@ -112,13 +145,12 @@ export class AutobotAssert {
    */
   static elementExists(abElement, timoutMillis = defaultAutobotTimeoutMillis) {
     log([
-      { text: 'Assert ', style: colors.bold },
-      { text: `${abElement.stuartname} `, style: colors.italic },
-      { text: "exists " },
-      { text: abElement.selector, style: colors.gray }]);
+      { text: 'Assert ', style: abStyle.verb },
+      { text: `${abElement.stuartname} `, style: abStyle.object },
+      { text: "exists ", style: abStyle.verb },
+      { text: abElement.selector, style: abStyle.selector }]);
     // browser.waitUntil(() => abElement.isExisting(), timoutMillis);
     // assert(abElement.isExisting());
-
 
     try {
       browser.waitUntil(() => abElement.isExisting(), timoutMillis);
@@ -127,8 +159,28 @@ export class AutobotAssert {
       console.log(err)
       throw new Error(`Element "${abElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${abElement.selector}`);
     }
-
   }
+
+  static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
+    // console.log("in valueEquals")
+
+    log([
+      { text: 'Assert ', style: abStyle.verb },
+      { text: `${targetDescription} `, style: abStyle.object },
+      { text: "equals ", style: abStyle.verb },
+      { text: value, style: abStyle.object }]);
+
+    try {
+      browser.waitUntil(() => f() === value, timoutMillis);
+    } catch (err) {
+      console.log("original error:")
+      console.log(err)
+      throw new Error(`${targetDescription}: Expected:  "${value}". Actual: "${f()}"`);
+    }
+  }
+
+
+
 }
 
 /******************************** hooks **************************************/
@@ -136,10 +188,10 @@ export class AutobotAssert {
 export let driver;
 export let currentTest, currentSpec, currentTestCustom;
 
-console.log("options.noPics ? ?")
-console.log(options.noPics);
-console.log("options.noPics === true")
-console.log(options.noPics === true);
+// console.log("options.noPics ? ?")
+// console.log(options.noPics);
+// console.log("options.noPics === true")
+// console.log(options.noPics === true);
 export let livy = new Livy(true, options.noPics ? false : true);
 
 
@@ -164,14 +216,6 @@ beforeEach(function () {
   livy.initializeNewTestCase(currentTest.title.trim(), currentTest.parent.title.trim(), fullName.trim(), testGrandparentsTitle.trim());
   livy.logTestStart();
 });
-
-// beforeEach(function () {
-//     console.log('beforeeach2')
-// });
-
-// afterEach(function () {
-//   livy.endNewTestCase();
-// })
 
 before(function () {
   const filePath = this.test.parent.suites[0].tests[0].file

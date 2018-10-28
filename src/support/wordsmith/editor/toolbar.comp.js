@@ -31,7 +31,7 @@ export const editorPageToolbar = new class EditorToolbar extends AbElement {
   constructor() {
     super('.toolbar__list');
     this.insertDataButton = this.getChild('.btn-insert-data').tagAsLoadCriterion();
-    this.addSynonymButtom = this.getChild('.btn-synonym').tagAsLoadCriterion();
+    this.addSynonymButton = this.getChild('.btn-synonym').tagAsLoadCriterion();
     this.addBranchButton = this.getChild('.btn-branch').tagAsLoadCriterion();
     this.moreDropdownButton = this.getChild('.btn-more').tagAsLoadCriterion();
     this.insertDataDropdown = new InsertDataDropdown();

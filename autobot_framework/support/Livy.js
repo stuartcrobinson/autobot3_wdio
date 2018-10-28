@@ -70,8 +70,8 @@ export class Livy {
   constructor(doDisplay = true, doSaveEventScreenshots = true) {
     this.livyDoDisplay = doDisplay;
     this.doSaveEventScreenshots = doSaveEventScreenshots;
-    console.log('doSaveEventScreenshots?');
-    console.log(doSaveEventScreenshots);
+    // console.log('doSaveEventScreenshots?');
+    // console.log(doSaveEventScreenshots);
   }
 
   /**
@@ -112,15 +112,15 @@ export class Livy {
     this.hasPrintedNontestLine = false;
 
 
-    console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
-    console.log('testCaseTitle');
-    console.log(testCaseTitle);
-    console.log('testParentTitle');
-    console.log(testParentTitle);
-    console.log('testCaseFullTitle');
-    console.log(testCaseFullTitle);
-    console.log('testGrandparentsTitle');
-    console.log(testGrandparentsTitle);
+  //   console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
+  //   console.log('testCaseTitle');
+  //   console.log(testCaseTitle);
+  //   console.log('testParentTitle');
+  //   console.log(testParentTitle);
+  //   console.log('testCaseFullTitle');
+  //   console.log(testCaseFullTitle);
+  //   console.log('testGrandparentsTitle');
+  //   console.log(testGrandparentsTitle);
   }
 
   endNewTestCase() {

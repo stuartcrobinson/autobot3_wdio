@@ -1,5 +1,6 @@
 // @ts-check
 import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
+import { Toggle } from '../../../toggle';
 
 // var cssToXPath = require('css-to-xpath');
 
@@ -44,10 +45,15 @@ export const editDataNumberComp = new class EditDataNumberComp extends EditDataC
     super();
 
     // these are accessing the checkbox labels so later we can see if they're on or not.
-    this.toggle_absoluteValue = this.getChild('[for=absoluteValue]')
-    this.toggle_percentage = this.getChild('[for=percentage]')
-    this.toggle_stripTrailingZeros = this.getChild('[for=stripTrailingZeros]')
-    this.toggle_absoluteValue = this.getChild('[for=absoluteValue]')
+    this.toggle_absoluteValue = new Toggle('absoluteValue');
+    this.toggle_percentage = new Toggle('percentage')
+    this.toggle_stripTrailingZeros = new Toggle('stripTrailingZeros')
+    this.toggle_absoluteValue = new Toggle('absoluteValue')
+
+    // this.toggle_absoluteValue = this.getChild('[for=absoluteValue]')
+    // this.toggle_percentage = this.getChild('[for=percentage]')
+    // this.toggle_stripTrailingZeros = this.getChild('[for=stripTrailingZeros]')
+    // this.toggle_absoluteValue = this.getChild('[for=absoluteValue]')
     super.nameElements();
   }
 

@@ -35,6 +35,7 @@ export function nthDropdownButtonCssSelector(n) {
 export function nthDropDownOptionFromButton(n) {
   return ` + .dropdown-menu li:nth-of-type(${n})`;
 }
+
 /** Abstract */
 export class EditDataComp extends EditSegmentComp {
   constructor() {

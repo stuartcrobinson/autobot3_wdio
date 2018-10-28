@@ -25,6 +25,9 @@ export class Component {
     }
   }
 
+  /**
+   *
+   */
   get loadCriteriaElements() {
     const abElements = [];
 
@@ -50,5 +53,15 @@ export class Component {
       element.getWebElement();
     }
     return true;
+  }
+
+  /* eslint class-methods-use-this: "off" */
+  findWebElements(selector) {
+    return $$(selector);
+  }
+
+  /* eslint class-methods-use-this: "off" */
+  findWebElement(selector) {
+    return $(selector);
   }
 }

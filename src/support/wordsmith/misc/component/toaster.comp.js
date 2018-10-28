@@ -18,10 +18,15 @@ export const toaster = new class Toaster extends AbElement {
   }
 
   close() {
-    this.waitForExist();
-    this.xCloseIcon.click();
-    this.xCloseIcon.waitForNotExist();
-    this.waitForNotExist();
+    // try {
+      this.waitForExist();
+      this.xCloseIcon.click();
+      this.xCloseIcon.waitForNotExist();
+      this.waitForNotExist();
+    // } catch (err) {
+    //   console.log(err);
+    //   throw new Error('caught an error does this show up?');
+    // }
   }
 
   getMessage() {
