@@ -1,12 +1,10 @@
 // @ts-check
 import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
 
-/**
- * Used by Text and List and Boolean data vars.
- */
 export class TimeFormatDropdown extends EditDataDropdown {
   constructor(dropdownButtonSelector) {
     super(dropdownButtonSelector);
+    //probably would have made more sense as a single function and pass option # from test ?
     this.option1 = this.getChild(nthDropDownOptionFromButton(1));
     this.option2 = this.getChild(nthDropDownOptionFromButton(2));
     this.option3 = this.getChild(nthDropDownOptionFromButton(3));

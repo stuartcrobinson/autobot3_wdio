@@ -1,12 +1,12 @@
 // @ts-check
-// import L from '../autobotElement';
-// const cheerio = require('cheerio')
 import * as cheerio from 'cheerio';
 import { AbElement } from '../../../autobot_framework/autobot';
-// import { livy } from '../../../autobot_framework/autobot';
+
+
+//TODO this is still a mess - stuart 10/30/2018
 
 /**
- * The state of a Table object is not based on table columns and values, but rather which column is currently being either "selected" or "referenced" during a table action such as sorting or retrieving a value in one ("selected") column based on another ("reference") column's value.
+  The state of a Table object is not based on table columns and values, but rather which column is currently being either "selected" or "referenced" during a table action such as sorting or retrieving a value in one ("selected") column based on another ("reference") column's value.
  */
 export default class Table extends AbElement {
 
@@ -45,14 +45,12 @@ export default class Table extends AbElement {
   }
 
   getHeader(headerName) {
-    // return this.getChild(`//th[contains(@class, "sort-column")]/div[text()="${headerName}"]`);
     let header = this
       .getChild(`//th/div[text()="${headerName}"]`)
       .setName(`'${headerName}' column header`);
 
 
     return header;
-    // header = livy.setElementName(header, `${headerName} column header`);
   }
 
   waitForHeader(headerName) {
@@ -148,13 +146,11 @@ export default class Table extends AbElement {
 
     const colNum = this.getColNum(colName);
 
-    // livy.log("colname: " + colName + ", colNum: " + colNum);
-
     return this.getValuesByColNum(colNum);
   }
 
   getValuesByColNum(colNum) {
-    //2.  get elements at that td level
+    // get elements at that td level
 
     const selector = '//tr[contains(@class, "table-row")]/td[' + colNum + ']'
     const tds = $$(selector)
@@ -185,7 +181,7 @@ export default class Table extends AbElement {
 
   /**
    * First column is column 1.
-   * @param {*} colName 
+   * @param {String} colName 
    */
   getColNum(colName) {
     //not sure why this doesn't work:
@@ -209,7 +205,12 @@ export default class Table extends AbElement {
     return colNum;
   }
 
-  getRowNumWhereColContainsTarget(colNum, target) {
+  /**
+   * 
+   * @param {Number} colNum 
+   * @param {String} targetText 
+   */
+  getRowNumWhereColContainsTarget(colNum, targetText) {
     //1.  get all column's values
     const values = this.getValuesByColNum(colNum);
 
@@ -220,13 +221,13 @@ export default class Table extends AbElement {
     let foundIt = false;
     let i = 0;
     for (; i < headers.length; i++) {
-      if (values[i].includes(target)) {
+      if (values[i].includes(targetText)) {
         foundIt = true;
         break;
       }
     }
     if (!foundIt) {
-      throw new Error("Target text [" + target + "] never found in values [" + values + "].");
+      throw new Error("Target text [" + targetText + "] never found in values [" + values + "].");
     }
     const rowNum = i + 1;
 
@@ -237,10 +238,10 @@ export default class Table extends AbElement {
    * Code could be reduced by passing functions.  unnecessary repitition between this and getRowNumWhereColContainsTarget.
    * 
    * also true between some other functions
-   * @param {*} colNum 
-   * @param {*} target 
+   * @param {Number} colNum 
+   * @param {String} targetText 
    */
-  getRowNumWhereColEqualsTarget(colNum, target) {
+  getRowNumWhereColEqualsTarget(colNum, targetText) {
     //1.  get all column's values
     const values = this.getValuesByColNum(colNum);
 
@@ -250,13 +251,13 @@ export default class Table extends AbElement {
     let foundIt = false;
     let i = 0;
     for (; i < headers.length; i++) {
-      if (values[i] === target) {
+      if (values[i] === targetText) {
         foundIt = true;
         break;
       }
     }
     if (!foundIt) {
-      throw new Error("Target text [" + target + "] never found in values [" + values + "].");
+      throw new Error("Target text [" + targetText + "] never found in values [" + values + "].");
     }
     const rowNum = i + 1;
 

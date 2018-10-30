@@ -1,6 +1,6 @@
 // @ts-check
 import { AbElement, Page, loadPage } from  '../../../../../autobot_framework/autobot';
-import { toaster } from '../component/toaster.comp';
+import { toast } from '../component/toast.comp';
 import { dashboardPage } from './dashboard.page';
 
 export const loginPage = new class Login extends Page {
@@ -9,8 +9,8 @@ export const loginPage = new class Login extends Page {
     this.emailInput = new AbElement('input.email').tagAsLoadCriterion();
     this.passwordInput = new AbElement('input.password').tagAsLoadCriterion();
     this.logInButton = new AbElement('input[value="Log In"]');
-    this.toaster_signedOutSuccessfully = toaster.withMessage('Signed out successfully.');
-    this.toaster_invalidEmailOrPwd = toaster.withMessage('Invalid Email or password.');
+    this.toast_signedOutSuccessfully = toast.withMessage('Signed out successfully.');
+    this.toast_invalidEmailOrPwd = toast.withMessage('Invalid Email or password.');
     super.nameElements();
   }
 

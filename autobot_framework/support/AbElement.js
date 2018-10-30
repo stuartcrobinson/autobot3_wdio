@@ -1,26 +1,14 @@
 // @ts-check
-// import colors from 'colors/safe';
-import { logAndWait2, abStyle } from '../autobot';
+import { abStyle, livy } from '../autobot';
 /* eslint import/no-cycle: "off" */
 import { Component } from './Component';
 
-// const cssToXPath = require('css-to-xpath');
-
-
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
-
   const endPart = line.split('src/support/')[1];
   const result = endPart.split('.js')[0];
   return result;
 }
-
-/*
-considering pulling out all wdio-specific code from AbElement into a separate place
-
-like so:
-*/
-
 
 /**
  * WebElement wrapper - allows for:
@@ -53,11 +41,6 @@ export class AbElement extends Component {
     return this;
   }
 
-  // /* eslint class-methods-use-this: "off" */
-  // getWebElements(selector) {
-  //   return $$(selector);
-  // }
-
   /* eslint class-methods-use-this: "off" */
   getWebElement() {
     return browser.element(this.selector);
@@ -71,9 +54,10 @@ export class AbElement extends Component {
       return new AbElement(`${this.selector} ${selector}`);
     }
 
-    throw new Error(`Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`);
+    throw new Error(
+      `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
+    );
   }
-
 
   getChildren(selector) {
     if (this.selector.startsWith('/') && selector.startsWith('/')) {
@@ -83,84 +67,50 @@ export class AbElement extends Component {
       return this.findWebElements(`${this.selector} ${selector}`);
     }
 
-    throw new Error(`Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`);
+    throw new Error(
+      `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
+    );
   }
 
-  // spanWithText(text) {
-  //   if (this.selector.startsWith('/')) {
-  //     return this.getChild(this.selector + "//span[text()='" + text + "']");
-  //   }
-  //   if (!this.selector.startsWith('/')) {
-  //     return this.getChild(`${cssToXPath(this.selector)} ${selector}`);
-  //   }
-  // }
-
-  click(doLog = true) {
-    // livy.logAction('Click: ' + this.selector);
-    // browser.waitForExist(this.selector);
-    // this.logAction2({ text: 'PASS', style: colors.green.bold });
-    if (doLog) {
-      logAndWait2([
+  click(doLogAndWait = true) {
+    if (doLogAndWait) {
+      this.logAndWait2([
         { text: 'Click ', style: abStyle.verb },
         { text: `${this.stuartname} `, style: abStyle.object },
-        { text: `${this.selector}`, style: abStyle.selector }],
-      this.selector);
+        { text: `${this.selector}`, style: abStyle.selector }]);
     }
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
-    //   this.selector);
     browser.click(this.selector);
   }
 
   doubleClick(doLog = true) {
-    // livy.logAction('Click: ' + this.selector);
-    // browser.waitForExist(this.selector);
-    // this.logAction2({ text: 'PASS', style: colors.green.bold });
     if (doLog) {
-      logAndWait2([
+      this.logAndWait2([
         { text: 'Double-click ', style: abStyle.verb },
         { text: `${this.stuartname} `, style: abStyle.object },
-        { text: `${this.selector}`, style: abStyle.selector }],
-      this.selector);
+        { text: `${this.selector}`, style: abStyle.selector }]);
     }
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}`,
-    //   this.selector);
     browser.click(this.selector);
   }
 
   hover() {
-    // livy.logAction('Hover: ' + this.selector);
-    // browser.waitForExist(this.selector);
-
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Hover ', style: abStyle.verb },
       { text: `${this.stuartname} `, style: abStyle.object },
-      { text: `${this.selector}`, style: abStyle.selector }],
-    this.selector);
+      { text: `${this.selector}`, style: abStyle.selector }]);
     browser.moveToObject(this.selector);
     return this;
   }
 
   click_waitForChange(indicatorSelector = '//body') {
     const initialIndicatorElementHtml = browser.element(indicatorSelector).getHTML();
-
-    // livy.logAction('click: ' + this.selector + ', then wait for change in: ' + indicatorSelector);
-    // browser.waitForExist(this.selector);
-
-
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Click ', style: abStyle.verb },
       { text: `${this.stuartname} `, style: abStyle.object },
       { text: 'then wait for change in ', style: abStyle.filler },
       { text: indicatorSelector, style: abStyle.selector },
       { text: ' target: ', style: abStyle.filler },
       { text: `${this.selector} `, style: abStyle.selector },
-
-    ],
-    this.selector);
-
-
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for change in: ${indicatorSelector}`,
-    //   this.selector);
+    ]);
 
     browser.click(this.selector);
 
@@ -181,38 +131,14 @@ export class AbElement extends Component {
     if (browser.isExisting(indicatorSelector)) {
       throw new Error(`Element already exists: ${indicatorSelector}`);
     }
-
-    // livy.logAction('Click: ' + this.selector + ', then wait for element to exist: ' + indicatorSelector);
-    // browser.waitForExist(this.selector);
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to exist: ${indicatorSelector}`,
-    //   this.selector);
-
-
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Click ', style: abStyle.verb },
       { text: `${this.stuartname} `, style: abStyle.object },
-      // { text: `${this.selector} `, style: abStyle.selector },
       { text: 'then wait for element to exist: ', style: abStyle.filler },
       { text: indicatorSelector, style: abStyle.selector },
       { text: ' target: ', style: abStyle.filler },
       { text: `${this.selector} `, style: abStyle.selector },
-
-    ],
-    this.selector);
-
-    // { text: 'Click ', style: autobotSyles.verb },
-    // { text: `${this.stuartname} `, style: autobotSyles.object },
-    // { text: `${this.selector} `, style: autobotSyles.selector },
-    // { text: 'then wait for change in ', style: autobotSyles.filler },
-    // { text: indicatorSelector, style: autobotSyles.selector }],
-    // this.selector);
-
-
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to exist: ${indicatorSelector}`,
-    //   this.selector);
-
-
-    // this.logAction2({ text: 'PASS', style: colors.green.bold });
+    ]);
 
     browser.click(this.selector);
 
@@ -233,102 +159,94 @@ export class AbElement extends Component {
     if (!browser.isExisting(indicatorSelector)) {
       throw new Error(`Element [${indicatorSelector}] should exist prior to clicking [${this.selector}]`);
     }
-
-    // livy.logAction('Click: ' + this.selector + ', then wait for element to disappear: ' + indicatorSelector);
-    // browser.waitForExist(this.selector);
-
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Click ', style: abStyle.verb },
       { text: `${this.stuartname} `, style: abStyle.object },
       { text: 'then wait for element to disappear: ', style: abStyle.filler },
       { text: indicatorSelector, style: abStyle.selector },
       { text: ' target: ', style: abStyle.filler },
       { text: `${this.selector} `, style: abStyle.selector },
-
-    ],
-    this.selector);
-
-    // logAndWait2([
-    //   { text: 'Click ', style: colors.bold },
-    //   { text: `${this.stuartname} `, style: colors.italic },
-    //   { text: `${this.selector} `, style: colors.gray },
-    //   { text: 'then wait for element to disappear: ' },
-    //   { text: indicatorSelector, style: colors.gray }],
-    //   this.selector);
-
-
-    // logAndWait(`Click: "${this.stuartname}" via ${this.selector}, then wait for element to disappear: ${indicatorSelector}`,
-    //   this.selector);
+    ]);
     browser.click(this.selector);
 
     browser.waitUntil(() => !browser.isExisting(indicatorSelector));
-
-    // const init = new Date().getTime();
-
-    // const timeout = 2000;
-
-    // while (browser.isExisting(indicatorSelector)) {
-    //   browser.pause(200);
-
-    //   if (new Date().getTime() - init > timeout) {
-    //     throw new Error(`Timeout waiting for ${indicatorSelector} to no longer exist after clicking ${this.selector}`);
-    //   }
-    // }
   }
 
   setValue(value) {
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Set value ', style: abStyle.verb },
       { text: 'of ', style: abStyle.filler },
       { text: `${this.stuartname} `, style: abStyle.object },
       { text: 'to ', style: abStyle.filler },
       { text: `${value} `, style: abStyle.object },
-      { text: `${this.selector} `, style: abStyle.selector }],
-    this.selector);
+      { text: `${this.selector} `, style: abStyle.selector }]);
 
     browser.setValue(this.selector, value);
   }
 
+  /** If event screenshots are being saved, attempt to hover over an object prior to interacting with it so that the mouse-over state is captured in the image.  */
+  failSafeHover(timeoutInMillis = 5000) {
+    try {
+      browser.waitUntil(() => (browser.isExisting(this.selector)), timeoutInMillis);
+      browser.moveToObject(this.selector);
+    } catch (err) {
+      // do nothing
+    }
+  }
+
+
+  logAndWait2(messages) {
+    const timeoutMillis = 5000;
+    if (livy.doSaveEventScreenshots) {
+      this.failSafeHover(timeoutMillis);
+    }
+    const screenshotId = livy.logAction2(messages);
+    this.waitForExist(timeoutMillis);
+    livy.setMouseoverEventScreenshotFunction(screenshotId);
+  }
 
   clickAndType(value) {
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Click ', style: abStyle.verb },
-      // { text: 'of ', style: abStyle.filler },
       { text: this.stuartname, style: abStyle.object },
       { text: ' and ', style: abStyle.filler },
       { text: 'type ', style: abStyle.verb },
       { text: value, style: abStyle.object },
-      { text: ` ${this.selector}`, style: abStyle.selector }],
-    this.selector);
+      { text: ` ${this.selector}`, style: abStyle.selector }]);
 
     browser.click(this.selector);
 
     browser.keys(value);
   }
 
-
   uploadFile(filePath) {
-    logAndWait2([
+    this.logAndWait2([
       { text: 'Upload file ', style: abStyle.verb },
       { text: `${filePath} `, style: abStyle.object },
       { text: 'to ', style: abStyle.filler },
       { text: `${this.stuartname} `, style: abStyle.object },
-      { text: `${this.selector} `, style: abStyle.selector }],
-    this.selector);
+      { text: `${this.selector} `, style: abStyle.selector }]);
 
     browser.chooseFile(this.selector, filePath);
   }
 
-
   waitForNotExist(timeoutInMillis = 1000) {
-    browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);
+    try {
+      browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);
+    } catch (err) {
+      throw new Error(`Error waiting for ${this.stuartname} to not exist within ${timeoutInMillis} ms. Selector: ${this.selector} `);
+    }
   }
 
+  /**
+   * Doesn't log.
+   * @param {Number} timeoutInMillis
+   */
   waitForExist(timeoutInMillis = 5000) {
     try {
       browser.waitUntil(() => (browser.isExisting(this.selector)), timeoutInMillis);
     } catch (err) {
-      throw new Error(`Error finding ${this.stuartname} by ${this.selector} within  ${timeoutInMillis} ms`);
+      throw new Error(`Error finding ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
     }
   }
 

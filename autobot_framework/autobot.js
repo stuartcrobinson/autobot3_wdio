@@ -1,19 +1,17 @@
 // @ts-check
+import axios, { AxiosPromise } from 'axios';
+import { assert } from 'chai';
 import colors from 'colors/safe';
 import { existsSync, readFileSync } from 'fs';
 import stringArgv from 'string-argv';
 import yargsParse from 'yargs-parser';
-// import { assert } from 'chai';
-import { AbElement } from './support/AbElement';
-import { Livy } from './support/Livy';
-export { AbElement } from './support/AbElement';
-export { Page } from './support/Page';
-// import { AssertionError } from 'assert';
-import axios, { AxiosPromise } from 'axios';
+import { editorPage } from '../src/support/wordsmith/editor/editor.page';
 import { loginPage } from '../src/support/wordsmith/misc/page/login.page';
 import { projectPage } from '../src/support/wordsmith/misc/page/project.page';
-import { editorPage } from '../src/support/wordsmith/editor/editor.page';
-import { assert } from 'chai';
+import { AbElement } from './support/AbElement';
+import { Livy } from './support/Livy';
+// export { AbElement } from './support/AbElement';
+// export { Page } from './support/Page';
 
 
 
@@ -72,11 +70,8 @@ export class Autobot {
         'Content-Type': 'application/json'
       },
     };
-
-    console.log('posting')
     return axios.post(url, body, axiosConfig)
   }
-
 
   /**
    * 
@@ -127,14 +122,6 @@ export const abStyle = new class AutobotSyles {
 }();
 
 
-export function logAndWait2(messages, waiteeSelector) {
-  const screenshotId = livy.logAction2(messages);
-  if (waiteeSelector) {
-    browser.waitForExist(waiteeSelector);
-    // browser.waitForVisible(waiteeSelector);
-  }
-  livy.setMouseoverEventScreenshotFunction(screenshotId);
-}
 
 export function log(messages) {
   const screenshotId = livy.logAction2(messages);
@@ -293,30 +280,15 @@ export class Before {
   static get load() { return new Load(); }
 }
 
-// const projectName = Autobot.makeSlugSafeName("Autobot Add Data" + livy.specDate + ' ' + livy.specTime);
-// let httpRequestPromise = Autobot.httpRequestCreateProject_begin(projectName, data);
-// loginPage.logIn(options.email, options.password, options.url);
-// Autobot.httpRequestComplete(httpRequestPromise);
-// browser.url(Autobot.getProjectUrlFromName(projectName));
-// projectPage.createNewTemplateButton.click_waitForNotExisting();
-// assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
-
-
 /******************************** hooks **************************************/
 //these should be pulled out into a separate file and imported per test, since some tests might want unique before/after code
 export let driver;
 export let currentTest, currentSpec, currentTestCustom;
 
-// console.log("options.noPics ? ?")
-// console.log(options.noPics);
-// console.log("options.noPics === true")
-// console.log(options.noPics === true);
-export let livy = new Livy(true, options.noPics ? false : true);
 
+export let livy = new Livy(true, options.noPics ? false : true, false);
 
 beforeEach(function () {
-  // console.log('beforeeach1')
-
   currentTest = this.currentTest;
   let fullName = "";
   let ancestor = currentTest;
@@ -337,7 +309,7 @@ beforeEach(function () {
 });
 
 before(function () {
-  const filePath = this.test.parent.suites[0].tests[0].file
+  const filePath = this.test.parent.suites[0].file
   livy.initialize(filePath);
 
   // @ts-ignore

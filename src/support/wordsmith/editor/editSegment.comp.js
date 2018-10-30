@@ -1,5 +1,6 @@
+import { AbElement } from "../../../../autobot_framework/support/AbElement";
+
 // @ts-check
-import { AbElement } from '../../../../autobot_framework/autobot';
 
 /** Abstract class */
 export class EditSegmentComp extends AbElement {

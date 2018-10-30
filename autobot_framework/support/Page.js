@@ -1,5 +1,7 @@
 // @ts-check
+/* eslint import/no-cycle: "off" */
 import { Component } from './Component';
+/* eslint import/no-cycle: "off" */
 import { options } from '../autobot';
 
 /**

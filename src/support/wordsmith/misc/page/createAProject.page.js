@@ -1,5 +1,7 @@
 // @ts-check
-import { AbElement, autobotBrowser, logMessage, Page } from '../../../../../autobot_framework/autobot';
+import { autobotBrowser, logMessage } from '../../../../../autobot_framework/autobot';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { Page } from '../../../../../autobot_framework/support/Page';
 
 export const createAProjectPage = new class CreateAProject extends Page {
   constructor() {
@@ -22,8 +24,6 @@ export const createAProjectPage = new class CreateAProject extends Page {
         new AbElement('//*[@id="' + id + '"]').click(false);
 
         autobotBrowser.keys(we.getAttribute("placeholder"), false)
-        // browser.click('//*[@id="' + id + '"]')
-        // browser.keys(we.getAttribute("placeholder"))
       })
 
 

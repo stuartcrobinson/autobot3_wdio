@@ -1,19 +1,18 @@
 // @ts-check
-import { AutobotAssert, autobotBrowser, Before } from '../../../../autobot_framework/autobot';
 import { editorPage } from '../../../support/wordsmith/editor/editor.page';
 import { editDataBooleanComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.comp';
 import { editDataDateComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataDate.comp';
-import { editDataTextComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataList.comp';
+import { editDataListComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataList.comp';
 import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
-import { editDataListComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
+import { editDataTextComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
 import { editDataTimeComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
 import { header } from '../../../support/wordsmith/misc/component/header.comp';
+import { Before, AutobotAssert, autobotBrowser } from '../../../../autobot_framework/autobot';
 
 describe('Format and insert data var of type', () => {
 
   before(() => { Before.load.newTemplateEditor(); });
 
-  // done
   it('Number', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.xCloseButton.click();
@@ -35,8 +34,6 @@ describe('Format and insert data var of type', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
   });
 
-
-  // done
   it('Text', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option1.click();
@@ -68,7 +65,6 @@ describe('Format and insert data var of type', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
   });
 
-  // done
   it('True/False', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option4.click();
@@ -101,7 +97,6 @@ describe('Format and insert data var of type', () => {
   });
 
 
-  // done
   it('List', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option3.click();
@@ -161,9 +156,7 @@ describe('Format and insert data var of type', () => {
     comp.subsetLimit.click();
     autobotBrowser.keys('\uE012'); // left
     autobotBrowser.keys('2');
-    // autobotBrowser.keys('\uE05D'); // delete
     autobotBrowser.keys('\uE017'); // delete
-    // comp.dropdown_listSettings.first.click();
     AutobotAssert.elementText(comp.highlightedPreviewSpan, 'one or two');
 
     comp.dropdown_listSettings.click();
@@ -191,8 +184,6 @@ describe('Format and insert data var of type', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
   });
 
-
-  // done
   it('Date', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option5.click();

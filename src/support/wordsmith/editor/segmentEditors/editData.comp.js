@@ -1,8 +1,6 @@
 // @ts-check
 import { EditSegmentComp } from '../editSegment.comp';
-import { AbElement } from '../../../../../autobot_framework/autobot';
-
-
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
 export class EditDataDropdown extends AbElement {
   constructor(selector) {
@@ -28,6 +26,7 @@ export class CapitalizationDropdown extends EditDataDropdown {
     super.nameElements();
   }
 }
+
 export function nthDropdownButtonCssSelector(n) {
   return `.input-container:nth-of-type(${n}) .dropdown button`
 }
@@ -43,12 +42,9 @@ export class EditDataComp extends EditSegmentComp {
     if (this.constructor === EditDataComp) {
       throw new TypeError('Abstract class cannot be instantiated directly.');
     }
-    // this.formatterCard = this.getChild('.card--datavar-formatter').tagAsLoadCriterion(); //not useful
+
     this.dataVarNameSpan = this.getChild('.segment__header-datavar').tagAsLoadCriterion();
     super.nameElements();
   }
-
-
-
 };
 

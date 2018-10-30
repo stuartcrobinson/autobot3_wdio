@@ -7,6 +7,9 @@ import { AbElement } from './AbElement';
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
 export class Component {
+  // constructor() {
+  // }
+
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
    * This adds a custom name parameter to each element object so that the variable's name

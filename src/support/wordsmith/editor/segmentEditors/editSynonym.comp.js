@@ -1,9 +1,9 @@
 // @ts-check
-import { AbElement } from '../../../../../autobot_framework/autobot';
 import { EditSegmentComp } from '../editSegment.comp';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
-class SynonymBox extends AbElement{
-  constructor(selector){
+class SynonymBox extends AbElement {
+  constructor(selector) {
     super(selector);
     this.xCloseButton = this.getChild('.delete-button');
     this.textInput = this.getChild('.public-DraftEditor-content');
@@ -28,15 +28,15 @@ export const editSynonymComp = new class EditSynonymComp extends EditSegmentComp
    * n starts at 1
    * @param {Number} n 
    */
-  getNthSynonymBox(n){
-    return new SynonymBox(`li.synonym-variation:nth-of-type(${n})`);
+  getNthSynonymBox(n) {
+    return new SynonymBox(`li.synonym-variation:nth-of-type(${n})`).setName('synonym box ' + n);
   }
 
-  getNthBreadcrumbLink(n){
-    return new AbElement(`li.synonym:nth-of-type(${n}) a`);
+  getNthBreadcrumbLink(n) {
+    return new AbElement(`li.synonym:nth-of-type(${n}) a`).setName('breadcrumb link ' + n);
   }
 
-  getNthBreadcrumbText(n){
+  getNthBreadcrumbText(n) {
     return this.getNthBreadcrumbLink(n).getWebElement().getText();
   }
 }();

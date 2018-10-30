@@ -1,11 +1,9 @@
+import { AbElement } from "../../../autobot_framework/support/AbElement";
+
 // @ts-check
-import { AbElement } from '../../../autobot_framework/autobot';
-
-
 
 /*
-
-
+toggle code 10/30/2018:
 <div class="input-container">
   <label class="mdl-switch mdl-js-switch is-upgraded is-checked" for="ordinal" data-upgraded=",MaterialSwitchd">
     <input id="ordinal" name="ordinal" type="checkbox" class="mdl-switch__input">
@@ -16,12 +14,14 @@ import { AbElement } from '../../../autobot_framework/autobot';
       </div>
   </label>
 </div>
-
 */
 
+/**
+ * Modeling this, I think: https://getmdl.io/components/#toggles-section/switch
+ */
 export class Toggle extends AbElement {
   /**
-   * Toggle selector is the toggle label.  his changes depending on state.
+   * Toggle selector is the toggle label.  This changes depending on state (on or off).
    * @param {String} id 
    */
   constructor(id) {

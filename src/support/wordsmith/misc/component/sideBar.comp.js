@@ -2,33 +2,39 @@
 import { AbElement } from '../../../../../autobot_framework/autobot';
 import { loginPage } from '../page/login.page';
 
-
 class SettingsDropdownComp extends AbElement {
   constructor() {
     super('//div[contains(@class, "ws-sidebar__account-menu--open")]');
-
-    this.signOutLink = this.getChild('//span[text()="Sign Out"]');
+    this.accountLink = this.getChild("//*[*='account_circle']");
+    this.billingLink = this.getChild("//*[*='credit_car']");
+    this.teamLink = this.getChild("//*[*='group']");
+    this.legalLink = this.getChild("//*[*='gavel']");
+    this.customerAdminLink = this.getChild("//*[*='lock_outline']");
+    this.signOutLink = this.getChild("//*[*='exit_to_app']");
     super.nameElements();
   }
-
-  // get accountLink() { return this.get('//span[text()="Account"]'); }
-  // get billingLink() { return this.get('//span[text()="Billing and Usage"]'); }
-  // get teamLink() { return this.get('//span[text()="Team"]'); }
-  // get legalLink() { return this.get('//span[text()="Legal"]'); }
-  // get customerAdminLink() { return this.get('//span[text()="Customer Admin"]'); }
-  // get SignOutLink() { return this.get('//span[text()="Sign Out"]'); }
 }
-
 
 export const sidebar = new class SideBarComp extends AbElement {
   constructor() {
     super('//div[@class="ws-sidebar"]');
     // this is where we make sure the sidebar is open. if not, click the header hamburger aka sidebar trigger button
 
-    this.settingsLink = this.getChild('//div[text()="Settings"]');
+    this.dashboardLink = this.getChild("//*[*='web']");
+    this.galleryLink = this.getChild("//*[*='view_module']");
+    this.integrationsLink = this.getChild("//*[*='device_hub']");
+    this.apiAccessLink = this.getChild("//*[*='code']");
+    this.helpLink = this.getChild("//*[*='help']");
+    this.liveChatLink = this.getChild("//*[*='chat']");
+    this.settingsLink = this.getChild("//*[*='settings']");
 
-    /** only in Editor sidebar.  clean up this? */
-    this.reviewLink = this.getChild('//a[@data-for="Review"]');
+    /** only in Editor sidebar.  clean up sidebars organization? */
+    this.review = this.getChild('//a[@data-for="Review"]');
+
+    this.dataLink = this.getChild("//*[*='grid_on']");
+    this.writeLinke = this.getChild("//*[*='mode_edit']");
+    this.reviewLink = this.getChild("//*[*='done']");
+    this.downloadLink = this.getChild("//*[*='file_download']");
 
     this.settingsMenu = new SettingsDropdownComp();
     super.nameElements();
@@ -37,19 +43,6 @@ export const sidebar = new class SideBarComp extends AbElement {
   signOut() {
     this.settingsLink.hover();
     this.settingsMenu.signOutLink.click();
-    loginPage.toaster_signedOutSuccessfully.close();
+    loginPage.toast_signedOutSuccessfully.close();
   }
-
-  // get dashboardLink() { return this.get('//span[text()="Dashboard"]'); }
-  // get galleryLink() { return this.get('//span[text()="Gallery"]'); }
-  // get integrationsLink() { return this.get('//span[text()="Integrations"]'); }
-  // get apiAccessLink() { return this.get('//span[text()="API Access"]'); }
-
-  // get helpLink() { return this.get('//div[text()="Live Chat"]'); }
-  // get liveChatLink() { return this.get('//div[text()="Live Chat"]'); }
-  // get settingsLink() { return this.get('//div[text()="Settings"]'); }
-
-  // get settingsMenu() { return new SettingsDropdownComp(); }
 }();
-
-// export default new SideBarComp();

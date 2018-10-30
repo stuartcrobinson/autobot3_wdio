@@ -1,5 +1,6 @@
+import { AbElement } from "../../../../../autobot3_wdio/autobot_framework/support/AbElement";
+
 // @ts-check
-import { AbElement } from '../../../../autobot_framework/autobot';
 
 class InsertDataDropdown_SegmentListOption extends AbElement {
   constructor(n) {

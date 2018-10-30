@@ -1,7 +1,5 @@
 // @ts-check
 /* eslint prefer-destructuring: "off" */
-
-
 import colors from 'colors/safe';
 import dateFormat from 'dateformat';
 import filenamify from 'filenamify';
@@ -10,7 +8,6 @@ import * as fs_extra from 'fs-extra';
 import { AllHtmlEntities } from 'html-entities';
 import * as os from 'os';
 import * as path from 'path';
-// import * as Tools from './Tools';
 
 const entities = new AllHtmlEntities();
 
@@ -34,7 +31,7 @@ function convertNpmColorsToCss(style) {
     } else if (styles.includes('blue')) {
       htmlStyle += 'color:blue;';
     } else if (styles.includes('gray')) {
-      htmlStyle += 'color:gray;';
+      htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
     }
     if (styles.includes('bold')) {
       htmlStyle += 'font-weight:bold;';
@@ -51,25 +48,27 @@ function getEventDomFileRelPath(id) {
 }
 
 /**
-     * TODO - rename to eventSnapshot instead of screenshot.   cos holding DOM also.
-     */
+* TODO - rename to eventSnapshot instead of screenshot.   cos holding DOM also.
+*/
 function getEventScreenshotsDirName() {
   return 'eventScreenshots';
 }
 
-
 function getEventScreenshotFileRelPath(id) {
   return `${getEventScreenshotsDirName()}/${id}.png`;
 }
+
 export class Livy {
   /**
    *
    * @param {Boolean} doDisplay
    * @param {Boolean} doSaveEventScreenshots
+   * @param {Boolean} doSaveEventDom - not yet supported
    */
-  constructor(doDisplay = true, doSaveEventScreenshots = true) {
+  constructor(doDisplay = true, doSaveEventScreenshots = true, doSaveEventDom = false) {
     this.livyDoDisplay = doDisplay;
     this.doSaveEventScreenshots = doSaveEventScreenshots;
+    this.doSaveEventDom = doSaveEventDom;
     // console.log('doSaveEventScreenshots?');
     // console.log(doSaveEventScreenshots);
   }
@@ -112,15 +111,15 @@ export class Livy {
     this.hasPrintedNontestLine = false;
 
 
-  //   console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
-  //   console.log('testCaseTitle');
-  //   console.log(testCaseTitle);
-  //   console.log('testParentTitle');
-  //   console.log(testParentTitle);
-  //   console.log('testCaseFullTitle');
-  //   console.log(testCaseFullTitle);
-  //   console.log('testGrandparentsTitle');
-  //   console.log(testGrandparentsTitle);
+    //   console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
+    //   console.log('testCaseTitle');
+    //   console.log(testCaseTitle);
+    //   console.log('testParentTitle');
+    //   console.log(testParentTitle);
+    //   console.log('testCaseFullTitle');
+    //   console.log(testCaseFullTitle);
+    //   console.log('testGrandparentsTitle');
+    //   console.log(testGrandparentsTitle);
   }
 
   endNewTestCase() {
@@ -195,11 +194,9 @@ export class Livy {
     return filenamify(this.testCaseFullTitle.replace(/ /g, '_'));
   }
 
-
   getFile() {
     return `${this.getReportDir()}/report.html`;
   }
-
 
   get reportClickablePathWithHash() {
     return `${this.reportClickablePath}#${this.getSpacelessTestCaseFullTitle()}`;
@@ -289,7 +286,12 @@ export class Livy {
     return this.logAction2([{ text: message }]);
   }
 
-  logAction2(messageChunks) {
+  /**
+   *
+   * @param {Object} messageChunks
+   * @param {Boolean} withPrefix
+   */
+  logAction2(messageChunks, withPrefix = true) {
     const testDateTime = new Date();
 
     const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
@@ -305,13 +307,13 @@ export class Livy {
     let consoleBuilder = '';
 
 
+    const onClickHtml = this.doSaveEventDom ? `onclick="window.open('${getEventDomFileRelPath(screenshotId)}');"` : '';
+
     let htmlBuilder = '';
-    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" onclick="window.open('${getEventDomFileRelPath(screenshotId)}');">`;
-    htmlBuilder += entities.encode(`${currDate} ${currTime}> `);
+    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" ${onClickHtml}>`;
 
 
-    // console.log('messageChunks: ');
-    // console.log(messageChunks);
+    htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
     for (let i = 0; i < messageChunks.length; i++) {
       const chunk = messageChunks[i];
@@ -319,12 +321,6 @@ export class Livy {
       let message = chunk.text;
 
       if (message) {
-        // console.log('style: ');
-        // console.log(style);
-
-        // console.log('message: ');
-        // console.log(message);
-
         const htmlStyle = convertNpmColorsToCss(style);
 
         if (!style) {
@@ -342,17 +338,17 @@ export class Livy {
     htmlBuilder += '</span><br/>';
     fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);
 
+    let prefix;
+
     if (this.livyDoDisplay) {
       if (this.isInTestCase) {
-        // @ts-ignore
-        console.log(`${currTime} ${colors.gray(`${this.testGrandparentsTitle} ${this.testParentTitle}`.trim())} ${this.testCaseTitle}> ${consoleBuilder}`);
+        prefix = !withPrefix ? ''
+          : `${currTime} ${colors.gray(`${this.testGrandparentsTitle} ${this.testParentTitle}`.trim())} ${this.testCaseTitle}> `;
       } else {
-        // message must be logged from outside a test (before or after?) so just preface message with spec full name
-        // @ts-ignore
-        console.log(`${currTime} ${colors.gray(this.getSpecFileDirName())}/${this.getSpecFileName()}> ${consoleBuilder}`);
+        prefix = !withPrefix ? '' : `${currTime} ${colors.gray(this.getSpecFileDirName())}/${this.getSpecFileName()}>  `;
       }
+      console.log(prefix + consoleBuilder);
     }
-
     return screenshotId;
   }
 
@@ -368,6 +364,7 @@ export class Livy {
     // <img src=${imageClickablePath} width=900></img>
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
+
 
   logWithoutPrefix(message, inputStyle) {
     let style = inputStyle;
@@ -392,10 +389,20 @@ export class Livy {
   logTestStart() {
     fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
     this.logWithoutPrefix('---------------------------------------------------------------------------------------');
-    this.logWithoutPrefix(`Starting test: ${this.testGrandparentsTitle}`);
-    this.logWithoutPrefix(`                         ${this.testParentTitle}`, colors.blue);
-    // @ts-ignore
-    this.logWithoutPrefix(`                             ${this.testCaseTitle}`, colors.bold.blue);
+    this.logWithoutPrefix('');
+
+    // this.logWithoutPrefix(`Starting test: ${this.testGrandparentsTitle}`);
+    // this.logWithoutPrefix(`                         ${this.testParentTitle}`, colors.blue);
+    // // @ts-ignore
+    // this.logWithoutPrefix(`                             ${this.testCaseTitle}`, colors.bold.blue);
+
+    this.logAction2([
+      { text: 'Starting test:  ', style: colors.bold },
+      { text: `${this.testGrandparentsTitle} `, style: colors.reset },
+      { text: `${this.testParentTitle} `, style: colors.blue },
+      // @ts-ignore
+      { text: this.testCaseTitle, style: colors.bold.blue },
+    ], false);
     this.logWithoutPrefix('');
   }
 
