@@ -1,6 +1,6 @@
 // @ts-check
-import { AbElement } from '../../../../../autobot_framework/autobot';
 import { EditSegmentComp } from '../editSegment.comp';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
 class BranchBox extends AbElement {
   constructor(selector) {

@@ -1,7 +1,7 @@
 
 // @ts-check
-import axios, { AxiosPromise } from 'axios';
-import { Autobot, data } from '../../../autobot_framework/autobot'
+import { Autobot } from '../../../autobot_framework/autobot';
+import { data } from '../../../autobot_framework/support/hooks';
 
 console.log("in requests.tes.js")
 

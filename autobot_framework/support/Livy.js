@@ -231,57 +231,6 @@ export class Livy {
   }
 
 
-  // logAction(inputMessage, inputStyle) {
-  //   let style = inputStyle;
-  //   let message = inputMessage;
-
-  //   const htmlStyle = convertNpmColorsToCss(style);
-
-  //   if (!style) {
-  //     style = passthrough;
-  //   }
-
-
-  //   const testDateTime = new Date();
-
-  //   const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
-  //   const currDate = dateFormat(testDateTime, 'yyyymmdd');
-
-
-  //   if (!message) {
-  //     message = '';
-  //   }
-
-  //   if (!this.isInTestCase && !this.hasPrintedNontestLine) {
-  //     this.logWithoutPrefix('---------------------------------------------------------------------------------------');
-  //     this.hasPrintedNontestLine = true;
-  //   }
-
-  //   const screenshotId = dateFormat(new Date(), 'MMssl');
-
-
-  //   let html = '';
-  //   html += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" onclick="window.open('${getEventDomFileRelPath(screenshotId)}');">`;
-  //   html += entities.encode(`${currDate} ${currTime}> `);
-  //   html += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
-  //   html += '</span><br/>';
-
-  //   fs.appendFileSync(this.getFile(), html + os.EOL);
-
-  //   if (this.livyDoDisplay) {
-  //     if (this.isInTestCase) {
-  //       // @ts-ignore
-  //       console.log(`${currTime} ${colors.gray(this.testGrandparentsTitle)} ${this.testParentTitle} ${colors.black.bold(`${this.testCaseTitle}> `)}${style(message)}`);
-  //     } else {
-  //       // message must be logged from outside a test (before or after?) so just preface message with spec full name
-  //       // @ts-ignore
-  //       console.log(`${currTime} ${colors.gray(this.getSpecFileDirName())}/${colors.black.bold(`${this.getSpecFileName()}> `)}${style(message)}`);
-  //     }
-  //   }
-  //   return screenshotId;
-  // }
-
-
   logMessage(message) {
     return this.logAction2([{ text: message }]);
   }

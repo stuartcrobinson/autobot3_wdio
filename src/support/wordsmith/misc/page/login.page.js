@@ -1,7 +1,9 @@
 // @ts-check
-import { AbElement, Page, loadPage } from  '../../../../../autobot_framework/autobot';
+import { loadPage } from  '../../../../../autobot_framework/autobot';
 import { toast } from '../component/toast.comp';
 import { dashboardPage } from './dashboard.page';
+import { Page } from '../../../../../autobot_framework/support/Page';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
 export const loginPage = new class Login extends Page {
   constructor() {

@@ -1,12 +1,13 @@
 // @ts-check
-import { AutobotAssert, autobotBrowser, Before } from '../../../autobot_framework/autobot';
 import { editorPage } from '../../support/wordsmith/editor/editor.page';
 import { editDataNumberComp } from '../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
 import { editSynonymComp } from '../../support/wordsmith/editor/segmentEditors/editSynonym.comp';
 import { header } from '../../support/wordsmith/misc/component/header.comp';
+import { Load } from '../../../autobot_framework/support/hooks';
+import { AutobotAssert } from '../../../autobot_framework/support/AutobotAssert';
 
 describe('Add', () => {
-  before(() => { Before.load.newTemplateEditor(); });
+  before(() => { Load.newTemplateEditor(); });
 
   // done
   it('synonym', () => {

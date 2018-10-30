@@ -1,14 +1,10 @@
 // @ts-check
 import axios, { AxiosPromise } from 'axios';
-import { assert } from 'chai';
 import colors from 'colors/safe';
 import { existsSync, readFileSync } from 'fs';
 import stringArgv from 'string-argv';
 import yargsParse from 'yargs-parser';
-import { editorPage } from '../src/support/wordsmith/editor/editor.page';
-import { loginPage } from '../src/support/wordsmith/misc/page/login.page';
-import { projectPage } from '../src/support/wordsmith/misc/page/project.page';
-import { AbElement } from './support/AbElement';
+// import { AbElement } from './support/AbElement';
 import { Livy } from './support/Livy';
 // export { AbElement } from './support/AbElement';
 // export { Page } from './support/Page';
@@ -83,7 +79,8 @@ export class Autobot {
     browser.call(function () {
       return axiosPromise
         .then(function (response) {
-          console.log('response status: ' + response.status);
+          // console.log('response status: ' + response.status);
+          // do nothing
         })
         .catch(function (error) {
           throw new Error(error);   //trace is useful this way
@@ -158,127 +155,8 @@ export const autobotBrowser = new class AutobotBrowser {
     browser.keys(keysToType);
   }
 
-
-  /**
-   * 
-   * @param {AbElement} abEl1 
-   * @param {AbElement} abEl2 
-   */
-  dragAndDrop(abEl1, abEl2) {
-    log([
-      { text: 'Drag ', style: abStyle.verb },
-      { text: abEl1.stuartname, style: abStyle.object },
-      { text: ' to ', style: abStyle.filler },
-      { text: abEl2.stuartname, style: abStyle.object },
-      { text: ' [', style: abStyle.filler },
-      { text: abEl1.selector, style: abStyle.selector },
-      { text: '], [', style: abStyle.filler },
-      { text: abEl2.selector, style: abStyle.selector },
-      { text: ']', style: abStyle.filler },
-    ]);
-    browser.dragAndDrop(abEl1.selector, abEl2.selector);
-  }
 }
 
-
-/******************************** assert **************************************/
-
-const defaultAutobotTimeoutMillis = 5000;
-export class AutobotAssert {
-
-  /**
-   * 
-   * @param {AbElement} abElement 
-   * @param {String} expected 
-   * @param {Number} timoutMillis 
-   */
-  static elementText(abElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
-    log([
-      { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname}`, style: abStyle.object },
-      { text: "'s text is ", style: abStyle.filler },
-      { text: expected, style: abStyle.object },
-      { text: ` ${abElement.selector}`, style: abStyle.selector }]);
-
-    try {
-      abElement.waitForExist();
-      browser.waitUntil(() => abElement.getWebElement().getText() === expected, timoutMillis);
-    } catch (err) {
-      console.log("original error:")
-      console.log(err)
-      throw new Error(`Element "${abElement.stuartname}"'s text is "${abElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${abElement.selector}`);
-    }
-  }
-
-  /**
-   * 
-   * @param {AbElement} abElement 
-   * @param {Number} timoutMillis 
-   */
-  static elementExists(abElement, timoutMillis = defaultAutobotTimeoutMillis) {
-    log([
-      { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname} `, style: abStyle.object },
-      { text: "exists ", style: abStyle.verb },
-      { text: abElement.selector, style: abStyle.selector }]);
-    // browser.waitUntil(() => abElement.isExisting(), timoutMillis);
-    // assert(abElement.isExisting());
-
-    try {
-      browser.waitUntil(() => abElement.isExisting(), timoutMillis);
-    } catch (err) {
-      console.log("original error:")
-      console.log(err)
-      throw new Error(`Element "${abElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${abElement.selector}`);
-    }
-  }
-
-  static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
-    // console.log("in valueEquals")
-
-    log([
-      { text: 'Assert ', style: abStyle.verb },
-      { text: `${targetDescription} `, style: abStyle.object },
-      { text: "equals ", style: abStyle.verb },
-      { text: value, style: abStyle.object }]);
-
-    try {
-      browser.waitUntil(() => f() === value, timoutMillis);
-    } catch (err) {
-      console.log("original error:")
-      console.log(err)
-      throw new Error(`${targetDescription}: Expected:  "${value}". Actual: "${f()}"`);
-    }
-  }
-}
-
-//Hooks class
-
-/**
- * Just syntax sugar to make "before" line more readable.  Good/bad idea?
- * 
- *   Named by the page on which the functions end.
- */
-class Load {
-  dashboard() {
-    loginPage.logIn(options.email, options.password, options.url);
-  }
-  newTemplateEditor() {
-    const projectName = Autobot.makeSlugSafeName("Autobot Add Data" + livy.specDate + ' ' + livy.specTime);
-    let httpRequestPromise = Autobot.httpRequestCreateProject_begin(projectName, data);
-    loginPage.logIn(options.email, options.password, options.url);
-    Autobot.httpRequestComplete(httpRequestPromise);
-    browser.url(Autobot.getProjectUrlFromName(projectName));
-    projectPage.createNewTemplateButton.click_waitForNotExisting();
-    assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
-  }
-}
-/**
- * "Before"-level hooks.  Named by the page on which the functions end.
- */
-export class Before {
-  static get load() { return new Load(); }
-}
 
 /******************************** hooks **************************************/
 //these should be pulled out into a separate file and imported per test, since some tests might want unique before/after code
@@ -311,6 +189,7 @@ beforeEach(function () {
 before(function () {
   const filePath = this.test.parent.suites[0].file
   livy.initialize(filePath);
+  console.log('\nReport:\t\t', livy.reportClickablePath, '\n');
 
   // @ts-ignore
   global.livy = livy;
@@ -321,19 +200,4 @@ after(function () {
   console.log('\nReport:\t\t', livy.reportClickablePath, '\n');
   livy.endSpec();
 });
-
-
-/* ****** data *****/
-
-// string, num, list, bool, date, time, truedata
-// anneau du Vic - Bilh, 100, "one,Two,tHREE", true, 2 / 1 / 1900, 1: 45 PM, 3
-
-export const data = [{
-  "string": "anneau du Vic-Bilh",
-  "num": 100,
-  "list": "one,Two,tHREE",
-  "bool": "true",
-  "date": "2/1/1900",
-  "time": "1:45 PM"
-}];
 

@@ -1,6 +1,6 @@
 // @ts-check
-import { AbElement, Page } from '../../../../autobot_framework/autobot';
 import { editorPageToolbar } from './toolbar.comp';
+import { Page } from '../../../../autobot_framework/support/Page';
 
 export const reviewPage = new class Review extends Page {
   constructor() {

@@ -1,5 +1,8 @@
 // @ts-check
-import { AbElement, Page } from '../../../../../autobot_framework/autobot';
+import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+import { Page } from "../../../../../autobot_framework/support/Page";
+
+
 
 export const projectPage = new class Project extends Page {
   constructor() {

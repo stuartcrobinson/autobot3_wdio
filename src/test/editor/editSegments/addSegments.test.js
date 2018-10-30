@@ -1,15 +1,17 @@
 // @ts-check
-import { AutobotAssert, autobotBrowser, Before } from '../../../../autobot_framework/autobot';
+import { autobotBrowser } from '../../../../autobot_framework/autobot';
 import { editorPage } from '../../../support/wordsmith/editor/editor.page';
 import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
 import { editBranchComp } from '../../../support/wordsmith/editor/segmentEditors/editBranch.comp';
 import { editSynonymComp } from '../../../support/wordsmith/editor/segmentEditors/editSynonym.comp';
 import { header } from '../../../support/wordsmith/misc/component/header.comp';
+import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
+import { Load } from '../../../../autobot_framework/support/hooks';
 
 //split these up into "it"s?
 
 describe('Add new ', () => {
-  before(() => { Before.load.newTemplateEditor(); });
+  before(() => { Load.newTemplateEditor(); });
 
   describe('synonym,', () => {
     it('load editor', () => {

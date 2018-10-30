@@ -1,5 +1,7 @@
 // @ts-check
-import { AbElement } from '../../../../../autobot_framework/autobot';
+import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+
+
 
 export const toast = new class toast extends AbElement {
   constructor(message) {
@@ -17,10 +19,10 @@ export const toast = new class toast extends AbElement {
   }
 
   close() {
-      this.waitForExist();
-      this.xCloseIcon.click();
-      this.xCloseIcon.waitForNotExist();
-      this.waitForNotExist();
+    this.waitForExist();
+    this.xCloseIcon.click();
+    this.xCloseIcon.waitForNotExist();
+    this.waitForNotExist();
   }
 
   getMessage() {

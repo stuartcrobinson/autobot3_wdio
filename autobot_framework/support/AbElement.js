@@ -1,7 +1,9 @@
 // @ts-check
-import { abStyle, livy } from '../autobot';
-/* eslint import/no-cycle: "off" */
 import { Component } from './Component';
+import {
+  abStyle,
+  livy,
+} from '../autobot';
 
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
@@ -219,6 +221,26 @@ export class AbElement extends Component {
     browser.keys(value);
   }
 
+
+  /**
+   *
+   * @param {AbElement} abEl2
+   */
+  dragAndDropTo(abEl2) {
+    this.logAndWait2([
+      { text: 'Drag ', style: abStyle.verb },
+      { text: this.stuartname, style: abStyle.object },
+      { text: ' to ', style: abStyle.filler },
+      { text: abEl2.stuartname, style: abStyle.object },
+      { text: ' [', style: abStyle.filler },
+      { text: this.selector, style: abStyle.selector },
+      { text: '], [', style: abStyle.filler },
+      { text: abEl2.selector, style: abStyle.selector },
+      { text: ']', style: abStyle.filler },
+    ]);
+    browser.dragAndDrop(this.selector, abEl2.selector);
+  }
+
   uploadFile(filePath) {
     this.logAndWait2([
       { text: 'Upload file ', style: abStyle.verb },
@@ -253,4 +275,65 @@ export class AbElement extends Component {
   isExisting() {
     return browser.isExisting(this.selector);
   }
+
+  // ////////from Component, rip (circ dependencies)
+
+
+  /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
+  /**
+   * This adds a custom name parameter to each element object so that the variable's name
+   * can be displayed in the ui test logs instead of just a potentially cryptic selector.
+   *
+   * This was inspired by the idea that maybe we should avoid using visible values in selectors to prepare for multi-language support
+   */
+  nameElements() {
+    for (const propName in this) {
+      const propValue = this[propName];
+      if (propValue instanceof AbElement) {
+        // @ts-ignore
+        // propValue.stuartname = propName;
+        propValue.setName(propName);
+      }
+    }
+  }
+
+  // /**
+  //  *
+  //  */
+  // get loadCriteriaElements() {
+  //   const abElements = [];
+
+  //   for (const propName in this) {
+  //     const propValue = this[propName];
+  //     if (propValue instanceof AbElement && propValue.isLoadCriterion) {
+  //       abElements.push(propValue);
+  //     }
+  //   }
+  //   return abElements;
+  // }
+
+  // waitForLoad(timeoutInMillis = 12000) {
+  //   for (let i = 0; i < this.loadCriteriaElements.length; i++) {
+  //     const element = this.loadCriteriaElements[i];
+  //     element.waitForExist(timeoutInMillis);
+  //   }
+  // }
+
+  // isLoaded() {
+  //   for (let i = 0; i < this.loadCriteriaElements.length; i++) {
+  //     const element = this.loadCriteriaElements[i];
+  //     element.getWebElement();
+  //   }
+  //   return true;
+  // }
+
+  // /* eslint class-methods-use-this: "off" */
+  // findWebElements(selector) {
+  //   return $$(selector);
+  // }
+
+  // /* eslint class-methods-use-this: "off" */
+  // findWebElement(selector) {
+  //   return $(selector);
+  // }
 }

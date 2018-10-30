@@ -1,6 +1,7 @@
 // @ts-check
-import { AbElement, Page } from '../../../../../autobot_framework/autobot';
 import Table from '../../table';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { Page } from '../../../../../autobot_framework/support/Page';
 
 export const dashboardPage = new class Dashboard extends Page {
   constructor() {

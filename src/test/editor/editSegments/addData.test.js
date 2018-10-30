@@ -7,11 +7,13 @@ import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEdi
 import { editDataTextComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
 import { editDataTimeComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
 import { header } from '../../../support/wordsmith/misc/component/header.comp';
-import { Before, AutobotAssert, autobotBrowser } from '../../../../autobot_framework/autobot';
+import { autobotBrowser } from '../../../../autobot_framework/autobot';
+import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
+import { Load } from '../../../../autobot_framework/support/hooks';
 
 describe('Format and insert data var of type', () => {
 
-  before(() => { Before.load.newTemplateEditor(); });
+  before(() => { Load.newTemplateEditor(); });
 
   it('Number', () => {
     editorPage.toolbar.insertDataButton.click();

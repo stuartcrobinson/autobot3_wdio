@@ -1,6 +1,6 @@
 // @ts-check
 import * as cheerio from 'cheerio';
-import { AbElement } from '../../../autobot_framework/autobot';
+import { AbElement } from '../../../autobot_framework/support/AbElement';
 
 
 //TODO this is still a mess - stuart 10/30/2018

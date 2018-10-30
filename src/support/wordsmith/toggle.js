@@ -1,6 +1,7 @@
+// @ts-check
 import { AbElement } from "../../../autobot_framework/support/AbElement";
 
-// @ts-check
+
 
 /*
 toggle code 10/30/2018:

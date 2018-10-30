@@ -1,6 +1,6 @@
 // @ts-check
-import { AbElement } from '../../../../../autobot_framework/autobot';
 import { loginPage } from '../page/login.page';
+import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
 class SettingsDropdownComp extends AbElement {
   constructor() {

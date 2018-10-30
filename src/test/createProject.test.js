@@ -1,13 +1,14 @@
 // @ts-check
 import { assert } from 'chai';
-import { Before, livy } from '../../autobot_framework/autobot';
+import { livy } from '../../autobot_framework/autobot';
+import { Load } from '../../autobot_framework/support/hooks';
 import { editorPage } from '../support/wordsmith/editor/editor.page';
 import { createAProjectPage } from '../support/wordsmith/misc/page/createAProject.page';
 import { createAProjectUploadCsvPage } from '../support/wordsmith/misc/page/createAProjectUploadCsv.page';
 import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
 
 describe('Create a project', () => {
-  before(() => { Before.load.dashboard(); });
+  before(() => { Load.dashboard(); });
 
   it('from CSV upload', () => {
     dashboardPage.newProjectDropdown.click();

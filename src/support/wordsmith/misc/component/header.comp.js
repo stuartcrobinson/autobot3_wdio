@@ -1,5 +1,7 @@
 // @ts-check
-import { AbElement } from '../../../../../autobot_framework/autobot';
+import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+
+
 
 export const header = new class HeaderComp extends AbElement {
   constructor() {

@@ -1,14 +1,10 @@
 // @ts-check
-/* eslint import/no-cycle: "off" */
-import { AbElement } from './AbElement';
 
 /**
  * Any class that contains custom web element objects.
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
 export class Component {
-  // constructor() {
-  // }
 
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
@@ -20,11 +16,19 @@ export class Component {
   nameElements() {
     for (const propName in this) {
       const propValue = this[propName];
-      if (propValue instanceof AbElement) {
-        // @ts-ignore
-        // propValue.stuartname = propName;
-        propValue.setName(propName);
+      // don't delete.  commented out to hopefully fix weird errors caused from circular import dependencies
+      // if (propValue instanceof AbElement) {
+      // @ts-ignore
+      // propValue.stuartname = propName;
+      if (propValue) {
+        try {
+          // @ts-ignore
+          propValue.setName(propName);
+        } catch (err) {
+          // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
+        }
       }
+      // }
     }
   }
 
@@ -36,8 +40,13 @@ export class Component {
 
     for (const propName in this) {
       const propValue = this[propName];
-      if (propValue instanceof AbElement && propValue.isLoadCriterion) {
-        abElements.push(propValue);
+      try {
+        // @ts-ignore
+        if (propValue.isLoadCriterion) { // propValue instanceof AbElement &&
+          abElements.push(propValue);
+        }
+      } catch (err) {
+        // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
       }
     }
     return abElements;
@@ -46,6 +55,7 @@ export class Component {
   waitForLoad(timeoutInMillis = 12000) {
     for (let i = 0; i < this.loadCriteriaElements.length; i++) {
       const element = this.loadCriteriaElements[i];
+      // @ts-ignore
       element.waitForExist(timeoutInMillis);
     }
   }
@@ -53,6 +63,7 @@ export class Component {
   isLoaded() {
     for (let i = 0; i < this.loadCriteriaElements.length; i++) {
       const element = this.loadCriteriaElements[i];
+      // @ts-ignore
       element.getWebElement();
     }
     return true;
