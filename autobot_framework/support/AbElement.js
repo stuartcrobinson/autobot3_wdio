@@ -5,6 +5,7 @@ import {
   livy,
 } from '../autobot';
 
+
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
   const endPart = line.split('src/support/')[1];
@@ -19,6 +20,10 @@ function getParentFromStack(stack) {
  * 3.  child web elements
  */
 export class AbElement extends Component {
+  static $(selector) {
+    return new AbElement(selector);
+  }
+
   /**
      * @param {String} selector - xpath or css selector
      */
@@ -45,7 +50,13 @@ export class AbElement extends Component {
 
   /* eslint class-methods-use-this: "off" */
   getWebElement() {
+    this.waitForExist();
     return browser.element(this.selector);
+  }
+
+  getWebElements() {
+    this.waitForExist();
+    return $$(this.selector);
   }
 
   getChild(selector) {
@@ -72,6 +83,19 @@ export class AbElement extends Component {
     throw new Error(
       `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
     );
+  }
+
+  /** Returns an array of text values of all web elements matching the given AbElement's selector. */
+  getTexts() {
+    const wes = this.getWebElements();
+
+    const texts = [];
+
+    wes.forEach((we) => {
+      texts.push(we.getText());
+    });
+
+    return texts;
   }
 
   click(doLogAndWait = true) {

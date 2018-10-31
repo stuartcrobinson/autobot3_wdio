@@ -23,6 +23,8 @@ toggle code 10/30/2018:
 export class Toggle extends AbElement {
   /**
    * Toggle selector is the toggle label.  This changes depending on state (on or off).
+   * 
+   * This only works for toggles where the label class includes "is-checked" when checked.  Works for data format editors, but not for Review page.
    * @param {String} id 
    */
   constructor(id) {

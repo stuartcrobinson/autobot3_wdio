@@ -15,7 +15,7 @@ export const editorPage = new class Editor extends Page {
   }
 
   segmentWithText(text) {
-    return new AbElement(`//span[@data-text='true' and text()='${text}']`).setName('text: "' + text + '"')
+    return new AbElement(`//span[@data-text='true' and text()='${text}']`).setName('Segment with text: "' + text + '"')
   }
 
   getLastSegmentText() {

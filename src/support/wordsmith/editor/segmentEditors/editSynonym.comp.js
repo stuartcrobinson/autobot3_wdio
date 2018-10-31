@@ -2,6 +2,8 @@
 import { EditSegmentComp } from '../editSegment.comp';
 import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
+//TODO - logs aren't useful that just say "textInput" - need to specify which SynonymBOx the textInput is in
+
 class SynonymBox extends AbElement {
   constructor(selector) {
     super(selector);

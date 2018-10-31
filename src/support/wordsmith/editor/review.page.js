@@ -1,38 +1,93 @@
 // @ts-check
-import { editorPageToolbar } from './toolbar.comp';
+import countBy from 'lodash';
+import { AbElement } from '../../../../autobot_framework/support/AbElement';
 import { Page } from '../../../../autobot_framework/support/Page';
+
+
+class NarrativeDiv extends AbElement {
+  constructor(selector) {
+    super(selector);
+    this.rowNumber = this.getChild('.row-number');
+    super.nameElements();
+  }
+  getNthSegmentSpan(n) { return new AbElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
+}
+const getNthRunStatValueDiv = (n) => (new AbElement(`.run-stat-list.flex.flex-wrap.center > div:nth-of-type(${n}) .run-stat__value`));
+
+const getNthToggle = (n) => (new AbElement(`.toggle-switch__horizontal-group > .margin-bottom-small:nth-of-type(${n}) .switch`));
+
+const textSpan = (variability) => (
+  (str) => new AbElement(`//*[@*='segment editor-textarea-segment ${variability}' and text()='${str}']`)
+    .setName(`Span with text "${str}" and ${variability} variability`)
+);
+
+//TODO send csv file over api project creation
 
 export const reviewPage = new class Review extends Page {
   constructor() {
     super();
-    this.pageCountToggleLink = editorPageToolbar.tagAsLoadCriterion();
+    this.showAllLink = new AbElement('.pagination + span .page-item.show-all');
+    this.show10PerPageLink = new AbElement('.pagination-container .label + span .page-item.show-all');
+    this.avgWordsValueDiv = getNthRunStatValueDiv(1).tagAsLoadCriterion();
+    this.maxWordsValueDiv = getNthRunStatValueDiv(2).tagAsLoadCriterion();
+    this.minWordsValueDiv = getNthRunStatValueDiv(3).tagAsLoadCriterion();
+    this.maxCharsValueDiv = getNthRunStatValueDiv(4).tagAsLoadCriterion();
+    this.readingTimesValueDiv = getNthRunStatValueDiv(5).tagAsLoadCriterion();
+    this.gradeLevelReadabilityValueDiv = getNthRunStatValueDiv(6).tagAsLoadCriterion();
+    this.variabilityScoreValueDiv = getNthRunStatValueDiv(7).tagAsLoadCriterion();
 
+    this.renderHtmlToggle = getNthToggle(1).tagAsLoadCriterion();
+    this.randomizeRowsToggle = getNthToggle(2).tagAsLoadCriterion();
+    this.variabilityHeatmapToggle = getNthToggle(3).tagAsLoadCriterion();
 
-    /*
-
-
-
-
-
-
-TODO start here-- model the "Show All" vs "10 per page" link somehow.  think of best name for this toggling link
-
-this is for the synonym test -- checking syn distribution
-
-
-
-
-
-
-
-
-
-
-
-
-    */
+    this.generate50NewRowsLink = new AbElement('h2 a');
 
     super.nameElements();
   }
+  getNthSegmentSpan(n) { return new AbElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
+
+
+  poorVariabilitySpanWithText = (str) => (textSpan('poor')(str));
+
+  excellentVariabilitySpanWithText = (str) => (textSpan('excellent')(str));
+
+  randomizeRows_isOn() {
+    return this.generate50NewRowsLink.isExisting();
+  }
+
+  randomizeRows_turnOn() {
+    if (this.randomizeRows_isOn()) {
+      throw new Error("Rows are already randomized");
+    }
+    this.randomizeRowsToggle.click_waitForChange();
+  }
+
+  randomizeRows_turnOff() {
+    if (!this.randomizeRows_isOn()) {
+      throw new Error("Rows aren't currently randomized");
+    }
+    this.randomizeRowsToggle.click_waitForChange();
+  }
+
+  getCountsOfSecondSegmentTexts() {
+
+    const secondSegmentWEs = this.getNthSegmentSpan(2).getWebElements();
+
+    let synonyms = [];
+
+    secondSegmentWEs.forEach((we) => {
+      synonyms.push(we.getText());
+    })
+
+    const countsObject = countBy(synonyms);
+
+    return countsObject;
+  }
 
 }();
+
+
+
+    /*
+TODO - allow grabbing input parameters from file AND console.  combine them.  give precedence to command line
+    */

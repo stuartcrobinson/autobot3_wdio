@@ -29,7 +29,7 @@ export const sidebar = new class SideBarComp extends AbElement {
     this.settingsLink = this.getChild("//*[*='settings']");
 
     /** only in Editor sidebar.  clean up sidebars organization? */
-    this.review = this.getChild('//a[@data-for="Review"]');
+    // this.review = this.getChild('//a[@data-for="Review"]');
 
     this.dataLink = this.getChild("//*[*='grid_on']");
     this.writeLinke = this.getChild("//*[*='mode_edit']");

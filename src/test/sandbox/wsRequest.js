@@ -95,7 +95,7 @@ describe('requests describe', () => {
     // ];
 
     console.log('b4 send');
-    let httpRequestPromise = Autobot.httpRequestCreateProject_begin(name, data);
+    let httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(name, data);
     console.log('after send');
     Autobot.httpRequestComplete(httpRequestPromise);
     console.log('afer wait');

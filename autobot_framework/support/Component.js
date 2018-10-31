@@ -5,7 +5,6 @@
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
 export class Component {
-
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
    * This adds a custom name parameter to each element object so that the variable's name

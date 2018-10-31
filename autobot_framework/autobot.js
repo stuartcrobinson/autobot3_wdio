@@ -8,6 +8,7 @@ import yargsParse from 'yargs-parser';
 import { Livy } from './support/Livy';
 // export { AbElement } from './support/AbElement';
 // export { Page } from './support/Page';
+    import * as base64js from 'base64-js'
 
 
 
@@ -16,7 +17,7 @@ import { Livy } from './support/Livy';
 
 
 
-function getAxiosBody(projectName, projectData) {
+function getAxiosBodyWithDataObject(projectName, projectData) {
   return {
     "data": {
       "name": projectName,
@@ -27,6 +28,22 @@ function getAxiosBody(projectName, projectData) {
     }
   }
 }
+
+//eachDataType_date2
+function getAxiosBodyWithDataBase64(projectName, projectData) {
+  return {
+    "data": {
+      "name": projectName,
+      "dataset": {
+        "format": "csv",
+        "filename": "file.csv",
+        "content": base64js.toByteArray()
+      }
+    }
+  }
+}
+
+
 
 
 export class Autobot {
@@ -47,9 +64,14 @@ export class Autobot {
     return slugSafe;
   }
 
-  static httpRequestCreateProject_begin(name, data) {
+  static httpRequestCreateProjectFromDataObject_begin(name, dataObject1) {
 
-    const body = getAxiosBody(name, data);
+    const body = getAxiosBodyWithDataObject(name, dataObject1);
+
+    // import * as base64js from 'base64-js'
+
+
+    
 
     return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
   }
@@ -153,6 +175,10 @@ export const autobotBrowser = new class AutobotBrowser {
         { text: keysToType, style: abStyle.object }]);
     }
     browser.keys(keysToType);
+  }
+
+  sleep(timeInMilliseconds) {
+    browser.pause(timeInMilliseconds);
   }
 
 }

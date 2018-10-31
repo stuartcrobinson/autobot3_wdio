@@ -33,7 +33,7 @@ export class Load {
 
   static newTemplateEditor() {
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
-    const httpRequestPromise = Autobot.httpRequestCreateProject_begin(projectName, data);
+    const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
     loginPage.logIn(options.email, options.password, options.url);
     Autobot.httpRequestComplete(httpRequestPromise);
     browser.url(Autobot.getProjectUrlFromName(projectName));
