@@ -95,6 +95,10 @@ export class AbElement extends Component {
       texts.push(we.getText());
     });
 
+    // console.log('in getTexts, new texts array: ');
+    // console.log(texts);
+    // console.log(typeof (texts));
+
     return texts;
   }
 

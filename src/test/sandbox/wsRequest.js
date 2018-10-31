@@ -25,19 +25,6 @@ describe('requests describe', () => {
   it('requests it 1', () => {
     console.log('in requests it 1');
 
-    //   return {
-    //     "data": {
-    //       "name": projectName,
-    //       "dataset": {
-    //         "format": "csv",
-    //         "filename": "file.csv",
-    //         "content": base64js.toByteArray()
-    //       }
-    //     }
-    //   }
-    // }
-
-
     const axiosBodyFile = {
       "data": {
         "name": "Cities8",

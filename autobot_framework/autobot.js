@@ -138,19 +138,27 @@ export class Autobot {
 };
 
 /******************************** config *************************************/
-let _options;
+let _options, optionsFile, optionsCommandLine;
 
 if (existsSync('file.txt')) {
-  _options = yargsParse(stringArgv(readFileSync('file.txt')));
+  optionsFile = yargsParse(stringArgv(readFileSync('file.txt')));
 }
-else {
-  let argv = stringArgv(browser.options.key);
+// else {
+let argv = stringArgv(browser.options.key);
 
-  for (let i = 0; i < argv.length; i++) {
-    argv[i] = '--' + argv[i]
-  }
-  _options = yargsParse(argv);
+for (let i = 0; i < argv.length; i++) {
+  argv[i] = '--' + argv[i]
 }
+optionsCommandLine = yargsParse(argv);
+
+_options = optionsFile
+_options = { ..._options, ...optionsCommandLine }
+
+console.log(_options);
+
+// process.exit()
+
+// }
 export const options = _options;
 
 
