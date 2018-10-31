@@ -11,7 +11,7 @@ import { sidebar } from '../../support/wordsmith/misc/component/sideBar.comp';
 import { autobotBrowser } from '../../../autobot_framework/autobot';
 
 describe('Add', () => {
-  before(() => { Load.newTemplateEditor(); });
+  before(() => { Load.newTemplateEditorUsingDataFile("resources/eachDataType_date2.csv"); });
 
   // done
   it('synonym', () => {
@@ -163,12 +163,119 @@ describe('Add', () => {
 
 
 
-    //TODO
+    //TODO - get actual counts object.  this is what's getting printed rn:
+
     /*
-
-    make Review page
-    
-
+01:18:29am Add synonym> Click generate50NewRowsLink then wait for change in //body target: h2 a
+01:18:33am Add synonym> Click showAllLink then wait for change in //body target: .pagination + span .page-item.show-all
+LodashWrapper {
+  __wrapped__:
+   [ 'flapjacks',
+     'flapjacks',
+     'hotcakes',
+     'flapjacks',
+     'griddle cakes',
+     'hotcakes',
+     'hotcakes',
+     'slapjacks',
+     'flapjacks',
+     'flapjacks',
+     'slapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'slapjacks',
+     'flapjacks',
+     'hotcakes',
+     'hotcakes',
+     'flapjacks',
+     'pancakes',
+     'hotcakes',
+     'pancakes',
+     'pancakes',
+     'griddle cakes',
+     'slapjacks',
+     'slapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'slapjacks',
+     'griddle cakes',
+     'pancakes',
+     'slapjacks',
+     'pancakes',
+     'griddle cakes',
+     'flapjacks',
+     'flapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'hotcakes',
+     'hotcakes',
+     'flapjacks',
+     'flapjacks',
+     'slapjacks',
+     'pancakes',
+     'flapjacks',
+     'slapjacks',
+     'griddle cakes',
+     'hotcakes',
+     'pancakes',
+     'pancakes',
+     'slapjacks',
+     'slapjacks',
+     'pancakes',
+     'flapjacks',
+     'griddle cakes',
+     'hotcakes',
+     'pancakes',
+     'slapjacks',
+     'slapjacks',
+     'flapjacks',
+     'flapjacks',
+     'pancakes',
+     'hotcakes',
+     'pancakes',
+     'hotcakes',
+     'flapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'flapjacks',
+     'flapjacks',
+     'flapjacks',
+     'pancakes',
+     'flapjacks',
+     'pancakes',
+     'griddle cakes',
+     'griddle cakes',
+     'flapjacks',
+     'pancakes',
+     'griddle cakes',
+     'pancakes',
+     'hotcakes',
+     'flapjacks',
+     'pancakes',
+     'flapjacks',
+     'slapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'pancakes',
+     'griddle cakes',
+     'pancakes',
+     'slapjacks',
+     'flapjacks',
+     'griddle cakes',
+     'slapjacks',
+     'slapjacks',
+     'slapjacks',
+     'hotcakes',
+     'flapjacks',
+     'hotcakes',
+     'griddle cakes',
+     'flapjacks',
+     ... 50 more items ],
+  __actions__: [],
+  __chain__: false,
+  __index__: 0,
+  __values__: undefined }
+01:18:34am Add synonym> PASS
 
 
     */

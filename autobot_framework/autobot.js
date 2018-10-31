@@ -8,7 +8,12 @@ import yargsParse from 'yargs-parser';
 import { Livy } from './support/Livy';
 // export { AbElement } from './support/AbElement';
 // export { Page } from './support/Page';
-    import * as base64js from 'base64-js'
+import * as base64 from 'file-base64'
+
+//   base64.encode('text.txt', function (err, base64String) {
+//     console.log(base64String);
+//   });
+// var base64 = require('file-base64');
 
 
 
@@ -30,14 +35,20 @@ function getAxiosBodyWithDataObject(projectName, projectData) {
 }
 
 //eachDataType_date2
-function getAxiosBodyWithDataBase64(projectName, projectData) {
+function getAxiosBodyWithFileData64(projectName, file, data64) {
+
+
+  // base64.encode('text.txt', function (err, base64String) {
+  //   console.log(base64String);
+  // });
+
   return {
     "data": {
       "name": projectName,
       "dataset": {
         "format": "csv",
-        "filename": "file.csv",
-        "content": base64js.toByteArray()
+        "filename": file,
+        "content": data64
       }
     }
   }
@@ -45,6 +56,15 @@ function getAxiosBodyWithDataBase64(projectName, projectData) {
 
 
 
+var fs = require('fs');
+
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+  // read binary data
+  var bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return new Buffer(bitmap).toString('base64');
+}
 
 export class Autobot {
 
@@ -68,10 +88,15 @@ export class Autobot {
 
     const body = getAxiosBodyWithDataObject(name, dataObject1);
 
-    // import * as base64js from 'base64-js'
+    return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
+  }
 
 
-    
+  static httpRequestCreateProjectFromDataFile_begin(name, file) {
+
+    const data64 = base64_encode(file)
+
+    const body = getAxiosBodyWithFileData64(name, file, data64);
 
     return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
   }

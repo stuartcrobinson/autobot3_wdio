@@ -5,51 +5,53 @@ import { data } from '../../../autobot_framework/support/hooks';
 
 console.log("in requests.tes.js")
 
-// /**
-//  * 
-//  * @param {Object} body 
-//  */
-// function httpRequestBegin(body) {
 
-//   const axiosConfig = {
-//     headers: {
-//       'Authorization': 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
-//       'User-Agent': 'Autobot',
-//       'Content-Type': 'application/json'
-//     },
-//   };
+// import * as base64 from 'file-base64'
 
-//   console.log('posting')
-//   return axios.post('https://api.automatedinsights.com/v1.8/projects', body, axiosConfig)
-// }
+// //   base64.encode('text.txt', function (err, base64String) {
+// //     console.log(base64String);
+// //   });
+var fs = require('fs');
 
-
-// /**
-//  * 
-//  * @param {AxiosPromise} axiosPromise 
-//  */
-// function httpRequestComplete(axiosPromise) {
-
-//   //does wait and does print
-//   browser.call(function () {
-//     return axiosPromise
-//       .then(function (response) {
-//         console.log('response status: ' + response.status);
-//       })
-//       .catch(function (error) {
-//         throw new Error(error);   //trace is useful this way
-//       });
-//   });
-
-// }
-
-
+// function to encode file data to base64 encoded string
+function base64_encode(file) {
+  // read binary data
+  var bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return new Buffer(bitmap).toString('base64');
+}
 describe('requests describe', () => {
 
   it('requests it 1', () => {
     console.log('in requests it 1');
 
-    const axiosBody = {
+    //   return {
+    //     "data": {
+    //       "name": projectName,
+    //       "dataset": {
+    //         "format": "csv",
+    //         "filename": "file.csv",
+    //         "content": base64js.toByteArray()
+    //       }
+    //     }
+    //   }
+    // }
+
+
+    const axiosBodyFile = {
+      "data": {
+        "name": "Cities8",
+        "dataset": {
+          "format": "csv",
+          "filename": "resources/eachDataType_date2.csv",
+          "content": base64_encode("resources/eachDataType_date2.csv"),
+        }
+      }
+    }
+
+
+
+    const axiosBodyData = {
       "data": {
         "name": "Cities6",
         "dataset": {
@@ -95,7 +97,8 @@ describe('requests describe', () => {
     // ];
 
     console.log('b4 send');
-    let httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(name, data);
+    let httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(name, "resources/eachDataType_date2.csv");
+    // let httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(name, data);
     console.log('after send');
     Autobot.httpRequestComplete(httpRequestPromise);
     console.log('afer wait');
