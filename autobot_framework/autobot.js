@@ -154,7 +154,7 @@ optionsCommandLine = yargsParse(argv);
 _options = optionsFile
 _options = { ..._options, ...optionsCommandLine }
 
-console.log(_options);
+// console.log(_options);
 
 // process.exit()
 

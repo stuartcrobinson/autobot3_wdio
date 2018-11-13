@@ -1,16 +1,14 @@
 HOW TO RUN:
 
-cd into repo directory
-
-enter:
 
 ``npm install``
 
-then
 
-``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --mochaOpts.grep "Login"``
+``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/login.test.js``
 
 OR
+
+src/test/login.test.js
 
 ``npm run wdio -- --spec src/test/login/login.js --key "email=your@email.com password=y0urp4$$w0rd url=https://wordsmith.automatedinsights.com"``
 
@@ -20,10 +18,13 @@ as a live Ai tool, i'm imagining that we'll have a saved config file with a list
 
 the nice thing about mocha is that you can run subsets of tests using "grep."  so certain tests could be tagged to run only for admin accounts, etc.  
 
+as in 
+
+``npm run wdio -- --mochaOpts.grep "Login"``
+
 notes:
 
 - to run NOT in headless mode, comment out this stuff in wdio.conf.js:
-
 
         chromeOptions: {
             args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
