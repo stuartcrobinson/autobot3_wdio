@@ -3,14 +3,26 @@ HOW TO RUN:
 
 ``npm install``
 
+then
 
-``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/loginForRye.test.js``
+
+``npm run wdio -- --spec src/test/loginForRye.test.js --email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com``
+
+
+
+(alternatively, you can just save that echoed string to file.txt beforehand)
 
 OR
 
-``npm run wdio -- --spec src/test/login/loginForRye.js --key "email=your@email.com password=y0urp4$$w0rd url=https://wordsmith.automatedinsights.com"``
 
-(alternatively, you can just save that echoed string to file.txt beforehand)
+``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/loginForRye.test.js --notHeadless --noPics``
+
+``noPics`` defaults to false - setting this to true prevents screenshots from being taken per logged action.  this will make the testing report less useful, but let the tests run faster
+
+``notHeadless`` defaults to false - set this flag to force autobot to load a visible
+
+so you can submit parameters either in ``file.txt`` or through the command line.  command line values get precedence. 
+
 
 as a live Ai tool, i'm imagining that we'll have a saved config file with a list of different user accounts with different permission levels for different levels of testing.
 

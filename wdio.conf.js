@@ -16,6 +16,52 @@ function getScreenshotName(basePath) {
   };
 }
 
+var yargsParse = require('yargs-parser');
+var stringArgv = require('string-argv');
+var fs = require('fs');
+
+let _options, optionsFile;
+
+if (fs.existsSync('file.txt')) {
+  optionsFile = yargsParse(stringArgv(fs.readFileSync('file.txt')));
+}
+
+// console.log("process.argv: ")
+// console.log(process.argv)
+
+// console.log("optionsFile: ")
+// console.log(optionsFile)
+
+// let argv = stringArgv(process.argv);
+// console.log("stringArgv(process.argv): ")
+// console.log(argv)
+
+let yargsParsed = yargsParse(process.argv);
+// console.log("yargsParse(process.argv): ")
+// console.log(yargsParsed)
+
+// for (let i = 0; i < argv.length; i++) {
+//   argv[i] = '--' + argv[i]
+// }
+// optionsCommandLine = yargsParse(argv);
+
+_options = optionsFile
+_options = { ..._options, ...yargsParsed }
+
+global._options = _options
+
+// console.log("global._options:");
+// console.log(global._options);
+
+// const validParams = ['email', 'password', 'url', 'noPics', 'notHeadless']
+
+
+// process.exit()
+
+// }
+// export const options = _options;
+
+
 // var path = require('path');
 // var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 
@@ -78,7 +124,7 @@ exports.config = {
     maxInstances: 5,
     //
     browserName: 'chrome',
-    chromeOptions: {
+    chromeOptions: global._options.notHeadless ? {} : {
       args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
       binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
     }

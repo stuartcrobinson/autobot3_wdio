@@ -1,26 +1,9 @@
 // @ts-check
 import axios, { AxiosPromise } from 'axios';
 import colors from 'colors/safe';
-import { existsSync, readFileSync } from 'fs';
-import stringArgv from 'string-argv';
-import yargsParse from 'yargs-parser';
-// import { AbElement } from './support/AbElement';
 import { Livy } from './support/Livy';
-// export { AbElement } from './support/AbElement';
-// export { Page } from './support/Page';
-import * as base64 from 'file-base64'
-
-//   base64.encode('text.txt', function (err, base64String) {
-//     console.log(base64String);
-//   });
-// var base64 = require('file-base64');
-
-
-
 
 /* ******************************* wrapped *************************************/
-
-
 
 function getAxiosBodyWithDataObject(projectName, projectData) {
   return {
@@ -138,28 +121,11 @@ export class Autobot {
 };
 
 /******************************** config *************************************/
-let _options, optionsFile, optionsCommandLine;
 
-if (existsSync('file.txt')) {
-  optionsFile = yargsParse(stringArgv(readFileSync('file.txt')));
-}
-// else {
-let argv = stringArgv(browser.options.key);
+//@ts-ignore
+export const options = global._options;
 
-for (let i = 0; i < argv.length; i++) {
-  argv[i] = '--' + argv[i]
-}
-optionsCommandLine = yargsParse(argv);
 
-_options = optionsFile
-_options = { ..._options, ...optionsCommandLine }
-
-// console.log(_options);
-
-// process.exit()
-
-// }
-export const options = _options;
 
 
 /******** tools *******/
