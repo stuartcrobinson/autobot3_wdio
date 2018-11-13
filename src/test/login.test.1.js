@@ -10,15 +10,18 @@ describe('Login', () => {
 
     // TODO wrap and log this:
     // @ts-ignore
-    assert(browser.checkViewport()[0].isWithinMisMatchTolerance);
+    const visualTestReport = browser.checkViewport()[0];
+    console.log('visualTestReport:');
+    console.log(visualTestReport);
+    assert(visualTestReport.isWithinMisMatchTolerance);
 
     loginPage.toast_invalidEmailOrPwd.close();
     assert(loginPage.isLoaded(), 'Login page should be loaded.');
   });
 
-  it('and logout', () => {
-    loginPage.logIn(options.email, options.password, options.url);
-    sidebar.signOut();
-    assert(loginPage.isLoaded(), 'Login page should be loaded.');
-  });  //src/test/login.test.js///Users/stuartrobinson/repos/autobot3_wdio/src/test/login.test.js
+  // it('and logout', () => {
+  //   loginPage.logIn(options.email, options.password, options.url);
+  //   sidebar.signOut();
+  //   assert(loginPage.isLoaded(), 'Login page should be loaded.');
+  // });  //src/test/login.test.js///Users/stuartrobinson/repos/autobot3_wdio/src/test/login.test.js
 });

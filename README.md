@@ -4,13 +4,11 @@ HOW TO RUN:
 ``npm install``
 
 
-``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/login.test.js``
+``echo "--email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/loginForRye.test.js``
 
 OR
 
-src/test/login.test.js
-
-``npm run wdio -- --spec src/test/login/login.js --key "email=your@email.com password=y0urp4$$w0rd url=https://wordsmith.automatedinsights.com"``
+``npm run wdio -- --spec src/test/login/loginForRye.js --key "email=your@email.com password=y0urp4$$w0rd url=https://wordsmith.automatedinsights.com"``
 
 (alternatively, you can just save that echoed string to file.txt beforehand)
 
