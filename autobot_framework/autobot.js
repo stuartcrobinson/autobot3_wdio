@@ -123,7 +123,7 @@ export class Autobot {
 /******************************** config *************************************/
 
 //@ts-ignore
-export const options = global._options;
+export const options = global.autobotOptions;
 
 
 
@@ -189,7 +189,7 @@ export let driver;
 export let currentTest, currentSpec, currentTestCustom;
 
 
-export let livy = new Livy(true, options.noPics ? false : true, false);
+export let livy = new Livy(true, global.autobotOptions.noPics ? false : true, false);
 
 beforeEach(function () {
   currentTest = this.currentTest;

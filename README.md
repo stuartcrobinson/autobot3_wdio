@@ -6,7 +6,7 @@ HOW TO RUN:
 then
 
 
-``npm run wdio -- --spec src/test/loginForRye.test.js --email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com``
+``npm run wdio -- --spec src/test/loginForRye.test.js --email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com --noPics``
 
 
 

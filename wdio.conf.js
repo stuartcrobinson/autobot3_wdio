@@ -48,10 +48,10 @@ let yargsParsed = yargsParse(process.argv);
 _options = optionsFile
 _options = { ..._options, ...yargsParsed }
 
-global._options = _options
+global.autobotOptions = _options
 
-// console.log("global._options:");
-// console.log(global._options);
+// console.log("global.autobotOptions:");
+// console.log(global.autobotOptions);
 
 // const validParams = ['email', 'password', 'url', 'noPics', 'notHeadless']
 
@@ -124,7 +124,7 @@ exports.config = {
     maxInstances: 5,
     //
     browserName: 'chrome',
-    chromeOptions: global._options.notHeadless ? {} : {
+    chromeOptions: global.autobotOptions.notHeadless ? {} : {
       args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
       binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
     }
