@@ -1,6 +1,6 @@
 // @ts-check
 
-import { assert } from 'chai';
+import assert from 'assert';
 import { options } from '../../autobot_framework/autobot';
 import { createAProjectPage } from '../support/wordsmith/misc/page/createAProject.page';
 import { loginPage } from '../support/wordsmith/misc/page/login.page';

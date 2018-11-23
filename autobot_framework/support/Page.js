@@ -1,11 +1,11 @@
 // @ts-check
-import { options } from '../autobot';
-import { Component } from './Component';
+import { options, livy, abStyle } from '../autobot';
+import { Container } from './Container';
 
 /**
  * Parent class for a Page Object.
  */
-export class Page extends Component {
+export class Page extends Container {
   // maybe this should have url sometimes?  what's the difference in a page and a component ...
 
   // page: url
@@ -14,7 +14,7 @@ export class Page extends Component {
    *
    * @param {String} urlPath starts with "/" https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
    */
-  constructor(urlPath = undefined) {
+  constructor(urlPath = '/') {
     if (urlPath && !urlPath.startsWith('/')) {
       throw new Error('urlPath should start with forward slash (/)');
     }
@@ -23,11 +23,24 @@ export class Page extends Component {
   }
 
 
+  get pageName() { return this.constructor.name; }
+
   /**
    * TODO -- first check to see if it's already loaded.  don't load if so.
    */
   load() {
-    browser.url(options.url + this.urlPath);
+    // if (!this.urlPath){
+    //   throw new Error("urlPath is undefined");
+    // }
+    // console.log(`loading: ${options.url}${this.urlPath}`);
+    const url = options.url + this.urlPath;
+
+    livy.logAction2([
+      { text: 'Load ', style: abStyle.verb },
+      { text: `${this.pageName} Page `, style: abStyle.object },
+      { text: options.url + this.urlPath, style: abStyle.selector }]);
+
+    browser.url(url);
     super.waitForLoad();
   }
 

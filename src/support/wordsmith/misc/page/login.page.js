@@ -1,18 +1,20 @@
 // @ts-check
-import { loadPage } from  '../../../../../autobot_framework/autobot';
+import { loadPage } from '../../../../../autobot_framework/autobot';
 import { toast } from '../component/toast.comp';
 import { dashboardPage } from './dashboard.page';
 import { Page } from '../../../../../autobot_framework/support/Page';
 import { AbElement } from '../../../../../autobot_framework/support/AbElement';
 
 export const loginPage = new class Login extends Page {
-  constructor() {
-    super();
+  constructor(urlPath) {
+    super(urlPath);
     this.emailInput = new AbElement('input.email').tagAsLoadCriterion();
     this.passwordInput = new AbElement('input.password').tagAsLoadCriterion();
     this.logInButton = new AbElement('input[value="Log In"]');
     this.toast_signedOutSuccessfully = toast.withMessage('Signed out successfully.');
     this.toast_invalidEmailOrPwd = toast.withMessage('Invalid Email or password.');
+    this.headerLogoLink = new AbElement('.header__logo').tagAsLoadCriterion();
+    this.header = new AbElement('.header').tagAsLoadCriterion();
     super.nameElements();
   }
 

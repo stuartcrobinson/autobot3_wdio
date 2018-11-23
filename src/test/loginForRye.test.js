@@ -1,5 +1,5 @@
 // @ts-check
-import { assert } from 'chai';
+import assert from 'assert';
 import { options } from '../../autobot_framework/autobot';
 import { sidebar } from '../support/wordsmith/misc/component/sideBar.comp';
 import { loginPage } from '../support/wordsmith/misc/page/login.page';

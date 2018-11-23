@@ -11,6 +11,7 @@ class SettingsDropdownComp extends AbElement {
     this.legalLink = this.getChild("//*[*='gavel']");
     this.customerAdminLink = this.getChild("//*[*='lock_outline']");
     this.signOutLink = this.getChild("//*[*='exit_to_app']");
+    this.greetingSpan = this.getChild("//*[@class='account_menu__greeting']");
     super.nameElements();
   }
 }

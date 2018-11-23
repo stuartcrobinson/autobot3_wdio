@@ -13,6 +13,7 @@ export const dashboardPage = new class Dashboard extends Page {
     this.projectsTabLink = new AbElement('//a[text()="Projects"]');
     this.downloadsTabLink = new AbElement('//a[text()="Downloads"]').tagAsLoadCriterion();
     this.table = new Table();
+    this.projectsTableBody = new AbElement('tbody');
 
     super.nameElements();
   }

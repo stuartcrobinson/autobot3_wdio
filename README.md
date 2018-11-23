@@ -50,5 +50,6 @@ STYLE RULES
 *  super.nameElements(); must be called at the end of every page object constructor
 *  do not call "browser" from tests.  must be wrapped in autobot functions for proper logging and error handling.
 *  all files must start with //@ts-check
+*  do NOT use chai.assert - too easy to mistakenly code: `assert(x)`
 
  

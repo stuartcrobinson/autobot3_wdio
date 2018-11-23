@@ -1,5 +1,5 @@
 // @ts-check
-import { Component } from './Component';
+import { Container } from './Container';
 import {
   abStyle,
   livy,
@@ -19,7 +19,7 @@ function getParentFromStack(stack) {
  * 2.  custom logging per relevant action
  * 3.  child web elements
  */
-export class AbElement extends Component {
+export class AbElement extends Container {
   static $(selector) {
     return new AbElement(selector);
   }

@@ -11,6 +11,8 @@ import * as path from 'path';
 
 const entities = new AllHtmlEntities();
 
+/*  TODO - this file is terrible.  should be broken up.  */
+
 function passthrough(message) {
   return message;
 }
@@ -314,25 +316,51 @@ export class Livy {
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
 
+  logFailedVisualTest(diffImageFilePath) {
+    this.logAction2([{ text: 'Visual test failed. ', style: colors.red }]);
 
-  logWithoutPrefix(message, inputStyle) {
-    let style = inputStyle;
+    this.logWithoutPrefix_toHtml('Diff image: ', colors.red);
 
+    const html = `<img style="width:35%" src="${diffImageFilePath}"><br>`;
+    fs.appendFileSync(this.getFile(), html + os.EOL);
+  }
+
+  logWithoutPrefix(message, style) {
+    this.logWithoutPrefix_toConsole(message, style);
+    this.logWithoutPrefix_toHtml(message, style);
+    // const htmlStyle = convertNpmColorsToCss(style);
+
+    // if (!style) {
+    //   style = passthrough;
+    // }
+
+    // const html = `<span style="white-space:pre;${htmlStyle}">${entities.encode(message)}</span><br/>`;
+    // fs.appendFileSync(this.getFile(), html + os.EOL);
+
+    // if (this.livyDoDisplay) {
+    //   console.log(style(message));
+    // }
+  }
+
+  /* eslint no-param-reassign: "off" */
+  logWithoutPrefix_toHtml(message, style) {
     const htmlStyle = convertNpmColorsToCss(style);
 
+    const html = `<span style="white-space:pre;${htmlStyle}">${entities.encode(message)}</span><br/>`;
+    fs.appendFileSync(this.getFile(), html + os.EOL);
+  }
+
+  /* eslint no-param-reassign: "off" */
+  logWithoutPrefix_toConsole(message, style) {
     if (!style) {
       style = passthrough;
     }
-
-    // TODO start here -- not enough stylres are supported
-    const html = `<span style="white-space:pre;${htmlStyle}">${entities.encode(message)}</span><br/>`;
-    // fs.appendFileSync(file, message + os.EOL);
-    fs.appendFileSync(this.getFile(), html + os.EOL);
 
     if (this.livyDoDisplay) {
       console.log(style(message));
     }
   }
+
 
   // run this before "it"
   logTestStart() {
@@ -364,19 +392,13 @@ export class Livy {
 
   logFailed(stack) {
     // @ts-ignore
-    const screenshotId = this.logAction2({ text: 'FAIL', style: colors.red.bold });
-    this.logReportError(stack);
+    const screenshotId = this.logAction2([{ text: 'FAIL', style: colors.red.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
+
+    this.logReportError(stack);
   }
 
   logAfterEachStuff(testDidPass, stack) {
-    // let livy = global.livy;
-
-
-    // let testDidPass = test.passed   //this.currentTest.state === "passed"
-    // let stack = test.err.stack      //this.currentTest.err.stack
-
-
     // // if test passed, ignore, else take and save screenshot.
     if (testDidPass) {
       this.logPassed();

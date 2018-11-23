@@ -4,7 +4,7 @@
  * Any class that contains custom web element objects.
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
-export class Component {
+export class Container {
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
    * This adds a custom name parameter to each element object so that the variable's name
@@ -31,10 +31,7 @@ export class Component {
     }
   }
 
-  /**
-   *
-   */
-  get loadCriteriaElements() {
+  get criteriaElements() {
     const abElements = [];
 
     for (const propName in this) {
@@ -52,16 +49,16 @@ export class Component {
   }
 
   waitForLoad(timeoutInMillis = 12000) {
-    for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-      const element = this.loadCriteriaElements[i];
+    for (let i = 0; i < this.criteriaElements.length; i++) {
+      const element = this.criteriaElements[i];
       // @ts-ignore
       element.waitForExist(timeoutInMillis);
     }
   }
 
   isLoaded() {
-    for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-      const element = this.loadCriteriaElements[i];
+    for (let i = 0; i < this.criteriaElements.length; i++) {
+      const element = this.criteriaElements[i];
       // @ts-ignore
       element.getWebElement();
     }

@@ -12,9 +12,21 @@ function getScreenshotName(basePath) {
     var browserWidth = browserViewport.width;
     var browserHeight = browserViewport.height;
 
-    return path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
+    const result = path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
+
+    /* Used to display the diff image in the html report. */
+    global.previousImageFileLocation = result;
+
+    if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
+      console.log('dawefawefdf deleting ' + result)
+      fs.unlinkSync(result);
+    }
+
+    return result;
   };
 }
+
+global.getScreenshotName = getScreenshotName;
 
 var yargsParse = require('yargs-parser');
 var stringArgv = require('string-argv');

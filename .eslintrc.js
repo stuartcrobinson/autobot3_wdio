@@ -21,7 +21,7 @@ module.exports = {
         "no-use-before-define": "off",
         "no-underscore-dangle": "off",
         "func-names": "off",
-        // "eqeqeq": "off",
+        "no-unused-vars": "off",
         // "eqeqeq": "off",
         // "curly": "error",
         // "quotes": ["error", "double"]

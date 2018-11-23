@@ -1,6 +1,8 @@
-// @ts-check
 import { autobotBrowser, logMessage } from '../../../../../autobot_framework/autobot';
+// import { autobotBrowser, logMessage } from 'autobot_framework';
+
 import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+// import { AbElement } from 'support/AbElement';
 import { Page } from '../../../../../autobot_framework/support/Page';
 
 export const createAProjectPage = new class CreateAProject extends Page {

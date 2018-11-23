@@ -1,5 +1,7 @@
 notes
 
+TODO - need to add ability to reset reference image instead of having to manually find image and delete
+
 
 TODOS:
 

@@ -1,5 +1,5 @@
 // @ts-check
-import { assert } from 'chai';
+import assert from 'assert';
 import { livy } from '../../autobot_framework/autobot';
 import { Load } from '../../autobot_framework/support/hooks';
 import { editorPage } from '../support/wordsmith/editor/editor.page';

@@ -2,6 +2,7 @@
 import axios, { AxiosPromise } from 'axios';
 import colors from 'colors/safe';
 import { Livy } from './support/Livy';
+import { AssertionError } from 'assert';
 
 /* ******************************* wrapped *************************************/
 
@@ -118,6 +119,41 @@ export class Autobot {
     });
 
   }
+
+  /**
+   * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
+   * 
+   * To reset the reference image, replace `checkVisual(...)` with `resetVisual(...)` and re-run.
+   * @param  excludedElements AbElement - cssSelectors or xpaths for sections of the screen to ignore
+   */
+  static checkVisual(...excludedElements) {
+
+
+    const excludedSelectors = excludedElements.map(abElement => abElement.selector)
+
+
+    // @ts-ignore
+    const report = browser.checkDocument({ hide: excludedSelectors })[0];
+
+    if (!report.isWithinMisMatchTolerance) {
+      // @ts-ignore
+      livy.logFailedVisualTest(global.previousImageFileLocation);
+      throw new AssertionError({ message: "Visual test failed." });
+    }
+  }
+
+
+  static resetVisual(...excludedElements) {
+    // this is sloppy but i'm not sure how to determine the ref image name - stuart 11/22/2018
+
+    // @ts-ignore
+    global.doDeleteReferenceImage = true;
+    this.checkVisual(...excludedElements);
+    // @ts-ignore
+    global.doDeleteReferenceImage = false;
+  }
+
+
 };
 
 /******************************** config *************************************/
@@ -188,7 +224,7 @@ export const autobotBrowser = new class AutobotBrowser {
 export let driver;
 export let currentTest, currentSpec, currentTestCustom;
 
-
+// @ts-ignore
 export let livy = new Livy(true, global.autobotOptions.noPics ? false : true, false);
 
 beforeEach(function () {

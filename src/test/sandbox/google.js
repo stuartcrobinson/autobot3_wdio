@@ -1,5 +1,5 @@
 // // @ts-check
-import { assert } from 'chai';
+import  assert  from 'assert';
 import * as autobot from '../../../autobot_framework/autobot';
 import { googlePage } from '../../support/wordsmith/misc/page/google.page';
 import { ApplicationCacheStatus } from 'webdriverio';
