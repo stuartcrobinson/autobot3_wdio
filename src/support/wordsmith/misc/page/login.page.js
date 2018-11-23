@@ -2,7 +2,7 @@
 import { loadPage } from '../../../../../autobot_framework/autobot';
 import { toast } from '../component/toast.comp';
 import { dashboardPage } from './dashboard.page';
-import { WordsmithPage } from '../../../../../autobot_framework/support/Page';
+import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 export const loginPage = new class Login extends WordsmithPage {

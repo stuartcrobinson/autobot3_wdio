@@ -1,5 +1,4 @@
 // // @ts-check
-import { UiElement } from '../../../autobot_framework/support/UiElement';
 
 console.log("here GoogleTest afewefef")
 
@@ -7,6 +6,7 @@ console.log("here GoogleTest afewefef")
 var _ = require('lodash');
 
 import { countBy } from 'lodash';
+import { UiElement } from '../autobot_framework/support/UiElement';
 
 
 // var ar = [6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 2, 2, 2, 2];

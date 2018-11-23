@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from "../../../../../autobot_framework/support/Page";
+import { WordsmithPage } from "../../../../../autobot_framework/support/WordsmithPage";
 import { UiElement } from "../../../../../autobot_framework/support/UiElement";
 
 

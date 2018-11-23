@@ -120,39 +120,6 @@ export class Autobot {
 
   }
 
-  /**
-   * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
-   * 
-   * To reset the reference image, replace `checkVisual(...)` with `resetVisual(...)` and re-run.
-   * @param  excludedElements UiElement - cssSelectors or xpaths for sections of the screen to ignore
-   */
-  static checkVisual(...excludedElements) {
-
-
-    const excludedSelectors = excludedElements.map(uiElement => uiElement.selector)
-
-
-    // @ts-ignore
-    const report = browser.checkDocument({ hide: excludedSelectors })[0];
-
-    if (!report.isWithinMisMatchTolerance) {
-      // @ts-ignore
-      livy.logFailedVisualTest(global.previousImageFileLocation);
-      throw new AssertionError({ message: "Visual test failed." });
-    }
-  }
-
-
-  static resetVisual(...excludedElements) {
-    // this is sloppy but i'm not sure how to determine the ref image name - stuart 11/22/2018
-
-    // @ts-ignore
-    global.doDeleteReferenceImage = true;
-    this.checkVisual(...excludedElements);
-    // @ts-ignore
-    global.doDeleteReferenceImage = false;
-  }
-
 
 };
 
@@ -177,15 +144,15 @@ export const abStyle = new class AutobotSyles {
 
 
 
-export function log(messages) {
-  const screenshotId = livy.logAction2(messages);
-  livy.setMouseoverEventScreenshotFunction(screenshotId);
-}
+// export function logScreenshottedAction(messages) {
+//   const screenshotId = livy.logAction2(messages);
+//   livy.setMouseoverEventScreenshotFunction(screenshotId);
+// }
 
-export function logMessage(message) {
-  const screenshotId = livy.logMessage(message);
-  livy.setMouseoverEventScreenshotFunction(screenshotId);
-}
+// export function logScreenshottedAction(message) {
+//   const screenshotId = livy.logMessage(message);
+//   livy.setMouseoverEventScreenshotFunction(screenshotId);
+// }
 
 // /******************************** browser ************************************/
 /**
@@ -205,7 +172,7 @@ export const autobotBrowser = new class AutobotBrowser {
 
   keys(keysToType, doLog = true) {
     if (doLog) {
-      log([
+      livy.logScreenshottedAction([
         { text: 'Type ', style: abStyle.verb },
         { text: keysToType, style: abStyle.object }]);
     }
@@ -225,7 +192,12 @@ export let driver;
 export let currentTest, currentSpec, currentTestCustom;
 
 // @ts-ignore
-export let livy = new Livy(true, global.autobotOptions.noPics ? false : true, false);
+export let livy =
+  new Livy(
+    options.muteConsole ? false : true,
+    options.noPics ? false : true,
+    false
+  );
 
 beforeEach(function () {
   currentTest = this.currentTest;
@@ -248,17 +220,19 @@ beforeEach(function () {
 });
 
 before(function () {
+  console.log('here global before')
   const filePath = this.test.parent.suites[0].file
   livy.initialize(filePath);
-  console.log('\nReport:\t\t', livy.reportClickablePath, '\n');
+  console.log('\nReport, in progress: ', livy.reportClickablePath, '\n');
 
   // @ts-ignore
   global.livy = livy;
 });
 
 after(function () {
-  // console.log('after global')
-  console.log('\nReport:\t\t', livy.reportClickablePath, '\n');
-  livy.endSpec();
+  if (!options.muteConsole) {
+    console.log('\nReport: ', livy.reportClickablePath, '\n');
+  }
+  livy.printLotsOfNewlines();
 });
 

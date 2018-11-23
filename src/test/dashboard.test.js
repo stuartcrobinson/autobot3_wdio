@@ -5,10 +5,10 @@ import { options } from '../../autobot_framework/autobot';
 import { createAProjectPage } from '../support/wordsmith/misc/page/createAProject.page';
 import { loginPage } from '../support/wordsmith/misc/page/login.page';
 import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
-import Table from '../support/wordsmith/table';
+import { Table } from '../support/wordsmith/table';
 
 describe('Dashboard', () => {
-  before(() => { loginPage.logIn(options.email, options.password, options.wordsmithUrl); });
+  before(() => { loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl); });
 
 
   it('"New Project" button loads the "Create a Project" input table page', () => {

@@ -8,13 +8,13 @@ export const toast = new class toast extends UiElement {
     const container = new UiElement('//div[contains(@class, "loaded-message")]');
 
     if (message) {
-      super(container.getChild(`//*[contains(text(),"${message}")]/..`).selector);
+      super(container.get(`//*[contains(text(),"${message}")]/..`).selector);
     } else {
       super(container.selector);
     }
 
-    this.xCloseIcon = container.getChild('//i[@title="Dismiss alert"]');
-    this.messageSpan = container.getChild('//span[contains(@class="message__text"]');
+    this.xCloseIcon = container.get('//i[@title="Dismiss alert"]');
+    this.messageSpan = container.get('//span[contains(@class="message__text"]');
     super.nameElements();
   }
 

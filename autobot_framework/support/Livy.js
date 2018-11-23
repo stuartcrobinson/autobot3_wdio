@@ -232,6 +232,10 @@ export class Livy {
     fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
+  logScreenshottedAction(messages) {
+    const screenshotId = this.logAction2(messages);
+    this.setMouseoverEventScreenshotFunction(screenshotId);
+  }
 
   logMessage(message) {
     return this.logAction2([{ text: message }]);
@@ -328,18 +332,17 @@ export class Livy {
   logWithoutPrefix(message, style) {
     this.logWithoutPrefix_toConsole(message, style);
     this.logWithoutPrefix_toHtml(message, style);
-    // const htmlStyle = convertNpmColorsToCss(style);
+  }
 
-    // if (!style) {
-    //   style = passthrough;
-    // }
 
-    // const html = `<span style="white-space:pre;${htmlStyle}">${entities.encode(message)}</span><br/>`;
-    // fs.appendFileSync(this.getFile(), html + os.EOL);
+  logRawToHtml(text) {
+    fs.appendFileSync(this.getFile(), text + os.EOL);
+  }
 
-    // if (this.livyDoDisplay) {
-    //   console.log(style(message));
-    // }
+  logHorizontalLine() {
+    console.log('---------------------------------------------------------------------------------------');
+    console.log('');
+    this.logRawToHtml('<hr/><br/>');
   }
 
   /* eslint no-param-reassign: "off" */
@@ -365,8 +368,9 @@ export class Livy {
   // run this before "it"
   logTestStart() {
     fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
-    this.logWithoutPrefix('---------------------------------------------------------------------------------------');
-    this.logWithoutPrefix('');
+
+
+    this.logHorizontalLine();
 
     // this.logWithoutPrefix(`Starting test: ${this.testGrandparentsTitle}`);
     // this.logWithoutPrefix(`                         ${this.testParentTitle}`, colors.blue);
@@ -414,7 +418,13 @@ export class Livy {
     this.endNewTestCase();
   }
 
-  endSpec() {
+  logSuiteFailure(stack) {
+    // // if test passed, ignore, else take and save screenshot.
+    this.logFailed(stack);
+    this.printLotsOfNewlines();
+  }
+
+  printLotsOfNewlines() {
     fs.appendFileSync(this.getFile(), `</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>${os.EOL}`);
   }
 }

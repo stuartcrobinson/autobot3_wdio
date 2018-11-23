@@ -1,8 +1,8 @@
 
 //@ts-check
 //@ts-ignore
-require('../../../autobot_framework/hooks2');
-require('../../../autobot_framework/hooks1');
+require('../autobot_framework/hooks2');
+require('../autobot_framework/hooks1');
 
 // console.log("hesaefasf")
 

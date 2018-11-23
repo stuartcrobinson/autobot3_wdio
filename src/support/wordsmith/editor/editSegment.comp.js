@@ -10,12 +10,12 @@ export class EditSegmentComp extends UiElement {
       throw new TypeError('Abstract class cannot be instantiated directly.');
     }
 
-    this.segmentPreview = this.getChild('.segment-preview').tagAsLoadCriterion();
-    this.highlightedPreviewSpan = this.getChild('.highlight');
+    this.segmentPreview = this.get('.segment-preview').tagAsLoadCriterion();
+    this.highlightedPreviewSpan = this.get('.highlight');
 
     //note: doneButton and backButton are the same element
-    this.doneButton = this.getChild('.btn-primary').tagAsLoadCriterion();
-    this.backButton = this.getChild('.back-button').tagAsLoadCriterion();
+    this.doneButton = this.get('.btn-primary').tagAsLoadCriterion();
+    this.backButton = this.get('.back-button').tagAsLoadCriterion();
     super.nameElements();
   }
 };

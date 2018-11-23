@@ -59,7 +59,7 @@ export class UiElement extends UiContainer {
     return $$(this.selector);
   }
 
-  getChild(selector) {
+  get(selector) {
     if (this.selector.startsWith('/') && selector.startsWith('/')) {
       return new UiElement(this.selector + selector);
     }
@@ -95,15 +95,12 @@ export class UiElement extends UiContainer {
       texts.push(we.getText());
     });
 
-    // console.log('in getTexts, new texts array: ');
-    // console.log(texts);
-    // console.log(typeof (texts));
-
     return texts;
   }
 
   click(doLogAndWait = true) {
     if (doLogAndWait) {
+      console.log('faweoifaweof awehrererrer');
       this.logAndWait2([
         { text: 'Click ', style: abStyle.verb },
         { text: `${this.stuartname} `, style: abStyle.object },
@@ -189,14 +186,23 @@ export class UiElement extends UiContainer {
     if (!browser.isExisting(indicatorSelector)) {
       throw new Error(`Element [${indicatorSelector}] should exist prior to clicking [${this.selector}]`);
     }
-    this.logAndWait2([
-      { text: 'Click ', style: abStyle.verb },
-      { text: `${this.stuartname} `, style: abStyle.object },
-      { text: 'then wait for element to disappear: ', style: abStyle.filler },
-      { text: indicatorSelector, style: abStyle.selector },
-      { text: ' target: ', style: abStyle.filler },
-      { text: `${this.selector} `, style: abStyle.selector },
-    ]);
+    if (indicatorSelector === this.selector) {
+      this.logAndWait2([
+        { text: 'Click ', style: abStyle.verb },
+        { text: `${this.stuartname} `, style: abStyle.object },
+        { text: 'then wait for target to disappear ', style: abStyle.filler },
+        { text: indicatorSelector, style: abStyle.selector },
+      ]);
+    } else {
+      this.logAndWait2([
+        { text: 'Click ', style: abStyle.verb },
+        { text: `${this.stuartname} `, style: abStyle.object },
+        { text: 'then wait for element to disappear: ', style: abStyle.filler },
+        { text: indicatorSelector, style: abStyle.selector },
+        { text: ' target: ', style: abStyle.filler },
+        { text: `${this.selector} `, style: abStyle.selector },
+      ]);
+    }
     browser.click(this.selector);
 
     browser.waitUntil(() => !browser.isExisting(indicatorSelector));
@@ -297,6 +303,19 @@ export class UiElement extends UiContainer {
       browser.waitUntil(() => (browser.isExisting(this.selector)), timeoutInMillis);
     } catch (err) {
       throw new Error(`Error finding ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
+    }
+  }
+
+
+  /**
+   * This is not a super reliable function since selenium isn't 100% accurate at determining visibility.
+   * @param {Number} timeoutInMillis
+   */
+  waitForVisible(timeoutInMillis = 5000) {
+    try {
+      browser.waitUntil(() => (browser.isVisible(this.selector)), timeoutInMillis);
+    } catch (err) {
+      throw new Error(`Error finding visible ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
     }
   }
 

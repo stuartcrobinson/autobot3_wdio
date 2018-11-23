@@ -1,13 +1,13 @@
 // @ts-check
 import countBy from 'lodash';
 import { UiElement } from '../../../../autobot_framework/support/UiElement';
-import { WordsmithPage } from '../../../../autobot_framework/support/Page';
+import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
 
 
 class NarrativeDiv extends UiElement {
   constructor(selector) {
     super(selector);
-    this.rowNumber = this.getChild('.row-number');
+    this.rowNumber = this.get('.row-number');
     super.nameElements();
   }
   getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }

@@ -5,17 +5,22 @@ var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 function getScreenshotName(basePath) {
   return function (context) {
     var type = context.type;
-    var testName = context.test.title;
+    var testName = context.test.fullTitle;
     var browserVersion = parseInt(context.browser.version, 10);
     var browserName = context.browser.name;
     var browserViewport = context.meta.viewport;
     var browserWidth = browserViewport.width;
     var browserHeight = browserViewport.height;
 
-    const result = path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
+    const tag = global.customScreenshotTag;
+
+    const result = path.join(basePath, `${testName}_${type}_${tag}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
+    // const result = path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
 
     /* Used to display the diff image in the html report. */
     global.previousImageFileLocation = result;
+
+
 
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
       console.log('dawefawefdf deleting ' + result)
@@ -332,8 +337,20 @@ exports.config = {
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
-  // afterSuite: function (suite) {
-  // },
+  afterSuite: function (suite) {
+    console.log("in wdio.conf afterSuite: 8u98u98--------------------------------------------------------------------------------")
+    console.log(suite)
+
+    if (suite.err) {
+      if (global.livy) {
+
+        // let testDidPass = test.passed;   //this.currentTest.state === "passed"
+        // let stack = testDidPass ? '' : test.err.stack;      //this.currentTest.err.stack
+
+        global.livy.logSuiteFailure(suite.err.stack);
+      }
+    }
+  },
 
   /**
    * Runs after a WebdriverIO command gets executed

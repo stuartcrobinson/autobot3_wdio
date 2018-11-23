@@ -1,6 +1,11 @@
 notes
 
-TODO - need to add ability to reset reference image instead of having to manually find image and delete
+
+
+X TODO - need to add ability to reset reference image instead of having to manually find image and delete
+
+* TODO - make sure errors in before/after functions are printed to livy log
+          * TODO - handle newline printing.  aka don't print newlines in "after" if we never reached a test case . 
 
 
 TODOS:

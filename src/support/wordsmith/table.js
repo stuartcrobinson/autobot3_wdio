@@ -8,7 +8,7 @@ import { UiElement } from '../../../autobot_framework/support/UiElement';
 /**
   The state of a Table object is not based on table columns and values, but rather which column is currently being either "selected" or "referenced" during a table action such as sorting or retrieving a value in one ("selected") column based on another ("reference") column's value.
  */
-export default class Table extends UiElement {
+export class Table extends UiElement {
 
   static isIncreasing(values) {
 
@@ -46,7 +46,7 @@ export default class Table extends UiElement {
 
   getHeader(headerName) {
     let header = this
-      .getChild(`//th/div[text()="${headerName}"]`)
+      .get(`//th/div[text()="${headerName}"]`)
       .setName(`'${headerName}' column header`);
 
 

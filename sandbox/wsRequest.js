@@ -1,7 +1,6 @@
 
 // @ts-check
-import { Autobot } from '../../../autobot_framework/autobot';
-import { data } from '../../../autobot_framework/support/hooks';
+import { Autobot } from '../autobot_framework/autobot';
 
 console.log("in requests.tes.js")
 

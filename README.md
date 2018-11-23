@@ -6,7 +6,7 @@ HOW TO RUN:
 then
 
 
-``npm run wdio -- --spec src/test/loginForRye.test.js --email your@email.com --password y0urp4$$w0rd --url https://wordsmith.automatedinsights.com --noPics``
+``npm run wdio -- --spec src/test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com --noPics``
 
 
 
@@ -47,9 +47,10 @@ notes:
 STYLE RULES
 
 *  at some point after running x = Autobot.httpRequestCreateProject_begin(...), you must run Autobot.httpRequestComplete(x);
-*  super.nameElements(); must be called at the end of every page object constructor
+*  super.nameElements(); must be called at the end of every element container constructor
 *  do not call "browser" from tests.  must be wrapped in autobot functions for proper logging and error handling.
 *  all files must start with //@ts-check
 *  do NOT use chai.assert - too easy to mistakenly code: `assert(x)`
+*  actually, don't `assert` at all.  each step should fail-fast. asserts are pointless clutter
 
  

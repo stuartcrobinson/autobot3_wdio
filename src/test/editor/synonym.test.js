@@ -1,7 +1,7 @@
 // @ts-check
 import { expect } from 'chai';
 import { countBy } from 'lodash';
-import { autobotBrowser, livy } from '../../../autobot_framework/autobot';
+import { livy } from '../../../autobot_framework/autobot';
 import { AutobotAssert } from '../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../autobot_framework/support/hooks';
 import { editorPage } from '../../support/wordsmith/editor/editor.page';

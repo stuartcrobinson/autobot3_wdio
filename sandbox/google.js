@@ -1,8 +1,4 @@
 // // @ts-check
-import  assert  from 'assert';
-import * as autobot from '../../../autobot_framework/autobot';
-import { googlePage } from '../../support/wordsmith/misc/page/google.page';
-import { ApplicationCacheStatus } from 'webdriverio';
 
 // console.log("here GoogleTest afewefef")
 

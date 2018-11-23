@@ -1,48 +1,36 @@
-/* eslint no-multi-assign: "off" */
-/*  eslint no-undef: "off" */
-
-import assert from 'assert';
-import { options, Autobot } from '../../autobot_framework/autobot';
-import { sidebar } from '../support/wordsmith/misc/component/sideBar.comp';
-import { loginPage } from '../support/wordsmith/misc/page/login.page';
+// @ts-check
+import { options } from '../../autobot_framework/autobot';
 import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
+import { loginPage } from '../support/wordsmith/misc/page/login.page';
 
-const path = require('path');
 
 describe('Login', () => {
   it('with invalid creds', () => {
-    loginPage.attemptLogIn(options.email, `${options.password}invalid`, options.wordsmithUrl);
+    loginPage.attemptLogIn(options.wsLogin, `${options.wsPassword}invalid`, options.wsUrl);
 
     loginPage.checkVisual(loginPage.emailInput);
 
-    // Autobot.checkVisual(loginPage.emailInput);
     loginPage.toast_invalidEmailOrPwd.close();
   });
 
-  it('login and click Settings', () => {
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
 
-    // sidebar.signOut();
+  describe('with valid creds', () => {
+    it('click Settings', () => {
+      loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
 
-    sidebar.settingsLink.click();
-    sidebar.settingsMenu.signOutLink.waitForExist();
+      dashboardPage.sidebar.settingsLink.click_waitForChange();
 
-    dashboardPage.checkVisual(dashboardPage.projectsTableBody, sidebar.settingsMenu.greetingSpan);
+      dashboardPage.checkVisual(
+        dashboardPage.projectsTableBody,
+        dashboardPage.sidebar.settingsMenu.greetingSpan,
+        dashboardPage.paginationContainer,
+      );
+    });
 
-    Autobot.checkVisual(dashboardPage.projectsTableBody, sidebar.settingsMenu.greetingSpan);
+    it('click Sign Out', () => {
+      dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
+
+      loginPage.toast_signedOutSuccessfully.checkVisual();
+    });
   });
-
-  // TODO start here.  finish this test with smart vis logging and REMOVE ASSERTS they're just pointless clutter
-
-
-  it('logout', () => {
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
-
-    Autobot.checkVisual(loginPage.emailInput);
-
-    sidebar.signOut();
-    assert(loginPage.isLoaded(), 'Login page should be loaded.');
-  });
-
-  // src/test/login.test.js///Users/stuartrobinson/repos/autobot3_wdio/src/test/login.test.js
 });

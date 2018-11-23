@@ -5,7 +5,7 @@ import { dashboardPage, loginPage } from '../../support/wordsmith/pages';
 
 describe('Login', () => {
   it('with valid creds should load the dashboard', () => {
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
     assert(dashboardPage.isLoaded(), 'Dashboard page should be loaded.');
   });
 });

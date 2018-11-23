@@ -1,4 +1,6 @@
+/* eslint no-unreachable: "off" */
 // @ts-check
+
 import { assert } from 'chai';
 import { editorPage } from '../../src/support/wordsmith/editor/editor.page';
 import { loginPage } from '../../src/support/wordsmith/misc/page/login.page';
@@ -28,15 +30,17 @@ export const data = [{
  */
 export class Load {
   static dashboard() {
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
   }
 
   // TODO refactor:
 
+
   static newTemplateEditor() {
+    throw new Error('dummy error');
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
     Autobot.httpRequestComplete(httpRequestPromise);
     browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();
@@ -46,7 +50,7 @@ export class Load {
   static newTemplateEditorUsingDataFile(file) {
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
-    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
     Autobot.httpRequestComplete(httpRequestPromise);
     browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();

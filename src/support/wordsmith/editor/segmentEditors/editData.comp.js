@@ -18,11 +18,11 @@ export class EditDataDropdown extends UiElement {
 export class CapitalizationDropdown extends EditDataDropdown {
   constructor(dropdownButtonSelector) {
     super(dropdownButtonSelector);
-    this.keepAsIs = this.getChild(nthDropDownOptionFromButton(1));
-    this.firstWord = this.getChild(nthDropDownOptionFromButton(2));
-    this.eachWord = this.getChild(nthDropDownOptionFromButton(3));
-    this.eachLetter = this.getChild(nthDropDownOptionFromButton(4));
-    this.noLetters = this.getChild(nthDropDownOptionFromButton(5));
+    this.keepAsIs = this.get(nthDropDownOptionFromButton(1));
+    this.firstWord = this.get(nthDropDownOptionFromButton(2));
+    this.eachWord = this.get(nthDropDownOptionFromButton(3));
+    this.eachLetter = this.get(nthDropDownOptionFromButton(4));
+    this.noLetters = this.get(nthDropDownOptionFromButton(5));
     super.nameElements();
   }
 }
@@ -43,7 +43,7 @@ export class EditDataComp extends EditSegmentComp {
       throw new TypeError('Abstract class cannot be instantiated directly.');
     }
 
-    this.dataVarNameSpan = this.getChild('.segment__header-datavar').tagAsLoadCriterion();
+    this.dataVarNameSpan = this.get('.segment__header-datavar').tagAsLoadCriterion();
     super.nameElements();
   }
 };

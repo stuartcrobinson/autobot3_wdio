@@ -1,3 +1,7 @@
+import { AssertionError } from 'assert';
+import filenamify from 'filenamify';
+import { livy } from '../autobot';
+
 // @ts-check
 
 /**
@@ -73,5 +77,61 @@ export class UiContainer {
   /* eslint class-methods-use-this: "off" */
   findWebElement(selector) {
     return $(selector);
+  }
+
+  /**
+   * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
+   *
+   * To reset the reference image, replace `checkVisual(...)` with `resetVisual(...)` and re-run.
+   * @param  excludedElements UiElement - cssSelectors or xpaths for sections of the screen to ignore
+   */
+  checkVisual(...excludedElements) {
+    // console.log(this.constructor.name)
+
+    excludedElements.forEach((uiElement) => {
+      uiElement.waitForVisible();
+    });
+
+    const excludedSelectors = excludedElements.map(uiElement => uiElement.selector);
+
+    let report;
+    if (this.selector) {
+      // is an element
+
+      this.waitForExist();
+
+      global.customScreenshotTag = filenamify(this.selector);
+
+      /* eslint prefer-destructuring: "off" */
+      report = browser.checkElement(this.selector, { hide: excludedSelectors })[0];
+    } else {
+      // is a page
+
+
+      this.waitForLoad();
+
+      global.customScreenshotTag = `${this.constructor.name}Page`;
+
+      /* eslint prefer-destructuring: "off" */
+      report = browser.checkDocument({ hide: excludedSelectors })[0];
+    }
+
+    // @ts-ignore
+    if (!report.isWithinMisMatchTolerance) {
+      // @ts-ignore
+      livy.logFailedVisualTest(global.previousImageFileLocation);
+      throw new AssertionError({ message: 'Visual test failed.' });
+    }
+    global.customScreenshotTag = undefined;
+  }
+
+  resetVisual(...excludedElements) {
+    // this is sloppy but i'm not sure how to determine the ref image name - stuart 11/22/2018
+
+    // @ts-ignore
+    global.doDeleteReferenceImage = true;
+    this.checkVisual(...excludedElements);
+    // @ts-ignore
+    global.doDeleteReferenceImage = false;
   }
 }

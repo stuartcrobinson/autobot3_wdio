@@ -7,8 +7,8 @@ import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 class SynonymBox extends UiElement {
   constructor(selector) {
     super(selector);
-    this.xCloseButton = this.getChild('.delete-button');
-    this.textInput = this.getChild('.public-DraftEditor-content');
+    this.xCloseButton = this.get('.delete-button');
+    this.textInput = this.get('.public-DraftEditor-content');
     super.nameElements();
 
   }
@@ -17,7 +17,7 @@ export const editSynonymComp = new class EditSynonymComp extends EditSegmentComp
   constructor() {
     super();
 
-    this.addAnotherSynonymLink = this.getChild('.insert-wrapper span a').tagAsLoadCriterion();
+    this.addAnotherSynonymLink = this.get('.insert-wrapper span a').tagAsLoadCriterion();
     this.synonymBox1 = this.getNthSynonymBox(1).tagAsLoadCriterion();
     this.synonymBox2 = this.getNthSynonymBox(2);
     this.synonymBox3 = this.getNthSynonymBox(3);
