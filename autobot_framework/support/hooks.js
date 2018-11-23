@@ -28,7 +28,7 @@ export const data = [{
  */
 export class Load {
   static dashboard() {
-    loginPage.logIn(options.email, options.password, options.url);
+    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
   }
 
   // TODO refactor:
@@ -36,7 +36,7 @@ export class Load {
   static newTemplateEditor() {
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
-    loginPage.logIn(options.email, options.password, options.url);
+    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
     Autobot.httpRequestComplete(httpRequestPromise);
     browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();
@@ -46,7 +46,7 @@ export class Load {
   static newTemplateEditorUsingDataFile(file) {
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
-    loginPage.logIn(options.email, options.password, options.url);
+    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
     Autobot.httpRequestComplete(httpRequestPromise);
     browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();

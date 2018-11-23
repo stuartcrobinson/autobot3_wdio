@@ -1,7 +1,7 @@
 // @ts-check
 import { abStyle, livy } from '../autobot';
 /* eslint no-unused-vars: "off" */
-import { AbElement } from './AbElement';
+import { UiElement } from './UiElement';
 
 
 /** ****************************** assert ************************************* */
@@ -13,49 +13,49 @@ export class AutobotAssert {
 
   /**
    *
-   * @param {AbElement} abElement
+   * @param {UiElement} uiElement
    * @param {String} expected
    * @param {Number} timoutMillis
    */
-  static elementText(abElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
+  static elementText(uiElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
       { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname}`, style: abStyle.object },
+      { text: `${uiElement.stuartname}`, style: abStyle.object },
       { text: "'s text is ", style: abStyle.filler },
       { text: expected, style: abStyle.object },
-      { text: ` ${abElement.selector}`, style: abStyle.selector }]);
+      { text: ` ${uiElement.selector}`, style: abStyle.selector }]);
 
     try {
-      abElement.waitForExist();
-      browser.waitUntil(() => abElement.getWebElement().getText() === expected, timoutMillis);
+      uiElement.waitForExist();
+      browser.waitUntil(() => uiElement.getWebElement().getText() === expected, timoutMillis);
     } catch (err) {
       console.log('original error:');
       console.log(err);
-      throw new Error(`Element "${abElement.stuartname}"'s text is "${abElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${abElement.selector}`);
+      throw new Error(`Element "${uiElement.stuartname}"'s text is "${uiElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${uiElement.selector}`);
     }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
   /**
    *
-   * @param {AbElement} abElement
+   * @param {UiElement} uiElement
    * @param {Number} timoutMillis
    */
-  static elementExists(abElement, timoutMillis = defaultAutobotTimeoutMillis) {
+  static elementExists(uiElement, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
       { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname} `, style: abStyle.object },
+      { text: `${uiElement.stuartname} `, style: abStyle.object },
       { text: 'exists ', style: abStyle.verb },
-      { text: abElement.selector, style: abStyle.selector }]);
-    // browser.waitUntil(() => abElement.isExisting(), timoutMillis);
-    // assert(abElement.isExisting());
+      { text: uiElement.selector, style: abStyle.selector }]);
+    // browser.waitUntil(() => uiElement.isExisting(), timoutMillis);
+    // assert(uiElement.isExisting());
 
     try {
-      browser.waitUntil(() => abElement.isExisting(), timoutMillis);
+      browser.waitUntil(() => uiElement.isExisting(), timoutMillis);
     } catch (err) {
       console.log('original error:');
       console.log(err);
-      throw new Error(`Element "${abElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${abElement.selector}`);
+      throw new Error(`Element "${uiElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${uiElement.selector}`);
     }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }

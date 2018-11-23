@@ -1,15 +1,15 @@
 import { autobotBrowser, logMessage } from '../../../../../autobot_framework/autobot';
 // import { autobotBrowser, logMessage } from 'autobot_framework';
 
-import { AbElement } from '../../../../../autobot_framework/support/AbElement';
-// import { AbElement } from 'support/AbElement';
-import { Page } from '../../../../../autobot_framework/support/Page';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
+// import { UiElement } from 'support/UiElement';
+import { WordsmithPage } from '../../../../../autobot_framework/support/Page';
 
-export const createAProjectPage = new class CreateAProject extends Page {
+export const createAProjectPage = new class CreateAProject extends WordsmithPage {
   constructor() {
     super();
-    this.dataInputTable = new AbElement('.wizard-table-wrapper').tagAsLoadCriterion();
-    this.createProjectButton = new AbElement('//button[text()="Create Project"]').tagAsLoadCriterion();
+    this.dataInputTable = new UiElement('.wizard-table-wrapper').tagAsLoadCriterion();
+    this.createProjectButton = new UiElement('//button[text()="Create Project"]').tagAsLoadCriterion();
     super.nameElements();
   }
 
@@ -23,7 +23,7 @@ export const createAProjectPage = new class CreateAProject extends Page {
 
         const id = we.getAttribute("id")
 
-        new AbElement('//*[@id="' + id + '"]').click(false);
+        new UiElement('//*[@id="' + id + '"]').click(false);
 
         autobotBrowser.keys(we.getAttribute("placeholder"), false)
       })

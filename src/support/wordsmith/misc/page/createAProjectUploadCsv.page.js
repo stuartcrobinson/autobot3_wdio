@@ -1,14 +1,14 @@
 // @ts-check
-import { Page } from "../../../../../autobot_framework/support/Page";
-import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+import { WordsmithPage } from "../../../../../autobot_framework/support/Page";
+import { UiElement } from "../../../../../autobot_framework/support/UiElement";
 
 
 
-export const createAProjectUploadCsvPage = new class CreateAProject extends Page {
+export const createAProjectUploadCsvPage = new class CreateAProject extends WordsmithPage {
   constructor() {
     super();
-    this.nameYourProjectField = new AbElement('#name').tagAsLoadCriterion();
-    this.fileUploadInput = new AbElement('#file-upload');
+    this.nameYourProjectField = new UiElement('#name').tagAsLoadCriterion();
+    this.fileUploadInput = new UiElement('#file-upload');
     super.nameElements();
   }
 

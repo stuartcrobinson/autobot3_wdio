@@ -1,5 +1,5 @@
 // @ts-check
-import { Container } from './Container';
+import { UiContainer } from './UiContainer';
 import {
   abStyle,
   livy,
@@ -19,9 +19,9 @@ function getParentFromStack(stack) {
  * 2.  custom logging per relevant action
  * 3.  child web elements
  */
-export class AbElement extends Container {
+export class UiElement extends UiContainer {
   static $(selector) {
-    return new AbElement(selector);
+    return new UiElement(selector);
   }
 
   /**
@@ -61,10 +61,10 @@ export class AbElement extends Container {
 
   getChild(selector) {
     if (this.selector.startsWith('/') && selector.startsWith('/')) {
-      return new AbElement(this.selector + selector);
+      return new UiElement(this.selector + selector);
     }
     if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
-      return new AbElement(`${this.selector} ${selector}`);
+      return new UiElement(`${this.selector} ${selector}`);
     }
 
     throw new Error(
@@ -85,7 +85,7 @@ export class AbElement extends Container {
     );
   }
 
-  /** Returns an array of text values of all web elements matching the given AbElement's selector. */
+  /** Returns an array of text values of all web elements matching the given UiElement's selector. */
   getTexts() {
     const wes = this.getWebElements();
 
@@ -252,7 +252,7 @@ export class AbElement extends Container {
 
   /**
    *
-   * @param {AbElement} abEl2
+   * @param {UiElement} abEl2
    */
   dragAndDropTo(abEl2) {
     this.logAndWait2([
@@ -317,7 +317,7 @@ export class AbElement extends Container {
   nameElements() {
     for (const propName in this) {
       const propValue = this[propName];
-      if (propValue instanceof AbElement) {
+      if (propValue instanceof UiElement) {
         // @ts-ignore
         // propValue.stuartname = propName;
         propValue.setName(propName);
@@ -333,7 +333,7 @@ export class AbElement extends Container {
 
   //   for (const propName in this) {
   //     const propValue = this[propName];
-  //     if (propValue instanceof AbElement && propValue.isLoadCriterion) {
+  //     if (propValue instanceof UiElement && propValue.isLoadCriterion) {
   //       abElements.push(propValue);
   //     }
   //   }

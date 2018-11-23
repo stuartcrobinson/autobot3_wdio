@@ -1,10 +1,10 @@
 // @ts-check
 import { EditSegmentComp } from '../editSegment.comp';
-import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 //TODO - logs aren't useful that just say "textInput" - need to specify which SynonymBOx the textInput is in
 
-class SynonymBox extends AbElement {
+class SynonymBox extends UiElement {
   constructor(selector) {
     super(selector);
     this.xCloseButton = this.getChild('.delete-button');
@@ -35,7 +35,7 @@ export const editSynonymComp = new class EditSynonymComp extends EditSegmentComp
   }
 
   getNthBreadcrumbLink(n) {
-    return new AbElement(`li.synonym:nth-of-type(${n}) a`).setName('breadcrumb link ' + n);
+    return new UiElement(`li.synonym:nth-of-type(${n}) a`).setName('breadcrumb link ' + n);
   }
 
   getNthBreadcrumbText(n) {

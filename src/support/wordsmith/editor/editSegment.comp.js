@@ -1,9 +1,9 @@
-import { AbElement } from "../../../../autobot_framework/support/AbElement";
+import { UiElement } from "../../../../autobot_framework/support/UiElement";
 
 // @ts-check
 
 /** Abstract class */
-export class EditSegmentComp extends AbElement {
+export class EditSegmentComp extends UiElement {
   constructor() {
     super('.narrative--is-segment-selected');
     if (this.constructor === EditSegmentComp) {

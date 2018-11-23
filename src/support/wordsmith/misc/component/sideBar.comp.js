@@ -1,8 +1,8 @@
 // @ts-check
 import { loginPage } from '../page/login.page';
-import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
-class SettingsDropdownComp extends AbElement {
+class SettingsDropdownComp extends UiElement {
   constructor() {
     super('//div[contains(@class, "ws-sidebar__account-menu--open")]');
     this.accountLink = this.getChild("//*[*='account_circle']");
@@ -16,7 +16,7 @@ class SettingsDropdownComp extends AbElement {
   }
 }
 
-export const sidebar = new class SideBarComp extends AbElement {
+export const sidebar = new class SideBarComp extends UiElement {
   constructor() {
     super('//div[@class="ws-sidebar"]');
     // this is where we make sure the sidebar is open. if not, click the header hamburger aka sidebar trigger button

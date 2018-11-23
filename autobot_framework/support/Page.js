@@ -1,14 +1,8 @@
 // @ts-check
 import { options, livy, abStyle } from '../autobot';
-import { Container } from './Container';
+import { UiContainer } from './UiContainer';
 
-/**
- * Parent class for a Page Object.
- */
-export class Page extends Container {
-  // maybe this should have url sometimes?  what's the difference in a page and a component ...
-
-  // page: url
+export class WordsmithPage extends UiContainer {
 
   /**
    *
@@ -32,13 +26,13 @@ export class Page extends Container {
     // if (!this.urlPath){
     //   throw new Error("urlPath is undefined");
     // }
-    // console.log(`loading: ${options.url}${this.urlPath}`);
-    const url = options.url + this.urlPath;
+    // console.log(`loading: ${options.wordsmithUrl}${this.urlPath}`);
+    const url = options.wordsmithUrl + this.urlPath;
 
     livy.logAction2([
       { text: 'Load ', style: abStyle.verb },
       { text: `${this.pageName} Page `, style: abStyle.object },
-      { text: options.url + this.urlPath, style: abStyle.selector }]);
+      { text: options.wordsmithUrl + this.urlPath, style: abStyle.selector }]);
 
     browser.url(url);
     super.waitForLoad();
@@ -54,7 +48,7 @@ export class Page extends Container {
   // nameElements() {
   //   for (const propName in this) {
   //     const propValue = this[propName];
-  //     if (propValue instanceof AbElement) {
+  //     if (propValue instanceof UiElement) {
   //       // @ts-ignore
   //       // propValue.stuartname = propName;
   //       propValue.setName(propName);
@@ -70,7 +64,7 @@ export class Page extends Container {
 
   //   for (const propName in this) {
   //     const propValue = this[propName];
-  //     if (propValue instanceof AbElement && propValue.isLoadCriterion) {
+  //     if (propValue instanceof UiElement && propValue.isLoadCriterion) {
   //       abElements.push(propValue);
   //     }
   //   }

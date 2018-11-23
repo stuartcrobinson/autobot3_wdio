@@ -1,11 +1,11 @@
 // @ts-check
-import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+import { UiElement } from "../../../../../autobot_framework/support/UiElement";
 
 
 
-export const toast = new class toast extends AbElement {
+export const toast = new class toast extends UiElement {
   constructor(message) {
-    const container = new AbElement('//div[contains(@class, "loaded-message")]');
+    const container = new UiElement('//div[contains(@class, "loaded-message")]');
 
     if (message) {
       super(container.getChild(`//*[contains(text(),"${message}")]/..`).selector);

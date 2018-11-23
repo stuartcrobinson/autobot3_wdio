@@ -1,14 +1,14 @@
 // @ts-check
-import { Page } from "../../../../../autobot_framework/support/Page";
-import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+import { WordsmithPage } from "../../../../../autobot_framework/support/Page";
+import { UiElement } from "../../../../../autobot_framework/support/UiElement";
 
 
 
-export const googlePage = new class Google extends Page {
+export const googlePage = new class Google extends WordsmithPage {
   constructor() {
     super();
-    this.aboutLink = new AbElement('//*[text()="About"]');
-    this.storeLink = new AbElement('//*[text()="Store"]');
+    this.aboutLink = new UiElement('//*[text()="About"]');
+    this.storeLink = new UiElement('//*[text()="Store"]');
     super.nameElements();
   }
 }();

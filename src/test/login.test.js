@@ -11,7 +11,7 @@ const path = require('path');
 
 describe('Login', () => {
   it('with invalid creds', () => {
-    loginPage.attemptLogIn(options.email, `${options.password}invalid`, options.url);
+    loginPage.attemptLogIn(options.email, `${options.password}invalid`, options.wordsmithUrl);
 
     loginPage.checkVisual(loginPage.emailInput);
 
@@ -20,7 +20,7 @@ describe('Login', () => {
   });
 
   it('login and click Settings', () => {
-    loginPage.logIn(options.email, options.password, options.url);
+    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
 
     // sidebar.signOut();
 
@@ -36,7 +36,7 @@ describe('Login', () => {
 
 
   it('logout', () => {
-    loginPage.logIn(options.email, options.password, options.url);
+    loginPage.logIn(options.email, options.password, options.wordsmithUrl);
 
     Autobot.checkVisual(loginPage.emailInput);
 

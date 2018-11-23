@@ -1,10 +1,10 @@
 // @ts-check
-import { AbElement, Page, loadPage } from '../../../../autobot_framework/autobot';
+import { UiElement, Page, loadPage } from '../../../../autobot_framework/autobot';
 
 export const tableauSitePage = new class Site extends Page {
   constructor() {
     super();
-    this.defaultSiteOption = new AbElement('//*[text()="Default"]').tagAsLoadCriterion();
+    this.defaultSiteOption = new UiElement('//*[text()="Default"]').tagAsLoadCriterion();
     super.nameElements();
   }
 }();

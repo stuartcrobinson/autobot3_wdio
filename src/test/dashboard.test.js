@@ -8,7 +8,7 @@ import { dashboardPage } from '../support/wordsmith/misc/page/dashboard.page';
 import Table from '../support/wordsmith/table';
 
 describe('Dashboard', () => {
-  before(() => { loginPage.logIn(options.email, options.password, options.url); });
+  before(() => { loginPage.logIn(options.email, options.password, options.wordsmithUrl); });
 
 
   it('"New Project" button loads the "Create a Project" input table page', () => {

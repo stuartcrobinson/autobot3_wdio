@@ -9,7 +9,7 @@ import { loginPage } from '../support/wordsmith/misc/page/login.page';
 
 describe('Login for Rye', () => {
   it('with valid creds', () => {
-    loginPage.attemptLogIn(options.email, options.password, options.url);
+    loginPage.attemptLogIn(options.email, options.password, options.wordsmithUrl);
     assert(sidebar.settingsLink.isExisting(), 'Settings link should be visible after logging in successfully.');
   });
 });

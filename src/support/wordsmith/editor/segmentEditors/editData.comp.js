@@ -1,8 +1,8 @@
 // @ts-check
 import { EditSegmentComp } from '../editSegment.comp';
-import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
-export class EditDataDropdown extends AbElement {
+export class EditDataDropdown extends UiElement {
   constructor(selector) {
     super(selector);
     if (this.constructor === EditDataDropdown) {

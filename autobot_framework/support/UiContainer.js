@@ -4,7 +4,7 @@
  * Any class that contains custom web element objects.
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
-export class Container {
+export class UiContainer {
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
    * This adds a custom name parameter to each element object so that the variable's name
@@ -16,7 +16,7 @@ export class Container {
     for (const propName in this) {
       const propValue = this[propName];
       // don't delete.  commented out to hopefully fix weird errors caused from circular import dependencies
-      // if (propValue instanceof AbElement) {
+      // if (propValue instanceof UiElement) {
       // @ts-ignore
       // propValue.stuartname = propName;
       if (propValue) {
@@ -24,7 +24,7 @@ export class Container {
           // @ts-ignore
           propValue.setName(propName);
         } catch (err) {
-          // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
+          // do nothing.  i would love to check if propValue was instanceOf UiElement but that gives circular dependency errors
         }
       }
       // }
@@ -38,11 +38,11 @@ export class Container {
       const propValue = this[propName];
       try {
         // @ts-ignore
-        if (propValue.isLoadCriterion) { // propValue instanceof AbElement &&
+        if (propValue.isLoadCriterion) { // propValue instanceof UiElement &&
           abElements.push(propValue);
         }
       } catch (err) {
-        // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
+        // do nothing.  i would love to check if propValue was instanceOf UiElement but that gives circular dependency errors
       }
     }
     return abElements;

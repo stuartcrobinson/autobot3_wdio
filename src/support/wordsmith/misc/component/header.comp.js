@@ -1,9 +1,9 @@
 // @ts-check
-import { AbElement } from "../../../../../autobot_framework/support/AbElement";
+import { UiElement } from "../../../../../autobot_framework/support/UiElement";
 
 
 
-export const header = new class HeaderComp extends AbElement {
+export const header = new class HeaderComp extends UiElement {
   constructor() {
     super('header.header');
 

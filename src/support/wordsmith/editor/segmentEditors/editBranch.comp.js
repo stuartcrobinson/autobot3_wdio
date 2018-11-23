@@ -1,8 +1,8 @@
 // @ts-check
 import { EditSegmentComp } from '../editSegment.comp';
-import { AbElement } from '../../../../../autobot_framework/support/AbElement';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
-class BranchBox extends AbElement {
+class BranchBox extends UiElement {
   constructor(selector) {
     super(selector);
     this.trashButton = this.getChild('.delete-button');
