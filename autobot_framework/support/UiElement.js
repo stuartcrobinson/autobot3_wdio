@@ -1,11 +1,18 @@
+import { UiAtom } from './UiAtom';
+
 // @ts-check
 
 /**
  * Any class that contains custom web element objects.
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
-export class Container {
+export class UiElement extends UiAtom {
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
+
+  // constructor(selector) {
+  //   super(selector);
+  // }
+
   /**
    * This adds a custom name parameter to each element object so that the variable's name
    * can be displayed in the ui test logs instead of just a potentially cryptic selector.
@@ -16,7 +23,7 @@ export class Container {
     for (const propName in this) {
       const propValue = this[propName];
       // don't delete.  commented out to hopefully fix weird errors caused from circular import dependencies
-      // if (propValue instanceof AbElement) {
+      // if (propValue instanceof UiAtom) {
       // @ts-ignore
       // propValue.stuartname = propName;
       if (propValue) {
@@ -24,7 +31,7 @@ export class Container {
           // @ts-ignore
           propValue.setName(propName);
         } catch (err) {
-          // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
+          // do nothing.  i would love to check if propValue was instanceOf UiAtom but that gives circular dependency errors
         }
       }
       // }
@@ -38,11 +45,11 @@ export class Container {
       const propValue = this[propName];
       try {
         // @ts-ignore
-        if (propValue.isLoadCriterion) { // propValue instanceof AbElement &&
+        if (propValue.isLoadCriterion) { // propValue instanceof UiAtom &&
           abElements.push(propValue);
         }
       } catch (err) {
-        // do nothing.  i would love to check if propValue was instanceOf AbElement but that gives circular dependency errors
+        // do nothing.  i would love to check if propValue was instanceOf UiAtom but that gives circular dependency errors
       }
     }
     return abElements;
@@ -73,5 +80,32 @@ export class Container {
   /* eslint class-methods-use-this: "off" */
   findWebElement(selector) {
     return $(selector);
+  }
+
+
+  getChild(selector) {
+    if (this.selector.startsWith('/') && selector.startsWith('/')) {
+      return new UiElement(this.selector + selector);
+    }
+    if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
+      return new UiElement(`${this.selector} ${selector}`);
+    }
+
+    throw new Error(
+      `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
+    );
+  }
+
+  getChildren(selector) {
+    if (this.selector.startsWith('/') && selector.startsWith('/')) {
+      return this.findWebElements(this.selector + selector);
+    }
+    if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
+      return this.findWebElements(`${this.selector} ${selector}`);
+    }
+
+    throw new Error(
+      `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
+    );
   }
 }

@@ -1,25 +1,25 @@
 // @ts-check
 import { options, livy, abStyle } from '../autobot';
-import { Container } from './Container';
+import { UiElement } from './UiElement';
 
 /**
  * Parent class for a Page Object.
  */
-export class Page extends Container {
+export class Page extends UiElement {
   // maybe this should have url sometimes?  what's the difference in a page and a component ...
 
   // page: url
 
   /**
    *
-   * @param {String} urlPath starts with "/" https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+   * @param {String} url starts with "/" https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
    */
-  constructor(urlPath = '/') {
-    if (urlPath && !urlPath.startsWith('/')) {
-      throw new Error('urlPath should start with forward slash (/)');
-    }
-    super();
-    this.urlPath = urlPath;
+  constructor(url = undefined) {
+    // if (urlPath && !urlPath.startsWith('/')) {
+    //   throw new Error('urlPath should start with forward slash (/)');
+    // }
+    super('body');
+    this.url = url;
   }
 
 
@@ -33,14 +33,16 @@ export class Page extends Container {
     //   throw new Error("urlPath is undefined");
     // }
     // console.log(`loading: ${options.url}${this.urlPath}`);
-    const url = options.url + this.urlPath;
-
+    // const url = options.url + this.urlPath;
+    if (!this.url) {
+      throw new Error('url is undefined');
+    }
     livy.logAction2([
       { text: 'Load ', style: abStyle.verb },
       { text: `${this.pageName} Page `, style: abStyle.object },
-      { text: options.url + this.urlPath, style: abStyle.selector }]);
+      { text: this.url, style: abStyle.selector }]);
 
-    browser.url(url);
+    browser.url(this.url);
     super.waitForLoad();
   }
 
@@ -54,7 +56,7 @@ export class Page extends Container {
   // nameElements() {
   //   for (const propName in this) {
   //     const propValue = this[propName];
-  //     if (propValue instanceof AbElement) {
+  //     if (propValue instanceof UiAtom) {
   //       // @ts-ignore
   //       // propValue.stuartname = propName;
   //       propValue.setName(propName);
@@ -70,7 +72,7 @@ export class Page extends Container {
 
   //   for (const propName in this) {
   //     const propValue = this[propName];
-  //     if (propValue instanceof AbElement && propValue.isLoadCriterion) {
+  //     if (propValue instanceof UiAtom && propValue.isLoadCriterion) {
   //       abElements.push(propValue);
   //     }
   //   }

@@ -1,23 +1,24 @@
 // @ts-check
 import countBy from 'lodash';
-import { AbElement } from '../../../../autobot_framework/support/AbElement';
+import { UiAtom } from '../../../../autobot_framework/support/UiAtom';
 import { Page } from '../../../../autobot_framework/support/Page';
+import { UiElement } from '../../../../autobot_framework/support/UiElement';
 
 
-class NarrativeDiv extends AbElement {
+class NarrativeDiv extends UiElement {
   constructor(selector) {
     super(selector);
     this.rowNumber = this.getChild('.row-number');
     super.nameElements();
   }
-  getNthSegmentSpan(n) { return new AbElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
+  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
 }
-const getNthRunStatValueDiv = (n) => (new AbElement(`.run-stat-list.flex.flex-wrap.center > div:nth-of-type(${n}) .run-stat__value`));
+const getNthRunStatValueDiv = (n) => (new UiElement(`.run-stat-list.flex.flex-wrap.center > div:nth-of-type(${n}) .run-stat__value`));
 
-const getNthToggle = (n) => (new AbElement(`.toggle-switch__horizontal-group > .margin-bottom-small:nth-of-type(${n}) .switch`));
+const getNthToggle = (n) => (new UiElement(`.toggle-switch__horizontal-group > .margin-bottom-small:nth-of-type(${n}) .switch`));
 
 const textSpan = (variability) => (
-  (str) => new AbElement(`//*[@*='segment editor-textarea-segment ${variability}' and text()='${str}']`)
+  (str) => new UiAtom(`//*[@*='segment editor-textarea-segment ${variability}' and text()='${str}']`)
     .setName(`Span with text "${str}" and ${variability} variability`)
 );
 
@@ -26,8 +27,8 @@ const textSpan = (variability) => (
 export const reviewPage = new class Review extends Page {
   constructor() {
     super();
-    this.showAllLink = new AbElement('.pagination + span .page-item.show-all');
-    this.show10PerPageLink = new AbElement('.pagination-container .label + span .page-item.show-all');
+    this.showAllLink = new UiAtom('.pagination + span .page-item.show-all');
+    this.show10PerPageLink = new UiAtom('.pagination-container .label + span .page-item.show-all');
     this.avgWordsValueDiv = getNthRunStatValueDiv(1).tagAsLoadCriterion();
     this.maxWordsValueDiv = getNthRunStatValueDiv(2).tagAsLoadCriterion();
     this.minWordsValueDiv = getNthRunStatValueDiv(3).tagAsLoadCriterion();
@@ -40,11 +41,11 @@ export const reviewPage = new class Review extends Page {
     this.randomizeRowsToggle = getNthToggle(2).tagAsLoadCriterion();
     this.variabilityHeatmapToggle = getNthToggle(3).tagAsLoadCriterion();
 
-    this.generate50NewRowsLink = new AbElement('h2 a');
+    this.generate50NewRowsLink = new UiAtom('h2 a');
 
     super.nameElements();
   }
-  getNthSegmentSpan(n) { return new AbElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
+  getNthSegmentSpan(n) { return new UiAtom(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
 
 
   poorVariabilitySpanWithText = (str) => (textSpan('poor')(str));

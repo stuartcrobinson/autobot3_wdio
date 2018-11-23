@@ -1,61 +1,61 @@
 // @ts-check
 import { abStyle, livy } from '../autobot';
 /* eslint no-unused-vars: "off" */
-import { AbElement } from './AbElement';
+import { UiAtom } from './UiAtom';
 
 
 /** ****************************** assert ************************************* */
 
 const defaultAutobotTimeoutMillis = 5000;
 export class AutobotAssert {
-// TODO it would be cleaner to wrap all these in a function that accepted the main assert code as a function and
+  // TODO it would be cleaner to wrap all these in a function that accepted the main assert code as a function and
   // did the logging stuff b4 and after
 
   /**
    *
-   * @param {AbElement} abElement
+   * @param {UiAtom} uiAtom
    * @param {String} expected
    * @param {Number} timoutMillis
    */
-  static elementText(abElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
+  static elementText(uiAtom, expected, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
       { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname}`, style: abStyle.object },
+      { text: `${uiAtom.stuartname}`, style: abStyle.object },
       { text: "'s text is ", style: abStyle.filler },
       { text: expected, style: abStyle.object },
-      { text: ` ${abElement.selector}`, style: abStyle.selector }]);
+      { text: ` ${uiAtom.selector}`, style: abStyle.selector }]);
 
     try {
-      abElement.waitForExist();
-      browser.waitUntil(() => abElement.getWebElement().getText() === expected, timoutMillis);
+      uiAtom.waitForExist();
+      browser.waitUntil(() => uiAtom.getWebElement().getText() === expected, timoutMillis);
     } catch (err) {
       console.log('original error:');
       console.log(err);
-      throw new Error(`Element "${abElement.stuartname}"'s text is "${abElement.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${abElement.selector}`);
+      throw new Error(`Element "${uiAtom.stuartname}"'s text is "${uiAtom.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${expected}". Selector: ${uiAtom.selector}`);
     }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
   /**
    *
-   * @param {AbElement} abElement
+   * @param {UiAtom} uiAtom
    * @param {Number} timoutMillis
    */
-  static elementExists(abElement, timoutMillis = defaultAutobotTimeoutMillis) {
+  static elementExists(uiAtom, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
       { text: 'Assert ', style: abStyle.verb },
-      { text: `${abElement.stuartname} `, style: abStyle.object },
+      { text: `${uiAtom.stuartname} `, style: abStyle.object },
       { text: 'exists ', style: abStyle.verb },
-      { text: abElement.selector, style: abStyle.selector }]);
-    // browser.waitUntil(() => abElement.isExisting(), timoutMillis);
-    // assert(abElement.isExisting());
+      { text: uiAtom.selector, style: abStyle.selector }]);
+    // browser.waitUntil(() => uiAtom.isExisting(), timoutMillis);
+    // assert(uiAtom.isExisting());
 
     try {
-      browser.waitUntil(() => abElement.isExisting(), timoutMillis);
+      browser.waitUntil(() => uiAtom.isExisting(), timoutMillis);
     } catch (err) {
       console.log('original error:');
       console.log(err);
-      throw new Error(`Element "${abElement.stuartname}" not found after ${timoutMillis} ms. Selector: ${abElement.selector}`);
+      throw new Error(`Element "${uiAtom.stuartname}" not found after ${timoutMillis} ms. Selector: ${uiAtom.selector}`);
     }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }

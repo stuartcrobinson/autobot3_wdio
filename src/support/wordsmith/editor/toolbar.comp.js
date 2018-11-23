@@ -1,8 +1,8 @@
-import { AbElement } from "../../../../../autobot3_wdio/autobot_framework/support/AbElement";
+import { UiAtom } from "../../../../../autobot3_wdio/autobot_framework/support/UiAtom";
 
 // @ts-check
 
-class InsertDataDropdown_SegmentListOption extends AbElement {
+class InsertDataDropdown_SegmentListOption extends UiAtom {
   constructor(n) {
     super(`.segment-list li:nth-of-type(${n})`);
     this.datavarNameDiv = this.getChild('.name')
@@ -10,7 +10,7 @@ class InsertDataDropdown_SegmentListOption extends AbElement {
   }
 }
 
-class InsertDataDropdown extends AbElement {
+class InsertDataDropdown extends UiAtom {
   constructor() {
     super('.ws-insert-segment-modal-container--open');
     this.createFormulaButton = this.getChild('.padding-all button:nth-of-type(1)').tagAsLoadCriterion();
@@ -28,7 +28,7 @@ class InsertDataDropdown extends AbElement {
   }
 }
 
-export const editorPageToolbar = new class EditorToolbar extends AbElement {
+export const editorPageToolbar = new class EditorToolbar extends UiAtom {
   constructor() {
     super('.toolbar__list');
     this.insertDataButton = this.getChild('.btn-insert-data').tagAsLoadCriterion();

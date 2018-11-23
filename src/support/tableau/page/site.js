@@ -1,10 +1,12 @@
 // @ts-check
-import { AbElement, Page, loadPage } from '../../../../autobot_framework/autobot';
+import { Page } from "../../../../autobot_framework/support/Page";
+
+
 
 export const tableauSitePage = new class Site extends Page {
   constructor() {
-    super();
-    this.defaultSiteOption = new AbElement('//*[text()="Default"]').tagAsLoadCriterion();
+    super('TODO - whats the url');
+    this.defaultSiteOption = this.getChild('//*[text()="Default"]').tagAsLoadCriterion();
     super.nameElements();
   }
 }();

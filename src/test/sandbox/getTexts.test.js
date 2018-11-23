@@ -1,5 +1,5 @@
 // // @ts-check
-import { AbElement } from '../../../autobot_framework/support/AbElement';
+import { UiAtom } from '../../../autobot_framework/support/UiAtom';
 
 console.log("here GoogleTest afewefef")
 
@@ -23,7 +23,7 @@ describe('GoogleTest', () => {
 
     console.log("here after browser url load")
 
-    let el = new AbElement('h3.LC20lb');
+    let el = new UiAtom('h3.LC20lb');
 
     const ar = el.getTexts();
 

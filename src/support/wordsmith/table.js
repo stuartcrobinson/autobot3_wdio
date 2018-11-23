@@ -1,6 +1,7 @@
 // @ts-check
 import * as cheerio from 'cheerio';
-import { AbElement } from '../../../autobot_framework/support/AbElement';
+import { UiAtom } from '../../../autobot_framework/support/UiAtom';
+import { UiElement } from '../../../autobot_framework/support/UiElement';
 
 
 //TODO this is still a mess - stuart 10/30/2018
@@ -8,7 +9,7 @@ import { AbElement } from '../../../autobot_framework/support/AbElement';
 /**
   The state of a Table object is not based on table columns and values, but rather which column is currently being either "selected" or "referenced" during a table action such as sorting or retrieving a value in one ("selected") column based on another ("reference") column's value.
  */
-export default class Table extends AbElement {
+export default class Table extends UiElement {
 
   static isIncreasing(values) {
 
@@ -116,14 +117,14 @@ export default class Table extends AbElement {
   }
 
   sortIncreasing(columnName) {
-    // const header = new AbElement('//th/div[@class="flex flex-align-center" and text()="' + columnName + '"]');
+    // const header = new UiAtom('//th/div[@class="flex flex-align-center" and text()="' + columnName + '"]');
     const header = this.getHeader(columnName);
 
     let chevronClass
 
     do {
       header.click();
-      chevronClass = new AbElement(header.selector + '/span').getWebElement().getAttribute("class");
+      chevronClass = new UiAtom(header.selector + '/span').getWebElement().getAttribute("class");
     } while (chevronClass !== "chevron top");
 
     return this;
@@ -134,7 +135,7 @@ export default class Table extends AbElement {
     let chevronClass
     do {
       header.click();
-      chevronClass = new AbElement(header.selector + '/span').getWebElement().getAttribute("class");
+      chevronClass = new UiAtom(header.selector + '/span').getWebElement().getAttribute("class");
     } while (chevronClass !== "chevron");
     return this;
   }
@@ -268,7 +269,7 @@ export default class Table extends AbElement {
 
     const selector = '//tbody/tr[' + rowNum + ']/td[' + colNum + ']//div[@class="flex flex-column flex-center"]/span'
 
-    return new AbElement(selector).getWebElement().getText();
+    return new UiAtom(selector).getWebElement().getText();
   }
 }
 

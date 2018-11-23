@@ -124,12 +124,12 @@ export class Autobot {
    * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
    * 
    * To reset the reference image, replace `checkVisual(...)` with `resetVisual(...)` and re-run.
-   * @param  excludedElements AbElement - cssSelectors or xpaths for sections of the screen to ignore
+   * @param  excludedElements UiAtom - cssSelectors or xpaths for sections of the screen to ignore
    */
   static checkVisual(...excludedElements) {
 
 
-    const excludedSelectors = excludedElements.map(abElement => abElement.selector)
+    const excludedSelectors = excludedElements.map(uiAtom => uiAtom.selector)
 
 
     // @ts-ignore

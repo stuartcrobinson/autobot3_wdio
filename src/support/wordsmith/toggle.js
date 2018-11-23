@@ -1,5 +1,5 @@
 // @ts-check
-import { AbElement } from "../../../autobot_framework/support/AbElement";
+import { UiAtom } from "../../../autobot_framework/support/UiAtom";
 
 
 
@@ -20,7 +20,7 @@ toggle code 10/30/2018:
 /**
  * Modeling this, I think: https://getmdl.io/components/#toggles-section/switch
  */
-export class Toggle extends AbElement {
+export class Toggle extends UiAtom {
   /**
    * Toggle selector is the toggle label.  This changes depending on state (on or off).
    * 
