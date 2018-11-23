@@ -1,7 +1,7 @@
 // @ts-check
 import { options, livy, abStyle } from '../autobot';
 import { UiContainer } from './UiContainer';
-
+ 
 export class WordsmithPage extends UiContainer {
 
   /**
