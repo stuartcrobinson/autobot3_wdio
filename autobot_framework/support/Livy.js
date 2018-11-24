@@ -253,7 +253,7 @@ export class Livy {
     const currDate = dateFormat(testDateTime, 'yyyymmdd');
 
     if (!this.isInTestCase && !this.hasPrintedNontestLine) {
-      this.logWithoutPrefix('---------------------------------------------------------------------------------------');
+      this.logHorizontalLine();
       this.hasPrintedNontestLine = true;
     }
 
@@ -402,12 +402,12 @@ export class Livy {
     this.logReportError(stack);
   }
 
-  logAfterEachStuff(testDidPass, stack) {
+  logAfterEachStuff(testDidPass, err) {
     // // if test passed, ignore, else take and save screenshot.
     if (testDidPass) {
       this.logPassed();
     } else {
-      this.logFailed(stack);
+      this.logFailed(err.stack);
       browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
       this.logErrorImage();
       console.log('\n\tTest case report:\n\t\t', this.reportClickablePathWithHash, '\n');
@@ -418,13 +418,13 @@ export class Livy {
     this.endNewTestCase();
   }
 
-  logSuiteFailure(stack) {
-    // // if test passed, ignore, else take and save screenshot.
-    this.logFailed(stack);
-    this.printLotsOfNewlines();
-  }
+  // logSuiteFailure(stack) {
+  //   // // if test passed, ignore, else take and save screenshot.
+  //   this.logFailed(stack);
+  //   // this.printLotsOfNewlines();
+  // }
 
-  printLotsOfNewlines() {
-    fs.appendFileSync(this.getFile(), `</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>${os.EOL}`);
-  }
+  // printLotsOfNewlines() {
+  //   fs.appendFileSync(this.getFile(), `</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>${os.EOL}`);
+  // }
 }

@@ -1,4 +1,3 @@
-
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 
@@ -19,8 +18,6 @@ function getScreenshotName(basePath) {
 
     /* Used to display the diff image in the html report. */
     global.previousImageFileLocation = result;
-
-
 
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
       console.log('dawefawefdf deleting ' + result)
@@ -43,56 +40,12 @@ if (fs.existsSync('file.txt')) {
   optionsFile = yargsParse(stringArgv(fs.readFileSync('file.txt')));
 }
 
-// console.log("process.argv: ")
-// console.log(process.argv)
-
-// console.log("optionsFile: ")
-// console.log(optionsFile)
-
-// let argv = stringArgv(process.argv);
-// console.log("stringArgv(process.argv): ")
-// console.log(argv)
-
 let yargsParsed = yargsParse(process.argv);
-// console.log("yargsParse(process.argv): ")
-// console.log(yargsParsed)
-
-// for (let i = 0; i < argv.length; i++) {
-//   argv[i] = '--' + argv[i]
-// }
-// optionsCommandLine = yargsParse(argv);
 
 _options = optionsFile
 _options = { ..._options, ...yargsParsed }
 
 global.autobotOptions = _options
-
-// console.log("global.autobotOptions:");
-// console.log(global.autobotOptions);
-
-// const validParams = ['email', 'password', 'url', 'noPics', 'notHeadless']
-
-
-// process.exit()
-
-// }
-// export const options = _options;
-
-
-// var path = require('path');
-// var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
-
-
-// function getScreenshotName(basePath) {
-//   return function(context) {
-//     var testName = context.test.title;
-//     var resolution = context.meta.width || context.meta.orientation || 'unknown';
-//     var browserVersion = parseInt(/\d+/.exec(context.browser.version)[0]);
-//     var browserName = context.browser.name;
-
-//     return path.join(basePath, `${testName}_${resolution}_${browserName}_v${browserVersion}.png`);
-//   };
-// }
 
 
 exports.config = {
@@ -251,8 +204,6 @@ exports.config = {
     ui: 'bdd',
     timeout: 300000,
     compilers: ['js:@babel/register'],
-    // grep: "with valid creds"
-
   },
   //
   // =====
@@ -323,35 +274,16 @@ exports.config = {
    * @param {Object} test test details
    */
   afterTest: function (test) {
-    //only log to livy if livy has been defined as a global var, aka if running autobot tests
-    //(and not testing basic mocha stuff)
-    if (global.livy) {
-
-      let testDidPass = test.passed;   //this.currentTest.state === "passed"
-      let stack = testDidPass ? '' : test.err.stack;      //this.currentTest.err.stack
-
-      global.livy.logAfterEachStuff(testDidPass, stack);
-    }
+    //livy might not be defined if just testing mocha stuff
+    global.livy && global.livy.logAfterEachStuff(test.passed, test.err);
   },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    console.log("in wdio.conf afterSuite: 8u98u98--------------------------------------------------------------------------------")
-    console.log(suite)
-
-    if (suite.err) {
-      if (global.livy) {
-
-        // let testDidPass = test.passed;   //this.currentTest.state === "passed"
-        // let stack = testDidPass ? '' : test.err.stack;      //this.currentTest.err.stack
-
-        global.livy.logSuiteFailure(suite.err.stack);
-      }
-    }
+    global.livy && suite.err && global.livy.logFailed(suite.err.stack);
   },
-
   /**
    * Runs after a WebdriverIO command gets executed
    * @param {String} commandName hook command name
@@ -376,8 +308,12 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  // afterSession: function (config, capabilities, specs) {
-  // },
+  afterSession: function (config, capabilities, specs) {
+    //so you can scroll code up so the screenshot isn't blocking it
+    for (let i = 0; i < 30; i++) {
+      global.livy.logRawToHtml(`</br>`);
+    }
+  },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
    * @param {Object} exitCode 0 - success, 1 - fail

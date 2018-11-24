@@ -233,6 +233,6 @@ after(function () {
   if (!options.muteConsole) {
     console.log('\nReport: ', livy.reportClickablePath, '\n');
   }
-  livy.printLotsOfNewlines();
+  // livy.printLotsOfNewlines();
 });
 

@@ -22,6 +22,7 @@ module.exports = {
         "no-underscore-dangle": "off",
         "func-names": "off",
         "no-unused-vars": "off",
+        "no-unused-expressions": "off"
         // "eqeqeq": "off",
         // "curly": "error",
         // "quotes": ["error", "double"]

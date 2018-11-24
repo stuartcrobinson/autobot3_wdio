@@ -7,12 +7,6 @@ import { loginPage } from '../../src/support/wordsmith/misc/page/login.page';
 import { projectPage } from '../../src/support/wordsmith/misc/page/project.page';
 import { Autobot, livy, options } from '../autobot';
 
-
-/* ****** data **** */
-
-// string, num, list, bool, date, time, truedata
-// anneau du Vic - Bilh, 100, "one,Two,tHREE", true, 2 / 1 / 1900, 1: 45 PM, 3
-
 export const data = [{
   string: 'anneau du Vic-Bilh',
   num: 100,
@@ -32,9 +26,6 @@ export class Load {
   static dashboard() {
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
   }
-
-  // TODO refactor:
-
 
   static newTemplateEditor() {
     throw new Error('dummy error');
