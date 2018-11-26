@@ -1,5 +1,5 @@
 // @ts-check
-import { loginPage } from '../support/wordsmith/misc/page/login.page';
+import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
 
 describe('Dummy', () => {
   it('go home', () => {

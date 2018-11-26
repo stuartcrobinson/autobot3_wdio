@@ -12,6 +12,8 @@ export class EditSegmentComp extends UiElement {
 
     this.segmentPreview = this.get('.segment-preview').tagAsLoadCriterion();
     this.highlightedPreviewSpan = this.get('.highlight');
+    this.deleteButton = this.get('[data-test="close-button"]');
+    this.modalYesButton = this.get('.modal-dialog-content .btn-primary');
 
     //note: doneButton and backButton are the same element
     this.doneButton = this.get('.btn-primary').tagAsLoadCriterion();

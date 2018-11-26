@@ -100,7 +100,6 @@ export class UiElement extends UiContainer {
 
   click(doLogAndWait = true) {
     if (doLogAndWait) {
-      console.log('faweoifaweof awehrererrer');
       this.logAndWait2([
         { text: 'Click ', style: abStyle.verb },
         { text: `${this.stuartname} `, style: abStyle.object },
@@ -181,6 +180,23 @@ export class UiElement extends UiContainer {
       }
     }
   }
+
+  clickAllToRemove() {
+    this.logAndWait2([
+      { text: 'Click all instances of ', style: abStyle.verb },
+      { text: `${this.stuartname} `, style: abStyle.object },
+      { text: this.selector, style: abStyle.selector },
+    ]);
+    browser.click(this.selector);
+
+    while (this.isExisting()) {
+      // TODO start here - writing this to click all delete buttons in branch variations to close all - but proabbly stupid.  shouldn't expose this to all UiElements.  just put this in EditBranch.comp.js
+
+
+      this.click_waitForChange();
+    }
+  }
+
 
   click_waitForNotExisting(indicatorSelector = this.selector) {
     if (!browser.isExisting(indicatorSelector)) {
@@ -286,6 +302,31 @@ export class UiElement extends UiContainer {
     browser.chooseFile(this.selector, filePath);
   }
 
+
+  /**
+   *
+   * @param {Number} timoutMillis
+   */
+  waitForText(text, timoutMillis = 1000) {
+    const screenshotId = livy.logAction2([
+      { text: 'Assert ', style: abStyle.verb },
+      { text: this.stuartname, style: abStyle.object },
+      { text: "'s text is ", style: abStyle.filler },
+      { text, style: abStyle.object },
+      { text: ` ${this.selector}`, style: abStyle.selector }]);
+
+    try {
+      this.waitForExist();
+      browser.waitUntil(() => this.getWebElement().getText() === text, timoutMillis);
+    } catch (err) {
+      console.log('original error:');
+      console.log(err);
+      throw new Error(`Element "${this.stuartname}"'s text is "${this.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
+    }
+    livy.setMouseoverEventScreenshotFunction(screenshotId);
+  }
+
+
   waitForNotExist(timeoutInMillis = 1000) {
     try {
       browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);
@@ -305,7 +346,6 @@ export class UiElement extends UiContainer {
       throw new Error(`Error finding ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
     }
   }
-
 
   /**
    * This is not a super reliable function since selenium isn't 100% accurate at determining visibility.

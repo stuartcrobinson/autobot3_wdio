@@ -18,6 +18,11 @@ export const editorPage = new class Editor extends WordsmithPage {
     return new UiElement(`//span[@data-text='true' and text()='${text}']`).setName('Segment with text: "' + text + '"')
   }
 
+  invalidSegmentWithText(text) {
+    return new UiElement(`//span[@data-text='true' and text()='${text}']/../../../*[contains(@class, 'err')]`)
+      .setName('Invalid segment with text: "' + text + '"')
+  }
+
   getLastSegmentText() {
     const segmentsSpans = this.findWebElements('span[data-text="true"]');
     return segmentsSpans[segmentsSpans.length - 1].getText();

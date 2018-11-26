@@ -1,10 +1,8 @@
-/* eslint no-unreachable: "off" */
 // @ts-check
-
 import { assert } from 'chai';
-import { editorPage } from '../../src/support/wordsmith/editor/editor.page';
-import { loginPage } from '../../src/support/wordsmith/misc/page/login.page';
-import { projectPage } from '../../src/support/wordsmith/misc/page/project.page';
+import { editorPage } from '../../src/ui-model/wordsmith/editor/editor.page';
+import { loginPage } from '../../src/ui-model/wordsmith/misc/page/login.page';
+import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page';
 import { Autobot, livy, options } from '../autobot';
 
 export const data = [{
@@ -28,7 +26,7 @@ export class Load {
   }
 
   static newTemplateEditor() {
-    throw new Error('dummy error');
+    // throw new Error('dummy error');
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);

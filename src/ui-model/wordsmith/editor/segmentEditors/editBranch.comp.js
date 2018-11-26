@@ -31,9 +31,15 @@ export const editBranchComp = new class EditBranchComp extends EditSegmentComp {
     this.writeFirstRuleThatIsTrueLink = this.get('.branch-logic-summary')
     this.addAnotherRuleLink = this.get('div.conditions .insert-button-wrapper > .insert-text').tagAsLoadCriterion();
     this.addTextIfNoRulesAreThereLink = this.get('.insert-wrapper span a').tagAsLoadCriterion();
+    this.YOUR_RULE_IS_EMPTY_MSG = 'Your rule is empty.';
+    this.NUMBER_RESULT_MSG = 'Rules must evaluate to true or false. This rule returns a Number result.';
+    this.PROBLEM_WITH_SYNTAX_MSG = 'There is a problem with the syntax of this rule.';
     super.nameElements();
   }
 
+  no_data_msg(firstWord) {
+    return `There is no data variable or formula called "${firstWord}".`
+  }
   /**
    * n starts at 1
    * @param {Number} n 

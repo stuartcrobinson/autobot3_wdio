@@ -2,15 +2,12 @@
 import { autobotBrowser } from '../../../../autobot_framework/autobot';
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
-import { editorPage } from '../../../support/wordsmith/editor/editor.page';
-import { editDataNumberComp } from '../../../support/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
-import { editBranchComp } from '../../../support/wordsmith/editor/segmentEditors/editBranch.comp';
-import { editSynonymComp } from '../../../support/wordsmith/editor/segmentEditors/editSynonym.comp';
-import { header } from '../../../support/wordsmith/misc/component/header.comp';
+import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
+import { editDataNumberComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
+import { editBranchComp } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.comp';
+import { editSynonymComp } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.comp';
+import { header } from '../../../ui-model/wordsmith/misc/component/header.comp';
 
-//split these up into "it"s?
-
-// console.log('here????')
 
 describe('Add new segment: ', () => {
   before(() => { Load.newTemplateEditor(); });
@@ -22,130 +19,115 @@ describe('Add new segment: ', () => {
     });
     it('new first synonym should display in highlighted content', () => {
       editSynonymComp.getNthSynonymBox(1).textInput.clickAndType('pancakes');
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
     });
     it('add 2 more synonyms', () => {
       editSynonymComp.addAnotherSynonymLink.click();
       editSynonymComp.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'flapjacks', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('flapjacks', 2000);
 
       editSynonymComp.addAnotherSynonymLink.click();
       editSynonymComp.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'hotcakes', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('hotcakes', 2000);
     });
     it('delete a synonym', () => {
       editSynonymComp.getNthSynonymBox(3).xCloseButton.click_waitForNotExisting();
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
     });
     it('highlighted content should change per synonym click', () => {
       editSynonymComp.getNthSynonymBox(2).click_waitForChange();
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'flapjacks', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('flapjacks', 2000);
 
       editSynonymComp.getNthSynonymBox(1).click_waitForChange();
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'pancakes', 2000);
+      editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
     });
     it('main editor should display first synonym', () => {
-      AutobotAssert.elementExists(header.savedDiv, 10000);
+      header.savedDiv.waitForExist(10000);
       editDataNumberComp.doneButton.click_waitForNotExisting();
       AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
     });
   });
 
+  describe('branch, ', () => {
 
-
-  // done
-  describe('branch', () => {
-    it('lalalala idk', () => {
-
+    it('delete it', () => {
       editorPage.toolbar.addBranchButton.click();
-
-
       editBranchComp.getNthBranchBox(1).trashButton.click_waitForNotExisting(); //test trash icon for single rule
-
       editorPage.waitForLoad();
-
+    });
+    it('create and delete a new rule', () => {
       editorPage.toolbar.addBranchButton.click();
-
       editBranchComp.getNthBranchBox(1).conditionLabel.click();
       editBranchComp.addAnotherRuleLink.click();
       editBranchComp.getNthBranchBox(2).conditionLabel.click();
-      // editBranchComp.getNthBranchBox(2).trashButton.hover();
       editBranchComp.getNthBranchBox(2).trashButton.click_waitForNotExisting();
+    });
 
-
+    it('fill out valid condition, text, and description for first rule', () => {
       editBranchComp.getNthBranchBox(1).conditionLabel.click(); //to close dropdown
-
-      AutobotAssert.elementExists(editBranchComp.getNthBranchBox(1).conditionError);
-
+      editBranchComp.getNthBranchBox(1).conditionError.waitForExist();
       editBranchComp.getNthBranchBox(1).conditionTextarea.click();
-
       autobotBrowser.keys('\uE015\uE007\uE015\uE007\uE015\uE007\uE004cheeto'); // down enter down enter down enter tab cheeto
-
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'cheeto');
-
+      editSynonymComp.highlightedPreviewSpan.waitForText('cheeto');
       editBranchComp.getNthBranchBox(1).hover().elipsisDropdown.click_waitForChange();
       editBranchComp.getNthBranchBox(1).elipsisDropdown_AddDescription.click_waitForNotExisting();
-      autobotBrowser.keys('Dangerously cheesy ™'); // down down enter enter down enter tab cheez-it
+      autobotBrowser.keys('Dangerously cheesy ™');
+    });
 
-
+    it('add and fill out another rule', () => {
       editBranchComp.addAnotherRuleLink.click();
       editBranchComp.getNthBranchBox(2).conditionTextarea.waitForExist();  //don't click - cursor should already be at condition input
       autobotBrowser.keys('\uE015\uE015\uE007\uE007\uE015\uE007\uE004cheez-it'); // down down enter enter down enter tab cheez-it
       editBranchComp.getNthBranchBox(2).hover().elipsisDropdown.click_waitForChange();
       editBranchComp.getNthBranchBox(2).elipsisDropdown_AddDescription.click_waitForNotExisting();
       autobotBrowser.keys('A safe level of cheese ™'); // down down enter enter down enter tab cheez-it
+    });
 
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'cheez-it');
+    it('preview should display new rule text', () => {
+      editSynonymComp.highlightedPreviewSpan.waitForText('cheez-it');
+    });
 
-      //make sure preview changes when click different rule
+    it('clicking first rule should change preview text', () => {
       editBranchComp.getNthBranchBox(1).editorInput.click();
-      AutobotAssert.elementText(editSynonymComp.highlightedPreviewSpan, 'cheeto');
+      editSynonymComp.highlightedPreviewSpan.waitForText('cheeto');
+    });
 
-      //ensure both descriptions were saved in rules
-      AutobotAssert.elementText(editBranchComp.getNthBranchBox(1).descriptionSpan, 'Dangerously cheesy ™');
-      AutobotAssert.elementText(editBranchComp.getNthBranchBox(2).descriptionSpan, 'A safe level of cheese ™');
+    it('rule descriptions should be saved', () => {
+      editBranchComp.getNthBranchBox(1).descriptionSpan.waitForText('Dangerously cheesy ™');
+      editBranchComp.getNthBranchBox(2).descriptionSpan.waitForText('A safe level of cheese ™');
+    });
 
-
-      //test drag
+    it('drag and drop 2nd rule to 1st rule position', () => {
       editBranchComp.getNthBranchBox(1).bulletHandle.dragAndDropTo(editBranchComp.getNthBranchBox(2).bulletHandle);
+      editBranchComp.getNthBranchBox(1).editorInput.waitForText('cheez-it');
+      editBranchComp.getNthBranchBox(2).editorInput.waitForText('cheeto');
+    });
 
-      //old way - delete this
-      // autobotBrowser.dragAndDrop(editBranchComp.getNthBranchBox(1).bulletHandle, editBranchComp.getNthBranchBox(2).bulletHandle);
-
-      //check editor contents to make sure rules moved
-      AutobotAssert.elementText(editBranchComp.getNthBranchBox(1).editorInput, 'cheez-it');
-      AutobotAssert.elementText(editBranchComp.getNthBranchBox(2).editorInput, 'cheeto');
-
-
-      //test duplication
+    it('duplicate a rule', () => {
       editBranchComp.getNthBranchBox(1).hover().elipsisDropdown.click_waitForChange();
-      // editBranchComp.getNthBranchBox(1).elipsisDropdown.click_waitForChange();
       editBranchComp.getNthBranchBox(1).elipsisDropdown_DuplicateRule.click_waitForNotExisting();
 
       //check condition, description, and editor content of 1st 2 rules - should match
-      AutobotAssert.elementText(
-        editBranchComp.getNthBranchBox(1).conditionTextarea,
+
+      editBranchComp.getNthBranchBox(1).conditionTextarea.waitForText(
         editBranchComp.getNthBranchBox(2).conditionTextarea.getWebElement().getText()
       );
+      //test duplication - still broken in prod ??
       // TODO https://autoin.atlassian.net/browse/QS-302 
-      // AutobotAssert.elementText(
-      //   editBranchComp.getNthBranchBox(1).descriptionSpan,
+      // 
+      //   editBranchComp.getNthBranchBox(1).descriptionSpan.waitForText(
       //   editBranchComp.getNthBranchBox(2).descriptionSpan.getWebElement().getText()
       // );
-      // AutobotAssert.elementText(
+      // 
       //   editBranchComp.getNthBranchBox(1).editorInput,
       //   editBranchComp.getNthBranchBox(2).editorInput.getWebElement().getText()
       // );
+    });
 
-      AutobotAssert.elementExists(header.savedDiv, 10000);
-
+    it('editor should show top rule text after waiting for save and closing', () => {
+      header.savedDiv.waitForExist(10000);
       editDataNumberComp.doneButton.click_waitForNotExisting();
-
       AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
-
-
     });
   });
-
-
 });
