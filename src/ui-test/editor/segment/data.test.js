@@ -11,9 +11,20 @@ import { autobotBrowser } from '../../../../autobot_framework/autobot';
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
 
+
+export const data = [{
+  string: 'anneau du Vic-Bilh',
+  num: 100,
+  list: 'one,Two,tHREE',
+  bool: 'true',
+  date: '2/1/1900',
+  time: '1:45:12 PM',
+}];
+
+
 describe('Format and insert data var of type', () => {
 
-  before(() => { Load.newTemplateEditor(); });
+  before(() => { Load.newTemplateEditor(data); });
 
   it('Number', () => {
     editorPage.toolbar.insertDataButton.click();

@@ -21,7 +21,12 @@ function getScreenshotName(basePath) {
 
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
       console.log('dawefawefdf deleting ' + result)
-      fs.unlinkSync(result);
+      if (!fs.existsSync(result)) {
+        throw new Error('You tried to delete a reference image that does not exist.  Images are specific to environment (including headless or not).  File: ' + result);
+      }
+      else {
+        fs.unlinkSync(result);
+      }
     }
 
     return result;
@@ -59,7 +64,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './src/test/**/*.js'
+    './src/ui-test/*.js'
   ],
   // Patterns to exclude.
   exclude: [

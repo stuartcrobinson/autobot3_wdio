@@ -12,7 +12,6 @@ export const dashboardPage = new class Dashboard extends WordsmithPage {
     this.uploadCsvDropdownOption = this.get('//a[text()="Upload CSV"]');
     this.projectsTabLink = this.get('//a[text()="Projects"]');
     this.downloadsTabLink = this.get('//a[text()="Downloads"]').tagAsLoadCriterion();
-    this.projectsTableBody = this.get('tbody');
     this.paginationContainer = this.get('//div[@class="pagination-container"]').tagAsLoadCriterion();
 
     this.table = new Table();

@@ -243,7 +243,7 @@ export class Livy {
 
   /**
    *
-   * @param {Object} messageChunks
+   * @param {Object} messageChunks an array of {text, style} objects
    * @param {Boolean} withPrefix
    */
   logAction2(messageChunks, withPrefix = true) {

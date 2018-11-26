@@ -14,6 +14,14 @@ export class Page extends UiContainer {
 
   get pageName() { return this.constructor.name; }
 
+  static load(url) {
+    livy.logAction2([
+      { text: 'Load ', style: abStyle.verb },
+      { text: url, style: abStyle.selector }]);
+
+    browser.url(url);
+  }
+
   load() {
     livy.logAction2([
       { text: 'Load ', style: abStyle.verb },

@@ -11,7 +11,7 @@ export const createAProjectPage = new class CreateAProject extends WordsmithPage
 
   populateTable() {
 
-    livy.logScreenshottedAction({ text: 'Populate wizard table.', style: abStyle.filler });
+    livy.logScreenshottedAction([{ text: 'Populate wizard table.', style: abStyle.filler }]);
 
     this.dataInputTable
       .getChildren('.ws-input')
