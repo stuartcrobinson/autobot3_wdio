@@ -10,8 +10,8 @@ file.txt
 
 # for visual testing
 
-screenshots/screen
-screenshots/diff
+screenshots*/screen
+screenshots*/diff
 
 # from https://github.com/webdriverio/webdriverio/blob/master/.gitignore
 
