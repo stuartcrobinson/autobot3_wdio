@@ -1,11 +1,11 @@
 // @ts-check
 import assert from 'assert';
-import { livy } from '../../autobot_framework/autobot';
 import { Load } from '../../autobot_framework/support/hooks';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
 import { createAProjectPage } from '../ui-model/wordsmith/misc/page/createAProject.page';
 import { createAProjectUploadCsvPage } from '../ui-model/wordsmith/misc/page/createAProjectUploadCsv.page';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
+import { livy } from '../../autobot_framework/support/Livy';
 
 describe('Create a project', () => {
   before(() => { Load.dashboard(); });

@@ -272,8 +272,6 @@ exports.config = {
    * @param {Object} test test details
    */
   beforeTest: function (test) {
-    console.log("beforeTest wdioConf. test:")
-    console.log(JSON.stringify(test));
     global.livy && global.livy.wdioConf_beforeTest(test);
 
   },

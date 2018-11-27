@@ -1,14 +1,14 @@
 // @ts-check
-import { abStyle, livy } from '../autobot';
 /* eslint no-unused-vars: "off" */
 import { UiElement } from './UiElement';
+import { livy } from './Livy';
 
 
 /** ****************************** assert ************************************* */
 
 const defaultAutobotTimeoutMillis = 5000;
 export class AutobotAssert {
-// TODO it would be cleaner to wrap all these in a function that accepted the main assert code as a function and
+  // TODO it would be cleaner to wrap all these in a function that accepted the main assert code as a function and
   // did the logging stuff b4 and after
 
   // /**
@@ -19,11 +19,11 @@ export class AutobotAssert {
   //  */
   // static elementText(uiElement, expected, timoutMillis = defaultAutobotTimeoutMillis) {
   //   const screenshotId = livy.logAction2([
-  //     { text: 'Assert ', style: abStyle.verb },
-  //     { text: `${uiElement.stuartname}`, style: abStyle.object },
-  //     { text: "'s text is ", style: abStyle.filler },
-  //     { text: expected, style: abStyle.object },
-  //     { text: ` ${uiElement.selector}`, style: abStyle.selector }]);
+  //     { text: 'Assert ', style: livy.style.verb },
+  //     { text: `${uiElement.stuartname}`, style: livy.style.object },
+  //     { text: "'s text is ", style: livy.style.filler },
+  //     { text: expected, style: livy.style.object },
+  //     { text: ` ${uiElement.selector}`, style: livy.style.selector }]);
 
   //   try {
   //     uiElement.waitForExist();
@@ -43,10 +43,10 @@ export class AutobotAssert {
   //  */
   // static elementExists(uiElement, timoutMillis = defaultAutobotTimeoutMillis) {
   //   const screenshotId = livy.logAction2([
-  //     { text: 'Assert ', style: abStyle.verb },
-  //     { text: `${uiElement.stuartname} `, style: abStyle.object },
-  //     { text: 'exists ', style: abStyle.verb },
-  //     { text: uiElement.selector, style: abStyle.selector }]);
+  //     { text: 'Assert ', style: livy.style.verb },
+  //     { text: `${uiElement.stuartname} `, style: livy.style.object },
+  //     { text: 'exists ', style: livy.style.verb },
+  //     { text: uiElement.selector, style: livy.style.selector }]);
   //   // browser.waitUntil(() => uiElement.isExisting(), timoutMillis);
   //   // assert(uiElement.isExisting());
 
@@ -62,10 +62,10 @@ export class AutobotAssert {
 
   static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
-      { text: 'Assert ', style: abStyle.verb },
-      { text: `${targetDescription} `, style: abStyle.object },
-      { text: 'equals ', style: abStyle.verb },
-      { text: value, style: abStyle.object }]);
+      { text: 'Assert ', style: livy.style.verb },
+      { text: `${targetDescription} `, style: livy.style.object },
+      { text: 'equals ', style: livy.style.verb },
+      { text: value, style: livy.style.object }]);
 
     try {
       browser.waitUntil(() => f() === value, timoutMillis);

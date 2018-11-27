@@ -7,7 +7,6 @@ import { editDataNumberComp } from '../../../ui-model/wordsmith/editor/segmentEd
 import { editDataTextComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
 import { editDataTimeComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.comp';
-import { autobotBrowser } from '../../../../autobot_framework/autobot';
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
 
@@ -167,9 +166,9 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('one');
 
     comp.subsetLimit.click();
-    autobotBrowser.keys('\uE012'); // left
-    autobotBrowser.keys('2');
-    autobotBrowser.keys('\uE017'); // delete
+    comp.keys('\uE012'); // left
+    comp.keys('2');
+    comp.keys('\uE017'); // delete
     comp.highlightedPreviewSpan.waitForText('one or two');
 
     comp.dropdown_listSettings.click();

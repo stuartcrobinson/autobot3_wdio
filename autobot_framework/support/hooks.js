@@ -3,8 +3,9 @@ import { assert } from 'chai';
 import { editorPage } from '../../src/ui-model/wordsmith/editor/editor.page';
 import { loginPage } from '../../src/ui-model/wordsmith/misc/page/login.page';
 import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page';
-import { Autobot, livy, options } from '../autobot';
+import { Autobot, options } from '../autobot';
 import { Page } from './Page';
+import { livy } from './Livy';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -46,7 +47,7 @@ export class Load {
   static newTemplateEditorUsingDataFile(file) {
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
-    loginPage.logIn(options.wsLogin, `${options.wsPassword}asdf`, options.wsUrl);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
     livy.logMessage(`Api use data file to create project: ${projectName}`);
     Autobot.httpRequestComplete(httpRequestPromise);
     Page.load(Autobot.getProjectUrlFromName(projectName));

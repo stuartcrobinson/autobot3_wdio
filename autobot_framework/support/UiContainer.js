@@ -1,8 +1,7 @@
+// @ts-check
 import { AssertionError } from 'assert';
 import filenamify from 'filenamify';
-import { livy } from '../autobot';
-
-// @ts-check
+import { livy } from './Livy';
 
 /**
  * Any class that contains custom web element objects.
@@ -53,10 +52,14 @@ export class UiContainer {
   }
 
   waitForLoad(timeoutInMillis = 12000) {
-    for (let i = 0; i < this.criteriaElements.length; i++) {
-      const element = this.criteriaElements[i];
-      // @ts-ignore
-      element.waitForExist(timeoutInMillis);
+    try {
+      for (let i = 0; i < this.criteriaElements.length; i++) {
+        const element = this.criteriaElements[i];
+        // @ts-ignore
+        element.waitForExist(timeoutInMillis);
+      }
+    } catch (error) {
+      throw new Error(`Container ${this.constructor.name} failed to load. ${error}`);
     }
   }
 
@@ -95,24 +98,30 @@ export class UiContainer {
     const excludedSelectors = excludedElements.map(uiElement => uiElement.selector);
 
     let report;
+    // @ts-ignore
     if (this.selector) {
       // is an element
 
+      // @ts-ignore
       this.waitForExist();
 
+      // @ts-ignore
       global.customScreenshotTag = filenamify(this.selector);
 
       /* eslint prefer-destructuring: "off" */
+      // @ts-ignore
       report = browser.checkElement(this.selector, { hide: excludedSelectors })[0];
     } else {
       // is a page
 
 
       this.waitForLoad();
-
+      // @ts-ignore
       global.customScreenshotTag = `${this.constructor.name}Page`;
 
+
       /* eslint prefer-destructuring: "off" */
+      // @ts-ignore
       report = browser.checkDocument({ hide: excludedSelectors })[0];
     }
 
@@ -122,6 +131,7 @@ export class UiContainer {
       livy.logFailedVisualTest(global.previousImageFileLocation);
       throw new AssertionError({ message: 'Visual test failed.' });
     }
+    // @ts-ignore
     global.customScreenshotTag = undefined;
   }
 
@@ -133,5 +143,71 @@ export class UiContainer {
     this.checkVisual(...excludedElements);
     // @ts-ignore
     global.doDeleteReferenceImage = false;
+  }
+
+
+  keys(...inputs) {
+    this.waitForLoad();
+
+    const asdf = [];
+
+    let doLog = true;
+
+    let outputString = '';
+    console.log('inputs  98u98u');
+    console.log(inputs);
+    console.log('inputs lenght');
+    console.log(inputs.length);
+
+    if (inputs.length === 1) {
+      asdf.push({ k: inputs[0], n: 1 });
+      outputString = JSON.stringify(asdf[0].k);
+    } else {
+      for (let i = 0; i < inputs.length; i += 2) {
+        const k = inputs[i];
+
+        if (i + 1 < inputs.length) {
+          const n = inputs[i + 1];
+
+          asdf.push({ k, n });
+          outputString += `${JSON.stringify(k) + (n > 1 ? `x${n}` : '')}, `;
+        } else {
+          doLog = k;
+        }
+      }
+      outputString = outputString.slice(0, -2);
+    }
+
+    if (doLog) {
+      livy.logScreenshottedAction([
+        { text: 'Type ', style: livy.style.verb },
+        { text: outputString, style: livy.style.object }]);
+    }
+    for (let i = 0; i < asdf.length; i++) {
+      const inputObject = asdf[i];
+      for (let j = 0; j < inputObject.n; j++) {
+        // console.log('asdf[i].k');
+        // console.log(asdf[i].k);
+        browser.keys(asdf[i].k);
+      }
+    }
+  }
+
+
+  // keys(keysToType, n = 1, doLog = true) {
+  //   this.waitForLoad();
+  //   if (doLog) {
+  //     livy.logScreenshottedAction([
+  //       { text: 'Type ', style: livy.style.verb },
+  //       { text: JSON.stringify(keysToType) + (n > 1 ? `x${n}` : ''), style: livy.style.object }]);
+  //   }
+  //   for (let i = 0; i < n; i++) {
+  //     browser.keys(keysToType);
+  //   }
+  // }
+
+  sleep(timeInMilliseconds) {
+    this.waitForLoad();
+    browser.pause(timeInMilliseconds);
   }
 }

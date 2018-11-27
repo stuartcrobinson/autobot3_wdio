@@ -1,7 +1,6 @@
 // @ts-check
 import axios, { AxiosPromise } from 'axios';
-import colors from 'colors/safe';
-import { Livy } from './support/Livy';
+import { livy } from './support/Livy';
 
 /* ******************************* wrapped *************************************/
 
@@ -19,11 +18,6 @@ function getAxiosBodyWithDataObject(projectName, projectData) {
 
 //eachDataType_date2
 function getAxiosBodyWithFileData64(projectName, file, data64) {
-
-
-  // base64.encode('text.txt', function (err, base64String) {
-  //   console.log(base64String);
-  // });
 
   return {
     "data": {
@@ -130,14 +124,14 @@ export const options = global.autobotOptions;
 
 /******** tools *******/
 
-export const abStyle = new class AutobotSyles {
-  constructor() {
-    this.verb = colors.italic;
-    this.object = colors.bold;
-    this.filler = colors.reset;
-    this.selector = colors.gray;
-  }
-}();
+// export const livy.style = new class AutobotSyles {
+//   constructor() {
+//     this.verb = colors.italic;
+//     this.object = colors.bold;
+//     this.filler = colors.reset;
+//     this.selector = colors.gray;
+//   }
+// }();
 
 
 // /******************************** browser ************************************/
@@ -153,31 +147,3 @@ export const abStyle = new class AutobotSyles {
 export function loadPage(url) {
   browser.url(url);
 }
-
-export const autobotBrowser = new class AutobotBrowser {
-
-  keys(keysToType, doLog = true) {
-    if (doLog) {
-      livy.logScreenshottedAction([
-        { text: 'Type ', style: abStyle.verb },
-        { text: JSON.stringify(keysToType), style: abStyle.object }]);
-    }
-    browser.keys(keysToType);
-  }
-
-  sleep(timeInMilliseconds) {
-    browser.pause(timeInMilliseconds);
-  }
-}
-
-export let livy =
-  new Livy(
-    options.muteConsole ? false : true,
-    options.noPics ? false : true,
-    false
-  );
-
-/** for wdio.conf */
-// @ts-ignore
-global.livy = livy;
-

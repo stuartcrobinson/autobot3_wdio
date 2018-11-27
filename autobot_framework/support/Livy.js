@@ -10,6 +10,7 @@ import * as os from 'os';
 import * as path from 'path';
 // import { options } from '../autobot';
 
+
 const entities = new AllHtmlEntities();
 
 /*  TODO - this file is terrible.  should be broken up.  */
@@ -47,31 +48,43 @@ function convertNpmColorsToCss(style) {
 }
 
 function getEventDomFileRelPath(id) {
-  return `${getEventScreenshotsDirName()}/${id}.html`;
+  return `${getEventSnapshotsDirName()}/${id}.html`;
 }
 
-/**
-* TODO - rename to eventSnapshot instead of screenshot.   cos holding DOM also.
-*/
-function getEventScreenshotsDirName() {
-  return 'eventScreenshots';
+/** holds DOMs as well as event screenshots */
+function getEventSnapshotsDirName() {
+  return 'eventSnapshots';
 }
 
 function getEventScreenshotFileRelPath(id) {
-  return `${getEventScreenshotsDirName()}/${id}.png`;
+  return `${getEventSnapshotsDirName()}/${id}.png`;
 }
 
-export class Livy {
-  /**
-   *
-   * @param {Boolean} doDisplay
-   * @param {Boolean} doSaveEventScreenshots
-   * @param {Boolean} doSaveEventDom - not yet supported
-   */
-  constructor(doDisplay = true, doSaveEventScreenshots = true, doSaveEventDom = false) {
-    this.livyDoDisplay = doDisplay;
-    this.doSaveEventScreenshots = doSaveEventScreenshots;
-    this.doSaveEventDom = doSaveEventDom;
+/**
+ *
+ * @param {string} fullTitle
+ * @param {string} title
+ * @param {string} parent
+ */
+const getGrandparentsTitle = (fullTitle, title, parent) => {
+  const bitToRemove = `${parent} ${title}`;
+  return fullTitle.replace(bitToRemove, '');
+};
+
+class Livy {
+  constructor() {
+    // @ts-ignore
+    const options = global.autobotOptions;
+
+    this.livyDoDisplay = !options.muteConsole;
+    this.doSaveEventScreenshots = !options.noPics;
+    this.doSaveEventDom = false;
+    this.style = {
+      verb: colors.italic,
+      object: colors.bold,
+      filler: colors.reset,
+      selector: colors.gray,
+    };
     // console.log('doSaveEventScreenshots?');
     // console.log(doSaveEventScreenshots);
   }
@@ -127,20 +140,12 @@ export class Livy {
 
 
   getSpecFileName() {
-    // const specFilePath = currentTest.file;
-
-    // /Users/stuartrobinson/repos/autobot/autobot/test/dashboard.js
-
     const split = this.specFilePath.split('/');
 
     return split[split.length - 1].replace('.js', '');
   }
 
   getSpecFileDirName() {
-    // const specFilePath = currentTest.file;
-
-    // /Users/stuartrobinson/repos/autobot/autobot/test/dashboard.js
-
     const split = this.specFilePath.split('/');
 
     return split[split.length - 2];
@@ -161,7 +166,7 @@ export class Livy {
 
 
   getEventScreenshotsDir() {
-    return `${this.getReportDir()}/${getEventScreenshotsDirName()}`;
+    return `${this.getReportDir()}/${getEventSnapshotsDirName()}`;
   }
 
 
@@ -179,7 +184,8 @@ export class Livy {
   }
 
   getErrorScreenshotFileRelPath() {
-    return `${this.testCaseFullTitle.replace(/ /g, '_')}.png`;
+    return `${this.getSpacelessTestCaseFullTitle()}.png`;
+    // return `${this.testCaseFullTitle.replace(/ /g, '_')}.png`;
   }
 
   getSpacelessTestCaseFullTitle() {
@@ -399,22 +405,12 @@ export class Livy {
 
     this.logReportError(stack);
 
-    // console.log('this.getErrorScreenshotFileAbsPath()');
-    // console.log(this.getErrorScreenshotFileAbsPath());
-
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-    // console.log('before logErrorImage');
-
     this.logErrorImage();
   }
 
-  // wdioConf_before()
-
-
   wdioConf_beforeSuite(suite) {
     this.isInTestCase = false;
-    // "type":"beforeSuite","title":"Dummy","parent":"Dummy","fullTitle":"Dummy",
-    // this.suite = suite;
     this.specFilePath = suite.file;
     this.testCaseTitle = undefined;
     this.testParentTitle = suite.parent;
@@ -423,22 +419,9 @@ export class Livy {
 
     this.initialize(this.specFilePath);
     console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
-
-    // console.log('suite dfwe89ufosidf');
-    // console.log(JSON.stringify(suite));
   }
 
-  // wdioConf_before() {
-  //   // const filePath = 'asdf' //this.test.parent.suites[0].file
-  //   this.initialize(this.specFilePath);
-  //   console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
-
-  //   // @ts-ignore
-  //   // global.livy = livy;
-  // }
   wdioConf_beforeTest(test) {
-    // "title":"go home","parent":"Dummy","fullTitle":"DummyParent Dummy go home"
-
     const grandparentsTitle = getGrandparentsTitle(test.fullTitle, test.title, test.parent);
     this.initializeNewTestCase(test.title.trim(), test.parent.trim(), test.fullTitle.trim(), grandparentsTitle.trim());
     this.logTestStart();
@@ -486,13 +469,7 @@ export class Livy {
 }
 
 
-/**
- *
- * @param {string} fullTitle
- * @param {string} title
- * @param {string} parent
- */
-const getGrandparentsTitle = (fullTitle, title, parent) => {
-  const bitToRemove = `${parent} ${title}`;
-  return fullTitle.replace(bitToRemove, '');
-};
+export const livy = new Livy();
+
+// @ts-ignore
+global.livy = livy;

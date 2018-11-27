@@ -6,8 +6,8 @@ import { WordsmithPage } from '../../../../../autobot_framework/support/Wordsmit
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 export const loginPage = new class Login extends WordsmithPage {
-  constructor(urlPath) {
-    super(urlPath);
+  constructor() {
+    super("/");
     this.emailInput = new UiElement('input.email').tagAsLoadCriterion();
     this.passwordInput = new UiElement('input.password').tagAsLoadCriterion();
     this.logInButton = new UiElement('input[value="Log In"]');
@@ -19,7 +19,7 @@ export const loginPage = new class Login extends WordsmithPage {
   }
 
   attemptLogIn(email, password, url) {
-    loadPage(url);
+    this.load();
     this.emailInput.setValue(email);
     this.passwordInput.setValue(password);
     this.logInButton.click();

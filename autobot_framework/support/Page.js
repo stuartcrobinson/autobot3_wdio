@@ -1,7 +1,7 @@
 // @ts-check
-import { abStyle, livy } from '../autobot';
 import { UiContainer } from './UiContainer';
 import { UiElement } from './UiElement';
+import { livy } from './Livy';
 
 export class Page extends UiContainer {
   constructor(baseUrl, urlPath = undefined) {
@@ -16,17 +16,17 @@ export class Page extends UiContainer {
 
   static load(url) {
     livy.logAction2([
-      { text: 'Load ', style: abStyle.verb },
-      { text: url, style: abStyle.selector }]);
+      { text: 'Load ', style: livy.style.verb },
+      { text: url, style: livy.style.selector }]);
 
     browser.url(url);
   }
 
   load() {
     livy.logAction2([
-      { text: 'Load ', style: abStyle.verb },
-      { text: `${this.pageName} Page `, style: abStyle.object },
-      { text: this.url, style: abStyle.selector }]);
+      { text: 'Load ', style: livy.style.verb },
+      { text: `${this.pageName} Page `, style: livy.style.object },
+      { text: this.url, style: livy.style.selector }]);
 
     browser.url(this.url);
     super.waitForLoad();
