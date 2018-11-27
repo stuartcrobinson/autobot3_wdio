@@ -8,6 +8,7 @@ import * as fs_extra from 'fs-extra';
 import { AllHtmlEntities } from 'html-entities';
 import * as os from 'os';
 import * as path from 'path';
+// import { options } from '../autobot';
 
 const entities = new AllHtmlEntities();
 
@@ -111,24 +112,13 @@ export class Livy {
     this.testCaseFullTitle = testCaseFullTitle;
     this.testGrandparentsTitle = testGrandparentsTitle;
     this.hasPrintedNontestLine = false;
-
-
-    //   console.log('initializeNewTestCase:::::::::::::::::::::::::::::::::::');
-    //   console.log('testCaseTitle');
-    //   console.log(testCaseTitle);
-    //   console.log('testParentTitle');
-    //   console.log(testParentTitle);
-    //   console.log('testCaseFullTitle');
-    //   console.log(testCaseFullTitle);
-    //   console.log('testGrandparentsTitle');
-    //   console.log(testGrandparentsTitle);
   }
 
   endNewTestCase() {
     this.isInTestCase = false;
-    // this.testCaseTitle = undefined;
+    this.testCaseTitle = undefined;
     // this.testParentTitle = undefined;
-    // this.testCaseFullTitle = undefined;
+    this.testCaseFullTitle = undefined;
     // this.testGrandparentsTitle = undefined;
     this.hasPrintedNontestLine = false;
   }
@@ -193,7 +183,11 @@ export class Livy {
   }
 
   getSpacelessTestCaseFullTitle() {
-    return filenamify(this.testCaseFullTitle.replace(/ /g, '_'));
+    if (this.isInTestCase) {
+      return filenamify(this.testCaseFullTitle.replace(/ /g, '_'));
+    }
+
+    return filenamify(this.testParentTitle.replace(/ /g, '_'));
   }
 
   getFile() {
@@ -317,6 +311,10 @@ export class Livy {
 
   logErrorImage() {
     // <img src=${imageClickablePath} width=900></img>
+    console.log('in logErrorImage');
+    console.log('html:');
+    console.log(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
+
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
 
@@ -400,31 +398,101 @@ export class Livy {
     this.setMouseoverEventScreenshotFunction(screenshotId);
 
     this.logReportError(stack);
+
+    // console.log('this.getErrorScreenshotFileAbsPath()');
+    // console.log(this.getErrorScreenshotFileAbsPath());
+
+    browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
+    // console.log('before logErrorImage');
+
+    this.logErrorImage();
   }
 
-  logAfterEachStuff(testDidPass, err) {
+  // wdioConf_before()
+
+
+  wdioConf_beforeSuite(suite) {
+    this.isInTestCase = false;
+    // "type":"beforeSuite","title":"Dummy","parent":"Dummy","fullTitle":"Dummy",
+    // this.suite = suite;
+    this.specFilePath = suite.file;
+    this.testCaseTitle = undefined;
+    this.testParentTitle = suite.parent;
+    this.testCaseFullTitle = suite.fullTitle;
+    this.testGrandparentsTitle = undefined;
+
+    this.initialize(this.specFilePath);
+    console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
+
+    // console.log('suite dfwe89ufosidf');
+    // console.log(JSON.stringify(suite));
+  }
+
+  // wdioConf_before() {
+  //   // const filePath = 'asdf' //this.test.parent.suites[0].file
+  //   this.initialize(this.specFilePath);
+  //   console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
+
+  //   // @ts-ignore
+  //   // global.livy = livy;
+  // }
+  wdioConf_beforeTest(test) {
+    // "title":"go home","parent":"Dummy","fullTitle":"DummyParent Dummy go home"
+
+    const grandparentsTitle = getGrandparentsTitle(test.fullTitle, test.title, test.parent);
+    this.initializeNewTestCase(test.title.trim(), test.parent.trim(), test.fullTitle.trim(), grandparentsTitle.trim());
+    this.logTestStart();
+  }
+
+  /** called from wdio.conf.js */
+  wdioConf_after() {
+    // @ts-ignore
+    if (!global.autobotOptions.muteConsole) {
+      console.log('\nReport: ', this.reportClickablePath, '\n');
+    }
+  }
+
+  /** called from wdio.conf.js */
+  wdioConf_afterSession() {
+    // so you can scroll code up so the screenshot isn't blocking it
+    for (let i = 0; i < 30; i++) {
+      this.logRawToHtml('</br>');
+    }
+  }
+
+  /**
+   * Called from wdio.conf.js after testcase or suite completion
+   * @param {boolean} testDidPass
+   * @param {*} err
+   */
+  wdioConf_afterTest(testDidPass, err) {
     // // if test passed, ignore, else take and save screenshot.
     if (testDidPass) {
       this.logPassed();
     } else {
       this.logFailed(err.stack);
-      browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-      this.logErrorImage();
       console.log('\n\tTest case report:\n\t\t', this.reportClickablePathWithHash, '\n');
     }
     // const reportClickablePath = 'file://' + path.resolve(livy.getFile()) + '#' + livy.getSpacelessTestCaseFullTitle();
 
-
     this.endNewTestCase();
   }
 
-  // logSuiteFailure(stack) {
-  //   // // if test passed, ignore, else take and save screenshot.
-  //   this.logFailed(stack);
-  //   // this.printLotsOfNewlines();
-  // }
-
-  // printLotsOfNewlines() {
-  //   fs.appendFileSync(this.getFile(), `</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>${os.EOL}`);
-  // }
+  wdioConf_afterSuite(err) {
+    if (err) {
+      this.wdioConf_afterTest(false, err);
+    }
+  }
 }
+
+
+/**
+ *
+ * @param {string} fullTitle
+ * @param {string} title
+ * @param {string} parent
+ */
+const getGrandparentsTitle = (fullTitle, title, parent) => {
+  const bitToRemove = `${parent} ${title}`;
+  return fullTitle.replace(bitToRemove, '');
+};

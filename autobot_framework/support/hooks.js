@@ -44,18 +44,14 @@ export class Load {
   }
 
   static newTemplateEditorUsingDataFile(file) {
-    try {
-      const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
-      const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
-      loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-      livy.logMessage(`Api use data file to create project: ${projectName}`);
-      Autobot.httpRequestComplete(httpRequestPromise);
-      Page.load(Autobot.getProjectUrlFromName(projectName));
-      // browser.url(Autobot.getProjectUrlFromName(projectName));
-      projectPage.createNewTemplateButton.click_waitForNotExisting();
-      assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
-    } catch (error) {
-      throw new Error(error); // improves logging ?
-    }
+    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
+    const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
+    loginPage.logIn(options.wsLogin, `${options.wsPassword}asdf`, options.wsUrl);
+    livy.logMessage(`Api use data file to create project: ${projectName}`);
+    Autobot.httpRequestComplete(httpRequestPromise);
+    Page.load(Autobot.getProjectUrlFromName(projectName));
+    // browser.url(Autobot.getProjectUrlFromName(projectName));
+    projectPage.createNewTemplateButton.click_waitForNotExisting();
+    assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
   }
 }

@@ -326,7 +326,6 @@ export class UiElement extends UiContainer {
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
-
   waitForNotExist(timeoutInMillis = 1000) {
     try {
       browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);

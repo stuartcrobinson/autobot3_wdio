@@ -7,7 +7,7 @@ import { editDataNumberComp } from '../../../ui-model/wordsmith/editor/segmentEd
 import { editBranchComp } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.comp';
 import { editSynonymComp } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.comp';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.comp';
-import { keys } from '../../../../autobot_framework/support/Keys';
+import { key } from '../../../../autobot_framework/support/Key';
 
 
 // describe('Test', () => {
@@ -35,8 +35,8 @@ describe('Branches:', () => {
     editBranchComp.getNthBranchBox(1).conditionTextarea.click();
     // const asdf = keys.
     // down enter down enter down enter tab cheeto
-    autobotBrowser.keys(keys.DOWN, keys.ENTER, keys.DOWN, keys.ENTER, keys.DOWN, keys.ENTER, keys.TAB, 'cheeto');
-    autobotBrowser.keys('\uE015\uE007\uE015\uE007\uE015\uE007\uE004cheeto'); // down enter down enter down enter tab cheeto
+    autobotBrowser.keys([key.DOWN, key.ENTER, key.DOWN, key.ENTER, key.DOWN, key.ENTER, key.TAB, 'cheeto']);
+    // autobotBrowser.keys('\uE015\uE007\uE015\uE007\uE015\uE007\uE004cheeto'); // down enter down enter down enter tab cheeto
     editSynonymComp.highlightedPreviewSpan.waitForText('cheeto');
     editBranchComp.getNthBranchBox(1).hover().elipsisDropdown.click_waitForChange();
     editBranchComp.getNthBranchBox(1).elipsisDropdown_AddDescription.click_waitForNotExisting();

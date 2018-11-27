@@ -2,7 +2,6 @@
 import axios, { AxiosPromise } from 'axios';
 import colors from 'colors/safe';
 import { Livy } from './support/Livy';
-import { AssertionError } from 'assert';
 
 /* ******************************* wrapped *************************************/
 
@@ -129,8 +128,6 @@ export class Autobot {
 export const options = global.autobotOptions;
 
 
-
-
 /******** tools *******/
 
 export const abStyle = new class AutobotSyles {
@@ -142,17 +139,6 @@ export const abStyle = new class AutobotSyles {
   }
 }();
 
-
-
-// export function logScreenshottedAction(messages) {
-//   const screenshotId = livy.logAction2(messages);
-//   livy.setMouseoverEventScreenshotFunction(screenshotId);
-// }
-
-// export function logScreenshottedAction(message) {
-//   const screenshotId = livy.logMessage(message);
-//   livy.setMouseoverEventScreenshotFunction(screenshotId);
-// }
 
 // /******************************** browser ************************************/
 /**
@@ -174,7 +160,7 @@ export const autobotBrowser = new class AutobotBrowser {
     if (doLog) {
       livy.logScreenshottedAction([
         { text: 'Type ', style: abStyle.verb },
-        { text: keysToType, style: abStyle.object }]);
+        { text: JSON.stringify(keysToType), style: abStyle.object }]);
     }
     browser.keys(keysToType);
   }
@@ -184,13 +170,6 @@ export const autobotBrowser = new class AutobotBrowser {
   }
 }
 
-
-/******************************** hooks **************************************/
-//these should be pulled out into a separate file and imported per test, since some tests might want unique before/after code
-export let driver;
-export let currentTest, currentSpec, currentTestCustom;
-
-// @ts-ignore
 export let livy =
   new Livy(
     options.muteConsole ? false : true,
@@ -198,51 +177,7 @@ export let livy =
     false
   );
 
-beforeEach(function () {
-  currentTest = this.currentTest;
-  let fullName = "";
-  let ancestor = currentTest;
-  let testGrandparentsTitle = "";
-  let count = 0;
-  while (ancestor !== undefined) {
+/** for wdio.conf */
+// @ts-ignore
+global.livy = livy;
 
-    fullName = ancestor.title + " " + fullName;
-
-    if (count >= 2) {
-      testGrandparentsTitle = ancestor.title + " " + testGrandparentsTitle;
-    }
-    ancestor = ancestor.parent;
-    count++;
-  }
-  livy.initializeNewTestCase(currentTest.title.trim(), currentTest.parent.title.trim(), fullName.trim(), testGrandparentsTitle.trim());
-  livy.logTestStart();
-});
-
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */
-
-//TODO move this stuff back to wdio.conf?
-
-before(function () {
-  const filePath = this.test.parent.suites[0].file
-  livy.initialize(filePath);
-  console.log('\nReport, in progress: ', livy.reportClickablePath, '\n');
-
-  // @ts-ignore
-  global.livy = livy;
-});
-//TODO move this stuff back to wdio.conf?
-after(function () {
-  if (!options.muteConsole) {
-    console.log('\nReport: ', livy.reportClickablePath, '\n');
-  }
-  // livy.printLotsOfNewlines();
-});
-
-
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */
-/* ************************************************************************************************************************ */

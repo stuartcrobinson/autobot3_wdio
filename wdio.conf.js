@@ -64,8 +64,18 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './src/ui-test/*.js'
+    './src/ui-test/**/*.js'
   ],
+  // define specific suites
+  suites: {
+    login: [
+      './src/ui-test/dummy.test.js',
+      './src/ui-test/loginForRye.test.js'
+    ],
+    otherFeature: [
+      // ...
+    ]
+  },
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -251,17 +261,22 @@ exports.config = {
   // },
 
   /**
-   * Hook that gets executed before the suite starts
+   * Hook that gets executed before the suite starts.  (Suite is a mocha thing, not the wdio.conf-defined "suites" above.  So there is 1 spec file per suite. - stuart)
    * @param {Object} suite suite details
    */
-  // beforeSuite: function (suite) {
-  // },
+  beforeSuite: function (suite) {
+    global.livy && global.livy.wdioConf_beforeSuite(suite);
+  },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
-  // beforeTest: function (test) {
-  // },
+  beforeTest: function (test) {
+    console.log("beforeTest wdioConf. test:")
+    console.log(JSON.stringify(test));
+    global.livy && global.livy.wdioConf_beforeTest(test);
+
+  },
   /**
    * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
    * beforeEach in Mocha)
@@ -279,15 +294,14 @@ exports.config = {
    * @param {Object} test test details
    */
   afterTest: function (test) {
-    //livy might not be defined if just testing mocha stuff
-    global.livy && global.livy.logAfterEachStuff(test.passed, test.err);
+    global.livy && global.livy.wdioConf_afterTest(test.passed, test.err);
   },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy && suite.err && global.livy.logFailed(suite.err.stack);
+    global.livy && global.livy.wdioConf_afterSuite(suite.err);
   },
   /**
    * Runs after a WebdriverIO command gets executed
@@ -305,8 +319,9 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that ran
    */
-  // after: function (result, capabilities, specs) {
-  // },
+  after: function (result, capabilities, specs) {
+    global.livy && livy.wdioConf_after()
+  },
   /**
    * Gets executed right after terminating the webdriver session.
    * @param {Object} config wdio configuration object
@@ -314,10 +329,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    //so you can scroll code up so the screenshot isn't blocking it
-    for (let i = 0; i < 30; i++) {
-      global.livy.logRawToHtml(`</br>`);
-    }
+    global.livy && livy.wdioConf_afterSession()
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
