@@ -1,7 +1,7 @@
 // @ts-check
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { Table } from '../../table';
-import { sidebar } from '../component/sideBar.comp';
+import { sidebar } from '../component/sideBar.cont';
 
 export const dashboardPage = new class Dashboard extends WordsmithPage {
   constructor() {

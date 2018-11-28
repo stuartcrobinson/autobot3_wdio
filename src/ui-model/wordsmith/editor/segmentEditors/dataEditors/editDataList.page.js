@@ -1,5 +1,5 @@
 // @ts-check
-import { CapitalizationDropdown, EditDataComp, nthDropdownButtonCssSelector, EditDataDropdown, nthDropDownOptionFromButton } from '../editData.comp';
+import { CapitalizationDropdown, EditDataPage, nthDropdownButtonCssSelector, EditDataDropdown, nthDropDownOptionFromButton } from '../editData.page';
 import { Toggle } from '../../../toggle';
 
 class ConjunctionDropdown extends EditDataDropdown {
@@ -45,9 +45,9 @@ export class SortedCutoffDropdown extends EditDataDropdown {
 }
 
 
-export const editDataListComp = new class EditDataListComp extends EditDataComp {
-  constructor() {
-    super();
+export const editDataListPage = new class EditDataListPage extends EditDataPage {
+  constructor(urlPath) {
+    super(urlPath);
     this.dropdown_capitalization = new CapitalizationDropdown(
       this.get('.columns.medium-4:nth-of-type(1) ' + nthDropdownButtonCssSelector(1)).selector);
 

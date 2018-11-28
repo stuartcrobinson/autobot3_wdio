@@ -63,6 +63,16 @@ export class UiContainer {
     }
   }
 
+  waitFor() {
+    // @ts-ignore
+    if (this.waitForExist) {
+      // @ts-ignore
+      this.waitForExist();
+    } else {
+      this.waitForLoad();
+    }
+  }
+
   isLoaded() {
     for (let i = 0; i < this.criteriaElements.length; i++) {
       const element = this.criteriaElements[i];
@@ -82,6 +92,21 @@ export class UiContainer {
     return $(selector);
   }
 
+  // TODO refactor, i think this is waste.  artifact of different hierarchy
+  getChildren(selector) {
+    // if (this.selector.startsWith('/') && selector.startsWith('/')) {
+    //   return this.findWebElements(this.selector + selector);
+    // }
+    // if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
+    return this.findWebElements(selector);
+    // }
+
+    // throw new Error(
+    //   `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
+    // );
+  }
+
+
   /**
    * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
    *
@@ -89,7 +114,7 @@ export class UiContainer {
    * @param  excludedElements UiElement - cssSelectors or xpaths for sections of the screen to ignore
    */
   checkVisual(...excludedElements) {
-    // console.log(this.constructor.name)
+    this.waitFor();
 
     excludedElements.forEach((uiElement) => {
       uiElement.waitForVisible();
@@ -103,9 +128,6 @@ export class UiContainer {
       // is an element
 
       // @ts-ignore
-      this.waitForExist();
-
-      // @ts-ignore
       global.customScreenshotTag = filenamify(this.selector);
 
       /* eslint prefer-destructuring: "off" */
@@ -114,11 +136,8 @@ export class UiContainer {
     } else {
       // is a page
 
-
-      this.waitForLoad();
       // @ts-ignore
       global.customScreenshotTag = `${this.constructor.name}Page`;
-
 
       /* eslint prefer-destructuring: "off" */
       // @ts-ignore
@@ -147,17 +166,19 @@ export class UiContainer {
 
 
   keys(...inputs) {
-    this.waitForLoad();
+    this.waitFor();
+    // @ts-ignore
+    this.click && this.click(false);
 
     const asdf = [];
 
     let doLog = true;
 
     let outputString = '';
-    console.log('inputs  98u98u');
-    console.log(inputs);
-    console.log('inputs lenght');
-    console.log(inputs.length);
+    // console.log('inputs  98u98u');
+    // console.log(inputs);
+    // console.log('inputs lenght');
+    // console.log(inputs.length);
 
     if (inputs.length === 1) {
       asdf.push({ k: inputs[0], n: 1 });

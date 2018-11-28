@@ -70,6 +70,7 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
   const bitToRemove = `${parent} ${title}`;
   return fullTitle.replace(bitToRemove, '');
 };
+// @ts-ignore
 
 class Livy {
   constructor() {
@@ -81,7 +82,11 @@ class Livy {
     this.doSaveEventDom = false;
     this.style = {
       verb: colors.italic,
+      // @ts-ignore
+      verb_red: colors.italic.red,
       object: colors.bold,
+      // @ts-ignore
+      object_red: colors.bold.red,
       filler: colors.reset,
       selector: colors.gray,
     };
@@ -407,6 +412,24 @@ class Livy {
 
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
     this.logErrorImage();
+  }
+
+  logVisualTestReset() {
+    this.logScreenshottedAction([
+      { text: 'Reset ', style: livy.style.verb_red },
+      { text: 'screenshot', style: livy.style.object_red }]);
+  }
+
+  logVisualTestCreate() {
+    this.logScreenshottedAction([
+      { text: 'Save ', style: livy.style.verb_red },
+      { text: 'screenshot', style: livy.style.object_red }]);
+  }
+
+  logVisualTestVerify() {
+    this.logScreenshottedAction([
+      { text: 'Verify ', style: livy.style.verb },
+      { text: 'screenshot', style: livy.style.object }]);
   }
 
   wdioConf_beforeSuite(suite) {

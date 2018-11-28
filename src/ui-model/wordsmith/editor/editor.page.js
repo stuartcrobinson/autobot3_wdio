@@ -1,11 +1,11 @@
 // @ts-check
 import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
-import { editorPageToolbar } from './toolbar.comp';
+import { editorPageToolbar } from './toolbar.cont';
 import { UiElement } from '../../../../autobot_framework/support/UiElement';
 
 export const editorPage = new class Editor extends WordsmithPage {
-  constructor() {
-    super();
+  constructor(urlPath) {
+    super(urlPath);
     this.toolbar = editorPageToolbar.tagAsLoadCriterion();
     this.editor = new UiElement('.editor-textarea').tagAsLoadCriterion();
 

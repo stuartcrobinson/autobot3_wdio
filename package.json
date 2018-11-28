@@ -7,8 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && ./node_modules/.bin/wdio"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
     "chromedriver": "^2.42.0",
@@ -46,6 +44,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-webdriverio": "^1.0.1",
+    "eslint-plugin-autobot": "file:./eslint-plugin-autobot",
     "lodash": "^4.17.11",
     "prettier": "^1.14.3",
     "wdio-chromedriver-service": "^0.1.3",

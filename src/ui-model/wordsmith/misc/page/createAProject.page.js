@@ -3,8 +3,8 @@ import { WordsmithPage } from '../../../../../autobot_framework/support/Wordsmit
 import { livy } from '../../../../../autobot_framework/support/Livy';
 
 export const createAProjectPage = new class CreateAProject extends WordsmithPage {
-  constructor() {
-    super();
+  constructor(urlPath) {
+    super(urlPath);
     this.dataInputTable = this.get('.wizard-table-wrapper').tagAsLoadCriterion();
     this.createProjectButton = this.get('//button[text()="Create Project"]').tagAsLoadCriterion();
     super.nameElements();

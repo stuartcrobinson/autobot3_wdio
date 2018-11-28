@@ -19,8 +19,23 @@ function getScreenshotName(basePath) {
     /* Used to display the diff image in the html report. */
     global.previousImageFileLocation = result;
 
+
+    if (basePath.includes('screenshots/reference')) {
+      if (global.doDeleteReferenceImage) {
+        global.livy.logVisualTestReset();
+      }
+      else if (!fs.existsSync(result)) {
+        global.livy.logVisualTestCreate();
+      }
+      else {
+        global.livy.logVisualTestVerify();
+      }
+
+
+    }
+
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
-      console.log('dawefawefdf deleting ' + result)
+      // console.log('dawefawefdf deleting ' + result)
       if (!fs.existsSync(result)) {
         throw new Error('You tried to delete a reference image that does not exist.  Images are specific to environment (including headless or not).  File: ' + result);
       }

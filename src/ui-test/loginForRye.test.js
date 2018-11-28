@@ -1,8 +1,8 @@
 // @ts-check
 import assert from 'assert';
 import { options } from '../../autobot_framework/autobot';
-import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.comp';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
+import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';
 
 // Simple login and logout tests for Rye to use while implementing into jenkins process
 

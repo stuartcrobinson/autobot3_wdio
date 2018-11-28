@@ -1,5 +1,5 @@
 // @ts-check
-import { EditSegmentComp } from '../editSegment.comp';
+import { EditSegmentPage } from '../editSegment.page';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 //TODO - logs aren't useful that just say "textInput" - need to specify which SynonymBOx the textInput is in
@@ -13,9 +13,9 @@ class SynonymBox extends UiElement {
 
   }
 }
-export const editSynonymComp = new class EditSynonymComp extends EditSegmentComp {
-  constructor() {
-    super();
+export const editSynonymPage = new class EditSynonymPage extends EditSegmentPage {
+  constructor(urlPath) {
+    super(urlPath);
 
     this.addAnotherSynonymLink = this.get('.insert-wrapper span a').tagAsLoadCriterion();
     this.synonymBox1 = this.getNthSynonymBox(1).tagAsLoadCriterion();

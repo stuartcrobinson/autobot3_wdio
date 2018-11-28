@@ -1,5 +1,5 @@
 // @ts-check
-import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
+import { EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.page';
 
 export class TimeFormatDropdown extends EditDataDropdown {
   constructor(dropdownButtonSelector) {
@@ -21,9 +21,9 @@ export class TimeFormatDropdown extends EditDataDropdown {
   }
 }
 
-export const editDataTimeComp = new class EditDataTimeComp extends EditDataComp {
-  constructor() {
-    super();
+export const editDataTimePage = new class EditDataTimePage extends EditDataPage {
+  constructor(urlPath) {
+    super(urlPath);
     this.dropdown_timeFormat = new TimeFormatDropdown(this.get(nthDropdownButtonCssSelector(1)).selector);
     super.nameElements();
   }

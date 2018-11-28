@@ -1,3 +1,4 @@
+// @ts-check
 export const key = {
   DOWN: 'ArrowDown',
   LEFT: 'ArrowLeft',

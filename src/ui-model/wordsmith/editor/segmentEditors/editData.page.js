@@ -1,5 +1,5 @@
 // @ts-check
-import { EditSegmentComp } from '../editSegment.comp';
+import { EditSegmentPage } from '../editSegment.page';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 export class EditDataDropdown extends UiElement {
@@ -36,10 +36,11 @@ export function nthDropDownOptionFromButton(n) {
 }
 
 /** Abstract */
-export class EditDataComp extends EditSegmentComp {
-  constructor() {
-    super();
-    if (this.constructor === EditDataComp) {
+export class EditDataPage extends EditSegmentPage {
+  /** @param {string} urlPath   */
+  constructor(urlPath) {
+    super(urlPath);
+    if (this.constructor === EditDataPage) {
       throw new TypeError('Abstract class cannot be instantiated directly.');
     }
 

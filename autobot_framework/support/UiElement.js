@@ -236,21 +236,26 @@ export class UiElement extends UiContainer {
       { text: `${value} `, style: livy.style.object },
       { text: `${this.selector} `, style: livy.style.selector }]);
 
-    try {
-      browser.setValue(this.selector, value);
-    } catch (err) {
-      // console.log('caught error: ');
-      // console.log(err);
-      // this.click_waitForChange();
+    // try {
+    //   browser.setValue(this.selector, value);
+    //   console.log('nooooooooonooooooooonooooooooonooooooooonooooooooo ');
+    // } catch (err) {
+    //   console.log('caught error: ');
+    //   console.log(err);
+    // this.click_waitForChange();
 
-      this.clear(false);
-      browser.pause(100);
-      browser.keys(' ');
-      browser.keys(key.BACKSPACE);
-      browser.click(this.selector);
-      browser.pause(100);
-      browser.keys([value]);
-    }
+
+    /* note: browser.setValue doesn't work with the WS editor in branch rules. */
+
+    this.clear(false);
+    this.keys(value, 1, false);
+    // browser.pause(100);
+    // browser.keys(' ');
+    // browser.keys(key.BACKSPACE);
+    // browser.click(this.selector);
+    // browser.pause(100);
+    // browser.keys([value]);
+    // }
   }
 
   /**
@@ -263,9 +268,9 @@ export class UiElement extends UiContainer {
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: `${this.selector} `, style: livy.style.selector }]);
 
-    browser.click(this.selector);
-    browser.pause(100);
-    browser.keys([key.COMMAND, 'a', key.BACKSPACE, key.COMMAND]);
+    this.click(false);
+    this.sleep(100);
+    this.keys(key.DELETE, 20, key.BACKSPACE, 40, false);
   }
 
   /** If event screenshots are being saved, attempt to hover over an object prior to interacting with it so that the mouse-over state is captured in the image.  */

@@ -1,5 +1,5 @@
 // @ts-check
-import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
+import { EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.page';
 
 
 /**
@@ -32,9 +32,9 @@ export class DateFormatDropdown extends EditDataDropdown {
 }
 
 
-export const editDataDateComp = new class EditDataDateComp extends EditDataComp {
-  constructor() {
-    super();
+export const editDataDatePage = new class EditDataDatePage extends EditDataPage {
+  constructor(urlPath) {
+    super(urlPath);
     this.dropdown_capitalization = new DateFormatDropdown(this.get(nthDropdownButtonCssSelector(1)).selector);
     super.nameElements();
   }

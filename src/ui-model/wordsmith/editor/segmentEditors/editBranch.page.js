@@ -1,5 +1,5 @@
 // @ts-check
-import { EditSegmentComp } from '../editSegment.comp';
+import { EditSegmentPage } from '../editSegment.page';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 class BranchBox extends UiElement {
@@ -24,9 +24,9 @@ class BranchBox extends UiElement {
     super.nameElements();
   }
 }
-export const editBranchComp = new class EditBranchComp extends EditSegmentComp {
-  constructor() {
-    super();
+export const editBranchPage = new class EditBranchPage extends EditSegmentPage {
+  constructor(urlPath) {
+    super(urlPath);
 
     this.writeFirstRuleThatIsTrueLink = this.get('.branch-logic-summary')
     this.addAnotherRuleLink = this.get('div.conditions .insert-button-wrapper > .insert-text').tagAsLoadCriterion();

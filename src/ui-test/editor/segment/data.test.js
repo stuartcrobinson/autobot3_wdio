@@ -1,14 +1,15 @@
 // @ts-check
-import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
-import { editDataBooleanComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.comp';
-import { editDataDateComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataDate.comp';
-import { editDataListComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataList.comp';
-import { editDataNumberComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.comp';
-import { editDataTextComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataText.comp';
-import { editDataTimeComp } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataTime.comp';
-import { header } from '../../../ui-model/wordsmith/misc/component/header.comp';
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
+import { key } from '../../../../autobot_framework/support/Key';
+import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
+import { editDataBooleanPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.page';
+import { editDataDatePage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataDate.page';
+import { editDataListPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataList.page';
+import { editDataNumberPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.page';
+import { editDataTextPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataText.page';
+import { editDataTimePage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataTime.page';
+import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
 
 
 export const data = [{
@@ -30,19 +31,19 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataDropdown.xCloseButton.click();
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option2.click();
-    editDataNumberComp.dropdown_decimalPlaces.click();
-    editDataNumberComp.dropdown_decimalPlaces._2.click();
-    editDataNumberComp.dropdown_decimalSeparator.click();
-    editDataNumberComp.dropdown_decimalSeparator.comma.click();
-    editDataNumberComp.dropdown_thousandsSeparator.click();
-    editDataNumberComp.dropdown_thousandsSeparator.space.click();
-    editDataNumberComp.toggle_absoluteValue.click();
-    editDataNumberComp.toggle_percentage.click();
-    editDataNumberComp.highlightedPreviewSpan.waitForText('10 000,00', 2000);
-    editDataNumberComp.toggle_stripTrailingZeros.click();
-    editDataNumberComp.highlightedPreviewSpan.waitForText('10 000', 2000);
+    editDataNumberPage.dropdown_decimalPlaces.click();
+    editDataNumberPage.dropdown_decimalPlaces._2.click();
+    editDataNumberPage.dropdown_decimalSeparator.click();
+    editDataNumberPage.dropdown_decimalSeparator.comma.click();
+    editDataNumberPage.dropdown_thousandsSeparator.click();
+    editDataNumberPage.dropdown_thousandsSeparator.space.click();
+    editDataNumberPage.toggle_absoluteValue.click();
+    editDataNumberPage.toggle_percentage.click();
+    editDataNumberPage.highlightedPreviewSpan.waitForText('10 000,00', 2000);
+    editDataNumberPage.toggle_stripTrailingZeros.click();
+    editDataNumberPage.highlightedPreviewSpan.waitForText('10 000', 2000);
     header.savedDiv.waitForExist(10000);
-    editDataNumberComp.doneButton.click_waitForNotExisting();
+    editDataNumberPage.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
   });
 
@@ -50,7 +51,7 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option1.click();
 
-    const comp = editDataTextComp;
+    const comp = editDataTextPage;
 
     comp.dropdown_capitalization.click();
     comp.dropdown_capitalization.keepAsIs.click();
@@ -81,7 +82,7 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option4.click();
 
-    const comp = editDataBooleanComp;
+    const comp = editDataBooleanPage;
 
     comp.dropdown_capitalization.click();
     comp.dropdown_capitalization.keepAsIs.click();
@@ -113,7 +114,7 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option3.click();
 
-    const comp = editDataListComp;
+    const comp = editDataListPage;
 
     comp.highlightedPreviewSpan.waitForText('one, Two, and tHREE');
 
@@ -166,9 +167,9 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('one');
 
     comp.subsetLimit.click();
-    comp.keys('\uE012'); // left
+    comp.keys(key.LEFT); // left
     comp.keys('2');
-    comp.keys('\uE017'); // delete
+    comp.keys(key.DELETE); // delete
     comp.highlightedPreviewSpan.waitForText('one or two');
 
     comp.dropdown_listSettings.click();
@@ -196,11 +197,12 @@ describe('Format and insert data var of type', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
   });
 
+  //TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
   it('Date', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option5.click();
 
-    const comp = editDataDateComp;
+    const comp = editDataDatePage;
 
     comp.dropdown_capitalization.click();
     comp.dropdown_capitalization._1_June_2c_1970.click();
@@ -288,7 +290,7 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option6.click();
 
-    const comp = editDataTimeComp;
+    const comp = editDataTimePage;
 
     comp.dropdown_timeFormat.click();
     comp.dropdown_timeFormat.option1.click();

@@ -7,9 +7,9 @@ import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAsse
 import { Load } from '../../../../autobot_framework/support/hooks';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { reviewPage } from '../../../ui-model/wordsmith/editor/review.page';
-import { editSynonymComp } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.comp';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.comp';
 import { sidebar } from '../../../ui-model/wordsmith/misc/component/sideBar.comp';
+import { editSynonymPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.page';
 
 
 // done
@@ -18,41 +18,41 @@ describe('Synonyms:', () => {
 
   it('load synonym editor', () => {
     editorPage.toolbar.addSynonymButton.click_waitForChange();
-    editSynonymComp.waitForLoad();
+    editSynonymPage.waitForLoad();
   });
   it('new first synonym should display in highlighted content', () => {
-    editSynonymComp.getNthSynonymBox(1).textInput.clickAndType('pancakes');
-    editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
+    editSynonymPage.getNthSynonymBox(1).textInput.clickAndType('pancakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('pancakes', 2000);
   });
   it('add 2 more synonyms', () => {
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
-    editSynonymComp.highlightedPreviewSpan.waitForText('flapjacks', 2000);
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
+    editSynonymPage.highlightedPreviewSpan.waitForText('flapjacks', 2000);
 
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
-    editSynonymComp.highlightedPreviewSpan.waitForText('hotcakes', 2000);
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('hotcakes', 2000);
   });
   it('delete a synonym', () => {
-    editSynonymComp.getNthSynonymBox(3).xCloseButton.click_waitForNotExisting();
-    editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
+    editSynonymPage.getNthSynonymBox(3).xCloseButton.click_waitForNotExisting();
+    editSynonymPage.highlightedPreviewSpan.waitForText('pancakes', 2000);
   });
   it('highlighted content should change per synonym click', () => {
-    editSynonymComp.getNthSynonymBox(2).click_waitForChange();
-    editSynonymComp.highlightedPreviewSpan.waitForText('flapjacks', 2000);
+    editSynonymPage.getNthSynonymBox(2).click_waitForChange();
+    editSynonymPage.highlightedPreviewSpan.waitForText('flapjacks', 2000);
 
-    editSynonymComp.getNthSynonymBox(1).click_waitForChange();
-    editSynonymComp.highlightedPreviewSpan.waitForText('pancakes', 2000);
+    editSynonymPage.getNthSynonymBox(1).click_waitForChange();
+    editSynonymPage.highlightedPreviewSpan.waitForText('pancakes', 2000);
   });
   it('main editor should display first synonym', () => {
     header.savedDiv.waitForExist(10000);
-    editSynonymComp.doneButton.click_waitForNotExisting();
+    editSynonymPage.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
   });
   it('deleting all variations should delete the synonym ', () => {
 
     editorPage.segmentWithText("pancakes").click_waitForChange();
-    editSynonymComp.deleteButton.clickAll();
+    editSynonymPage.deleteButton.clickAll();
 
 
 
@@ -90,7 +90,7 @@ describe('Synonyms:', () => {
 
     editorPage.toolbar.addSynonymButton.click_waitForChange();
 
-    editSynonymComp.highlightedPreviewSpan.waitForText('pancakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('pancakes');
 
   });
   it('change first synonym', () => {
@@ -104,39 +104,39 @@ describe('Synonyms:', () => {
       .keys("Alt")
       .keys("Shift")
 
-    editSynonymComp.getNthSynonymBox(1).textInput.clickAndType('slapjacks');
-    editSynonymComp.highlightedPreviewSpan.waitForText('slapjacks');
+    editSynonymPage.getNthSynonymBox(1).textInput.clickAndType('slapjacks');
+    editSynonymPage.highlightedPreviewSpan.waitForText('slapjacks');
   });
   it('add more synonyms', () => {
 
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
-    editSynonymComp.highlightedPreviewSpan.waitForText('flapjacks');
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(2).textInput.clickAndType('flapjacks');
+    editSynonymPage.highlightedPreviewSpan.waitForText('flapjacks');
 
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(3).textInput.clickAndType('oladyi');
-    editSynonymComp.highlightedPreviewSpan.waitForText('oladyi');
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(3).textInput.clickAndType('oladyi');
+    editSynonymPage.highlightedPreviewSpan.waitForText('oladyi');
 
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(4).textInput.clickAndType('pancakes');
-    editSynonymComp.highlightedPreviewSpan.waitForText('pancakes');
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(4).textInput.clickAndType('pancakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('pancakes');
 
-    editSynonymComp.addAnotherSynonymLink.click();
-    editSynonymComp.getNthSynonymBox(5).textInput.clickAndType('griddle cakes');
-    editSynonymComp.highlightedPreviewSpan.waitForText('griddle cakes');
+    editSynonymPage.addAnotherSynonymLink.click();
+    editSynonymPage.getNthSynonymBox(5).textInput.clickAndType('griddle cakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('griddle cakes');
 
   });
   it('close after saving and confirm changed first synonym', () => {
     header.savedDiv.waitForExist(10000);
-    editSynonymComp.doneButton.click_waitForNotExisting();
+    editSynonymPage.doneButton.click_waitForNotExisting();
     editorPage.segmentWithText("slapjacks").waitForExist();
   });
   it('open existing synonym', () => {
     editorPage.segmentWithText("slapjacks").click_waitForChange();
-    editSynonymComp.waitForExist();
+    editSynonymPage.waitForExist();
   });
   it('change a different synonym', () => {
-    editSynonymComp.getNthSynonymBox(3).textInput.click();
+    editSynonymPage.getNthSynonymBox(3).textInput.click();
 
     browser
       .keys("Alt")
@@ -150,12 +150,12 @@ describe('Synonyms:', () => {
       .keys("Alt")
       .keys("Shift")
 
-    editSynonymComp.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
-    editSynonymComp.highlightedPreviewSpan.waitForText('hotcakes', 2000);
+    editSynonymPage.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
+    editSynonymPage.highlightedPreviewSpan.waitForText('hotcakes', 2000);
   });
   it('close segment editor after save and confirm main editor segment text', () => {
     header.savedDiv.waitForExist(10000);
-    editSynonymComp.doneButton.click_waitForNotExisting();
+    editSynonymPage.doneButton.click_waitForNotExisting();
     editorPage.segmentWithText('slapjacks').waitForExist();
   });
 

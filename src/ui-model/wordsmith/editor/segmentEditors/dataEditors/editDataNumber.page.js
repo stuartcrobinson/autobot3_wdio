@@ -1,5 +1,5 @@
 // @ts-check
-import { EditDataComp, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.comp';
+import { EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.page';
 import { Toggle } from '../../../toggle';
 
 class DecimalPlacesDropdown extends EditDataDropdown {
@@ -36,9 +36,9 @@ class ThousandsSeparatorDropdown extends EditDataDropdown {
   }
 }
 
-export const editDataNumberComp = new class EditDataNumberComp extends EditDataComp {
-  constructor() {
-    super();
+export const editDataNumberPage = new class EditDataNumberPage extends EditDataPage {
+  constructor(urlPath) {
+    super(urlPath);
     this.toggle_absoluteValue = new Toggle('absoluteValue');
     this.toggle_percentage = new Toggle('percentage')
     this.toggle_stripTrailingZeros = new Toggle('stripTrailingZeros')
