@@ -1,3 +1,5 @@
+# TODO - UPDATE - OUT OF DATE - https://autoin.atlassian.net/browse/QS-413
+
 HOW TO RUN:
 
 
@@ -6,7 +8,7 @@ HOW TO RUN:
 then
 
 
-``npm run wdio -- --spec src/test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com --noPics``
+``npm run wdio -- --spec src/ui-test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com --noPics``
 
 
 

@@ -79,9 +79,9 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    // './src/ui-test/**/*.js'
-    './src/ui-test/dummy.test.js',
-    './src/ui-test/loginForRye.test.js'
+    './src/ui-test/**/*.js'
+    // './src/ui-test/dummy.test.js',
+    // './src/ui-test/loginForRye.test.js'
 
 
   ],
