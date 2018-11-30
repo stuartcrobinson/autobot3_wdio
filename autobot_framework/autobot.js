@@ -39,7 +39,7 @@ function base64_encode(file) {
   // read binary data
   var bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
-  return new Buffer(bitmap).toString('base64');
+  return Buffer.from(bitmap).toString('base64');
 }
 
 export class Autobot {
@@ -85,13 +85,13 @@ export class Autobot {
       },
     };
     axios.post(url, body, axiosConfig)
-      // .then(function (response) {
-      //   // console.log('response status: ' + response.status);
-      //   // do nothing
-      // })
-      // .catch(function (error) {
-      //   throw new Error(error);   //trace is useful this way
-      // });
+    // .then(function (response) {
+    //   // console.log('response status: ' + response.status);
+    //   // do nothing
+    // })
+    // .catch(function (error) {
+    //   throw new Error(error);   //trace is useful this way
+    // });
   }
 
 

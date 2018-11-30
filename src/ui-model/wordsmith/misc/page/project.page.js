@@ -5,8 +5,8 @@ import { WordsmithPage } from "../../../../../autobot_framework/support/Wordsmit
 
 
 export const projectPage = new class Project extends WordsmithPage {
-  constructor() {
-    super();
+  constructor(urlPath) {
+    super(urlPath);
     this.dataIcon = new UiElement('//*[@*="icon--dataset"]').tagAsLoadCriterion();
     this.dataDropdownButton = this.dataIcon.get('/../../..//button')
     this.dataDropdownButton_ChangeDataTypes = this.dataDropdownButton.get('/..//li[1]')

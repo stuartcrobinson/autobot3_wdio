@@ -20,7 +20,8 @@
     "string-argv": "^0.1.1",
     "wdio-spec-reporter": "^0.1.5",
     "webdriverio": "^4.14",
-    "yargs-parser": "^11.0.0"
+    "yargs-parser": "^11.0.0",
+    "axios": "^0.18.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -34,7 +35,6 @@
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
     "@types/webdriverio": "^4.10.5",
-    "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "cheerio": "^1.0.0-rc.2",

@@ -16,7 +16,7 @@ export class Page extends UiContainer {
   // get pageName() { return this.constructor.name; }
 
   static load(url) {
-    livy.logAction2([
+    livy.logScreenshottedAction([
       { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: url, style: livy.style.selector }]);
@@ -25,18 +25,25 @@ export class Page extends UiContainer {
   }
 
   load() {
-    livy.logAction2([
+    livy.logScreenshottedAction([
       { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: `${this.name} Page `, style: livy.style.object },
       { text: this.url, style: livy.style.selector }]);
 
     browser.url(this.url);
-    super.waitForLoad();
+    return super.waitForLoad();
+  }
+
+  loadWithRetry(timeoutInMillis = 100000){
+    
+
+    
   }
 
   /* eslint class-methods-use-this: "off" */
   get(selector) {
     return new UiElement(selector);
+    // .setPage(this); // setPage unused.  probably a bad idea.
   }
 }

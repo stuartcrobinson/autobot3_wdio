@@ -2,6 +2,7 @@
 import { key } from './Key';
 import { livy } from './Livy';
 import { UiContainer } from './UiContainer';
+// import { Page } from './Page';
 
 
 function getParentFromStack(stack) {
@@ -34,7 +35,22 @@ export class UiElement extends UiContainer {
       this.parentString = 'ERROR_GETTING_PARENT';
     }
     this.isLoadCriterion = false;
+    this.parentPage = undefined;
   }
+
+  // these would allow a UiElement to know their parent page.  maybe a good idea for logging ... ?
+  // /**
+  //  *
+  //  * //@param {Page} page //commented to avoid  Dependency cycle
+  //  */
+  // setPage(page) {
+  //   this.parentPage = page;
+  //   return this;
+  // }
+
+  // getPage() {
+  //   return this.parentPage;
+  // }
 
   setName(name) {
     // this.stuartname = name;
@@ -95,6 +111,11 @@ export class UiElement extends UiContainer {
     });
 
     return texts;
+  }
+
+  getText() {
+    // this.ensureContainerIsLoaded();
+    return this.getTexts()[0];
   }
 
   click(doLogAndWait = true) {

@@ -6,6 +6,7 @@ import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page
 import { Autobot, options } from '../autobot';
 import { Page } from './Page';
 import { livy } from './Livy';
+import { httpRequestCreateProjectFromDataFile_begin_and_complete } from './ApiStuff';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -31,12 +32,12 @@ export class Load {
     try {
       // throw new Error('dummy error');
       const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
-      const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
       loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
       livy.logAction2([
         { text: '☁️  ', style: livy.style.emoji },
         { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
-      Autobot.httpRequestComplete(httpRequestPromise);
+      httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, data);
+
       // browser.url(Autobot.getProjectUrlFromName(projectName));
       Page.load(Autobot.getProjectUrlFromName(projectName));
       projectPage.createNewTemplateButton.click_waitForNotExisting();
@@ -75,14 +76,17 @@ export class Load {
     // });
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
     // const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+
     livy.logAction2([
       { text: '☁️  ', style: livy.style.emoji },
       { text: `Api use data file to create project: ${projectName}`, style: livy.style.filler }]);
-    Autobot.httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, file);
-    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, file);
 
     // Autobot.httpRequestComplete(httpRequestPromise);
     Page.load(Autobot.getProjectUrlFromName(projectName));
+
+    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName))
     // browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();
     assert(editorPage.isLoaded(), 'Template editor page should be loaded.');

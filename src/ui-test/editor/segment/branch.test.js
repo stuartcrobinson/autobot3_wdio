@@ -2,17 +2,12 @@
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
 import { key } from '../../../../autobot_framework/support/Key';
+import { livy } from '../../../../autobot_framework/support/Livy';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
-import { editDataNumberPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataNumber.page';
 import { editBranchPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
-import { editSynonymPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.page';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
-import { ENGINE_METHOD_ALL } from 'constants';
 import { modal } from '../../../ui-model/wordsmith/misc/component/modal.cont';
 import { sidebar } from '../../../ui-model/wordsmith/misc/component/sideBar.cont';
-import { UiElement } from '../../../../autobot_framework/support/UiElement';
-import { livy } from '../../../../autobot_framework/support/Livy';
-
 
 describe('Branches:', () => {
   before(() => { Load.newTemplateEditorUsingDataFile("resources/eachDataType_date2.csv"); });
@@ -46,8 +41,6 @@ describe('Branches:', () => {
 
   it('add and fill out another rule - preview should update', () => {
     editBranchPage.addAnotherRuleLink.click();
-    // editBranchPage.getNthBranchBox(2).conditionTextarea.waitForExist();  //don't click - cursor should already be at condition input
-    // editBranchPage.keys([key.DOWN, key.DOWN, key.ENTER, key.ENTER, key.DOWN, key.ENTER, key.TAB, 'cheeto']);
     editBranchPage.getNthBranchBox(2).conditionTextarea.keys(key.DOWN, 2, key.ENTER, 2, [key.DOWN, key.ENTER, key.TAB, 'cheez-it'], 1);
 
     editBranchPage.getNthBranchBox(2).hover().elipsisDropdown.click_waitForChange();
@@ -87,7 +80,7 @@ describe('Branches:', () => {
     livy.logAction2([
       { text: '🤦 ', style: livy.style.emoji },
       { text: 'branch rule copy: not copying text ', style: livy.style.object_red },
-      { text: 'https://autoin.atlassian.net/browse/QS-302', style: livy.style.selector_red },
+      { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
       { text: 'https://autoin.atlassian.net/browse/WS-2282', style: livy.style.selector_red },
     ]);
         // TODO https://autoin.atlassian.net/browse/QS-302 

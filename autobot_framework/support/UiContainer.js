@@ -74,6 +74,7 @@ export class UiContainer {
     } catch (error) {
       throw new Error(`Container ${this.constructor.name} failed to load. ${error}`);
     }
+    return this;
   }
 
   waitFor() {
