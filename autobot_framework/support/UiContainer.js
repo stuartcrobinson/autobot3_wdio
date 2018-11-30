@@ -2,8 +2,8 @@
 import { AssertionError } from 'assert';
 import filenamify from 'filenamify';
 import { livy } from './Livy';
-/* eslint import/no-cycle: "off" */
-import { UiElement } from './UiElement';
+// /* eslint import/no-cycle: "off" */
+// import { UiElement } from './UiElement';
 
 /**
  * Any class that contains custom web element objects.
@@ -129,7 +129,7 @@ export class UiContainer {
 
   /**
     * Note: sometimes calling this on UiElement objects (instead of Page objects) gives a weird error: Error: There are some read requests waiting on finished stream
-    * @param  {...UiElement} excludedElements
+    // * @param  {...UiElement} excludedElements
     */
   checkVisual(...excludedElements) {
     this.waitFor();
@@ -226,7 +226,8 @@ export class UiContainer {
 
     if (doLog) {
       livy.logScreenshottedAction([
-        { text: '⌨  Type ', style: livy.style.verb },
+        { text: '⌨  ', style: livy.style.emoji },
+        { text: 'Type ', style: livy.style.verb },
         { text: outputString, style: livy.style.object }]);
     }
     for (let i = 0; i < asdf.length; i++) {

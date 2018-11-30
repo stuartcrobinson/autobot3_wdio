@@ -33,7 +33,9 @@ export class Load {
       const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
       const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
       loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-      livy.logMessage(`☁️  Api use data object to create project: ${projectName}`);
+      livy.logAction2([
+        { text: '☁️  ', style: livy.style.emoji },
+        { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
       Autobot.httpRequestComplete(httpRequestPromise);
       // browser.url(Autobot.getProjectUrlFromName(projectName));
       Page.load(Autobot.getProjectUrlFromName(projectName));
@@ -71,11 +73,15 @@ export class Load {
     //   }
     //   demo();
     // });
-    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
-    const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
+    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
+    // const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
+    livy.logAction2([
+      { text: '☁️  ', style: livy.style.emoji },
+      { text: `Api use data file to create project: ${projectName}`, style: livy.style.filler }]);
+    Autobot.httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, file);
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-    livy.logMessage(`☁️  Api use data file to create project: ${projectName}`);
-    Autobot.httpRequestComplete(httpRequestPromise);
+
+    // Autobot.httpRequestComplete(httpRequestPromise);
     Page.load(Autobot.getProjectUrlFromName(projectName));
     // browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();

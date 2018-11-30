@@ -15,15 +15,17 @@ describe('DummyParent', () => {
       // throw new Error('my error');
     });
     it('go home', () => {
-      loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+      // loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+
+      const c = 9;
 
       // browser.url('https://wordsmith.automatedinsights.com/projects/autobot-add-data20181127-03-58-57pm/templates/autobot-add-data20181127-03-58-57pm-template/edit/editor?segment=fe306362-de1b-44ed-8659-852a1edf6639');
       // browser.url('https://wordsmith.automatedinsights.com/projects/autobot-add-data20181127-05-02-44pm/templates/autobot-add-data20181127-05-02-44pm-template/edit/editor?segment=5bde3492-1ab7-4f8a-a9f0-c94b5760a303');
       // browser.url('https://wordsmith.automatedinsights.com/projects/autobot-add-data20181127-04-32-29pm/templates/autobot-add-data20181127-04-32-29pm-template/edit/editor?segment=c6361730-01a0-4670-b39e-0616d672aa9f');
-      browser.url('https://wordsmith.automatedinsights.com/projects/autobot-add-data20181127-04-50-14pm/templates/autobot-add-data20181127-04-50-14pm-template/edit/editor?segment=c8ea9eef-9fda-4903-b99a-f50705006c24');
+      // browser.url('https://wordsmith.automatedinsights.com/projects/autobot-add-data20181127-04-50-14pm/templates/autobot-add-data20181127-04-50-14pm-template/edit/editor?segment=c8ea9eef-9fda-4903-b99a-f50705006c24');
       // fastWebpage.load();
       // throw new Error('my error');
-      editBranchPage.getNthBranchBox(1).conditionTextarea.keys([key.DOWN, key.ENTER], 3, [key.TAB, 'cheeto'], 1);
+      // editBranchPage.getNthBranchBox(1).conditionTextarea.keys([key.DOWN, key.ENTER], 3, [key.TAB, 'cheeto'], 1);
 
       // editBranchPage.getNthBranchBox(1).conditionLabel.click_waitForChange();
 

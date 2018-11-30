@@ -68,7 +68,6 @@ _options = { ..._options, ...yargsParsed }
 
 global.autobotOptions = _options
 
-
 exports.config = {
   //
   // ==================
@@ -80,7 +79,11 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './src/ui-test/**/*.js'
+    // './src/ui-test/**/*.js'
+    './src/ui-test/dummy.test.js',
+    './src/ui-test/loginForRye.test.js'
+
+
   ],
   // define specific suites
   suites: {
@@ -88,8 +91,17 @@ exports.config = {
       './src/ui-test/dummy.test.js',
       './src/ui-test/loginForRye.test.js'
     ],
-    otherFeature: [
-      // ...
+    branch: [
+      './src/ui-test/editor/segment/branch.test.js',
+      './src/ui-test/editor/segment/branch.test.js',
+      './src/ui-test/editor/segment/branch.test.js',
+      './src/ui-test/editor/segment/branch.test.js',
+      './src/ui-test/editor/segment/branch.test.js'
+    ],
+    dummy: [
+      './src/ui-test/dummy.test.js',
+      './src/ui-test/dummy.test.js',
+      './src/ui-test/dummy.test.js',
     ]
   },
   // Patterns to exclude.
@@ -281,7 +293,7 @@ exports.config = {
    * @param {Object} suite suite details
    */
   beforeSuite: function (suite) {
-    global.livy && global.livy.wdioConf_beforeSuite(suite);
+    global.livy && global.livy.wdioConf_beforeSuite(suite, _options.myRunId);
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
@@ -343,7 +355,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    global.livy && livy.wdioConf_afterSession()
+    global.livy && livy.wdioConf_afterSession(config.baseUrl)
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
@@ -351,6 +363,8 @@ exports.config = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onComplete: function(exitCode, config, capabilities) {
-  // }
+  onComplete: function (exitCode, config, capabilities) {
+    console.log(fs.readFileSync(_options.myRunId).toString())
+    fs.unlinkSync(_options.myRunId)
+  }
 }

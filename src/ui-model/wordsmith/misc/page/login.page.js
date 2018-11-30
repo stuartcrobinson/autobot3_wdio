@@ -1,9 +1,8 @@
 // @ts-check
-import { loadPage } from '../../../../../autobot_framework/autobot';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
+import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { toast } from '../component/toast.cont';
 import { dashboardPage } from './dashboard.page';
-import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
-import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 export const loginPage = new class Login extends WordsmithPage {
   constructor() {

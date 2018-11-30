@@ -45,6 +45,6 @@ export const editBranchPage = new class EditBranchPage extends EditSegmentPage {
    * @param {Number} n 
    */
   getNthBranchBox(n) {
-    return new BranchBox(`li.condition:nth-of-type(${n})`);
+    return new BranchBox(`li.condition:nth-of-type(${n})`).setName('branch box ' + n);
   }
 }();

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && ./node_modules/.bin/wdio --no-warnings"
+    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\""
   },
   "dependencies": {
     "chai": "^4.2.0",

@@ -10,20 +10,20 @@ describe('Login', () => {
     loginPage.toast_invalidEmailOrPwd.close();
   });
 
-  // describe('with valid creds', () => {
-  //   it('click Settings', () => {
-  //     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-  //     dashboardPage.sidebar.settingsLink.click_waitForChange();
-  //     dashboardPage.checkVisual(
-  //       dashboardPage.table,
-  //       dashboardPage.sidebar.settingsMenu.greetingSpan,
-  //       dashboardPage.paginationContainer,
-  //     );
-  //   });
+  describe('with valid creds', () => {
+    it('click Settings', () => {
+      loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+      dashboardPage.sidebar.settingsLink.click_waitForChange();
+      dashboardPage.checkVisual(
+        dashboardPage.table,
+        dashboardPage.sidebar.settingsMenu.greetingSpan,
+        dashboardPage.paginationContainer,
+      );
+    });
 
-  //   it('click Sign Out', () => {
-  //     dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
-  //     loginPage.toast_signedOutSuccessfully.checkVisual();
-  //   });
-  // });
+    it('click Sign Out', () => {
+      dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
+      loginPage.toast_signedOutSuccessfully.checkVisual();
+    });
+  });
 });

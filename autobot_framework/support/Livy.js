@@ -26,7 +26,7 @@ function convertNpmColorsToCss(style) {
   if (!myStyle) {
     myStyle = passthrough;
   } else {
-    const styles = myStyle._styles;
+    const styles = myStyle._styles ? myStyle._styles : myStyle; // could be colors object or string ('emoji') // this is a mess
 
     if (styles.includes('red')) {
       htmlStyle += 'color:red;';
@@ -42,6 +42,9 @@ function convertNpmColorsToCss(style) {
     }
     if (styles.includes('italic')) {
       htmlStyle += 'font-style: italic;';
+    }
+    if (styles.includes('emoji')) {
+      htmlStyle += 'font-size:11px;';
     }
   }
   return htmlStyle;
@@ -93,6 +96,7 @@ class Livy {
       // @ts-ignore
       selector_red: colors.dim.red,
       selector: colors.gray,
+      emoji: 'emoji',
     };
     // console.log('doSaveEventScreenshots?');
     // console.log(doSaveEventScreenshots);
@@ -360,7 +364,7 @@ class Livy {
         } else {
           htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
         }
-        consoleBuilder += `${style(message)}`;
+        consoleBuilder += `${typeof style === 'function' ? style(message) : message}`;
       }
     }
     htmlBuilder += '</span><br/>';
@@ -484,7 +488,7 @@ class Livy {
 
   logVisualTestReset(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📷 ', style: livy.style.filler },
+      { text: '📷 ', style: livy.style.emoji },
       { text: 'Reset ', style: livy.style.verb_red },
       { text: 'screenshot ', style: livy.style.filler_red },
       { text: this.screenshotTargetName, style: livy.style.object_red },
@@ -494,7 +498,7 @@ class Livy {
 
   logVisualTestCreate(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📷 ', style: livy.style.filler },
+      { text: '📷 ', style: livy.style.emoji },
       { text: 'Save ', style: livy.style.verb_red },
       { text: 'screenshot ', style: livy.style.object_red },
       { text: this.screenshotTargetName, style: livy.style.object_red },
@@ -504,7 +508,7 @@ class Livy {
 
   logVisualTestVerify(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📸 ', style: livy.style.filler },
+      { text: '📸 ', style: livy.style.emoji },
       { text: 'Verify ', style: livy.style.verb },
       { text: 'screenshot ', style: livy.style.object },
       { text: this.screenshotTargetName, style: livy.style.object },
@@ -512,7 +516,7 @@ class Livy {
     screenshotFile);
   }
 
-  wdioConf_beforeSuite(suite) {
+  wdioConf_beforeSuite(suite, runId) {
     this.isInTestCase = false;
     this.specFilePath = suite.file;
     this.testCaseTitle = undefined;
@@ -522,6 +526,7 @@ class Livy {
 
     this.initialize(this.specFilePath);
     console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
+    fs.appendFileSync(runId, this.reportClickablePath + os.EOL);
   }
 
   wdioConf_beforeTest(test) {
@@ -539,7 +544,7 @@ class Livy {
   }
 
   /** called from wdio.conf.js */
-  wdioConf_afterSession() {
+  wdioConf_afterSession(configTimestamp) {
     // so you can scroll code up so the screenshot isn't blocking it
     for (let i = 0; i < 30; i++) {
       this.logRawToHtml('</br>');

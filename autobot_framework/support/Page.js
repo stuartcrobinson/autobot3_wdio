@@ -17,7 +17,7 @@ export class Page extends UiContainer {
 
   static load(url) {
     livy.logAction2([
-      { text: '🕸  ', style: livy.style.filler },
+      { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: url, style: livy.style.selector }]);
 
@@ -26,7 +26,7 @@ export class Page extends UiContainer {
 
   load() {
     livy.logAction2([
-      { text: '🕸  ', style: livy.style.filler },
+      { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: `${this.name} Page `, style: livy.style.object },
       { text: this.url, style: livy.style.selector }]);

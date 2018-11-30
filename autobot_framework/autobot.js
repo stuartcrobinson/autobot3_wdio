@@ -1,6 +1,5 @@
 // @ts-check
 import axios, { AxiosPromise } from 'axios';
-import { livy } from './support/Livy';
 
 /* ******************************* wrapped *************************************/
 
@@ -66,6 +65,33 @@ export class Autobot {
     const body = getAxiosBodyWithDataObject(name, dataObject1);
 
     return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
+  }
+
+
+
+  static httpRequestCreateProjectFromDataFile_begin_and_complete(name, file) {
+
+    const data64 = base64_encode(file)
+
+    const body = getAxiosBodyWithFileData64(name, file, data64);
+
+    let url = 'https://api.automatedinsights.com/v1.8/projects';
+
+    const axiosConfig = {
+      headers: {
+        'Authorization': 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
+        'User-Agent': 'Autobot',
+        'Content-Type': 'application/json'
+      },
+    };
+    axios.post(url, body, axiosConfig)
+      // .then(function (response) {
+      //   // console.log('response status: ' + response.status);
+      //   // do nothing
+      // })
+      // .catch(function (error) {
+      //   throw new Error(error);   //trace is useful this way
+      // });
   }
 
 
