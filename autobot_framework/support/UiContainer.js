@@ -2,6 +2,8 @@
 import { AssertionError } from 'assert';
 import filenamify from 'filenamify';
 import { livy } from './Livy';
+/* eslint import/no-cycle: "off" */
+import { UiElement } from './UiElement';
 
 /**
  * Any class that contains custom web element objects.
@@ -33,6 +35,17 @@ export class UiContainer {
       // }
     }
   }
+
+  setName(name) {
+    this.stuartname = name;
+    return this;
+  }
+
+  getName() {
+    return this.stuartname;
+  }
+
+  get name() { return this.stuartname; }
 
   get criteriaElements() {
     const abElements = [];
@@ -113,14 +126,21 @@ export class UiContainer {
    * To reset the reference image, replace `checkVisual(...)` with `resetVisual(...)` and re-run.
    * @param  excludedElements UiElement - cssSelectors or xpaths for sections of the screen to ignore
    */
+
+  /**
+    * Note: sometimes calling this on UiElement objects (instead of Page objects) gives a weird error: Error: There are some read requests waiting on finished stream
+    * @param  {...UiElement} excludedElements
+    */
   checkVisual(...excludedElements) {
     this.waitFor();
-
     excludedElements.forEach((uiElement) => {
       uiElement.waitForVisible();
     });
 
     const excludedSelectors = excludedElements.map(uiElement => uiElement.selector);
+
+    livy.screenshotTargetName = this.name;
+    livy.screenshotTargetSelector = excludedSelectors.length > 0 ? ` excluding: ${JSON.stringify(excludedSelectors)}` : '';
 
     let report;
     // @ts-ignore
@@ -129,29 +149,34 @@ export class UiContainer {
 
       // @ts-ignore
       global.customScreenshotTag = filenamify(this.selector);
+      // @ts-ignore
 
       /* eslint prefer-destructuring: "off" */
       // @ts-ignore
-      report = browser.checkElement(this.selector, { hide: excludedSelectors })[0];
+      report = browser.checkElement(this.selector, { hide: excludedSelectors, misMatchTolerance: 0.05 })[0];
+      // report = browser.checkElement(this.selector, { hide: excludedSelectors, misMatchTolerance: 0.04 })[0];
     } else {
       // is a page
 
       // @ts-ignore
       global.customScreenshotTag = `${this.constructor.name}Page`;
 
+
       /* eslint prefer-destructuring: "off" */
       // @ts-ignore
-      report = browser.checkDocument({ hide: excludedSelectors })[0];
+      report = browser.checkDocument({ hide: excludedSelectors, misMatchTolerance: 0.05 })[0];
     }
 
     // @ts-ignore
     if (!report.isWithinMisMatchTolerance) {
       // @ts-ignore
-      livy.logFailedVisualTest(global.previousImageFileLocation);
-      throw new AssertionError({ message: 'Visual test failed.' });
+      livy.logFailedVisualTest(global.previousImageFileLocation, report);
+      throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
     }
     // @ts-ignore
     global.customScreenshotTag = undefined;
+    livy.screenshotTargetName = undefined;
+    livy.screenshotTargetSelector = undefined;
   }
 
   resetVisual(...excludedElements) {
@@ -201,7 +226,7 @@ export class UiContainer {
 
     if (doLog) {
       livy.logScreenshottedAction([
-        { text: 'Type ', style: livy.style.verb },
+        { text: '⌨  Type ', style: livy.style.verb },
         { text: outputString, style: livy.style.object }]);
     }
     for (let i = 0; i < asdf.length; i++) {

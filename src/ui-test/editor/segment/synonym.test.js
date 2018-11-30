@@ -195,7 +195,7 @@ describe('Synonyms:', () => {
       synonyms = synonyms.concat(reviewPage.getNthSegmentSpan(2).getTexts());
     });
     it('check distribution', () => {
-      livy.logMessage("Confirm reasonable synonym distribution.")
+      livy.logMessage("Confirm reasonable synonym distribution 📊.")
       const counts = countBy(synonyms);
       try {
         //@ts-ignore

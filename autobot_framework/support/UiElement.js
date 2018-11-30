@@ -1,7 +1,8 @@
 // @ts-check
-import { livy } from './Livy';
-import { UiContainer } from './UiContainer';
 import { key } from './Key';
+import { livy } from './Livy';
+/* eslint import/no-cycle: "off" */
+import { UiContainer } from './UiContainer';
 
 
 function getParentFromStack(stack) {
@@ -37,9 +38,10 @@ export class UiElement extends UiContainer {
   }
 
   setName(name) {
-    this.stuartname = name;
-    return this;
+    // this.stuartname = name;
+    return super.setName(name);
   }
+
 
   tagAsLoadCriterion() {
     this.isLoadCriterion = true;
@@ -100,6 +102,7 @@ export class UiElement extends UiContainer {
   click(doLogAndWait = true) {
     if (doLogAndWait) {
       this.logAndWait2([
+        { text: '👇 ', style: livy.style.filler },
         { text: 'Click ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: `${this.selector}`, style: livy.style.selector }]);
@@ -110,6 +113,7 @@ export class UiElement extends UiContainer {
   doubleClick(doLog = true) {
     if (doLog) {
       this.logAndWait2([
+        { text: '👇👇 ', style: livy.style.filler },
         { text: 'Double-click ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: `${this.selector}`, style: livy.style.selector }]);
@@ -119,6 +123,7 @@ export class UiElement extends UiContainer {
 
   hover() {
     this.logAndWait2([
+      { text: '🕴  ', style: livy.style.filler },
       { text: 'Hover ', style: livy.style.verb },
       { text: `${this.stuartname} `, style: livy.style.object },
       { text: `${this.selector}`, style: livy.style.selector }]);
@@ -130,6 +135,7 @@ export class UiElement extends UiContainer {
     const initialIndicatorElementHtml = browser.element(indicatorSelector).getHTML();
     doLog
       && this.logAndWait2([
+        { text: '👇 ', style: livy.style.filler },
         { text: 'Click ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: 'then wait for change in ', style: livy.style.filler },
@@ -137,16 +143,11 @@ export class UiElement extends UiContainer {
         { text: ' target: ', style: livy.style.filler },
         { text: `${this.selector} `, style: livy.style.selector },
       ]);
-
     browser.click(this.selector);
-
     const init = new Date().getTime();
-
     const timeout = 2000;
-
     while (browser.element(indicatorSelector).getHTML() === initialIndicatorElementHtml) {
       browser.pause(200);
-
       if (new Date().getTime() - init > timeout) {
         throw new Error(`timeout waiting for ${indicatorSelector} to change after clicking ${this.selector}`);
       }
@@ -158,6 +159,7 @@ export class UiElement extends UiContainer {
       throw new Error(`Element already exists: ${indicatorSelector}`);
     }
     this.logAndWait2([
+      { text: '👇 ', style: livy.style.filler },
       { text: 'Click ', style: livy.style.verb },
       { text: `${this.stuartname} `, style: livy.style.object },
       { text: 'then wait for element to exist: ', style: livy.style.filler },
@@ -183,6 +185,7 @@ export class UiElement extends UiContainer {
 
   clickAllToRemove() {
     this.logAndWait2([
+      { text: '👇 ', style: livy.style.filler },
       { text: 'Click all instances of ', style: livy.style.verb },
       { text: `${this.stuartname} `, style: livy.style.object },
       { text: this.selector, style: livy.style.selector },
@@ -204,6 +207,7 @@ export class UiElement extends UiContainer {
     }
     if (indicatorSelector === this.selector) {
       this.logAndWait2([
+        { text: '👇 ', style: livy.style.filler },
         { text: 'Click ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: 'then wait for target to disappear ', style: livy.style.filler },
@@ -211,6 +215,7 @@ export class UiElement extends UiContainer {
       ]);
     } else {
       this.logAndWait2([
+        { text: '👇 ', style: livy.style.filler },
         { text: 'Click ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: 'then wait for element to disappear: ', style: livy.style.filler },
@@ -229,6 +234,7 @@ export class UiElement extends UiContainer {
       throw new Error('input can be string or array, not number');
     }
     this.logAndWait2([
+      { text: '⌨  ', style: livy.style.filler },
       { text: 'Set value ', style: livy.style.verb },
       { text: 'of ', style: livy.style.filler },
       { text: `${this.stuartname} `, style: livy.style.object },
@@ -264,6 +270,7 @@ export class UiElement extends UiContainer {
   clear(doLog = true) {
     doLog
       && this.logAndWait2([
+        { text: '✨ ', style: livy.style.filler },
         { text: 'Clear ', style: livy.style.verb },
         { text: `${this.stuartname} `, style: livy.style.object },
         { text: `${this.selector} `, style: livy.style.selector }]);
@@ -290,12 +297,15 @@ export class UiElement extends UiContainer {
       this.failSafeHover(timeoutMillis);
     }
     const screenshotId = livy.logAction2(messages);
+
     this.waitForExist(timeoutMillis);
+
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
   clickAndType(value) {
     this.logAndWait2([
+      { text: '👇 ', style: livy.style.filler },
       { text: 'Click ', style: livy.style.verb },
       { text: this.stuartname, style: livy.style.object },
       { text: ' and ', style: livy.style.filler },
@@ -315,6 +325,7 @@ export class UiElement extends UiContainer {
    */
   dragAndDropTo(abEl2) {
     this.logAndWait2([
+      { text: '🏎 ', style: livy.style.filler },
       { text: 'Drag ', style: livy.style.verb },
       { text: this.stuartname, style: livy.style.object },
       { text: ' to ', style: livy.style.filler },
@@ -330,6 +341,7 @@ export class UiElement extends UiContainer {
 
   uploadFile(filePath) {
     this.logAndWait2([
+      { text: '📂 ', style: livy.style.filler },
       { text: 'Upload file ', style: livy.style.verb },
       { text: `${filePath} `, style: livy.style.object },
       { text: 'to ', style: livy.style.filler },
@@ -347,6 +359,7 @@ export class UiElement extends UiContainer {
   waitForText(text, timoutMillis = 1000) {
     super.waitForLoad();
     const screenshotId = livy.logAction2([
+      { text: '🤔 ', style: livy.style.filler },
       { text: 'Assert ', style: livy.style.verb },
       { text: this.stuartname, style: livy.style.object },
       { text: "'s text is ", style: livy.style.filler },

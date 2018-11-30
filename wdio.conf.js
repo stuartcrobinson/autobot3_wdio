@@ -21,21 +21,23 @@ function getScreenshotName(basePath) {
 
 
     if (basePath.includes('screenshots/reference')) {
+
+      let resultScreen = result.replace('screenshots/reference', 'screenshots/screen');
+
+
       if (global.doDeleteReferenceImage) {
-        global.livy.logVisualTestReset();
+        global.livy.logVisualTestReset(resultScreen);
       }
       else if (!fs.existsSync(result)) {
-        global.livy.logVisualTestCreate();
+        global.livy.logVisualTestCreate(resultScreen);
       }
       else {
-        global.livy.logVisualTestVerify();
+        global.livy.logVisualTestVerify(resultScreen);
       }
-
 
     }
 
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
-      // console.log('dawefawefdf deleting ' + result)
       if (!fs.existsSync(result)) {
         throw new Error('You tried to delete a reference image that does not exist.  Images are specific to environment (including headless or not).  File: ' + result);
       }
@@ -43,7 +45,6 @@ function getScreenshotName(basePath) {
         fs.unlinkSync(result);
       }
     }
-
     return result;
   };
 }

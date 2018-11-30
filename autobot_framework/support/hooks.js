@@ -33,7 +33,7 @@ export class Load {
       const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
       const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataObject_begin(projectName, data);
       loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-      livy.logMessage(`Api use data object to create project: ${projectName}`);
+      livy.logMessage(`☁️  Api use data object to create project: ${projectName}`);
       Autobot.httpRequestComplete(httpRequestPromise);
       // browser.url(Autobot.getProjectUrlFromName(projectName));
       Page.load(Autobot.getProjectUrlFromName(projectName));
@@ -45,10 +45,36 @@ export class Load {
   }
 
   static newTemplateEditorUsingDataFile(file) {
+    // browser.call(() => {
+
+    //   function sleep(ms) {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    //   }
+    //   async function demo() {
+
+
+    //     console.log('Taking a break...');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //     await sleep(1000);
+    //     console.log('a seconds later');
+    //   }
+    //   demo();
+    // });
     const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
     const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-    livy.logMessage(`Api use data file to create project: ${projectName}`);
+    livy.logMessage(`☁️  Api use data file to create project: ${projectName}`);
     Autobot.httpRequestComplete(httpRequestPromise);
     Page.load(Autobot.getProjectUrlFromName(projectName));
     // browser.url(Autobot.getProjectUrlFromName(projectName));

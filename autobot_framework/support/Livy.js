@@ -88,10 +88,16 @@ class Livy {
       // @ts-ignore
       object_red: colors.bold.red,
       filler: colors.reset,
+      // @ts-ignore
+      filler_red: colors.red,
+      // @ts-ignore
+      selector_red: colors.dim.red,
       selector: colors.gray,
     };
     // console.log('doSaveEventScreenshots?');
     // console.log(doSaveEventScreenshots);
+    this.screenshotTargetName = undefined;
+    this.screenshotTargetSelector = undefined;
   }
 
   /**
@@ -113,7 +119,34 @@ class Livy {
     fs_extra.mkdirsSync(this.getReportDir());
     fs_extra.mkdirsSync(this.getEventScreenshotsDir());
 
-    let html = `<!doctype html><style>body{background-color:#f5f5f5}</style>${os.EOL}`;
+    let html = `<!doctype html>
+    <style>
+      body {
+        background-color: #f5f5f5
+      }
+      a:link {
+        color: inherit;
+      }
+      a:visited {
+        color: inherit;
+      }
+      a:hover {
+        color: inherit;
+      }
+      a:active {
+        color: inherit;
+      }
+      a:link {
+        text-decoration: none;
+      }
+      a:visited {
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    ${os.EOL}`;
 
     html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
 
@@ -213,14 +246,40 @@ class Livy {
     return `file://${path.resolve(this.getFile())}`;
   }
 
-  setMouseoverEventScreenshotFunction(screenshotId) {
+  setMouseoverEventScreenshotFunction(screenshotId, screenshotFile = undefined) {
     if (this.doSaveEventScreenshots) {
-      // autobot.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId))
-      browser.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId));
+      if (screenshotFile) {
+        // screenshotFile doens't exist yet!  but it will in a second.
+        // need to spin off a thread that will wait until the file exists, and then copy it.
+        // or wait to copy until later??? no, this might be the last step of a test.
+
+        const that = this;
+        browser.call(() => {
+          function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          async function demo() {
+            let count = 0;
+            while (!fs.existsSync(screenshotFile)) {
+              /* eslint no-await-in-loop: "off" */
+              await sleep(100);
+              count += 1;
+              if (count > 100) { // after 10 seconds
+                break;
+              }
+            }
+            fs.copyFileSync(screenshotFile, that.getEventScreenshotFileAbsPath(screenshotId));
+          }
+          demo();
+        });
+
+        // fs.copyFileSync(screenshotFile, this.getEventScreenshotFileAbsPath(screenshotId));
+      } else {
+        browser.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId));
+      }
     }
 
-    // fs.appendFileSync(this.getEventDomFileAbsPath(screenshotId), Tools.getFullDom() + os.EOL);
-
+    // TODO clean up livy html report javascript https://autoin.atlassian.net/browse/QS-404
 
     let html = '';
     html += `<script>${os.EOL}`;
@@ -237,9 +296,14 @@ class Livy {
     fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
-  logScreenshottedAction(messages) {
+  /**
+   *
+   * @param {Array} messages
+   * @param {string | undefined} screenshotFile
+   */
+  logScreenshottedAction(messages, screenshotFile = undefined) {
     const screenshotId = this.logAction2(messages);
-    this.setMouseoverEventScreenshotFunction(screenshotId);
+    this.setMouseoverEventScreenshotFunction(screenshotId, screenshotFile);
   }
 
   logMessage(message) {
@@ -291,7 +355,11 @@ class Livy {
           message = '';
         }
 
-        htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+        if (message.startsWith('http')) {
+          htmlBuilder += `<span style="${htmlStyle}"><a href=${message}>${entities.encode(message)}</a></span>`;
+        } else {
+          htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+        }
         consoleBuilder += `${style(message)}`;
       }
     }
@@ -329,8 +397,8 @@ class Livy {
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
 
-  logFailedVisualTest(diffImageFilePath) {
-    this.logAction2([{ text: 'Visual test failed. ', style: colors.red }]);
+  logFailedVisualTest(diffImageFilePath, report) {
+    this.logAction2([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
 
     this.logWithoutPrefix_toHtml('Diff image: ', colors.red);
 
@@ -414,22 +482,34 @@ class Livy {
     this.logErrorImage();
   }
 
-  logVisualTestReset() {
+  logVisualTestReset(screenshotFile) {
     this.logScreenshottedAction([
+      { text: '📷 ', style: livy.style.filler },
       { text: 'Reset ', style: livy.style.verb_red },
-      { text: 'screenshot', style: livy.style.object_red }]);
+      { text: 'screenshot ', style: livy.style.filler_red },
+      { text: this.screenshotTargetName, style: livy.style.object_red },
+      { text: this.screenshotTargetSelector, style: livy.style.selector_red }],
+    screenshotFile);
   }
 
-  logVisualTestCreate() {
+  logVisualTestCreate(screenshotFile) {
     this.logScreenshottedAction([
+      { text: '📷 ', style: livy.style.filler },
       { text: 'Save ', style: livy.style.verb_red },
-      { text: 'screenshot', style: livy.style.object_red }]);
+      { text: 'screenshot ', style: livy.style.object_red },
+      { text: this.screenshotTargetName, style: livy.style.object_red },
+      { text: this.screenshotTargetSelector, style: livy.style.selector_red }],
+    screenshotFile);
   }
 
-  logVisualTestVerify() {
+  logVisualTestVerify(screenshotFile) {
     this.logScreenshottedAction([
+      { text: '📸 ', style: livy.style.filler },
       { text: 'Verify ', style: livy.style.verb },
-      { text: 'screenshot', style: livy.style.object }]);
+      { text: 'screenshot ', style: livy.style.object },
+      { text: this.screenshotTargetName, style: livy.style.object },
+      { text: this.screenshotTargetSelector, style: livy.style.selector }],
+    screenshotFile);
   }
 
   wdioConf_beforeSuite(suite) {

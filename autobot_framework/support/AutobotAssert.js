@@ -62,7 +62,7 @@ export class AutobotAssert {
 
   static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([
-      { text: 'Assert ', style: livy.style.verb },
+      { text: '🤔 Assert ', style: livy.style.verb },
       { text: `${targetDescription} `, style: livy.style.object },
       { text: 'equals ', style: livy.style.verb },
       { text: value, style: livy.style.object }]);
