@@ -66,6 +66,10 @@ let yargsParsed = yargsParse(process.argv);
 _options = optionsFile
 _options = { ..._options, ...yargsParsed }
 
+if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
+  _options.hidePassword = true;
+}
+
 global.autobotOptions = _options
 
 exports.config = {

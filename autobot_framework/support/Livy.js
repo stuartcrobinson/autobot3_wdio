@@ -97,6 +97,7 @@ class Livy {
       selector_red: colors.dim.red,
       selector: colors.gray,
       emoji: 'emoji',
+      password: 'password',
     };
     // console.log('doSaveEventScreenshots?');
     // console.log(doSaveEventScreenshots);
@@ -349,6 +350,11 @@ class Livy {
       let message = chunk.text;
 
       if (message) {
+        if (style === this.style.password) {
+          message = message.replace(/[^\s]/g, '•');
+          style = this.style.object;
+        }
+
         const htmlStyle = convertNpmColorsToCss(style);
 
         if (!style) {

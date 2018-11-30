@@ -3,6 +3,7 @@ import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { toast } from '../component/toast.cont';
 import { dashboardPage } from './dashboard.page';
+import { options } from '../../../../../autobot_framework/autobot';
 
 export const loginPage = new class Login extends WordsmithPage {
   constructor() {
@@ -20,7 +21,7 @@ export const loginPage = new class Login extends WordsmithPage {
   attemptLogIn(email, password, url) {
     this.load();
     this.emailInput.setValue(email);
-    this.passwordInput.setValue(password);
+    this.passwordInput.setValue(password, options.hidePassword);
     this.logInButton.click();
   }
 

@@ -224,7 +224,7 @@ export class UiElement extends UiContainer {
     browser.waitUntil(() => !browser.isExisting(indicatorSelector));
   }
 
-  setValue(value) {
+  setValue(value, maskTextInLogs = false) {
     if (typeof value === 'number') {
       throw new Error('input can be string or array, not number');
     }
@@ -234,7 +234,7 @@ export class UiElement extends UiContainer {
       { text: 'of ', style: livy.style.filler },
       { text: `${this.stuartname} `, style: livy.style.object },
       { text: 'to ', style: livy.style.filler },
-      { text: `${value} `, style: livy.style.object },
+      { text: `${value} `, style: maskTextInLogs ? livy.style.password : livy.style.object },
       { text: `${this.selector} `, style: livy.style.selector }]);
 
     // try {
