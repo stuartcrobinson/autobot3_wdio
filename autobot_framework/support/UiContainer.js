@@ -172,7 +172,9 @@ export class UiContainer {
     if (!report.isWithinMisMatchTolerance) {
       // @ts-ignore
       livy.logFailedVisualTest(global.previousImageFileLocation, report);
-      throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
+      // throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
+      // @ts-ignore
+      global.aVisualTestFailed = true;
     }
     // @ts-ignore
     global.customScreenshotTag = undefined;

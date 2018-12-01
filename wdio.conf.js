@@ -304,6 +304,20 @@ exports.config = {
    * @param {Object} test test details
    */
   beforeTest: function (test) {
+
+
+
+    // console.log('hi');
+    // console.log('this awefawefawef');
+    // console.log(this);
+    // console.log('JSON.stringify(this) greeiugr8');
+    // console.log(JSON.stringify(this));
+
+    // for (const propName in this) {
+    //   const propValue = this[propName];
+    //   console.log(`this propName: ${propName}, ${propValue}`);
+    // }
+
     global.livy && global.livy.wdioConf_beforeTest(test);
 
   },

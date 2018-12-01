@@ -303,11 +303,21 @@ class Livy {
 
   /**
    *
-   * @param {Array} messages
+   * @param {Array | undefined} messages
    * @param {string | undefined} screenshotFile
    */
-  logScreenshottedAction(messages, screenshotFile = undefined) {
+  logScreenshottedAction(messages = [], screenshotFile = undefined) {
     const screenshotId = this.logAction2(messages);
+    this.setMouseoverEventScreenshotFunction(screenshotId, screenshotFile);
+  }
+
+  /**
+   *
+   * @param {string} message
+   * @param {string | undefined} screenshotFile
+   */
+  logScreenshottedMessage(message = '', screenshotFile = undefined) {
+    const screenshotId = this.logMessage(message);
     this.setMouseoverEventScreenshotFunction(screenshotId, screenshotFile);
   }
 
@@ -320,7 +330,7 @@ class Livy {
    * @param {Object} messageChunks an array of {text, style} objects
    * @param {Boolean} withPrefix
    */
-  logAction2(messageChunks, withPrefix = true) {
+  logAction2(messageChunks = [], withPrefix = true) {
     const testDateTime = new Date();
 
     const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
@@ -344,7 +354,7 @@ class Livy {
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
-    for (let i = 0; i < messageChunks.length; i++) {
+    for (let i = 0; i < messageChunks.length || 0; i++) {
       const chunk = messageChunks[i];
       let style = chunk.style;
       let message = chunk.text;

@@ -141,14 +141,23 @@ export class UiElement extends UiContainer {
     browser.click(this.selector);
   }
 
-  hover() {
-    this.logAndWait2([
-      { text: '🕴  ', style: livy.style.emoji },
-      { text: 'Hover ', style: livy.style.verb },
-      { text: `${this.stuartname} `, style: livy.style.object },
-      { text: `${this.selector}`, style: livy.style.selector }]);
+  /**
+   * I think this places the mouse over the center of the element and scrolls the page so the entire element is within view.
+   */
+  hover(doLog = true) {
+    if (doLog) {
+      this.logAndWait2([
+        { text: '🕴  ', style: livy.style.emoji },
+        { text: 'Hover ', style: livy.style.verb },
+        { text: `${this.stuartname} `, style: livy.style.object },
+        { text: `${this.selector}`, style: livy.style.selector }]);
+    }
     browser.moveToObject(this.selector);
     return this;
+  }
+
+  scroll() {
+    return this.hover(false);
   }
 
   click_waitForChange(indicatorSelector = '//body', doLog = true) {

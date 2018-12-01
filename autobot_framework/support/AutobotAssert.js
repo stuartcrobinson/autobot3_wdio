@@ -1,5 +1,6 @@
 // @ts-check
 /* eslint no-unused-vars: "off" */
+import { AssertionError } from 'assert';
 import { UiElement } from './UiElement';
 import { livy } from './Livy';
 
@@ -59,6 +60,16 @@ export class AutobotAssert {
   //   }
   //   livy.setMouseoverEventScreenshotFunction(screenshotId);
   // }
+
+
+  static visualTestsPassed() {
+    // @ts-ignore
+    if (global.aVisualTestFailed) {
+      // @ts-ignore
+      global.aVisualTestFailed = false;
+      throw new Error('A visual test failed.');
+    }
+  }
 
   static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
     const screenshotId = livy.logAction2([

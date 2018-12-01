@@ -57,4 +57,9 @@ implementing in autobot eslint plugin
 *  do NOT use chai.assert - too easy to mistakenly code: `assert(x)`
 *  actually, don't `assert` at all.  each step should fail-fast. asserts are pointless clutter
 
+note:
+
+browser.scroll doesn't work.  using offsets with browser.moveToObject doesn't seem to work.
+
+
  

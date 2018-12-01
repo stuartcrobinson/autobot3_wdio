@@ -18,6 +18,13 @@ export class EditSegmentPage extends WordsmithPage {
     //note: doneButton and backButton are the same element
     this.doneButton = this.get('.btn-primary').tagAsLoadCriterion();
     this.backButton = this.get('.back-button').tagAsLoadCriterion();
+    this.h3 = this.get('h3').tagAsLoadCriterion();
+    this.editSegmentPaneHeader = this.get('.segment__header').tagAsLoadCriterion();
     super.nameElements();
+  }
+
+  scrollUp(){
+    this.editSegmentPaneHeader.scroll();
+    return this;
   }
 };
