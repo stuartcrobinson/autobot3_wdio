@@ -40,8 +40,6 @@ export class Page extends UiContainer {
   }
 
   loadWithRetry(timeoutInMillis = 10000) {
-    console.log('asdfasdfasdfasdfasdfsfasdfasdfasdfasdfasdfsfasdfasdfasdfasdfasdfsf');
-
     let succeeded = false;
 
     const initTime = new Date().getMilliseconds();

@@ -24,6 +24,16 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).conditionLabel.click();
     editBranchPage.addAnotherRuleLink.click();
     editBranchPage.getNthBranchBox(2).conditionLabel.click();
+
+    // TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+    TODO - somehow scroll to top of page first so visual tests stop failing
+
     editBranchPage.checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(2).trashButton.click_waitForNotExisting();
   });
@@ -33,6 +43,18 @@ describe('Branches:', () => {
     editBranchPage.highlightedPreviewSpan.waitForText('cheeto');
     editBranchPage.getNthBranchBox(1).hover().elipsisDropdown.click_waitForChange();
     editBranchPage.getNthBranchBox(1).checkVisual();
+
+    //TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+    TODO - implement soft asserts for visual testing.  don't stop the test if it fails.  just display diff image and somehow fail the test after all code completed
+
+
     editBranchPage.getNthBranchBox(1).elipsisDropdown_AddDescription.click_waitForNotExisting();
     editBranchPage.keys('Dangerously cheesy ™');
     editBranchPage.getNthBranchBox(1).descriptionSpan.waitForText('Dangerously cheesy ™');
