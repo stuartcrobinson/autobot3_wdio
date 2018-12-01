@@ -65,81 +65,17 @@ before(function () {
 
 describe('DummyParent', () => {
   describe('Dummy', () => {
-    before(() => {
-      // fastWebpage.load();
-      // fastWebpage.keys('here', 3, 'go', 2, false);
-      // fastWebpage.keys('here', 3, 'go', 2);
-      // throw new Error('my error');
-    });
-    after(() => {
-      // dashboardPage.load();
-      // livy.logScreenshottedMessage('finished');
-      // throw new Error('myerror');
-    });
-    afterEach(() => {
-      // // @ts-ignore
-      // if (global.doFail) {
-      //   // @ts-ignore
-
-      //   global.doFail = false;
-      //   throw new Error('myerror');
-      // }
-
-      // const d = 0;
-      // console.log('hi');
-      // console.log('this awefawefawef');
-      // console.log(this);
-      // console.log('JSON.stringify(this) greeiugr8');
-      // console.log(JSON.stringify(this));
-
-      // for (const propName in this) {
-      //   const propValue = this[propName];
-      //   console.log(`this propName: ${propName}, ${propValue}`);
-      // }
-      // AutobotAssert.visualTestsPassed();
-    });
     it('go home', () => {
-      // fastWebpage.load();
-
-      const x = fastWebpage.feedTheBotImage;
-      // @ts-ignore
-      // global.aVisualTestFailed = true;
-      // console.log('88888888888888888888888888888888888');
-      // const d = 0;
-      // console.log('hi');
-      // console.log('this awefawefawef');
-      // console.log(this);
-      // console.log('JSON.stringify(this) greeiugr8');
-      // console.log(JSON.stringify(this));
-
-      // for (const propName in this) {
-      //   const propValue = this[propName];
-      //   console.log(`this propName: ${propName}, ${propValue}`);
-      // }
-      // fastWebpage.checkVisual();
-      // AutobotAssert.visualTestsPassed();
+      console.log('test 1');
     });
 
     it('go home2', () => {
-      // fastWebpage.load();
+      console.log('test 2');
 
-      // @ts-ignore
-      global.doFail = true;
-      const d = 0;
-      // @ts-ignore
-
-      global.aVisualTestFailed = true;
-      // fastWebpage.checkVisual();
     });
 
     it('go home3', () => {
-      // fastWebpage.load();
-      // @ts-ignore
-
-      global.aVisualTestFailed = true;
-
-      const d = 0;
-      // fastWebpage.checkVisual();
+      console.log('test 3');
     });
 
 
