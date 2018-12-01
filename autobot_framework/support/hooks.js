@@ -6,7 +6,7 @@ import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page
 import { Autobot, options } from '../autobot';
 import { Page } from './Page';
 import { livy } from './Livy';
-import { httpRequestCreateProjectFromDataFile_begin_and_complete } from './ApiStuff';
+import { httpRequestCreateProjectFromDataFile_begin_and_complete, httpRequestCreateProjectFromDataFile_begin, httpRequestComplete } from './ApiStuff';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -81,12 +81,14 @@ export class Load {
     livy.logAction2([
       { text: '☁️  ', style: livy.style.emoji },
       { text: `Api use data file to create project: ${projectName}`, style: livy.style.filler }]);
-    httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, file);
+    // httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, file);
+    const httpRequestPromise = httpRequestCreateProjectFromDataFile_begin(projectName, file);
 
+    httpRequestComplete(httpRequestPromise);
     // Autobot.httpRequestComplete(httpRequestPromise);
-    Page.load(Autobot.getProjectUrlFromName(projectName));
+    // Page.load(Autobot.getProjectUrlFromName(projectName));
 
-    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName))
+    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName)).loadWithRetry();
     // browser.url(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();
     assert(editorPage.isLoaded(), 'Template editor page should be loaded.');

@@ -110,12 +110,13 @@ export class UiElement extends UiContainer {
       texts.push(we.getText());
     });
 
+    // console.log(`texts: ${JSON.stringify(texts)}`);
     return texts;
   }
 
   getText() {
     // this.ensureContainerIsLoaded();
-    return this.getTexts()[0];
+    return this.getWebElement().getText();
   }
 
   click(doLogAndWait = true) {

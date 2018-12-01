@@ -400,9 +400,9 @@ class Livy {
 
   logErrorImage() {
     // <img src=${imageClickablePath} width=900></img>
-    console.log('in logErrorImage');
-    console.log('html:');
-    console.log(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
+    // console.log('in logErrorImage');
+    // console.log('html:');
+    // console.log(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
 
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
