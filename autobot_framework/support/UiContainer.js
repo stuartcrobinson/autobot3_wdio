@@ -1,9 +1,112 @@
 // @ts-check
-import { AssertionError } from 'assert';
 import filenamify from 'filenamify';
 import { livy } from './Livy';
 // /* eslint import/no-cycle: "off" */
 // import { UiElement } from './UiElement';
+
+
+// const appendFunctionToTestsRecursively = (newFunction, suites) => {
+//   if (suites.suites) {
+//     appendFunctionToTestsRecursively(newFunction, suites.suites);
+//   }
+
+//   for (let i = 0; i < suites.length; i++) {
+//     const tests = suites[i].tests;
+//     if (tests) {
+//       for (let k = 0; k < tests.length; i++) {
+//         const test = tests[i];
+//         test.fn = () => { test.fn(); newFunction(); };
+//       }
+//     }
+//   }
+// };
+
+// before(function () {
+//   // beforeEach(function () {
+//   const visualFailureChecker = () => {
+//     // @ts-ignore
+//     if (global.aVisualTestFailed) {
+//       // @ts-ignore
+//       global.aVisualTestFailed = false;
+//       throw new Error('A visual test failed.');
+//     }
+//   };
+
+//   // @ts-ignore
+//   const suites = this._runnable.parent.suites;
+
+//   appendFunctionToTestsRecursively(visualFailureChecker, suites);
+
+//   // for (let i = 0; i < suites.length; i++) {
+
+
+//   //   for (let m = 0; m < suites.length; m++) {
+
+
+//   //   }
+
+//   //   for (let j = 0; j < suites.length; j++) {
+
+//   //     for (let k = 0; k < suites.length; k++) {
+
+
+//   //       for (let l = 0; l < suites.length; l++) {
+
+
+//   //       }
+//   //     }
+//   //   }
+//   // }
+
+
+//   // console.log('this._runnable.parent.suites aow8eufa9wefaoidfadf');
+//   // // @ts-ignore
+
+//   // // console.log(this._runnable.parent.suites);
+//   // console.log(this._runnable.parent.suites[0].suites[0].tests[0].fn);
+//   // // // @ts-ignore
+//   // // this._runnable.parent.suites[0].suites[0].tests[0].fn = () => {
+//   // //   console.log('999999999999999999999999999999')
+//   // //   // @ts-ignore
+
+//   // //   this._runnable.parent.suites[0].suites[0].tests[0].fn();
+//   // // };
+
+//   // // @ts-ignore
+//   // const myf = this._runnable.parent.suites[0].suites[0].tests[0].fn;
+
+//   // const myf2 = () => { console.log('999999999999999999999999999999'); };
+//   // const myf3 = () => {
+//   //   // @ts-ignore
+//   //   if (global.aVisualTestFailed) {
+//   //     // @ts-ignore
+//   //     global.aVisualTestFailed = false;
+//   //     throw new Error('A visual test failed.');
+//   //   }
+//   // };
+
+//   // // @ts-ignore
+//   // this._runnable.parent.suites[0].suites[0].tests[0].fn = () => { myf(); myf2(); myf3(); };
+//   // // // const currentTest = this.currentTest;
+
+
+//   // // let that = this;
+//   // // // @ts-ignore
+//   // // this._runnable.parent.suites[0].suites[0].tests[0].fn = function asdf() { return that._runnable.parent.suites[0].suites[0].tests[0].fn(); };
+
+
+//   // // console.log('DummyParent beforeEach(function');
+//   // // console.log('this awefawefawef');
+//   // // console.log(this);
+//   // // console.log('JSON.stringify(this) greeiugr8');
+//   // // console.log(JSON.stringify(this));
+
+//   // // for (const propName in this) {
+//   // //   const propValue = this[propName];
+//   // //   console.log(`wdio this propName: ${propName}, ${propValue}`);
+//   // // }
+// });
+
 
 /**
  * Any class that contains custom web element objects.
@@ -203,10 +306,6 @@ export class UiContainer {
     let doLog = true;
 
     let outputString = '';
-    // console.log('inputs  98u98u');
-    // console.log(inputs);
-    // console.log('inputs lenght');
-    // console.log(inputs.length);
 
     if (inputs.length === 1) {
       asdf.push({ k: inputs[0], n: 1 });

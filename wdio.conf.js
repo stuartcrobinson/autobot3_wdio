@@ -1,6 +1,25 @@
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 
+// // beforeEach(function () {
+// //   currentTest = this.currentTest;
+// // }
+
+
+// console.log('hi');
+// console.log('this awefawefawef');
+// console.log(this);
+// console.log('JSON.stringify(this) greeiugr8');
+// console.log(JSON.stringify(this));
+
+// for (const propName in this) {
+//   const propValue = this[propName];
+//   console.log(`wdio this propName: ${propName}, ${propValue}`);
+// }
+
+
+
+
 function getScreenshotName(basePath) {
   return function (context) {
     var type = context.type;

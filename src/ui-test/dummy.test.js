@@ -1,5 +1,5 @@
 // @ts-check
-/* eslint guard-for-in: "off", no-restricted-syntax: "off" */
+/* eslint guard-for-in: "off", no-restricted-syntax: "off", prefer-destructuring: "off" */
 
 import { fastWebpage } from '../ui-model/misc/fastWebpage.page';
 import { editBranchPage } from '../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
@@ -10,6 +10,57 @@ import { livy } from '../../autobot_framework/support/Livy';
 import { UiElement } from '../../autobot_framework/support/UiElement';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
 import { AutobotAssert } from '../../autobot_framework/support/AutobotAssert';
+
+
+const appendFunctionToTestsRecursively = (newFunction, suites) => {
+  // console.log('suites fos98dfu9s8df');
+  // console.log(suites);
+
+  // if (suites.suites) {
+  //   appendFunctionToTestsRecursively(newFunction, suites.suites);
+  // }
+
+  //   // this._runnable.parent.suites[0].suites[0].tests[0].fn = () => { myf(); myf2(); myf3(); };
+
+
+  for (let i = 0; i < suites.length; i++) {
+    const suite = suites[i];
+
+    if (suite.suites) {
+      appendFunctionToTestsRecursively(newFunction, suite.suites);
+    }
+
+    const tests = suite.tests;
+    if (tests) {
+      // console.log('tests fos98dfu9s8df');
+      // console.log(tests);
+      for (let k = 0; k < tests.length; k++) {
+        const test = tests[k];
+        console.log('test fos98dfu9s8df');
+        // console.log(test);
+        // test.fn = () => { test.fn(); newFunction(); };
+        test.fn = () => { test.fn(); console.log('11111111111111111111111111111111'); };
+      }
+    }
+  }
+};
+
+before(function () {
+  // beforeEach(function () {
+  const visualFailureChecker = () => {
+    // @ts-ignore
+    if (global.aVisualTestFailed) {
+      // @ts-ignore
+      global.aVisualTestFailed = false;
+      throw new Error('A visual test failed!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    }
+  };
+
+  // @ts-ignore
+  const suites = this._runnable.parent.suites;
+
+  appendFunctionToTestsRecursively(visualFailureChecker, suites);
+});
 
 
 describe('DummyParent', () => {
@@ -45,23 +96,26 @@ describe('DummyParent', () => {
       //   const propValue = this[propName];
       //   console.log(`this propName: ${propName}, ${propValue}`);
       // }
-      AutobotAssert.visualTestsPassed();
+      // AutobotAssert.visualTestsPassed();
     });
     it('go home', () => {
       // fastWebpage.load();
 
+      const x = fastWebpage.feedTheBotImage;
+      // @ts-ignore
+      // global.aVisualTestFailed = true;
+      // console.log('88888888888888888888888888888888888');
+      // const d = 0;
+      // console.log('hi');
+      // console.log('this awefawefawef');
+      // console.log(this);
+      // console.log('JSON.stringify(this) greeiugr8');
+      // console.log(JSON.stringify(this));
 
-      const d = 0;
-      console.log('hi');
-      console.log('this awefawefawef');
-      console.log(this);
-      console.log('JSON.stringify(this) greeiugr8');
-      console.log(JSON.stringify(this));
-
-      for (const propName in this) {
-        const propValue = this[propName];
-        console.log(`this propName: ${propName}, ${propValue}`);
-      }
+      // for (const propName in this) {
+      //   const propValue = this[propName];
+      //   console.log(`this propName: ${propName}, ${propValue}`);
+      // }
       // fastWebpage.checkVisual();
       // AutobotAssert.visualTestsPassed();
     });
@@ -80,6 +134,9 @@ describe('DummyParent', () => {
 
     it('go home3', () => {
       // fastWebpage.load();
+      // @ts-ignore
+
+      global.aVisualTestFailed = true;
 
       const d = 0;
       // fastWebpage.checkVisual();
