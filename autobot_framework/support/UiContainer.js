@@ -3,57 +3,6 @@ import filenamify from 'filenamify';
 import { livy } from './Livy';
 
 /**
- * TODO this should be in a mocha global --file https://autoin.atlassian.net/browse/QS-422
- * @param {Function} newFunction
- * @param {Array} suites
- */
-const appendFunctionToTestsRecursively = (newFunction, suites) => {
-  for (let i = 0; i < suites.length; i++) {
-    const suite = suites[i];
-
-    if (suite.suites) {
-      appendFunctionToTestsRecursively(newFunction, suite.suites);
-    }
-
-    const tests = suite.tests;
-    if (tests) {
-      for (let k = 0; k < tests.length; k++) {
-        const test = tests[k];
-        const f = test.fn;
-        console.log('f.toString()');
-        console.log(f.toString());
-
-        // for (const propName in f) {
-        //   const propValue = f[propName];
-        //   console.log(`f: propName: ${propName}, ${propValue}`);
-        // }
-        test.fn = () => { f(); newFunction(); };
-      }
-    }
-  }
-};
-
-/**
- * TODO this should be in a mocha global --file https://autoin.atlassian.net/browse/QS-422
- */
-before(function () {
-  // beforeEach(function () {
-  const visualFailureChecker = () => {
-    // @ts-ignore
-    if (global.aVisualTestFailed) {
-      // @ts-ignore
-      global.aVisualTestFailed = false;
-      throw new Error('A visual test failed.');
-    }
-  };
-
-  // @ts-ignore
-  const suites = this._runnable.parent.suites;
-
-  appendFunctionToTestsRecursively(visualFailureChecker, suites);
-});
-
-/**
  * Any class that contains custom web element objects.
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
@@ -68,10 +17,6 @@ export class UiContainer {
   nameElements() {
     for (const propName in this) {
       const propValue = this[propName];
-      // don't delete.  commented out to hopefully fix weird errors caused from circular import dependencies
-      // if (propValue instanceof UiElement) {
-      // @ts-ignore
-      // propValue.stuartname = propName;
       if (propValue) {
         try {
           // @ts-ignore

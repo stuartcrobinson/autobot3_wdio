@@ -11,7 +11,6 @@ import { UiElement } from '../../autobot_framework/support/UiElement';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
 import { AutobotAssert } from '../../autobot_framework/support/AutobotAssert';
 
-
 describe('DummyParent', () => {
   describe('Dummy', () => {
     it('go home', () => {
@@ -19,21 +18,33 @@ describe('DummyParent', () => {
       fastWebpage.h2.click();
 
       fastWebpage.checkVisual();
+      fastWebpage.h2.hover();
       // // @ts-ignore
       // global.aVisualTestFailed = true;
       console.log('test 1');
+      AutobotAssert.visualTestsPassed();
+
+      // AutobotAssert.visualTestsPassed();
     });
 
     it('go home2', () => {
       fastWebpage.checkVisual();
+
+      fastWebpage.h2.click();
+
+      fastWebpage.h2.hover();
       console.log('test 2');
+      AutobotAssert.visualTestsPassed();
     });
 
     it('go home3', () => {
       fastWebpage.checkVisual();
       console.log('test 3');
+
+      fastWebpage.h2.click();
       // // @ts-ignore
       // global.aVisualTestFailed = true;
+      AutobotAssert.visualTestsPassed();
     });
   });
 });

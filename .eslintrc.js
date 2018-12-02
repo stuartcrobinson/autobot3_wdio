@@ -12,7 +12,6 @@ module.exports = {
 
     "no-console": "off",
 
-
     "max-len": "off",
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "import/prefer-default-export": "off",
@@ -23,7 +22,8 @@ module.exports = {
     "no-unused-vars": "off",
     "no-unused-expressions": "off",
     // "starts-with-ts-check": 2,
-    "autobot/starts-with-ts-check": 2
+    "autobot/starts-with-ts-check": 2,
+    "autobot/visual-test-contains-assert": 2
     // "eqeqeq": "off",
     // "curly": "error",
     // "quotes": ["error", "double"]
