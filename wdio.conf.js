@@ -270,6 +270,7 @@ exports.config = {
     ui: 'bdd',
     timeout: 300000,
     compilers: ['js:@babel/register'],
+    file: 'mocha.global.js'
   },
   //
   // =====
