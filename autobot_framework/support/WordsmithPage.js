@@ -7,7 +7,7 @@ import { Page } from './Page';
 /** Abstract class */
 export class WordsmithPage extends Page {
   /** @param {string} urlPath   */
-  constructor(urlPath = undefined) {
+  constructor(urlPath) {
     super(options.wsUrl, urlPath);
     if (this.constructor === WordsmithPage) {
       throw new TypeError('Abstract class cannot be instantiated directly.');
