@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from "../../../../autobot_framework/support/WordsmithPage";
+import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
 
 /** Abstract class */
 export class EditSegmentPage extends WordsmithPage {
@@ -15,7 +15,7 @@ export class EditSegmentPage extends WordsmithPage {
     this.deleteButton = this.get('[data-test="close-button"]');
     // this.modalYesButton = this.get('.modal-dialog-content .btn-primary'); // not within the seg editor container
 
-    //note: doneButton and backButton are the same element
+    // note: doneButton and backButton are the same element
     this.doneButton = this.get('.btn-primary').tagAsLoadCriterion();
     this.backButton = this.get('.back-button').tagAsLoadCriterion();
     this.h3 = this.get('h3').tagAsLoadCriterion();
@@ -23,8 +23,8 @@ export class EditSegmentPage extends WordsmithPage {
     super.nameElements();
   }
 
-  scrollUp(){
+  scrollUp() {
     this.editSegmentPaneHeader.scroll();
     return this;
   }
-};
+}

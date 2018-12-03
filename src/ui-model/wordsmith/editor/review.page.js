@@ -10,18 +10,19 @@ class NarrativeDiv extends UiElement {
     this.rowNumber = this.get('.row-number');
     super.nameElements();
   }
-  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
+
+  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName(`Segment ${n}`); }
 }
-const getNthRunStatValueDiv = (n) => (new UiElement(`.run-stat-list.flex.flex-wrap.center > div:nth-of-type(${n}) .run-stat__value`));
+const getNthRunStatValueDiv = n => (new UiElement(`.run-stat-list.flex.flex-wrap.center > div:nth-of-type(${n}) .run-stat__value`));
 
-const getNthToggle = (n) => (new UiElement(`.toggle-switch__horizontal-group > .margin-bottom-small:nth-of-type(${n}) .switch`));
+const getNthToggle = n => (new UiElement(`.toggle-switch__horizontal-group > .margin-bottom-small:nth-of-type(${n}) .switch`));
 
-const textSpan = (variability) => (
-  (str) => new UiElement(`//*[@*='segment editor-textarea-segment ${variability}' and text()='${str}']`)
+const textSpan = variability => (
+  str => new UiElement(`//*[@*='segment editor-textarea-segment ${variability}' and text()='${str}']`)
     .setName(`Span with text "${str}" and ${variability} variability`)
 );
 
-//TODO send csv file over api project creation
+// TODO send csv file over api project creation
 
 export const reviewPage = new class Review extends WordsmithPage {
   constructor() {
@@ -44,12 +45,12 @@ export const reviewPage = new class Review extends WordsmithPage {
 
     super.nameElements();
   }
-  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName('Segment ' + n); }
 
+  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName(`Segment ${n}`); }
 
-  poorVariabilitySpanWithText = (str) => (textSpan('poor')(str));
+  poorVariabilitySpanWithText = str => textSpan('poor')(str);
 
-  excellentVariabilitySpanWithText = (str) => (textSpan('excellent')(str));
+  excellentVariabilitySpanWithText = str => textSpan('excellent')(str);
 
   randomizeRows_isOn() {
     return this.generate50NewRowsLink.isExisting();
@@ -57,7 +58,7 @@ export const reviewPage = new class Review extends WordsmithPage {
 
   randomizeRows_turnOn() {
     if (this.randomizeRows_isOn()) {
-      throw new Error("Rows are already randomized");
+      throw new Error('Rows are already randomized');
     }
     this.randomizeRowsToggle.click_waitForChange();
   }
@@ -70,24 +71,21 @@ export const reviewPage = new class Review extends WordsmithPage {
   }
 
   getCountsOfSecondSegmentTexts() {
-
     const secondSegmentWEs = this.getNthSegmentSpan(2).getWebElements();
 
-    let synonyms = [];
+    const synonyms = [];
 
     secondSegmentWEs.forEach((we) => {
       synonyms.push(we.getText());
-    })
+    });
 
     const countsObject = countBy(synonyms);
 
     return countsObject;
   }
-
 }();
 
 
-
-    /*
+/*
 TODO - allow grabbing input parameters from file AND console.  combine them.  give precedence to command line
     */

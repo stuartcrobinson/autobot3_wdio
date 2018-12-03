@@ -1,7 +1,6 @@
 // @ts-check
-import { WordsmithPage } from "../../../../../autobot_framework/support/WordsmithPage";
-import { UiElement } from "../../../../../autobot_framework/support/UiElement";
-
+import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 
 export const createAProjectUploadCsvPage = new class CreateAProject extends WordsmithPage {
@@ -15,5 +14,4 @@ export const createAProjectUploadCsvPage = new class CreateAProject extends Word
   uploadCsv(filePath) {
     this.fileUploadInput.uploadFile(filePath);
   }
-
 }();

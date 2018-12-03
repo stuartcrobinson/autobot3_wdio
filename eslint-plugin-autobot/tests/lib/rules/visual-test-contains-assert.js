@@ -39,17 +39,17 @@ ruleTester.run("visual-test-contains-assert", rule, {
       });
   `
     }
-    //   ,
-    //   {
-    //     code: `
-    //     it('go home2', () => {
-    //       fastWebpage.h2.click();
+      ,
+      {
+        code: `
+        it('go home2', () => {
+          fastWebpage.h2.click();
 
-    //       fastWebpage.h2.hover();
-    //       console.log('test 2');
-    //     });
-    // `
-    //   }
+          fastWebpage.h2.hover();
+          console.log('test 2');
+        });
+    `
+      }
   ],
 
   invalid: [

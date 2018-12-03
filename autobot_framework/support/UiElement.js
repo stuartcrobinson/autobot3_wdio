@@ -318,7 +318,7 @@ export class UiElement extends UiContainer {
 
   logAndWait2(messages) {
     if (!this.name) {
-      throw new Error(`found ${this.constructor.name} with no name. selector: ${this.selector}`);
+      throw new Error(`Found ${this.constructor.name} with no name.  Make sure that the constructor for each class extending UiContainer ends with super.nameElements(). selector: ${this.selector}`);
     }
     const timeoutMillis = 5000;
     if (livy.doSaveEventScreenshots) {

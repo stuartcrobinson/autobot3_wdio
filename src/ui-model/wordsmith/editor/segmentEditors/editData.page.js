@@ -8,7 +8,7 @@ export class EditDataDropdown extends UiElement {
     if (this.constructor === EditDataDropdown) {
       throw new TypeError('Abstract class cannot be instantiated directly.');
     }
-    this.setName(this.constructor.name)
+    this.setName(this.constructor.name);
   }
 }
 
@@ -28,7 +28,7 @@ export class CapitalizationDropdown extends EditDataDropdown {
 }
 
 export function nthDropdownButtonCssSelector(n) {
-  return `.input-container:nth-of-type(${n}) .dropdown button`
+  return `.input-container:nth-of-type(${n}) .dropdown button`;
 }
 
 export function nthDropDownOptionFromButton(n) {
@@ -47,5 +47,4 @@ export class EditDataPage extends EditSegmentPage {
     this.dataVarNameSpan = this.get('.segment__header-datavar').tagAsLoadCriterion();
     super.nameElements();
   }
-};
-
+}

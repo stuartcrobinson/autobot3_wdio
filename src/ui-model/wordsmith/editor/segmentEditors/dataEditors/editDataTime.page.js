@@ -1,10 +1,12 @@
 // @ts-check
-import { EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.page';
+import {
+  EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton,
+} from '../editData.page';
 
 export class TimeFormatDropdown extends EditDataDropdown {
   constructor(dropdownButtonSelector) {
     super(dropdownButtonSelector);
-    //probably would have made more sense as a single function and pass option # from test ?
+    // probably would have made more sense as a single function and pass option # from test ?
     this.option1 = this.get(nthDropDownOptionFromButton(1));
     this.option2 = this.get(nthDropDownOptionFromButton(2));
     this.option3 = this.get(nthDropDownOptionFromButton(3));

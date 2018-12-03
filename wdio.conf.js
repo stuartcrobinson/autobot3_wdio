@@ -90,8 +90,6 @@ if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
 }
 
 global.autobotOptions = _options
-console.log("options")
-console.log(_options)
 
 exports.config = {
   //
@@ -372,8 +370,6 @@ exports.config = {
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    console.log("suite woeifosdifsdf")
-    console.log(suite)
     global.livy && global.livy.wdioConf_afterSuite(suite.err, _options.myRunId);
   },
   /**

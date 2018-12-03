@@ -10,13 +10,14 @@ import { modal } from '../../../ui-model/wordsmith/misc/component/modal.cont';
 import { sidebar } from '../../../ui-model/wordsmith/misc/component/sideBar.cont';
 
 describe('Branches:', () => {
-  before(() => { Load.newTemplateEditorUsingDataFile("resources/eachDataType_date2.csv"); });
+  before(() => { Load.newTemplateEditorUsingDataFile('resources/eachDataType_date2.csv'); });
 
   it('delete a new empty branch', () => {
     editorPage.toolbar.addBranchButton.click();
     editBranchPage.checkVisual(header, sidebar.liveChatLink);
-    editBranchPage.getNthBranchBox(1).trashButton.click_waitForNotExisting(); //test trash icon for single rule
+    editBranchPage.getNthBranchBox(1).trashButton.click_waitForNotExisting(); // test trash icon for single rule
     editorPage.waitForLoad();
+    AutobotAssert.visualTestsPassed();
   });
 
   it('create and delete a new rule', () => {
@@ -26,6 +27,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(2).conditionLabel.click();
     editBranchPage.scrollUp().checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(2).trashButton.click_waitForNotExisting();
+    AutobotAssert.visualTestsPassed();
   });
 
   it('fill out first rule', () => {
@@ -61,7 +63,6 @@ describe('Branches:', () => {
     editBranchPage.keys('A safe level of cheese ™');
     editBranchPage.highlightedPreviewSpan.waitForText('cheez-it');
     editBranchPage.getNthBranchBox(2).descriptionSpan.waitForText('A safe level of cheese ™');
-
   });
 
   // it('clicking first rule should change preview text', () => {
@@ -96,7 +97,7 @@ describe('Branches:', () => {
   //     { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
   //     { text: 'https://autoin.atlassian.net/browse/WS-2282', style: livy.style.selector_red },
   //   ]);
-  //       // TODO https://autoin.atlassian.net/browse/QS-302 
+  //       // TODO https://autoin.atlassian.net/browse/QS-302
   //   //   editBranchPage.getNthBranchBox(1).descriptionSpan.waitForText(
   //   //   editBranchPage.getNthBranchBox(2).descriptionSpan.getWebElement().getText()
   //   // );
@@ -164,5 +165,4 @@ describe('Branches:', () => {
   // it('edited invalid branch text should be visible in editor after closing modal', () => {
   //   editorPage.invalidSegmentWithText("pocky").waitForExist();
   // });
-
 });

@@ -1,11 +1,12 @@
 // @ts-check
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { Table } from '../../table';
+/* eslint import/no-cycle: "off" */
 import { sidebar } from '../component/sideBar.cont';
 
 export const dashboardPage = new class Dashboard extends WordsmithPage {
   constructor() {
-    super("/dashboard");
+    super('/dashboard');
     this.newProjectButton = this.get('//button[text()="New Project"]').tagAsLoadCriterion();
     this.newProjectDropdown = this.get('//button[text()="New Project"]/following-sibling::div[@class="dropdown"]');
     this.createCsvDropdownOption = this.get('//a[text()="Create CSV"]');

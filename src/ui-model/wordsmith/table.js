@@ -3,25 +3,23 @@ import * as cheerio from 'cheerio';
 import { UiElement } from '../../../autobot_framework/support/UiElement';
 
 
-//TODO this is still a mess - stuart 10/30/2018
+// TODO this is still a mess - stuart 10/30/2018
 
 /**
   The state of a Table object is not based on table columns and values, but rather which column is currently being either "selected" or "referenced" during a table action such as sorting or retrieving a value in one ("selected") column based on another ("reference") column's value.
  */
 export class Table extends UiElement {
-
   static isIncreasing(values) {
-
-    for (var i = 0; i < values.length - 1; i++) {
+    for (let i = 0; i < values.length - 1; i++) {
       if (values[i] > values[i + 1]) {
-        return false
+        return false;
       }
     }
     return true;
   }
 
   static isDecreasing(values) {
-    for (var i = 0; i < values.length - 1; i++) {
+    for (let i = 0; i < values.length - 1; i++) {
       if (values[i] < values[i + 1]) {
         return false;
       }
@@ -39,13 +37,13 @@ export class Table extends UiElement {
     this.selectedColumnName = columnName;
     // if (!browser.isExisting('//th/div[text()="' + this.selectedColumnName + '"]')) {
     if (!this.getHeader(this.selectedColumnName).isExisting) {
-      throw new Error("Selected column not found: " + this.selectedColumnName);
+      throw new Error(`Selected column not found: ${this.selectedColumnName}`);
     }
     return this;
   }
 
   getHeader(headerName) {
-    let header = this
+    const header = this
       .get(`//th/div[text()="${headerName}"]`)
       .setName(`'${headerName}' column header`);
 
@@ -59,58 +57,56 @@ export class Table extends UiElement {
 
   where(columnName) {
     if (!this.selectedColumnName) {
-      throw new Error("A column must be selected before a reference column can be identified.");
+      throw new Error('A column must be selected before a reference column can be identified.');
     }
     this.referenceColumnName = columnName;
 
     if (!this.getHeader(this.referenceColumnName).isExisting) {
-      throw new Error("Reference column not found: " + this.referenceColumnName);
+      throw new Error(`Reference column not found: ${this.referenceColumnName}`);
     }
     return this;
   }
 
 
   contains(target) {
-
-    //1.  determine colNumber of reference column
+    // 1.  determine colNumber of reference column
 
     const colNum = this.getColNum(this.referenceColumnName);
 
-    //2.  determine rowNumber of target in the selected column
+    // 2.  determine rowNumber of target in the selected column
 
     const rowNum = this.getRowNumWhereColContainsTarget(colNum, target);
 
-    //3.  return the value at rowNumber, colNumber
+    // 3.  return the value at rowNumber, colNumber
 
     const value = this.getValue(rowNum, colNum);
 
 
-    //now reset selections
+    // now reset selections
 
-    this.selectedColumnName = undefined
-    this.referenceColumnName = undefined
+    this.selectedColumnName = undefined;
+    this.referenceColumnName = undefined;
 
     return value;
   }
 
   equals(target) {
-
-    //1.  determine colNumber of reference column
+    // 1.  determine colNumber of reference column
 
     const colNum = this.getColNum(this.referenceColumnName);
 
-    //2.  determine rowNumber of target in the selected column
+    // 2.  determine rowNumber of target in the selected column
 
     const rowNum = this.getRowNumWhereColEqualsTarget(colNum, target);
 
-    //3.  return the value at rowNumber, colNumber
+    // 3.  return the value at rowNumber, colNumber
 
     const value = this.getValue(rowNum, colNum);
 
-    //now reset selections
+    // now reset selections
 
-    this.selectedColumnName = undefined
-    this.referenceColumnName = undefined
+    this.selectedColumnName = undefined;
+    this.referenceColumnName = undefined;
 
     return value;
   }
@@ -119,30 +115,30 @@ export class Table extends UiElement {
     // const header = new UiElement('//th/div[@class="flex flex-align-center" and text()="' + columnName + '"]');
     const header = this.getHeader(columnName);
 
-    let chevronClass
+    let chevronClass;
 
     do {
       header.click();
-      chevronClass = new UiElement(header.selector + '/span').getWebElement().getAttribute("class");
-    } while (chevronClass !== "chevron top");
+      chevronClass = new UiElement(`${header.selector}/span`).getWebElement().getAttribute('class');
+    } while (chevronClass !== 'chevron top');
 
     return this;
   }
 
   sortDecreasing(columnName) {
     const header = this.getHeader(columnName);
-    let chevronClass
+    let chevronClass;
     do {
       header.click();
-      chevronClass = new UiElement(header.selector + '/span').getWebElement().getAttribute("class");
-    } while (chevronClass !== "chevron");
+      chevronClass = new UiElement(`${header.selector}/span`).getWebElement().getAttribute('class');
+    } while (chevronClass !== 'chevron');
     return this;
   }
 
   getValuesByColName(colName) {
-    //1.  determine column number (selectedColumn) (first is 1)
+    // 1.  determine column number (selectedColumn) (first is 1)
 
-    //how?  get all headers.  loop through to see which one matches
+    // how?  get all headers.  loop through to see which one matches
 
     const colNum = this.getColNum(colName);
 
@@ -152,13 +148,12 @@ export class Table extends UiElement {
   getValuesByColNum(colNum) {
     // get elements at that td level
 
-    const selector = '//tr[contains(@class, "table-row")]/td[' + colNum + ']'
-    const tds = $$(selector)
+    const selector = `//tr[contains(@class, "table-row")]/td[${colNum}]`;
+    const tds = $$(selector);
 
-    let colValues = [];
+    const colValues = [];
 
-    for (var i = 0; i < tds.length; i++) {
-
+    for (let i = 0; i < tds.length; i++) {
       const html = tds[i].getHTML();
 
       const $ = cheerio.load(html);
@@ -169,24 +164,23 @@ export class Table extends UiElement {
     }
 
     return colValues;
-
   }
 
   getValues() {
     if (!this.selectedColumnName) {
-      throw new Error("No column has been selected yet.");
+      throw new Error('No column has been selected yet.');
     }
     return this.getValuesByColName(this.selectedColumnName);
   }
 
   /**
    * First column is column 1.
-   * @param {String} colName 
+   * @param {String} colName
    */
   getColNum(colName) {
-    //not sure why this doesn't work:
+    // not sure why this doesn't work:
     // var headers = browser.elements('th > div');
-    var headers = $$('th > div');
+    const headers = $$('th > div');
 
     let foundIt = false;
     let i = 0;
@@ -199,25 +193,25 @@ export class Table extends UiElement {
       }
     }
     if (!foundIt) {
-      throw new Error("Selected column not found: " + this.selectedColumnName);
+      throw new Error(`Selected column not found: ${this.selectedColumnName}`);
     }
     const colNum = i + 1;
     return colNum;
   }
 
   /**
-   * 
-   * @param {Number} colNum 
-   * @param {String} targetText 
+   *
+   * @param {Number} colNum
+   * @param {String} targetText
    */
   getRowNumWhereColContainsTarget(colNum, targetText) {
-    //1.  get all column's values
+    // 1.  get all column's values
     const values = this.getValuesByColNum(colNum);
 
-    //?
-    var headers = $$('th > div');
+    // ?
+    const headers = $$('th > div');
 
-    //2.  get the number of the first row to contain the target text
+    // 2.  get the number of the first row to contain the target text
     let foundIt = false;
     let i = 0;
     for (; i < headers.length; i++) {
@@ -227,7 +221,7 @@ export class Table extends UiElement {
       }
     }
     if (!foundIt) {
-      throw new Error("Target text [" + targetText + "] never found in values [" + values + "].");
+      throw new Error(`Target text [${targetText}] never found in values [${values}].`);
     }
     const rowNum = i + 1;
 
@@ -236,18 +230,18 @@ export class Table extends UiElement {
 
   /**
    * Code could be reduced by passing functions.  unnecessary repitition between this and getRowNumWhereColContainsTarget.
-   * 
+   *
    * also true between some other functions
-   * @param {Number} colNum 
-   * @param {String} targetText 
+   * @param {Number} colNum
+   * @param {String} targetText
    */
   getRowNumWhereColEqualsTarget(colNum, targetText) {
-    //1.  get all column's values
+    // 1.  get all column's values
     const values = this.getValuesByColNum(colNum);
 
-    var headers = $$('th > div');
+    const headers = $$('th > div');
 
-    //2.  get the number of the first row to equal the target text
+    // 2.  get the number of the first row to equal the target text
     let foundIt = false;
     let i = 0;
     for (; i < headers.length; i++) {
@@ -257,7 +251,7 @@ export class Table extends UiElement {
       }
     }
     if (!foundIt) {
-      throw new Error("Target text [" + targetText + "] never found in values [" + values + "].");
+      throw new Error(`Target text [${targetText}] never found in values [${values}].`);
     }
     const rowNum = i + 1;
 
@@ -265,19 +259,18 @@ export class Table extends UiElement {
   }
 
   getValue(rowNum, colNum) {
-
-    const selector = '//tbody/tr[' + rowNum + ']/td[' + colNum + ']//div[@class="flex flex-column flex-center"]/span'
+    const selector = `//tbody/tr[${rowNum}]/td[${colNum}]//div[@class="flex flex-column flex-center"]/span`;
 
     return new UiElement(selector).getWebElement().getText();
   }
 }
 
 // export default new Table();
-//notes
+// notes
 
 
-    //possible time values:
-    /*
+// possible time values:
+/*
 
 Less than a minute  ago
 A minute  ago
@@ -314,20 +307,19 @@ then combine into full timespan group
 then combine all the timespan groups
 
 
-
     */
 
 
-    // selectedColumnName
+// selectedColumnName
 
-    // referenceColumnName
-
-
-    // .setColumns('Project', 'Last Edited', 'Created')
-    // .setSearchSelector('#search-input')
-    // .setCheckboxSelector('.checkbox-input');
+// referenceColumnName
 
 
-    // get column(columnName) {
-    //     return new Column(columnName);
-    // }
+// .setColumns('Project', 'Last Edited', 'Created')
+// .setSearchSelector('#search-input')
+// .setCheckboxSelector('.checkbox-input');
+
+
+// get column(columnName) {
+//     return new Column(columnName);
+// }

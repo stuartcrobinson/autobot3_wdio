@@ -1,4 +1,5 @@
-import { Page } from "../../../../autobot_framework/support/Page";
+// @ts-check
+import { Page } from '../../../../autobot_framework/support/Page';
 
 // @ts-check
 
@@ -12,7 +13,8 @@ export const tableauLoginPage = new class Login extends Page {
   }
 
   logIn(username, password) {
-    loadPage("https://tableau-server.automatedinsights.com/#/signin");
+    // TODO use tableau page object derived from TaleauPage
+    // loadPage('https://tableau-server.automatedinsights.com/#/signin');
 
     this.usernameInput.setValue(username);
     this.passwordInput.setValue(password);

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "wdio": "./node_modules/.bin/eslint --fix autobot_framework/**/*.js src/**/*.js && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\""
+    "wdio": "./node_modules/.bin/eslint --fix \"autobot_framework/**/*.js\" \"src/**/*.js\" && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\"",
+    "lint": "./node_modules/.bin/eslint --fix \"autobot_framework/**/*.js\" \"src/**/*.js\""
   },
   "dependencies": {
     "chai": "^4.2.0",
@@ -21,6 +22,8 @@
     "wdio-spec-reporter": "^0.1.5",
     "webdriverio": "^4.14",
     "yargs-parser": "^11.0.0",
+    "lodash": "^4.17.11",
+    "cheerio": "^1.0.0-rc.2",
     "axios": "^0.18.0"
   },
   "devDependencies": {
@@ -37,16 +40,14 @@
     "@types/webdriverio": "^4.10.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
-    "cheerio": "^1.0.0-rc.2",
     "css-to-xpath": "^0.1.0",
-    "eslint": "^5.7.0",
+    "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-autobot": "file:./eslint-plugin-autobot",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-webdriverio": "^1.0.1",
-    "lodash": "^4.17.11",
     "prettier": "^1.14.3",
     "wdio-chromedriver-service": "^0.1.3",
     "wdio-mocha-framework": "^0.6.3",

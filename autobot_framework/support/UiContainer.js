@@ -4,9 +4,17 @@ import { livy } from './Livy';
 
 /**
  * Any class that contains custom web element objects.
+ *
+ * Abstract class
  */
 /* eslint guard-for-in: "off", no-restricted-syntax: "off",  */
 export class UiContainer {
+  constructor() {
+    if (this.constructor === UiContainer) {
+      throw new TypeError('Abstract class cannot be instantiated directly.');
+    }
+  }
+
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**
    * This adds a custom name parameter to each element object so that the variable's name

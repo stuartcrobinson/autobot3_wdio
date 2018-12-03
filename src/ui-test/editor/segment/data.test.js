@@ -23,7 +23,6 @@ export const data = [{
 
 
 describe('Format and insert data var of type', () => {
-
   before(() => { Load.newTemplateEditor(data); });
 
   it('Number', () => {
@@ -197,7 +196,7 @@ describe('Format and insert data var of type', () => {
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
   });
 
-  //TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
+  // TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
   it('Date', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option5.click();

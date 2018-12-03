@@ -1,6 +1,5 @@
 // @ts-check
-import { UiElement } from "../../../../../autobot_framework/support/UiElement";
-
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 
 export const header = new class HeaderComp extends UiElement {
@@ -11,4 +10,3 @@ export const header = new class HeaderComp extends UiElement {
     super.nameElements();
   }
 }();
-

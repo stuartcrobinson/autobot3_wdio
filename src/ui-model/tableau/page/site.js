@@ -1,4 +1,5 @@
-import { Page } from "../../../../autobot_framework/support/Page";
+// @ts-check
+import { Page } from '../../../../autobot_framework/support/Page';
 
 // @ts-check
 

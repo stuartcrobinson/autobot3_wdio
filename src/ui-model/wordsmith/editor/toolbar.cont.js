@@ -1,12 +1,13 @@
-import { UiElement } from "../../../../autobot_framework/support/UiElement";
+// @ts-check
+import { UiElement } from '../../../../autobot_framework/support/UiElement';
 
 // @ts-check
 
 class InsertDataDropdown_SegmentListOption extends UiElement {
   constructor(n) {
     super(`.segment-list li:nth-of-type(${n})`);
-    this.datavarNameDiv = this.get('.name')
-    this.datavarValuesDiv = this.get('.name .examples')
+    this.datavarNameDiv = this.get('.name');
+    this.datavarValuesDiv = this.get('.name .examples');
   }
 }
 

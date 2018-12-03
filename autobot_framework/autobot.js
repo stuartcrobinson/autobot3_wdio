@@ -1,55 +1,53 @@
 // @ts-check
 import axios, { AxiosPromise } from 'axios';
 
-/* ******************************* wrapped *************************************/
+/* ******************************* wrapped ************************************ */
 
 function getAxiosBodyWithDataObject(projectName, projectData) {
   return {
-    "data": {
-      "name": projectName,
-      "dataset": {
-        "format": "json",
-        "data": projectData
-      }
-    }
-  }
+    data: {
+      name: projectName,
+      dataset: {
+        format: 'json',
+        data: projectData,
+      },
+    },
+  };
 }
 
-//eachDataType_date2
+// eachDataType_date2
 function getAxiosBodyWithFileData64(projectName, file, data64) {
-
   return {
-    "data": {
-      "name": projectName,
-      "dataset": {
-        "format": "csv",
-        "filename": file,
-        "content": data64
-      }
-    }
-  }
+    data: {
+      name: projectName,
+      dataset: {
+        format: 'csv',
+        filename: file,
+        content: data64,
+      },
+    },
+  };
 }
 
 
-
-var fs = require('fs');
+const fs = require('fs');
 
 // function to encode file data to base64 encoded string
 function base64_encode(file) {
   // read binary data
-  var bitmap = fs.readFileSync(file);
+  const bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
   return Buffer.from(bitmap).toString('base64');
 }
 
 export class Autobot {
-
   static getProjectUrlFromName(name) {
-    return `https://wordsmith.automatedinsights.com/projects/` + name;
+    return `https://wordsmith.automatedinsights.com/projects/${name}`;
   }
+
   /**
-   * 
-   * @param {String} x 
+   *
+   * @param {String} x
    */
   static makeSlugSafeName(x) {
     let slugSafe = x;
@@ -61,30 +59,27 @@ export class Autobot {
   }
 
   static httpRequestCreateProjectFromDataObject_begin(name, dataObject1) {
-
     const body = getAxiosBodyWithDataObject(name, dataObject1);
 
     return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
   }
 
 
-
   static httpRequestCreateProjectFromDataFile_begin_and_complete(name, file) {
-
-    const data64 = base64_encode(file)
+    const data64 = base64_encode(file);
 
     const body = getAxiosBodyWithFileData64(name, file, data64);
 
-    let url = 'https://api.automatedinsights.com/v1.8/projects';
+    const url = 'https://api.automatedinsights.com/v1.8/projects';
 
     const axiosConfig = {
       headers: {
-        'Authorization': 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
+        Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
         'User-Agent': 'Autobot',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
     };
-    axios.post(url, body, axiosConfig)
+    axios.post(url, body, axiosConfig);
     // .then(function (response) {
     //   // console.log('response status: ' + response.status);
     //   // do nothing
@@ -96,8 +91,7 @@ export class Autobot {
 
 
   static httpRequestCreateProjectFromDataFile_begin(name, file) {
-
-    const data64 = base64_encode(file)
+    const data64 = base64_encode(file);
 
     const body = getAxiosBodyWithFileData64(name, file, data64);
 
@@ -105,50 +99,44 @@ export class Autobot {
   }
 
   /**
-   * 
-   * @param {Object} body 
+   *
+   * @param {Object} body
    */
   static httpRequestBegin(url, body) {
     const axiosConfig = {
       headers: {
-        'Authorization': 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
+        Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
         'User-Agent': 'Autobot',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
     };
-    return axios.post(url, body, axiosConfig)
+    return axios.post(url, body, axiosConfig);
   }
 
   /**
-   * 
-   * @param {AxiosPromise} axiosPromise 
+   *
+   * @param {AxiosPromise} axiosPromise
    */
   static httpRequestComplete(axiosPromise) {
-
-    //does wait and does print
-    browser.call(function () {
-      return axiosPromise
-        .then(function (response) {
-          // console.log('response status: ' + response.status);
-          // do nothing
-        })
-        .catch(function (error) {
-          throw new Error(error);   //trace is useful this way
-        });
-    });
-
+    // does wait and does print
+    browser.call(() => axiosPromise
+      .then((response) => {
+        // console.log('response status: ' + response.status);
+        // do nothing
+      })
+      .catch((error) => {
+        throw new Error(error); // trace is useful this way
+      }));
   }
+}
 
+/** ****************************** config ************************************ */
 
-};
-
-/******************************** config *************************************/
-
-//@ts-ignore
+// @ts-ignore
 export const options = global.autobotOptions;
 
 
-/******** tools *******/
+/** ****** tools ****** */
 
 // export const livy.style = new class AutobotSyles {
 //   constructor() {
@@ -163,12 +151,12 @@ export const options = global.autobotOptions;
 // /******************************** browser ************************************/
 /**
  * Should this method be in the Page parent class, so that we always make sure all the critical elements have finished loaded first?
- * 
+ *
  * Yeah probably.  You might want to check to see if something exists or not on a fully-loaded page.  Can't always rely on waiting for a given target.
- * 
+ *
  * TODO - move this to Page
- * 
- * @param {String} url 
+ *
+ * @param {String} url
  */
 export function loadPage(url) {
   browser.url(url);

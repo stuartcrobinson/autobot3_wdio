@@ -1,5 +1,7 @@
 // @ts-check
-import { EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton } from '../editData.page';
+import {
+  EditDataPage, EditDataDropdown, nthDropdownButtonCssSelector, nthDropDownOptionFromButton,
+} from '../editData.page';
 
 
 /**

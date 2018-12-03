@@ -1,9 +1,8 @@
 // @ts-check
-import { UiElement } from "../../../../../autobot_framework/support/UiElement";
+import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 
 
-
-export const toast = new class toast extends UiElement {
+export const toast = new class Toast extends UiElement {
   constructor(message) {
     const container = new UiElement('//div[contains(@class, "loaded-message")]');
 
@@ -40,6 +39,6 @@ export const toast = new class toast extends UiElement {
     if (message.includes('"') || message.includes("'")) {
       throw new Error('Apostrophes not yet supported.  This sounds like a good job for you.');
     }
-    return new toast(message);
+    return new Toast(message);
   }
 }();

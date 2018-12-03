@@ -1,6 +1,5 @@
 // @ts-check
-import { UiElement } from "../../../autobot_framework/support/UiElement";
-
+import { UiElement } from '../../../autobot_framework/support/UiElement';
 
 
 /*
@@ -23,16 +22,16 @@ toggle code 10/30/2018:
 export class Toggle extends UiElement {
   /**
    * Toggle selector is the toggle label.  This changes depending on state (on or off).
-   * 
+   *
    * This only works for toggles where the label class includes "is-checked" when checked.  Works for data format editors, but not for Review page.
-   * @param {String} id 
+   * @param {String} id
    */
   constructor(id) {
     super(`[for=${id}]`);
   }
 
   isOn() {
-    return String(this.getWebElement().getAttribute("class")).includes('is-checked');
+    return String(this.getWebElement().getAttribute('class')).includes('is-checked');
   }
 
   turnOn() {

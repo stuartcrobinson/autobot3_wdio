@@ -1,13 +1,14 @@
 // @ts-check
+import { options } from '../../../../../autobot_framework/autobot';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { toast } from '../component/toast.cont';
+/* eslint import/no-cycle: "off" */
 import { dashboardPage } from './dashboard.page';
-import { options } from '../../../../../autobot_framework/autobot';
 
 export const loginPage = new class Login extends WordsmithPage {
   constructor() {
-    super("/");
+    super('/');
     this.emailInput = new UiElement('input.email').tagAsLoadCriterion();
     this.passwordInput = new UiElement('input.password').tagAsLoadCriterion();
     this.logInButton = new UiElement('input[value="Log In"]');
@@ -18,6 +19,7 @@ export const loginPage = new class Login extends WordsmithPage {
     super.nameElements();
   }
 
+  // super.nameElements();
   attemptLogIn(email, password, url) {
     this.load();
     this.emailInput.setValue(email);
@@ -27,7 +29,7 @@ export const loginPage = new class Login extends WordsmithPage {
 
   /** Logs in and waits for Dashboard page to load. */
   logIn(email, password, url) {
-    this.attemptLogIn(email, password, url)
+    this.attemptLogIn(email, password, url);
     dashboardPage.waitForLoad();
   }
 }();

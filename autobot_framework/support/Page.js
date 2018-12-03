@@ -3,12 +3,16 @@ import { UiContainer } from './UiContainer';
 import { UiElement } from './UiElement';
 import { livy } from './Livy';
 
+/** Abstract class */
 export class Page extends UiContainer {
   constructor(baseUrl, urlPath = undefined) {
     if (urlPath && !urlPath.startsWith('/')) {
       throw new Error('urlPath should start with forward slash (/)');
     }
     super();
+    if (this.constructor === Page) {
+      throw new TypeError('Abstract class cannot be instantiated directly.');
+    }
     this.url = baseUrl + (urlPath || '');
     super.setName(this.constructor.name);
   }

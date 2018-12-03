@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { livy } from '../../../../../autobot_framework/support/Livy';
 
@@ -11,18 +11,16 @@ export const createAProjectPage = new class CreateAProject extends WordsmithPage
   }
 
   populateTable() {
-
     livy.logScreenshottedAction([{ text: 'Populate wizard table.', style: livy.style.filler }]);
 
     this.dataInputTable
       .getChildren('.ws-input')
-      .forEach(we => {
+      .forEach((we) => {
+        const id = we.getAttribute('id');
 
-        const id = we.getAttribute("id")
+        this.get(`//*[@id="${id}"]`).click(false);
 
-        this.get('//*[@id="' + id + '"]').click(false);
-
-        this.keys(we.getAttribute("placeholder"), 1, false)
-      })
+        this.keys(we.getAttribute('placeholder'), 1, false);
+      });
   }
 }();
