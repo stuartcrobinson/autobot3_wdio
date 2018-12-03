@@ -116,7 +116,7 @@ class Livy {
     const testParentDateTime = new Date();
 
     this.specMillis = dateFormat(testParentDateTime, 'l');
-    this.specTime = dateFormat(testParentDateTime, 'hh:MM:sstt');
+    this.specTime = dateFormat(testParentDateTime, 'hh:MM:ss.ltt');
     this.specDate = dateFormat(testParentDateTime, 'yyyymmdd');
 
     this.specFilePath = specFile;
@@ -204,7 +204,7 @@ class Livy {
 
   /** one log file per test js file */
   getReportDir() {
-    return `${this.getTimeDir()}/${this.getSpecFileDirName()}__${this.getSpecFileName()}_${this.specMillis}`;
+    return `${this.getTimeDir()}/${this.getSpecFileDirName()}__${this.getSpecFileName()}`;
   }
 
 
@@ -484,7 +484,6 @@ class Livy {
     this.logWithoutPrefix('');
   }
 
-
   logPassed() {
     // @ts-ignore
     const screenshotId = this.logAction2([{ text: 'PASS', style: colors.green.bold }]);
@@ -492,6 +491,8 @@ class Livy {
   }
 
   logFailed(stack) {
+    // @ts-ignore
+    global.specFailed = true;
     // @ts-ignore
     const screenshotId = this.logAction2([{ text: 'FAIL', style: colors.red.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
@@ -542,7 +543,7 @@ class Livy {
 
     this.initialize(this.specFilePath);
     console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
-    fs.appendFileSync(runId, this.reportClickablePath + os.EOL);
+    // fs.appendFileSync(runId, this.reportClickablePath + os.EOL);
   }
 
   wdioConf_beforeTest(test) {
@@ -585,7 +586,9 @@ class Livy {
     this.endNewTestCase();
   }
 
-  wdioConf_afterSuite(err) {
+  wdioConf_afterSuite(err, runId) {
+    // @ts-ignore
+    fs.appendFileSync(runId, (global.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
     if (err) {
       this.wdioConf_afterTest(false, err);
     }

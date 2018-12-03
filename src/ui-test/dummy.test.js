@@ -14,15 +14,15 @@ import { AutobotAssert } from '../../autobot_framework/support/AutobotAssert';
 describe('DummyParent', () => {
   describe('Dummy', () => {
     it('go home', () => {
-      fastWebpage.load();
-      fastWebpage.h2.click();
+      // fastWebpage.load();
+      // fastWebpage.h2.click();
 
-      fastWebpage.checkVisual();
-      fastWebpage.h2.hover();
-      // // @ts-ignore
-      // global.aVisualTestFailed = true;
-      console.log('test 1');
-      AutobotAssert.visualTestsPassed();
+      // fastWebpage.checkVisual();
+      // fastWebpage.h2.hover();
+      // // // @ts-ignore
+      // // global.aVisualTestFailed = true;
+      // console.log('test 1');
+      // AutobotAssert.visualTestsPassed();
 
       // AutobotAssert.visualTestsPassed();
     });
@@ -38,13 +38,13 @@ describe('DummyParent', () => {
     });
 
     it('go home3', () => {
-      fastWebpage.checkVisual();
-      console.log('test 3');
+      // fastWebpage.checkVisual();
+      // console.log('test 3');
 
-      fastWebpage.h2.click();
-      // // @ts-ignore
-      // global.aVisualTestFailed = true;
-      AutobotAssert.visualTestsPassed();
+      // fastWebpage.h2.click();
+      // // // @ts-ignore
+      // // global.aVisualTestFailed = true;
+      // AutobotAssert.visualTestsPassed();
     });
   });
 });

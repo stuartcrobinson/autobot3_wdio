@@ -90,6 +90,8 @@ if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
 }
 
 global.autobotOptions = _options
+console.log("options")
+console.log(_options)
 
 exports.config = {
   //
@@ -125,6 +127,11 @@ exports.config = {
       './src/ui-test/dummy.test.js',
       './src/ui-test/dummy.test.js',
       './src/ui-test/dummy.test.js',
+    ],
+    dummies: [
+      './src/ui-test/dummy1.js',
+      './src/ui-test/dummy2.js',
+      './src/ui-test/dummy3.js',
     ]
   },
   // Patterns to exclude.
@@ -365,7 +372,9 @@ exports.config = {
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy && global.livy.wdioConf_afterSuite(suite.err);
+    console.log("suite woeifosdifsdf")
+    console.log(suite)
+    global.livy && global.livy.wdioConf_afterSuite(suite.err, _options.myRunId);
   },
   /**
    * Runs after a WebdriverIO command gets executed
