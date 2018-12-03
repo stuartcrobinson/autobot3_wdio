@@ -56,13 +56,32 @@ module.exports = {
         let expressionStatements = node.body.body;
 
         if (expressionStatements) {
-          const statementsContainsCheckVisualStatement = expressionStatements.find(es => {
+          // const statementsContainsCheckVisualStatement = expressionStatements.find(es => {
+          //   try {
+          //     return es.expression.callee.property.name === 'checkVisual'
+          //   } catch (err) {
+          //     return false;
+          //   }
+          // });
+
+          let statementsContainsCheckVisualStatement;
+
+          for (let i = 0; i < expressionStatements.length; i++) {
             try {
-              return es.expression.callee.property.name === 'checkVisual'
+              const expressionStatement = expressionStatements[i];
+              if (expressionStatement.expression.callee.property.name === 'checkVisual') {
+                statementsContainsCheckVisualStatement = expressionStatement;
+                break;
+              }
             } catch (err) {
-              return false;
-            }
-          });
+            } finally { }
+          }
+
+
+
+
+
+
           // console.log("statementsContainsCheckVisualStatement")
           // console.log(statementsContainsCheckVisualStatement)
 
