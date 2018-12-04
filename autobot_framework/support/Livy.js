@@ -124,7 +124,11 @@ class Livy {
     fs_extra.mkdirsSync(this.getReportDir());
     fs_extra.mkdirsSync(this.getEventScreenshotsDir());
 
+    // https://www.iconfinder.com/icons/367619/autobot_transformers_icon
     let html = `<!doctype html>
+    <head>
+      <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
+    </head>
     <style>
       body {
         background-color: #f5f5f5
@@ -153,6 +157,18 @@ class Livy {
       .selector-text:hover {
         color: darkgray;
         background-color: azure !important;
+      }
+      .header img {
+        padding-left: 10px;
+        float: left;
+        width: 50px;
+        height: 50px;
+      }
+      
+      .header h1 {
+        position: relative;
+        top: 8px;
+        left: 10px;
       }
     </style>
 
@@ -194,7 +210,14 @@ class Livy {
 
     html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
 
-    html += `<h1>${this.specFilePath}</h1>`;
+
+    html += `
+    <div class="header">
+      <img src="../../../../autobot_icon.svg" alt="logo" />
+      <h1>${this.specFilePath}</h1>
+    </div>`;
+
+    // html += `<h1>${this.specFilePath}</h1>`;
 
     fs.appendFileSync(this.getFile(), html + os.EOL);
   }
@@ -542,7 +565,7 @@ class Livy {
 
   logPassed() {
     // @ts-ignore
-    const screenshotId = this.logAction2([{ text: 'PASS', style: colors.green.bold }]);
+    const screenshotId = this.logAction2([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
@@ -550,7 +573,7 @@ class Livy {
     // @ts-ignore
     global.specFailed = true;
     // @ts-ignore
-    const screenshotId = this.logAction2([{ text: 'FAIL', style: colors.red.bold }]);
+    const screenshotId = this.logAction2([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
 
     this.logReportError(stack);

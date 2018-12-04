@@ -1,6 +1,6 @@
 // @ts-check
-// @ts-check
 import { countBy } from 'lodash';
+import { expect } from 'chai';
 import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
 import { Load } from '../../../../autobot_framework/support/hooks';
 import { livy } from '../../../../autobot_framework/support/Livy';
@@ -10,8 +10,7 @@ import { editSynonymPage } from '../../../ui-model/wordsmith/editor/segmentEdito
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
 import { sidebar } from '../../../ui-model/wordsmith/misc/component/sideBar.cont';
 
-editorPage.segmentWithText('slapjacks').click_waitForChange();
-
+expect(1).to.be.lessThan(50);
 
 // done
 describe('Synonyms:', () => {
@@ -50,53 +49,57 @@ describe('Synonyms:', () => {
     editSynonymPage.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
   });
-  // it('deleting all variations should delete the synonym ', () => {
-  //   editorPage.segmentWithText('pancakes').click_waitForChange();
-  //   editSynonymPage.deleteButton.clickAll();
-  // });
+  it('deleting all variations should delete the synonym ', () => {
+    editorPage.segmentWithText('pancakes').click_waitForChange();
+    editSynonymPage.deleteButton.clickAll_disappearing();
+  });
 
   it('create new from highlighted text', () => {
     const content = 'moar pancakes please';
 
     editorPage.editor.clickAndType(content);
 
-    browser
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft');
+    editorPage.keys('ArrowLeft', 7, 'Shift', 1, 'ArrowLeft', 8, 'Shift', 1);
 
-    browser
-      .keys('Shift')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft')
-      .keys('ArrowLeft');
+    // browser
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft');
 
-    browser
-      .keys('Shift'); // releases shift probably?
+    // browser
+    //   .keys('Shift')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft')
+    //   .keys('ArrowLeft');
+
+    // browser
+    //   .keys('Shift'); // releases shift probably?
 
     editorPage.toolbar.addSynonymButton.click_waitForChange();
 
     editSynonymPage.highlightedPreviewSpan.waitForText('pancakes');
   });
   it('change first synonym', () => {
-    browser
-      .keys('Alt')
-      .keys('Shift')
-      .keys('ArrowLeft')
-      .keys('Delete');
+    editSynonymPage.keys(['Alt', 'Shift', 'ArrowLeft', 'Delete', 'Alt', 'Shift']);
 
-    browser
-      .keys('Alt')
-      .keys('Shift');
+    // browser
+    //   .keys('Alt')
+    //   .keys('Shift')
+    //   .keys('ArrowLeft')
+    //   .keys('Delete');
+
+    // browser
+    //   .keys('Alt')
+    //   .keys('Shift');
 
     editSynonymPage.getNthSynonymBox(1).textInput.clickAndType('slapjacks');
     editSynonymPage.highlightedPreviewSpan.waitForText('slapjacks');
@@ -129,21 +132,25 @@ describe('Synonyms:', () => {
   });
   it('change a different synonym', () => {
     editSynonymPage.getNthSynonymBox(3).textInput.click();
+    editSynonymPage.keys(['Alt', 'ArrowRight', 'Shift', 'ArrowLeft', 'Delete', 'Alt', 'Shift']);
 
-    browser
-      .keys('Alt')
-      .keys('ArrowRight')
-      .keys('Shift')
-      .keys('ArrowLeft')
-      .keys('Delete');
+    // browser
+    //   .keys('Alt')
+    //   .keys('ArrowRight')
+    //   .keys('Shift')
+    //   .keys('ArrowLeft')
+    //   .keys('Delete');
 
-    // releases pressed keys:
-    browser
-      .keys('Alt')
-      .keys('Shift');
+    // // releases pressed keys:
+    // browser
+    //   .keys('Alt')
+    //   .keys('Shift');
 
     editSynonymPage.getNthSynonymBox(3).textInput.clickAndType('hotcakes');
     editSynonymPage.highlightedPreviewSpan.waitForText('hotcakes', 2000);
+    editSynonymPage.toolbar.addSynonymButton.hover();
+    editSynonymPage.checkVisual(header, sidebar.liveChatLink);
+    AutobotAssert.visualTestsPassed();
   });
   it('close segment editor after save and confirm main editor segment text', () => {
     header.savedDiv.waitForExist(10000);
@@ -186,35 +193,20 @@ describe('Synonyms:', () => {
       synonyms = synonyms.concat(reviewPage.getNthSegmentSpan(2).getTexts());
     });
     it('check distribution', () => {
-      livy.logMessage('Confirm reasonable synonym distribution 📊.');
+      livy.logMessage('📊 Confirm reasonable synonym distribution.');
       const counts = countBy(synonyms);
-      try {
-        // TODO do this differnetly. eslint warning:
-        //
-        // /Users/stuartrobinson/repos/autobot/src/ui-test/editor/segment/synonym.test.js
-        // 194:9  error  iterators/generators require regenerator-runtime, which is too heavyweight for this guide to allow them. Separately, loops should be avoided in favor of array iterations  no-restricted-syntax
-        // // @ts-ignore
-        // for (const value of Object.values(counts)) {
-        //   expect(value).to.be.lessThan(50);
-        //   expect(value).to.be.greaterThan(10);
-        // }
-      } catch (err) {
-        livy.logMessage(JSON.stringify(err));
-        throw new Error(`Weird synonym distribution: ${JSON.stringify(counts)}`);
-      }
+      // try {
+      // @ts-ignore
+      Object.values(counts).forEach((value) => {
+        console.log('value awe8fidsfusf');
+        console.log(value);
+        expect(value).to.be.lessThan(50);
+        expect(value).to.be.greaterThan(10);
+      });
+      // } catch (err) {
+      //   livy.logMessage(JSON.stringify(err));
+      //   throw new Error(`Weird synonym distribution: ${JSON.stringify(counts)}`);
+      // }
     });
   });
 });
-
-
-/*
-
-TODO
-
-enter text, select text, insert branch.
-
-1.  create lots of rules and verify output in Review page.
-2.  create deepy nested branches and verify output.
-3.  create a branch with a synonym and verify.
-
-*/

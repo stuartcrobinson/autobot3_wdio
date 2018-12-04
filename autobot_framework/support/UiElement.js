@@ -212,20 +212,20 @@ export class UiElement extends UiContainer {
     }
   }
 
-  clickAllToRemove() {
+  /**
+   * Clicks each instance of the given webelement assuming it disappears upon click.
+   */
+  clickAll_disappearing() {
     this.logAndWait2([
       { text: '👇 ', style: livy.style.emoji },
-      { text: 'Click all instances of ', style: livy.style.verb },
+      { text: 'Click to remove all instances of ', style: livy.style.verb },
       { text: `${this.stuartname} `, style: livy.style.object },
       { text: this.selector, style: livy.style.selector },
     ]);
-    browser.click(this.selector);
+    this.click_waitForChange('//body', false);
 
     while (this.isExisting()) {
-      // TODO start here - writing this to click all delete buttons in branch variations to close all - but proabbly stupid.  shouldn't expose this to all UiElements.  just put this in EditBranch.comp.js
-
-
-      this.click_waitForChange();
+      this.click_waitForChange('//body', false);
     }
   }
 
