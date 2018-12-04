@@ -1,3 +1,4 @@
+// @ts-check
 import { options } from '../../../../../autobot_framework/autobot';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';

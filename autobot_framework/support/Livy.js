@@ -150,8 +150,47 @@ class Livy {
       a:hover {
         text-decoration: underline;
       }
+      .selector-text:hover {
+        color: darkgray;
+        background-color: azure !important;
+      }
     </style>
+
+    <script>
+    function dblclickSelectorSpan(e) {
+      e.firstElementChild.style.display = 'none';
+      e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+      e.lastElementChild.style.display = 'inline';
+      // e.lastElementChild.focus();
+      e.lastElementChild.select();
+    }
+    function blurSelectorInput(e) {
+      e.style.display = 'none';
+      e.parentElement.firstElementChild.style.display = 'inline';
+    }
+  </script>
     ${os.EOL}`;
+
+
+    //   <script>
+    //   function dblclickSelectorSpan(e) {
+    //     e.firstElementChild.style.display = 'none';
+    //     e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+    //     e.lastElementChild.style.display = 'inline';
+    //     e.lastElementChild.focus();
+    //   }
+    //   function blurSelectorInput(e) {
+    //     e.style.display = 'none';
+    //     e.parentElement.firstElementChild.style.display = 'inline';
+    //   }
+    // </script>
+
+
+    // <span id="asdf" style="color:#C8C8C8;font-family: monospace;" ondblclick="dblclickSelectorSpan(this);">
+    //   <span id='sup'>//body</span>
+    //   <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='//body'>
+    // </span>
+
 
     html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
 
@@ -365,6 +404,17 @@ class Livy {
           style = this.style.object;
         }
 
+
+        // <span id="asdf" style="color:#C8C8C8;font-family: monospace;" ondblclick="dblclickSelectorSpan(this);">
+        //   <span id='sup'>//body</span>
+        //   <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='//body'>
+        // </span>
+
+
+        // if (style === this.style.selector) {
+        //   message = message.replace(/[^\s]/g, '•');
+        //   style = this.style.object;
+        // }
         const htmlStyle = convertNpmColorsToCss(style);
 
         if (!style) {
@@ -377,6 +427,12 @@ class Livy {
 
         if (message.startsWith('http')) {
           htmlBuilder += `<span style="${htmlStyle}"><a href=${message}>${entities.encode(message)}</a></span>`;
+        } else if (!message.startsWith(' excluding') && (style === this.style.selector || style === this.style.selector_red)) {
+          htmlBuilder += `
+          <span style="${htmlStyle};font-family: monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>${entities.encode(message)}</span>
+              <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='${entities.encode(message)}'>
+          </span>`;
         } else {
           htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
         }
