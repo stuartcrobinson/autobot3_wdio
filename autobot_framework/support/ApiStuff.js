@@ -57,6 +57,53 @@ export function httpRequestCreateProjectFromDataFile_begin_and_complete(name, fi
 }
 
 
+function getAxiosBodyWithDataObject(projectName, projectData) {
+  return {
+    data: {
+      name: projectName,
+      dataset: {
+        format: 'json',
+        data: projectData,
+      },
+    },
+  };
+}
+
+export function httpRequestCreateProjectFromDataObject_begin_and_complete(name, data) {
+  // const data64 = base64_encode(file);
+
+  const body = getAxiosBodyWithDataObject(name, data);
+
+  // return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
+
+  // const body = getAxiosBodyWithFileData64(name, file, data64);
+
+  const url = 'https://api.automatedinsights.com/v1.8/projects';
+
+  if (!options.wsApiKey) {
+    // @ts-ignore
+    options.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
+    // options.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
+  }
+
+  const axiosConfig = {
+    headers: {
+      Authorization: `Bearer ${options.wsApiKey}`,
+      // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
+      'User-Agent': 'Autobot',
+      'Content-Type': 'application/json',
+    },
+  };
+  axios.post(url, body, axiosConfig).then((response) => {
+    // console.log('response status: ' + response.status);
+    // do nothing
+  })
+    .catch((error) => {
+      throw new Error(error); // trace is useful this way
+    });
+}
+
+
 export function httpRequestCreateProjectFromDataFile_begin(name, file) {
   const data64 = base64_encode(file);
 

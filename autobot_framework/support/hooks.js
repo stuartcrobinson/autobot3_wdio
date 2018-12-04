@@ -4,9 +4,9 @@ import { editorPage } from '../../src/ui-model/wordsmith/editor/editor.page';
 import { loginPage } from '../../src/ui-model/wordsmith/misc/page/login.page';
 import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page';
 import { Autobot, options } from '../autobot';
-import { Page } from './Page';
+import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from './ApiStuff';
 import { livy } from './Livy';
-import { httpRequestCreateProjectFromDataFile_begin_and_complete, httpRequestCreateProjectFromDataFile_begin, httpRequestComplete } from './ApiStuff';
+import { Page } from './Page';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -29,22 +29,17 @@ export class Load {
   }
 
   static newTemplateEditor(data = defaultDataForApi) {
-    try {
-      // throw new Error('dummy error');
-      const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
-      loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
-      livy.logAction2([
-        { text: '☁️  ', style: livy.style.emoji },
-        { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
-      httpRequestCreateProjectFromDataFile_begin_and_complete(projectName, data);
+    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
+    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    livy.logAction2([
+      { text: '☁️  ', style: livy.style.emoji },
+      { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
+    httpRequestCreateProjectFromDataObject_begin_and_complete(projectName, data);
 
-      // browser.url(Autobot.getProjectUrlFromName(projectName));
-      Page.load(Autobot.getProjectUrlFromName(projectName));
-      projectPage.createNewTemplateButton.click_waitForNotExisting();
-      assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
-    } catch (error) {
-      throw new Error(error); // improves logging ?
-    }
+    // browser.url(Autobot.getProjectUrlFromName(projectName));
+    Page.load(Autobot.getProjectUrlFromName(projectName));
+    projectPage.createNewTemplateButton.click_waitForNotExisting();
+    assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
   }
 
   static newTemplateEditorUsingDataFile(file) {

@@ -77,6 +77,7 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
 
 class Livy {
   constructor() {
+    console.log('livy constructor');
     // @ts-ignore
     const options = global.autobotOptions;
 
@@ -103,6 +104,8 @@ class Livy {
     // console.log(doSaveEventScreenshots);
     this.screenshotTargetName = undefined;
     this.screenshotTargetSelector = undefined;
+    // console.log('specFailed = false in constructor!!!!!');
+    this.specFailed = false;
   }
 
   /**
@@ -569,9 +572,31 @@ class Livy {
     this.setMouseoverEventScreenshotFunction(screenshotId);
   }
 
+
+  logReportFileToHackyFileIfNotWrittenYet(resultIcon) {
+    let fileText = '';
+    try {
+      fileText = fs.readFileSync(this.runId).toString();
+    } catch {
+      // do nothing
+    } finally {
+      console.log(`filetext: ${fileText}`);
+      if (!fileText.includes(this.reportClickablePath)) {
+        console.log(`writing ${resultIcon} to file`);
+
+        fs.appendFileSync(this.runId, `${resultIcon} ${this.reportClickablePath}${os.EOL}`);
+      }
+    }
+  }
+
   logFailed(stack) {
-    // @ts-ignore
-    global.specFailed = true;
+    console.log('specFailed = true in logFailed!!!!!');
+    this.specFailed = true;
+
+    // this.logReportFileToHackyFileIfNotWrittenYet('❌');
+
+    // fs.appendFileSync(this.runId, (this.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
+
     // @ts-ignore
     const screenshotId = this.logAction2([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
     this.setMouseoverEventScreenshotFunction(screenshotId);
@@ -619,6 +644,7 @@ class Livy {
     this.testParentTitle = suite.parent;
     this.testCaseFullTitle = suite.fullTitle;
     this.testGrandparentsTitle = undefined;
+    this.runId = runId;
 
     this.initialize(this.specFilePath);
     console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
@@ -641,6 +667,10 @@ class Livy {
 
   /** called from wdio.conf.js */
   wdioConf_afterSession(configTimestamp) {
+    // this.logReportFileToHackyFileIfNotWrittenYet(this.specFailed ? '❌ ' : '✅ ');
+
+    fs.appendFileSync(this.runId, `${this.specFailed ? '❌ ' : '✅ '} ${this.reportClickablePath}${os.EOL}`);
+
     // so you can scroll code up so the screenshot isn't blocking it
     for (let i = 0; i < 30; i++) {
       this.logRawToHtml('</br>');
@@ -666,8 +696,13 @@ class Livy {
   }
 
   wdioConf_afterSuite(err, runId) {
-    // @ts-ignore
-    fs.appendFileSync(runId, (global.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
+    // console.log(`wdioConf_afterSuite specFailed = ${this.specFailed}`);
+    // console.log(`wdioConf_afterSuite specFailed = ${this.specTime}`);
+
+
+    // this.logReportFileToHackyFileIfNotWrittenYet(this.specFailed ? '❌ ' : '✅ ');
+
+    // fs.appendFileSync(runId, (this.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
     if (err) {
       this.wdioConf_afterTest(false, err);
     }
