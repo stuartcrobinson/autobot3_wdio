@@ -3,13 +3,13 @@
 
 import { fastWebpage } from '../ui-model/misc/fastWebpage.page';
 import { editBranchPage } from '../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
-import { key } from '../../autobot_framework/support/Key';
+import { key } from '../../aqua/support/Key';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
-import { options } from '../../autobot_framework/autobot';
-import { livy } from '../../autobot_framework/support/Livy';
-import { UiElement } from '../../autobot_framework/support/UiElement';
+import { options } from '../../aqua/aqua';
+import { livy } from '../../aqua/support/Livy';
+import { UiElement } from '../../aqua/support/UiElement';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
-import { AutobotAssert } from '../../autobot_framework/support/AutobotAssert';
+import { AquaAssert } from '../../aqua/support/AquaAssert';
 
 describe('DummyParent', () => {
   describe('Dummy', () => {
@@ -22,9 +22,9 @@ describe('DummyParent', () => {
       // // // @ts-ignore
       // // global.aVisualTestFailed = true;
       // console.log('test 1');
-      // AutobotAssert.visualTestsPassed();
+      // AquaAssert.visualTestsPassed();
 
-      // AutobotAssert.visualTestsPassed();
+      // AquaAssert.visualTestsPassed();
     });
 
     it('go home2', () => {
@@ -34,7 +34,7 @@ describe('DummyParent', () => {
 
       fastWebpage.h2.hover();
       console.log('test 2');
-      AutobotAssert.visualTestsPassed();
+      AquaAssert.visualTestsPassed();
     });
 
     it('go home3', () => {
@@ -44,7 +44,7 @@ describe('DummyParent', () => {
       // fastWebpage.h2.click();
       // // // @ts-ignore
       // // global.aVisualTestFailed = true;
-      // AutobotAssert.visualTestsPassed();
+      // AquaAssert.visualTestsPassed();
     });
   });
 });

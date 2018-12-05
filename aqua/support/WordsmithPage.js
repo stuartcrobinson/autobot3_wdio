@@ -1,5 +1,5 @@
 // @ts-check
-import { options } from '../autobot';
+import { options } from '../aqua';
 import { Page } from './Page';
 
 // TODO https://autoin.atlassian.net/browse/QS-396 add url paths to existing static-path-page page objects

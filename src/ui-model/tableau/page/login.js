@@ -1,5 +1,5 @@
 // @ts-check
-import { Page } from '../../../../autobot_framework/support/Page';
+import { Page } from '../../../../aqua/support/Page';
 
 // @ts-check
 

@@ -1,5 +1,5 @@
 // @ts-check
-import { UiElement } from '../../../../../autobot_framework/support/UiElement';
+import { UiElement } from '../../../../../aqua/support/UiElement';
 
 export const modal = new class Modal extends UiElement {
   constructor() {

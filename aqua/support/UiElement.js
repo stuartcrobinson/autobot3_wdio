@@ -397,7 +397,7 @@ export class UiElement extends UiContainer {
    *
    * @param {Number} timoutMillis
    */
-  waitForText(text, timoutMillis = 1000) {
+  waitForText(text, timoutMillis = 2000) {
     super.waitForLoad();
     const screenshotId = livy.logAction2([
       { text: '🤔 ', style: livy.style.emoji },
@@ -407,13 +407,24 @@ export class UiElement extends UiContainer {
       { text, style: livy.style.object },
       { text: ` ${this.selector}`, style: livy.style.selector }]);
 
+    let actual;
+    let expected;
     try {
       this.waitForExist();
       browser.waitUntil(() => this.getWebElement().getText() === text, timoutMillis);
+
+      actual = this.getWebElement().getText();
+      expected = text;
+
+      const initTime = new Date().getMilliseconds();
+      while (actual !== expected && new Date().getMilliseconds() - initTime < timoutMillis) {
+        browser.pause(100);
+        actual = this.getWebElement().getText();
+      }
     } catch (err) {
       console.log('original error:');
       console.log(err);
-      throw new Error(`Element "${this.stuartname}"'s text is "${this.getWebElement().getText()}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
+      throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
     }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }

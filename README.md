@@ -8,7 +8,7 @@ HOW TO RUN:
 then
 
 
-``npm run wdio -- --spec src/ui-test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com --noPics``
+``npm run wdio -- --spec src/ui-test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com``
 
 
 OR
@@ -26,7 +26,7 @@ OR
 
 ``--notHeadless`` defaults to false - set this flag to force autobot to load a visible
 
-``--wsApiKey asdifuayiefewfiuhdkfhsdf`` if you don't give it your api key, it will grab it from the api_access page which will slow the tests down
+``--wsApiKey <your api key>`` if you don't give it your api key, it will grab it from the api_access page which will slow the tests down
 
 ``--hidePassword``  this will hide all passwords in the console and logs.  by default, only prod passwords are hidden.
 
@@ -50,7 +50,7 @@ implementing in autobot eslint plugin
 * X  all files must start with //@ts-check (handled with eslint)
 *  do NOT use chai.assert - too easy to mistakenly code: `assert(x)`
 *  actually, don't `assert` at all.  each step should fail-fast. asserts are pointless clutter
-* X tests including visual tests must end with AutobotAssert.visualTestsPassed() - this creates soft asserts for visual testing.  (handled with eslint)
+* X tests including visual tests must end with AquaAssert.visualTestsPassed() - this creates soft asserts for visual testing.  (handled with eslint)
 
 
 notes:

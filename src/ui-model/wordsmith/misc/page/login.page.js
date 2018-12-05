@@ -1,7 +1,7 @@
 // @ts-check
-import { options } from '../../../../../autobot_framework/autobot';
-import { UiElement } from '../../../../../autobot_framework/support/UiElement';
-import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
+import { options } from '../../../../../aqua/aqua';
+import { UiElement } from '../../../../../aqua/support/UiElement';
+import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
 import { toast } from '../component/toast.cont';
 import { dashboardPage } from './dashboard.page';
 

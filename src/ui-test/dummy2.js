@@ -1,5 +1,5 @@
 // @ts-check
-import { livy } from '../../autobot_framework/support/Livy';
+import { livy } from '../../aqua/support/Livy';
 
 describe('DummyParent2', () => {
   describe('Dummy2', () => {

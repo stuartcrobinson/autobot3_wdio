@@ -1,7 +1,7 @@
 // @ts-check
 import axios from 'axios';
 import fs from 'fs';
-import { options } from '../autobot';
+import { options } from '../aqua';
 import { apiAccessPage } from '../../src/ui-model/wordsmith/misc/page/apiAccess';
 
 

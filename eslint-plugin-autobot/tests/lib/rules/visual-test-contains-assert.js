@@ -35,7 +35,7 @@ ruleTester.run("visual-test-contains-assert", rule, {
   
         fastWebpage.h2.hover();
         console.log('test 2');
-        AutobotAssert.visualTestsPassed();
+        AquaAssert.visualTestsPassed();
       });
   `
     }

@@ -1,5 +1,6 @@
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
+var glob = require("glob")
 
 // // beforeEach(function () {
 // //   currentTest = this.currentTest;
@@ -91,6 +92,27 @@ if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
 
 global.autobotOptions = _options
 
+console.log("_options  9a8duf9a8sdf")
+console.log(_options)
+
+
+function getArray(str, n) {
+  return Array(n).fill(str)
+}
+
+function buildSpecsArray(f, n = 1) {
+
+  let specsArray = f.trim().split(/[ ,]+/);
+  let specsArrayAtom = f.trim().split(/[ ,]+/);
+
+  for (let i = 1; i < n; i++){
+    specsArray = specsArray.concat(specsArrayAtom);
+  }
+
+  return specsArray;
+}
+
+
 exports.config = {
   //
   // ==================
@@ -122,15 +144,20 @@ exports.config = {
       './src/ui-test/editor/segment/branch.test.js'
     ],
     dummy: [
-      './src/ui-test/dummy.test.js',
-      './src/ui-test/dummy.test.js',
+      'src/ui-test/dummy.test.js',
+      'src/ui-test/dummy.test.js',
       './src/ui-test/dummy.test.js',
     ],
     dummies: [
       './src/ui-test/dummy1.js',
       './src/ui-test/dummy2.js',
       './src/ui-test/dummy3.js',
-    ]
+    ],
+    dummies2: [
+      './src/ui-test/dummy*.js'
+    ],
+    many: getArray(_options.manySpec, _options.nRuns),
+    dev: buildSpecsArray(_options.s, _options.n)
   },
   // Patterns to exclude.
   exclude: [

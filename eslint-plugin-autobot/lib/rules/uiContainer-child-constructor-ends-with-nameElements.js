@@ -144,13 +144,13 @@ module.exports = {
         //     if (statementsContainsCheckVisualStatement && !statementsEndsWithVisualTestAssert) {
 
         //       context.report({
-        //         message: "test with visual test must end with AutobotAssert.visualTestsPassed()",
+        //         message: "test with visual test must end with AquaAssert.visualTestsPassed()",
         //         // node: Program,
         //         loc: {
         //           start: lastStatement.start,
         //           end: lastStatement.end,
         //         },
-        //         fix: fixer => fixer.replaceTextRange([lastStatement.end, lastStatement.end], os.EOL + 'AutobotAssert.visualTestsPassed();' + os.EOL),
+        //         fix: fixer => fixer.replaceTextRange([lastStatement.end, lastStatement.end], os.EOL + 'AquaAssert.visualTestsPassed();' + os.EOL),
         //       });
 
         //     }

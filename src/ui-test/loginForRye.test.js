@@ -1,6 +1,6 @@
 // @ts-check
 import assert from 'assert';
-import { options } from '../../autobot_framework/autobot';
+import { options } from '../../aqua/aqua';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
 import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';
 

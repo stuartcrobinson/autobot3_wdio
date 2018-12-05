@@ -1,7 +1,7 @@
 // @ts-check
 import countBy from 'lodash';
-import { UiElement } from '../../../../autobot_framework/support/UiElement';
-import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
+import { UiElement } from '../../../../aqua/support/UiElement';
+import { WordsmithPage } from '../../../../aqua/support/WordsmithPage';
 
 
 class NarrativeDiv extends UiElement {
@@ -39,7 +39,7 @@ export const reviewPage = new class Review extends WordsmithPage {
 
     this.renderHtmlToggle = getNthToggle(1).tagAsLoadCriterion();
     this.randomizeRowsToggle = getNthToggle(2).tagAsLoadCriterion();
-    this.variabilityHeatmapToggle = getNthToggle(3).tagAsLoadCriterion();
+    this.variabilityHeatmapToggle = getNthToggle(3);
 
     this.generate50NewRowsLink = new UiElement('h2 a');
 

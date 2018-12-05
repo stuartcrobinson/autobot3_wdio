@@ -1,6 +1,6 @@
 // @ts-check
 import { loginPage } from '../page/login.page';
-import { UiElement } from '../../../../../autobot_framework/support/UiElement';
+import { UiElement } from '../../../../../aqua/support/UiElement';
 
 class SettingsDropdownComp extends UiElement {
   constructor() {
@@ -30,7 +30,7 @@ export const sidebar = new class SideBarComp extends UiElement {
     this.settingsLink = this.get("//*[*='settings']");
 
     /** only in Editor sidebar.  clean up sidebars organization? */
-    // this.review = this.getChild('//a[@data-for="Review"]');
+    // this.review = this.get('//a[@data-for="Review"]');
 
     this.dataLink = this.get("//*[*='grid_on']");
     this.writeLinke = this.get("//*[*='mode_edit']");

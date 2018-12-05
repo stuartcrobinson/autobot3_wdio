@@ -1,9 +1,9 @@
 // @ts-check
 import { countBy } from 'lodash';
 import { expect } from 'chai';
-import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
-import { Load } from '../../../../autobot_framework/support/hooks';
-import { livy } from '../../../../autobot_framework/support/Livy';
+import { AquaAssert } from '../../../../aqua/support/AquaAssert';
+import { Load } from '../../../../aqua/support/hooks';
+import { livy } from '../../../../aqua/support/Livy';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { reviewPage } from '../../../ui-model/wordsmith/editor/review.page';
 import { editSynonymPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.page';
@@ -47,7 +47,7 @@ describe('Synonyms:', () => {
   it('main editor should display first synonym', () => {
     header.savedDiv.waitForExist(10000);
     editSynonymPage.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
   });
   it('deleting all variations should delete the synonym ', () => {
     editorPage.segmentWithText('pancakes').click_waitForChange();
@@ -150,7 +150,7 @@ describe('Synonyms:', () => {
     editSynonymPage.highlightedPreviewSpan.waitForText('hotcakes', 2000);
     editSynonymPage.toolbar.addSynonymButton.hover();
     editSynonymPage.checkVisual(header, sidebar.liveChatLink);
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.visualTestsPassed();
   });
   it('close segment editor after save and confirm main editor segment text', () => {
     header.savedDiv.waitForExist(10000);
@@ -160,7 +160,7 @@ describe('Synonyms:', () => {
 
   describe('Confirm random synonym distribution in review', () => {
     it('click Review tab', () => {
-      sidebar.reviewLink.click_waitForChange();
+      editorPage.sidebar.reviewLink.click_waitForChange();
       reviewPage.showAllLink.click_waitForChange();
     });
 

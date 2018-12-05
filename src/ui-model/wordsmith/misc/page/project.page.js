@@ -1,6 +1,6 @@
 // @ts-check
-import { UiElement } from '../../../../../autobot_framework/support/UiElement';
-import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
+import { UiElement } from '../../../../../aqua/support/UiElement';
+import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
 
 
 export const projectPage = new class Project extends WordsmithPage {
@@ -14,6 +14,11 @@ export const projectPage = new class Project extends WordsmithPage {
     /** Only present in projects with no templates. */
     this.createNewTemplateButton = new UiElement('//*[@*="empty-table"]//button');
 
+
     super.nameElements();
+  }
+
+  getNthTemplateLink(n) {
+    return this.get(`.table-row.clickable:nth-of-type(${n})`).setName(`Template Row ${n}`);
   }
 }();

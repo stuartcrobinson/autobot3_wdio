@@ -1,8 +1,8 @@
 // @ts-check
-import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
-import { Load } from '../../../../autobot_framework/support/hooks';
-import { key } from '../../../../autobot_framework/support/Key';
-import { livy } from '../../../../autobot_framework/support/Livy';
+import { AquaAssert } from '../../../../aqua/support/AquaAssert';
+import { Load } from '../../../../aqua/support/hooks';
+import { key } from '../../../../aqua/support/Key';
+import { livy } from '../../../../aqua/support/Livy';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { editBranchPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
@@ -17,7 +17,7 @@ describe('Branches:', () => {
     editBranchPage.checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(1).trashButton.click_waitForNotExisting(); // test trash icon for single rule
     editorPage.waitForLoad();
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.visualTestsPassed();
   });
 
   it('create and delete a new rule', () => {
@@ -27,7 +27,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(2).conditionLabel.click();
     editBranchPage.scrollUp().checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(2).trashButton.click_waitForNotExisting();
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.visualTestsPassed();
   });
 
   it('fill out first rule', () => {
@@ -38,7 +38,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).elipsisDropdown_AddDescription.click_waitForNotExisting();
     editBranchPage.keys('Dangerously cheesy ™');
     editBranchPage.getNthBranchBox(1).descriptionSpan.waitForText('Dangerously cheesy ™');
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.visualTestsPassed();
   });
 
   it('add and fill out another rule - preview should update', () => {
@@ -96,7 +96,7 @@ describe('Branches:', () => {
   it('editor should show top rule text after waiting for save and closing', () => {
     header.savedDiv.waitForExist(10000);
     editBranchPage.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
   });
 
   it('open new branch from highlighted text', () => {
@@ -146,7 +146,7 @@ describe('Branches:', () => {
     // modal.checkVisual();
     // new UiElement('.modal-dialog').checkVisual();
     modal.yesButton.click_waitForNotExisting();
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.visualTestsPassed();
   });
 
   it('edited invalid branch text should be visible in editor after closing modal', () => {

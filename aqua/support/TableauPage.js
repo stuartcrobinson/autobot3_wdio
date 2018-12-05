@@ -1,6 +1,6 @@
 // @ts-check
-import { options } from '../autobot';
 import { Page } from './Page';
+import { options } from '../aqua';
 
 export class TableauPage extends Page {
   constructor(urlPath) {

@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
+import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
 
 export const apiAccessPage = new class ApiAccess extends WordsmithPage {
   constructor() {

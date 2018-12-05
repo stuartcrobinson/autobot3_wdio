@@ -1,7 +1,7 @@
 // @ts-check
-import { AutobotAssert } from '../../../../autobot_framework/support/AutobotAssert';
-import { Load } from '../../../../autobot_framework/support/hooks';
-import { key } from '../../../../autobot_framework/support/Key';
+import { AquaAssert } from '../../../../aqua/support/AquaAssert';
+import { Load } from '../../../../aqua/support/hooks';
+import { key } from '../../../../aqua/support/Key';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { editDataBooleanPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.page';
 import { editDataDatePage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataDate.page';
@@ -43,11 +43,11 @@ describe('Format and insert data var of type', () => {
     editDataNumberPage.highlightedPreviewSpan.waitForText('10 000,00', 2000);
     editDataNumberPage.toggle_stripTrailingZeros.click();
     editDataNumberPage.highlightedPreviewSpan.waitForText('10 000', 2000);
-    editDataNumberPage.checkVisual(header, sidebar);
+    editDataNumberPage.segmentContainer.checkVisual();
     header.savedDiv.waitForExist(10000);
     editDataNumberPage.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 
   it('Text', () => {
@@ -55,33 +55,33 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option1.click();
 
-    const comp = editDataTextPage;
+    const page = editDataTextPage;
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.keepAsIs.click();
-    comp.highlightedPreviewSpan.waitForText('anneau du Vic-Bilh');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.keepAsIs.click();
+    page.highlightedPreviewSpan.waitForText('anneau du Vic-Bilh');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.firstWord.click();
-    comp.highlightedPreviewSpan.waitForText('Anneau du Vic-Bilh');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.firstWord.click();
+    page.highlightedPreviewSpan.waitForText('Anneau du Vic-Bilh');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.eachWord.click();
-    comp.highlightedPreviewSpan.waitForText('Anneau Du Vic-bilh');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.eachWord.click();
+    page.highlightedPreviewSpan.waitForText('Anneau Du Vic-bilh');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.eachLetter.click();
-    comp.highlightedPreviewSpan.waitForText('ANNEAU DU VIC-BILH');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.eachLetter.click();
+    page.highlightedPreviewSpan.waitForText('ANNEAU DU VIC-BILH');
 
-    comp.dropdown_capitalization.click();
-    comp.checkVisual(header, sidebar);
-    comp.dropdown_capitalization.noLetters.click();
-    comp.highlightedPreviewSpan.waitForText('anneau du vic-bilh');
+    page.dropdown_capitalization.click();
+    page.segmentContainer.checkVisual();
+    page.dropdown_capitalization.noLetters.click();
+    page.highlightedPreviewSpan.waitForText('anneau du vic-bilh');
 
     header.savedDiv.waitForExist(10000);
-    comp.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    page.doneButton.click_waitForNotExisting();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 
   it('True/False', () => {
@@ -89,33 +89,33 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option4.click();
 
-    const comp = editDataBooleanPage;
+    const page = editDataBooleanPage;
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.keepAsIs.click();
-    comp.highlightedPreviewSpan.waitForText('true');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.keepAsIs.click();
+    page.highlightedPreviewSpan.waitForText('true');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.firstWord.click();
-    comp.highlightedPreviewSpan.waitForText('True');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.firstWord.click();
+    page.highlightedPreviewSpan.waitForText('True');
 
-    comp.dropdown_capitalization.click();
-    comp.checkVisual(header, sidebar);
-    comp.dropdown_capitalization.eachWord.click();
-    comp.highlightedPreviewSpan.waitForText('True');
+    page.dropdown_capitalization.click();
+    page.segmentContainer.checkVisual();
+    page.dropdown_capitalization.eachWord.click();
+    page.highlightedPreviewSpan.waitForText('True');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.noLetters.click();
-    comp.highlightedPreviewSpan.waitForText('true');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.noLetters.click();
+    page.highlightedPreviewSpan.waitForText('true');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.eachLetter.click();
-    comp.highlightedPreviewSpan.waitForText('TRUE');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.eachLetter.click();
+    page.highlightedPreviewSpan.waitForText('TRUE');
 
     header.savedDiv.waitForExist(10000);
-    comp.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'TRUE', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    page.doneButton.click_waitForNotExisting();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'TRUE', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 
 
@@ -124,89 +124,89 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option3.click();
 
-    const comp = editDataListPage;
+    const page = editDataListPage;
 
-    comp.highlightedPreviewSpan.waitForText('one, Two, and tHREE');
+    page.highlightedPreviewSpan.waitForText('one, Two, and tHREE');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.keepAsIs.click();
-    comp.highlightedPreviewSpan.waitForText('one, Two, and tHREE');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.keepAsIs.click();
+    page.highlightedPreviewSpan.waitForText('one, Two, and tHREE');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.firstWord.click();
-    comp.highlightedPreviewSpan.waitForText('One, Two, and tHREE');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.firstWord.click();
+    page.highlightedPreviewSpan.waitForText('One, Two, and tHREE');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.eachWord.click();
-    comp.highlightedPreviewSpan.waitForText('One, Two, and Three');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.eachWord.click();
+    page.highlightedPreviewSpan.waitForText('One, Two, and Three');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.eachLetter.click();
-    comp.highlightedPreviewSpan.waitForText('ONE, TWO, AND THREE');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.eachLetter.click();
+    page.highlightedPreviewSpan.waitForText('ONE, TWO, AND THREE');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization.noLetters.click();
-    comp.highlightedPreviewSpan.waitForText('one, two, and three');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization.noLetters.click();
+    page.highlightedPreviewSpan.waitForText('one, two, and three');
 
-    comp.dropdown_conjunction.click();
-    comp.dropdown_conjunction.none.click();
-    comp.highlightedPreviewSpan.waitForText('one, two, three');
+    page.dropdown_conjunction.click();
+    page.dropdown_conjunction.none.click();
+    page.highlightedPreviewSpan.waitForText('one, two, three');
 
-    comp.dropdown_conjunction.click();
-    comp.dropdown_conjunction.and.click();
-    comp.highlightedPreviewSpan.waitForText('one, two, and three');
+    page.dropdown_conjunction.click();
+    page.dropdown_conjunction.and.click();
+    page.highlightedPreviewSpan.waitForText('one, two, and three');
 
-    comp.toggle_oxfordComma.turnOff();
-    comp.highlightedPreviewSpan.waitForText('one, two and three');
+    page.toggle_oxfordComma.turnOff();
+    page.highlightedPreviewSpan.waitForText('one, two and three');
 
-    comp.toggle_oxfordComma.turnOn();
-    comp.highlightedPreviewSpan.waitForText('one, two, and three');
+    page.toggle_oxfordComma.turnOn();
+    page.highlightedPreviewSpan.waitForText('one, two, and three');
 
-    comp.dropdown_conjunction.click();
-    comp.dropdown_conjunction.or.click();
-    comp.highlightedPreviewSpan.waitForText('one, two, or three');
+    page.dropdown_conjunction.click();
+    page.dropdown_conjunction.or.click();
+    page.highlightedPreviewSpan.waitForText('one, two, or three');
 
-    comp.toggle_oxfordComma.turnOff();
-    comp.highlightedPreviewSpan.waitForText('one, two or three');
+    page.toggle_oxfordComma.turnOff();
+    page.highlightedPreviewSpan.waitForText('one, two or three');
 
-    comp.toggle_oxfordComma.turnOn();
-    comp.highlightedPreviewSpan.waitForText('one, two, or three');
+    page.toggle_oxfordComma.turnOn();
+    page.highlightedPreviewSpan.waitForText('one, two, or three');
 
-    comp.dropdown_listSettings.click();
-    comp.dropdown_listSettings.first.click();
-    comp.highlightedPreviewSpan.waitForText('one');
+    page.dropdown_listSettings.click();
+    page.dropdown_listSettings.first.click();
+    page.highlightedPreviewSpan.waitForText('one');
 
-    comp.subsetLimit.click();
-    comp.keys(key.LEFT); // left
-    comp.keys('2');
-    comp.keys(key.DELETE); // delete
-    comp.highlightedPreviewSpan.waitForText('one or two');
+    page.subsetLimit.click();
+    page.keys(key.LEFT); // left
+    page.keys('2');
+    page.keys(key.DELETE); // delete
+    page.highlightedPreviewSpan.waitForText('one or two');
 
-    comp.dropdown_listSettings.click();
-    comp.dropdown_listSettings.last.click();
-    comp.highlightedPreviewSpan.waitForText('two or three');
+    page.dropdown_listSettings.click();
+    page.dropdown_listSettings.last.click();
+    page.highlightedPreviewSpan.waitForText('two or three');
 
-    comp.dropdown_listSettings.click();
-    comp.dropdown_listSettings.nth.click();
-    comp.highlightedPreviewSpan.waitForText('two');
+    page.dropdown_listSettings.click();
+    page.dropdown_listSettings.nth.click();
+    page.highlightedPreviewSpan.waitForText('two');
 
-    comp.dropdown_listSettings.click();
-    comp.dropdown_listSettings.sort.click();
-    comp.highlightedPreviewSpan.waitForText('three');
+    page.dropdown_listSettings.click();
+    page.dropdown_listSettings.sort.click();
+    page.highlightedPreviewSpan.waitForText('three');
 
-    comp.dropdown_sortedCutoff.click();
-    comp.dropdown_sortedCutoff.none.click();
-    comp.highlightedPreviewSpan.waitForText('one, three, or two');
+    page.dropdown_sortedCutoff.click();
+    page.dropdown_sortedCutoff.none.click();
+    page.highlightedPreviewSpan.waitForText('one, three, or two');
 
-    comp.dropdown_ascendingDescending.click();
-    comp.checkVisual(header, sidebar);
-    comp.dropdown_ascendingDescending.descending.click();
-    comp.highlightedPreviewSpan.waitForText('two, three, or one');
+    page.dropdown_ascendingDescending.click();
+    page.segmentContainer.checkVisual();
+    page.dropdown_ascendingDescending.descending.click();
+    page.highlightedPreviewSpan.waitForText('two, three, or one');
 
     header.savedDiv.waitForExist(10000);
-    comp.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    page.doneButton.click_waitForNotExisting();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 
   // TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
@@ -216,89 +216,89 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option5.click();
 
-    const comp = editDataDatePage;
+    const page = editDataDatePage;
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._1_June_2c_1970.click();
-    comp.highlightedPreviewSpan.waitForText('February 1, 1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._1_June_2c_1970.click();
+    page.highlightedPreviewSpan.waitForText('February 1, 1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._2_June_2ndc_1970.click();
-    comp.highlightedPreviewSpan.waitForText('February 1st, 1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._2_June_2ndc_1970.click();
+    page.highlightedPreviewSpan.waitForText('February 1st, 1900');
 
-    comp.dropdown_capitalization.click();
-    comp.checkVisual(header, sidebar);
-    comp.dropdown_capitalization._3__2_June_1970.click();
-    comp.highlightedPreviewSpan.waitForText('1 February 1900');
+    page.dropdown_capitalization.click();
+    page.segmentContainer.checkVisual();
+    page.dropdown_capitalization._3__2_June_1970.click();
+    page.highlightedPreviewSpan.waitForText('1 February 1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._4__2nd_June_1970.click();
-    comp.highlightedPreviewSpan.waitForText('1st February 1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._4__2nd_June_1970.click();
+    page.highlightedPreviewSpan.waitForText('1st February 1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._5__1970.click();
-    comp.highlightedPreviewSpan.waitForText('1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._5__1970.click();
+    page.highlightedPreviewSpan.waitForText('1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._6_June.click();
-    comp.highlightedPreviewSpan.waitForText('February');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._6_June.click();
+    page.highlightedPreviewSpan.waitForText('February');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._7_Jun.click();
-    comp.highlightedPreviewSpan.waitForText('Feb');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._7_Jun.click();
+    page.highlightedPreviewSpan.waitForText('Feb');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._8__06.click();
-    comp.highlightedPreviewSpan.waitForText('02');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._8__06.click();
+    page.highlightedPreviewSpan.waitForText('02');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._9__6.click();
-    comp.highlightedPreviewSpan.waitForText('2');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._9__6.click();
+    page.highlightedPreviewSpan.waitForText('2');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._10__02.click();
-    comp.highlightedPreviewSpan.waitForText('01');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._10__02.click();
+    page.highlightedPreviewSpan.waitForText('01');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._11__2.click();
-    comp.highlightedPreviewSpan.waitForText('1');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._11__2.click();
+    page.highlightedPreviewSpan.waitForText('1');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._12__2nd.click();
-    comp.highlightedPreviewSpan.waitForText('1st');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._12__2nd.click();
+    page.highlightedPreviewSpan.waitForText('1st');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._13_Tuesday.click();
-    comp.highlightedPreviewSpan.waitForText('Thursday');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._13_Tuesday.click();
+    page.highlightedPreviewSpan.waitForText('Thursday');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._14__6_slash_2.click();
-    comp.highlightedPreviewSpan.waitForText('2/1');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._14__6_slash_2.click();
+    page.highlightedPreviewSpan.waitForText('2/1');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._15__06_02_1970.click();
-    comp.highlightedPreviewSpan.waitForText('02-01-1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._15__06_02_1970.click();
+    page.highlightedPreviewSpan.waitForText('02-01-1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._16__02_06_1970.click();
-    comp.highlightedPreviewSpan.waitForText('01-02-1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._16__02_06_1970.click();
+    page.highlightedPreviewSpan.waitForText('01-02-1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._17__06s02s1970.click();
-    comp.highlightedPreviewSpan.waitForText('02/01/1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._17__06s02s1970.click();
+    page.highlightedPreviewSpan.waitForText('02/01/1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._18__02s06s1970.click();
-    comp.highlightedPreviewSpan.waitForText('01/02/1900');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._18__02s06s1970.click();
+    page.highlightedPreviewSpan.waitForText('01/02/1900');
 
-    comp.dropdown_capitalization.click();
-    comp.dropdown_capitalization._19__1970_06_02.click();
-    comp.highlightedPreviewSpan.waitForText('1900-02-01');
+    page.dropdown_capitalization.click();
+    page.dropdown_capitalization._19__1970_06_02.click();
+    page.highlightedPreviewSpan.waitForText('1900-02-01');
 
     header.savedDiv.waitForExist(10000);
-    comp.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '1900-02-01', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    page.doneButton.click_waitForNotExisting();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '1900-02-01', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 
 
@@ -347,7 +347,7 @@ describe('Format and insert data var of type', () => {
     page.highlightedPreviewSpan.waitForText('1:45pm');
 
     page.dropdown_timeFormat.click();
-    page.checkVisual(header, sidebar);
+    page.segmentContainer.checkVisual();
     page.dropdown_timeFormat.option10.click();
     page.highlightedPreviewSpan.waitForText('01:45pm');
 
@@ -361,7 +361,7 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '13:45', 'last segment text');
-    AutobotAssert.visualTestsPassed();
+    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '13:45', 'last segment text');
+    AquaAssert.visualTestsPassed();
   });
 });

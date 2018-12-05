@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
+import { WordsmithPage } from '../../../../aqua/support/WordsmithPage';
 import { EditorToolbar } from './toolbar.cont';
 
 /** Abstract class */
@@ -12,6 +12,7 @@ export class EditSegmentPage extends WordsmithPage {
     }
 
     this.segmentPreview = this.get('.segment-preview').tagAsLoadCriterion();
+    this.segmentContainer = this.get('.segment__container').tagAsLoadCriterion();
     this.highlightedPreviewSpan = this.get('.highlight');
     this.deleteButton = this.get('[data-test="close-button"]');
     // this.modalYesButton = this.get('.modal-dialog-content .btn-primary'); // not within the seg editor container

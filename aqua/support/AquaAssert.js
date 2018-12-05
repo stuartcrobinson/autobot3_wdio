@@ -4,7 +4,7 @@ import { livy } from './Livy';
 
 const defaultAutobotTimeoutMillis = 5000;
 
-export class AutobotAssert {
+export class AquaAssert {
   static visualTestsPassed() {
     // @ts-ignore
     if (global.aVisualTestFailed) {

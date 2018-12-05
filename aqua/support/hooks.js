@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { editorPage } from '../../src/ui-model/wordsmith/editor/editor.page';
 import { loginPage } from '../../src/ui-model/wordsmith/misc/page/login.page';
 import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page';
-import { Autobot, options } from '../autobot';
+import { Autobot, options } from '../aqua';
 import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from './ApiStuff';
 import { livy } from './Livy';
 import { Page } from './Page';
@@ -29,7 +29,7 @@ export class Load {
   }
 
   static newTemplateEditor(data = defaultDataForApi) {
-    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime}`);
+    const projectName = Autobot.makeSlugSafeName(`Aqua data obj ${livy.specDate} ${livy.specTime}`);
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
     livy.logAction2([
       { text: '☁️  ', style: livy.style.emoji },
@@ -71,7 +71,7 @@ export class Load {
     //   }
     //   demo();
     // });
-    const projectName = Autobot.makeSlugSafeName(`Autobot Add Data${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
+    const projectName = Autobot.makeSlugSafeName(`Aqua data file ${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
     // const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
     loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
 
