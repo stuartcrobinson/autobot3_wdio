@@ -1,6 +1,6 @@
 // @ts-check
 import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
-import { toolbar } from './toolbar.cont';
+import { EditorToolbar } from './toolbar.cont';
 
 /** Abstract class */
 export class EditSegmentPage extends WordsmithPage {
@@ -21,7 +21,7 @@ export class EditSegmentPage extends WordsmithPage {
     this.backButton = this.get('.back-button').tagAsLoadCriterion();
     this.h3 = this.get('h3').tagAsLoadCriterion();
     this.editSegmentPaneHeader = this.get('.segment__header').tagAsLoadCriterion();
-    this.toolbar = toolbar;
+    this.toolbar = new EditorToolbar();
     super.nameElements();
   }
 

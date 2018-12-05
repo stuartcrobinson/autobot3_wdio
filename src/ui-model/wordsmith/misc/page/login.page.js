@@ -3,7 +3,6 @@ import { options } from '../../../../../autobot_framework/autobot';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { toast } from '../component/toast.cont';
-/* eslint import/no-cycle: "off" */
 import { dashboardPage } from './dashboard.page';
 
 export const loginPage = new class Login extends WordsmithPage {

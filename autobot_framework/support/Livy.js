@@ -8,12 +8,11 @@ import * as fs_extra from 'fs-extra';
 import { AllHtmlEntities } from 'html-entities';
 import * as os from 'os';
 import * as path from 'path';
-// import { options } from '../autobot';
 
 
 const entities = new AllHtmlEntities();
 
-/*  TODO - this file is terrible.  should be broken up.  */
+/*  TODO - this file seems terrible.  should be broken up?  */
 
 function passthrough(message) {
   return message;
@@ -77,7 +76,6 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
 
 class Livy {
   constructor() {
-    console.log('livy constructor');
     // @ts-ignore
     const options = global.autobotOptions;
 
@@ -190,29 +188,7 @@ class Livy {
   </script>
     ${os.EOL}`;
 
-
-    //   <script>
-    //   function dblclickSelectorSpan(e) {
-    //     e.firstElementChild.style.display = 'none';
-    //     e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
-    //     e.lastElementChild.style.display = 'inline';
-    //     e.lastElementChild.focus();
-    //   }
-    //   function blurSelectorInput(e) {
-    //     e.style.display = 'none';
-    //     e.parentElement.firstElementChild.style.display = 'inline';
-    //   }
-    // </script>
-
-
-    // <span id="asdf" style="color:#C8C8C8;font-family: monospace;" ondblclick="dblclickSelectorSpan(this);">
-    //   <span id='sup'>//body</span>
-    //   <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='//body'>
-    // </span>
-
-
     html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
-
 
     html += `
     <div class="header">
@@ -410,12 +386,10 @@ class Livy {
 
     let consoleBuilder = '';
 
-
     const onClickHtml = this.doSaveEventDom ? `onclick="window.open('${getEventDomFileRelPath(screenshotId)}');"` : '';
 
     let htmlBuilder = '';
     htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" ${onClickHtml}>`;
-
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
@@ -430,17 +404,6 @@ class Livy {
           style = this.style.object;
         }
 
-
-        // <span id="asdf" style="color:#C8C8C8;font-family: monospace;" ondblclick="dblclickSelectorSpan(this);">
-        //   <span id='sup'>//body</span>
-        //   <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='//body'>
-        // </span>
-
-
-        // if (style === this.style.selector) {
-        //   message = message.replace(/[^\s]/g, '•');
-        //   style = this.style.object;
-        // }
         const htmlStyle = convertNpmColorsToCss(style);
 
         if (!style) {
@@ -483,7 +446,7 @@ class Livy {
   }
 
   logReportError(stack) {
-    let html = '';// `<span style="font-family:monospace"><span style="font-weight:bold">${entities.encode(type)}:</span><span style="color:red">${entities.encode(message)}</span><br/>${os.EOL}`
+    let html = '';
     html += `<span name="thisIsWhereStackGoes" style="font-family:monospace;color:red"><pre>${entities.encode(stack)}</pre></span><br/>`;
 
 
@@ -491,11 +454,6 @@ class Livy {
   }
 
   logErrorImage() {
-    // <img src=${imageClickablePath} width=900></img>
-    // console.log('in logErrorImage');
-    // console.log('html:');
-    // console.log(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
-
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
 
@@ -543,18 +501,11 @@ class Livy {
     }
   }
 
-
   // run this before "it"
   logTestStart() {
     fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
 
-
     this.logHorizontalLine();
-
-    // this.logWithoutPrefix(`Starting test: ${this.testGrandparentsTitle}`);
-    // this.logWithoutPrefix(`                         ${this.testParentTitle}`, colors.blue);
-    // // @ts-ignore
-    // this.logWithoutPrefix(`                             ${this.testCaseTitle}`, colors.bold.blue);
 
     this.logAction2([
       { text: 'Starting test:  ', style: colors.bold },
@@ -590,7 +541,6 @@ class Livy {
   }
 
   logFailed(stack) {
-    console.log('specFailed = true in logFailed!!!!!');
     this.specFailed = true;
 
     // this.logReportFileToHackyFileIfNotWrittenYet('❌');
@@ -647,7 +597,7 @@ class Livy {
     this.runId = runId;
 
     this.initialize(this.specFilePath);
-    console.log('\nReport, in progress: ', this.reportClickablePath, '\n');
+    console.log('\n📝   🚧  ', this.reportClickablePath, '\n');
     // fs.appendFileSync(runId, this.reportClickablePath + os.EOL);
   }
 
@@ -661,14 +611,12 @@ class Livy {
   wdioConf_after() {
     // @ts-ignore
     if (!global.autobotOptions.muteConsole) {
-      console.log('\nReport: ', this.reportClickablePath, '\n');
+      console.log('\n📝 ', this.reportClickablePath, '\n');
     }
   }
 
   /** called from wdio.conf.js */
   wdioConf_afterSession(configTimestamp) {
-    // this.logReportFileToHackyFileIfNotWrittenYet(this.specFailed ? '❌ ' : '✅ ');
-
     fs.appendFileSync(this.runId, `${this.specFailed ? '❌ ' : '✅ '} ${this.reportClickablePath}${os.EOL}`);
 
     // so you can scroll code up so the screenshot isn't blocking it
@@ -696,13 +644,6 @@ class Livy {
   }
 
   wdioConf_afterSuite(err, runId) {
-    // console.log(`wdioConf_afterSuite specFailed = ${this.specFailed}`);
-    // console.log(`wdioConf_afterSuite specFailed = ${this.specTime}`);
-
-
-    // this.logReportFileToHackyFileIfNotWrittenYet(this.specFailed ? '❌ ' : '✅ ');
-
-    // fs.appendFileSync(runId, (this.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
     if (err) {
       this.wdioConf_afterTest(false, err);
     }

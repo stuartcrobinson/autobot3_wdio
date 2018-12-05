@@ -1,12 +1,12 @@
 // @ts-check
 import { UiElement } from '../../../../autobot_framework/support/UiElement';
 import { WordsmithPage } from '../../../../autobot_framework/support/WordsmithPage';
-import { toolbar } from './toolbar.cont';
+import { EditorToolbar } from './toolbar.cont';
 
 export const editorPage = new class Editor extends WordsmithPage {
   constructor(urlPath) {
     super(urlPath);
-    this.toolbar = toolbar.tagAsLoadCriterion();
+    this.toolbar = new EditorToolbar().tagAsLoadCriterion();
     this.editor = new UiElement('.editor-textarea').tagAsLoadCriterion();
 
     /** Used for waiting for editor to load after closing segment editors. */

@@ -29,7 +29,7 @@ class InsertDataDropdown extends UiElement {
   }
 }
 
-export const toolbar = new class EditorToolbar extends UiElement {
+export class EditorToolbar extends UiElement {
   constructor() {
     super('.toolbar__list');
     this.insertDataButton = this.get('.btn-insert-data').tagAsLoadCriterion();
@@ -39,4 +39,4 @@ export const toolbar = new class EditorToolbar extends UiElement {
     this.insertDataDropdown = new InsertDataDropdown();
     super.nameElements();
   }
-}();
+}

@@ -95,7 +95,7 @@ export function httpRequestCreateProjectFromDataObject_begin_and_complete(name, 
     },
   };
   axios.post(url, body, axiosConfig).then((response) => {
-    // console.log('response status: ' + response.status);
+    console.log(`response status: ${response.status}`);
     // do nothing
   })
     .catch((error) => {

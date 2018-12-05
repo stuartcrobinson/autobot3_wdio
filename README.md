@@ -58,6 +58,7 @@ notes:
 - if you're using iTerm2, you can command-click on files in the stack trace to load in your defaul js editor
 - browser.scroll doesn't work.
 - you can't use ``npm install`` because it doesn't grab the autobot eslint plugin (`eslint-plugin-autobot`). 
+- it's dangerous to export instantiated UiElement objects cos something might be tagged as loadCriterion somewhere, but not everywhere it's used.
 
 
  

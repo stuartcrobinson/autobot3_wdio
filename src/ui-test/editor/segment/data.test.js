@@ -10,6 +10,7 @@ import { editDataNumberPage } from '../../../ui-model/wordsmith/editor/segmentEd
 import { editDataTextPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataText.page';
 import { editDataTimePage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataTime.page';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
+import { sidebar } from '../../../ui-model/wordsmith/misc/component/sideBar.cont';
 
 
 export const data = [{
@@ -30,6 +31,7 @@ describe('Format and insert data var of type', () => {
     editorPage.toolbar.insertDataDropdown.xCloseButton.click();
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option2.click();
+    editorPage.checkVisual(header, sidebar);
     editDataNumberPage.dropdown_decimalPlaces.click();
     editDataNumberPage.dropdown_decimalPlaces._2.click();
     editDataNumberPage.dropdown_decimalSeparator.click();
@@ -41,12 +43,15 @@ describe('Format and insert data var of type', () => {
     editDataNumberPage.highlightedPreviewSpan.waitForText('10 000,00', 2000);
     editDataNumberPage.toggle_stripTrailingZeros.click();
     editDataNumberPage.highlightedPreviewSpan.waitForText('10 000', 2000);
+    editDataNumberPage.checkVisual(header, sidebar);
     header.savedDiv.waitForExist(10000);
     editDataNumberPage.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 
   it('Text', () => {
+    editDataNumberPage.doneButton.click_ifExists();
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option1.click();
 
@@ -69,15 +74,18 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('ANNEAU DU VIC-BILH');
 
     comp.dropdown_capitalization.click();
+    comp.checkVisual(header, sidebar);
     comp.dropdown_capitalization.noLetters.click();
     comp.highlightedPreviewSpan.waitForText('anneau du vic-bilh');
 
     header.savedDiv.waitForExist(10000);
     comp.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 
   it('True/False', () => {
+    editDataNumberPage.doneButton.click_ifExists();
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option4.click();
 
@@ -92,6 +100,7 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('True');
 
     comp.dropdown_capitalization.click();
+    comp.checkVisual(header, sidebar);
     comp.dropdown_capitalization.eachWord.click();
     comp.highlightedPreviewSpan.waitForText('True');
 
@@ -106,10 +115,12 @@ describe('Format and insert data var of type', () => {
     header.savedDiv.waitForExist(10000);
     comp.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'TRUE', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 
 
   it('List', () => {
+    editDataNumberPage.doneButton.click_ifExists();
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option3.click();
 
@@ -188,16 +199,20 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('one, three, or two');
 
     comp.dropdown_ascendingDescending.click();
+    comp.checkVisual(header, sidebar);
     comp.dropdown_ascendingDescending.descending.click();
     comp.highlightedPreviewSpan.waitForText('two, three, or one');
 
     header.savedDiv.waitForExist(10000);
     comp.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 
   // TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
   it('Date', () => {
+    editDataNumberPage.doneButton.click_ifExists();
+
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option5.click();
 
@@ -212,6 +227,7 @@ describe('Format and insert data var of type', () => {
     comp.highlightedPreviewSpan.waitForText('February 1st, 1900');
 
     comp.dropdown_capitalization.click();
+    comp.checkVisual(header, sidebar);
     comp.dropdown_capitalization._3__2_June_1970.click();
     comp.highlightedPreviewSpan.waitForText('1 February 1900');
 
@@ -282,65 +298,70 @@ describe('Format and insert data var of type', () => {
     header.savedDiv.waitForExist(10000);
     comp.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '1900-02-01', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 
 
   it('Time', () => {
+    editDataNumberPage.doneButton.click_ifExists();
+
     editorPage.toolbar.insertDataButton.click();
     editorPage.toolbar.insertDataDropdown.option6.click();
 
-    const comp = editDataTimePage;
+    const page = editDataTimePage;
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option1.click();
-    comp.highlightedPreviewSpan.waitForText('1:45:12 pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option1.click();
+    page.highlightedPreviewSpan.waitForText('1:45:12 pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option2.click();
-    comp.highlightedPreviewSpan.waitForText('01:45:12 pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option2.click();
+    page.highlightedPreviewSpan.waitForText('01:45:12 pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option3.click();
-    comp.highlightedPreviewSpan.waitForText('1:45:12pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option3.click();
+    page.highlightedPreviewSpan.waitForText('1:45:12pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option4.click();
-    comp.highlightedPreviewSpan.waitForText('01:45:12pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option4.click();
+    page.highlightedPreviewSpan.waitForText('01:45:12pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option5.click();
-    comp.highlightedPreviewSpan.waitForText('13:45:12');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option5.click();
+    page.highlightedPreviewSpan.waitForText('13:45:12');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option6.click();
-    comp.highlightedPreviewSpan.waitForText('13:45:12');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option6.click();
+    page.highlightedPreviewSpan.waitForText('13:45:12');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option7.click();
-    comp.highlightedPreviewSpan.waitForText('1:45 pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option7.click();
+    page.highlightedPreviewSpan.waitForText('1:45 pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option8.click();
-    comp.highlightedPreviewSpan.waitForText('01:45 pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option8.click();
+    page.highlightedPreviewSpan.waitForText('01:45 pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option9.click();
-    comp.highlightedPreviewSpan.waitForText('1:45pm');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option9.click();
+    page.highlightedPreviewSpan.waitForText('1:45pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option10.click();
-    comp.highlightedPreviewSpan.waitForText('01:45pm');
+    page.dropdown_timeFormat.click();
+    page.checkVisual(header, sidebar);
+    page.dropdown_timeFormat.option10.click();
+    page.highlightedPreviewSpan.waitForText('01:45pm');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option11.click();
-    comp.highlightedPreviewSpan.waitForText('13:45');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option11.click();
+    page.highlightedPreviewSpan.waitForText('13:45');
 
-    comp.dropdown_timeFormat.click();
-    comp.dropdown_timeFormat.option12.click();
-    comp.highlightedPreviewSpan.waitForText('13:45');
+    page.dropdown_timeFormat.click();
+    page.dropdown_timeFormat.option12.click();
+    page.highlightedPreviewSpan.waitForText('13:45');
 
     header.savedDiv.waitForExist(10000);
-    comp.doneButton.click_waitForNotExisting();
+    page.doneButton.click_waitForNotExisting();
     AutobotAssert.valueEquals(() => editorPage.getLastSegmentText(), '13:45', 'last segment text');
+    AutobotAssert.visualTestsPassed();
   });
 });

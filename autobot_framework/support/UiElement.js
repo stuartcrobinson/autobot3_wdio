@@ -130,6 +130,19 @@ export class UiElement extends UiContainer {
     browser.click(this.selector);
   }
 
+  click_ifExists(doLogAndWait = true) {
+    if (this.isExisting()) {
+      if (doLogAndWait) {
+        this.logAndWait2([
+          { text: '👇 ', style: livy.style.emoji },
+          { text: 'Click ', style: livy.style.verb },
+          { text: `${this.stuartname} `, style: livy.style.object },
+          { text: `${this.selector}`, style: livy.style.selector }]);
+      }
+      browser.click(this.selector);
+    }
+  }
+
   doubleClick(doLog = true) {
     if (doLog) {
       this.logAndWait2([
@@ -461,44 +474,4 @@ export class UiElement extends UiContainer {
       }
     }
   }
-
-  // /**
-  //  *
-  //  */
-  // get loadCriteriaElements() {
-  //   const abElements = [];
-
-  //   for (const propName in this) {
-  //     const propValue = this[propName];
-  //     if (propValue instanceof UiElement && propValue.isLoadCriterion) {
-  //       abElements.push(propValue);
-  //     }
-  //   }
-  //   return abElements;
-  // }
-
-  // waitForLoad(timeoutInMillis = 12000) {
-  //   for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-  //     const element = this.loadCriteriaElements[i];
-  //     element.waitForExist(timeoutInMillis);
-  //   }
-  // }
-
-  // isLoaded() {
-  //   for (let i = 0; i < this.loadCriteriaElements.length; i++) {
-  //     const element = this.loadCriteriaElements[i];
-  //     element.getWebElement();
-  //   }
-  //   return true;
-  // }
-
-  // /* eslint class-methods-use-this: "off" */
-  // findWebElements(selector) {
-  //   return $$(selector);
-  // }
-
-  // /* eslint class-methods-use-this: "off" */
-  // findWebElement(selector) {
-  //   return $(selector);
-  // }
 }

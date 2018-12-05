@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint import/no-cycle: "off" */
 import { loginPage } from '../page/login.page';
 import { UiElement } from '../../../../../autobot_framework/support/UiElement';
 

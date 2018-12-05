@@ -1,7 +1,6 @@
 // @ts-check
 import { WordsmithPage } from '../../../../../autobot_framework/support/WordsmithPage';
 import { Table } from '../../table';
-/* eslint import/no-cycle: "off" */
 import { sidebar } from '../component/sideBar.cont';
 
 export const dashboardPage = new class Dashboard extends WordsmithPage {

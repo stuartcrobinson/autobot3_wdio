@@ -67,6 +67,10 @@ export class UiContainer {
 
   waitForLoad(timeoutInMillis = 12000) {
     try {
+      // console.log('this.constructor.name');
+      // console.log(this.constructor.name);
+      // console.log('this.criteriaElements');
+      // console.log(this.criteriaElements);
       for (let i = 0; i < this.criteriaElements.length; i++) {
         const element = this.criteriaElements[i];
         // @ts-ignore
@@ -120,7 +124,6 @@ export class UiContainer {
     //   `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
     // );
   }
-
 
   /**
    * Asserts that the browser screen matches the screenshot saved in screenshots/reference.
@@ -193,11 +196,10 @@ export class UiContainer {
     global.doDeleteReferenceImage = false;
   }
 
-
   keys(...inputs) {
-    this.waitFor();
-    // @ts-ignore
-    this.click && this.click(false);
+    try {
+      this.waitFor();
+    } catch { let donothing; } finally { let donothing; }
 
     const asdf = [];
 
@@ -230,6 +232,11 @@ export class UiContainer {
         { text: 'Type ', style: livy.style.verb },
         { text: outputString, style: livy.style.object }]);
     }
+
+    this.waitFor();
+    // @ts-ignore
+    this.click && this.click(false);
+
     for (let i = 0; i < asdf.length; i++) {
       const inputObject = asdf[i];
       for (let j = 0; j < inputObject.n; j++) {

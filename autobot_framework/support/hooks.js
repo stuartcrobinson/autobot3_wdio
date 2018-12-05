@@ -36,8 +36,10 @@ export class Load {
       { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
     httpRequestCreateProjectFromDataObject_begin_and_complete(projectName, data);
 
+    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName)).loadWithRetry();
+
     // browser.url(Autobot.getProjectUrlFromName(projectName));
-    Page.load(Autobot.getProjectUrlFromName(projectName));
+    // Page.load(Autobot.getProjectUrlFromName(projectName));
     projectPage.createNewTemplateButton.click_waitForNotExisting();
     assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
   }
