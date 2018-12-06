@@ -1,6 +1,6 @@
 // @ts-check
-import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
 import { UiElement } from '../../../../../aqua/support/UiElement';
+import { WordsmithPage } from '../../WordsmithPage';
 
 
 export const googlePage = new class Google extends WordsmithPage {

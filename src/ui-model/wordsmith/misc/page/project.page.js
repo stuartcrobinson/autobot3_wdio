@@ -1,6 +1,6 @@
 // @ts-check
 import { UiElement } from '../../../../../aqua/support/UiElement';
-import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../../WordsmithPage';
 
 
 export const projectPage = new class Project extends WordsmithPage {

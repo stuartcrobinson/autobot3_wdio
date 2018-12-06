@@ -3,10 +3,10 @@ import { assert } from 'chai';
 import { editorPage } from '../../src/ui-model/wordsmith/editor/editor.page';
 import { loginPage } from '../../src/ui-model/wordsmith/misc/page/login.page';
 import { projectPage } from '../../src/ui-model/wordsmith/misc/page/project.page';
-import { Autobot, options } from '../aqua';
+import { Autobot } from '../aqua';
 import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from './ApiStuff';
 import { livy } from './Livy';
-import { Page } from './Page';
+import { galleryCityGuideNarrative } from '../../src/ui-model/wordsmith/misc/page/galleryNarrative.page';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -25,12 +25,19 @@ export const defaultDataForApi = [{
  */
 export class Load {
   static dashboard() {
-    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    loginPage.logIn();
+  }
+
+  static cityGuideTemplateFromGallery() {
+    loginPage.logIn();
+    galleryCityGuideNarrative.load();
+    galleryCityGuideNarrative.getProjectButton.click_waitForNotExisting();
+    projectPage.getNthTemplateLink(1).click_waitForNotExisting();
   }
 
   static newTemplateEditor(data = defaultDataForApi) {
     const projectName = Autobot.makeSlugSafeName(`Aqua data obj ${livy.specDate} ${livy.specTime}`);
-    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    loginPage.logIn();
     livy.logAction2([
       { text: '☁️  ', style: livy.style.emoji },
       { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
@@ -73,7 +80,7 @@ export class Load {
     // });
     const projectName = Autobot.makeSlugSafeName(`Aqua data file ${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
     // const httpRequestPromise = Autobot.httpRequestCreateProjectFromDataFile_begin(projectName, file);
-    loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    loginPage.logIn();
 
     livy.logAction2([
       { text: '☁️  ', style: livy.style.emoji },

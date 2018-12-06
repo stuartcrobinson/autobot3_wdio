@@ -1,14 +1,18 @@
 // @ts-check
 import { UiElement } from '../../../../aqua/support/UiElement';
-import { WordsmithPage } from '../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../WordsmithPage';
 import { EditorToolbar } from './toolbar.cont';
 import { sidebar } from '../misc/component/sideBar.cont';
+import { Preview } from './preview.cont';
 
 export const editorPage = new class Editor extends WordsmithPage {
   constructor(urlPath) {
     super(urlPath);
     this.toolbar = new EditorToolbar().tagAsLoadCriterion();
     this.editor = new UiElement('.editor-textarea').tagAsLoadCriterion();
+    this.openPreviewButton = this.get('.btn--editor-root--preview');
+    this.openToolsButton = this.get('.btn--editor-root--toolpane');
+    this.previewPane = new Preview();
     this.sidebar = sidebar;
 
     /** Used for waiting for editor to load after closing segment editors. */

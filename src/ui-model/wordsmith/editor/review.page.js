@@ -1,7 +1,7 @@
 // @ts-check
 import countBy from 'lodash';
 import { UiElement } from '../../../../aqua/support/UiElement';
-import { WordsmithPage } from '../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../WordsmithPage';
 
 
 class NarrativeDiv extends UiElement {

@@ -8,7 +8,7 @@ describe('DummyParent', () => {
     });
 
     it('go home2', () => {
-      throw new Error('dummy3 failed!');
+      // throw new Error('dummy3 failed!');
     });
 
     it('go home3', () => {

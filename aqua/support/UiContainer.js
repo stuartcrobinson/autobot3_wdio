@@ -87,9 +87,8 @@ export class UiContainer {
     if (this.waitForExist) {
       // @ts-ignore
       this.waitForExist();
-    } else {
-      this.waitForLoad();
     }
+    return this.waitForLoad();
   }
 
   isLoaded() {

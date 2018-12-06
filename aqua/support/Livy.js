@@ -8,6 +8,7 @@ import * as fs_extra from 'fs-extra';
 import { AllHtmlEntities } from 'html-entities';
 import * as os from 'os';
 import * as path from 'path';
+import rimraf from 'rimraf';
 
 
 const entities = new AllHtmlEntities();
@@ -623,6 +624,8 @@ class Livy {
     for (let i = 0; i < 30; i++) {
       this.logRawToHtml('</br>');
     }
+
+    rimraf.sync('screenshots/screen');
   }
 
   /**

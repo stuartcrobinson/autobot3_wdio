@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../../WordsmithPage';
 import { livy } from '../../../../../aqua/support/Livy';
 
 export const createAProjectPage = new class CreateAProject extends WordsmithPage {

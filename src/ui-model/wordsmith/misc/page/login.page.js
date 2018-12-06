@@ -1,7 +1,7 @@
 // @ts-check
 import { options } from '../../../../../aqua/aqua';
 import { UiElement } from '../../../../../aqua/support/UiElement';
-import { WordsmithPage } from '../../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../../WordsmithPage';
 import { toast } from '../component/toast.cont';
 import { dashboardPage } from './dashboard.page';
 
@@ -26,9 +26,15 @@ export const loginPage = new class Login extends WordsmithPage {
     this.logInButton.click();
   }
 
+  // /** Logs in and waits for Dashboard page to load. */
+  // logIn(email, password, url) {
+  //   this.attemptLogIn(email, password, url);
+  //   dashboardPage.waitForLoad();
+  // }
+
   /** Logs in and waits for Dashboard page to load. */
-  logIn(email, password, url) {
-    this.attemptLogIn(email, password, url);
+  logIn() {
+    this.attemptLogIn(options.wsLogin, options.wsPassword, options.wsUrl);
     dashboardPage.waitForLoad();
   }
 }();

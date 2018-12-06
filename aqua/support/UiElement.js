@@ -408,24 +408,38 @@ export class UiElement extends UiContainer {
       { text: ` ${this.selector}`, style: livy.style.selector }]);
 
     let actual;
-    let expected;
-    try {
-      this.waitForExist();
-      browser.waitUntil(() => this.getWebElement().getText() === text, timoutMillis);
+    // try {
+    this.waitForExist();
+    console.log('here1');
+    // browser.waitUntil(() => this.getWebElement().getText() === text, timoutMillis);
 
+    actual = this.getWebElement().getText();
+    console.log(`actual 1: ${actual}`);
+
+    const expected = text;
+
+    const initTime = new Date().getTime();
+    while (actual !== expected && new Date().getTime() - initTime < timoutMillis) {
+      browser.pause(100);
       actual = this.getWebElement().getText();
-      expected = text;
-
-      const initTime = new Date().getMilliseconds();
-      while (actual !== expected && new Date().getMilliseconds() - initTime < timoutMillis) {
-        browser.pause(100);
-        actual = this.getWebElement().getText();
-      }
-    } catch (err) {
-      console.log('original error:');
-      console.log(err);
+      console.log(`actual loop: ${actual}`);
+      console.log('new Date().getMilliseconds()');
+      console.log(new Date().getMilliseconds());
+      console.log('initTime');
+      console.log(initTime);
+      console.log('timoutMillis');
+      console.log(timoutMillis);
+      console.log('new Date().getMilliseconds() - initTime');
+      console.log(new Date().getMilliseconds() - initTime);
+    }
+    if (actual !== expected) {
       throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
     }
+    // } catch (err) {
+    //   console.log('original error:');
+    //   console.log(err);
+    //   throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
+    // }
     livy.setMouseoverEventScreenshotFunction(screenshotId);
   }
 

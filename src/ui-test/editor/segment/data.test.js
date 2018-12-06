@@ -67,7 +67,7 @@ describe('Format and insert data var of type', () => {
 
     page.dropdown_capitalization.click();
     page.dropdown_capitalization.eachWord.click();
-    page.highlightedPreviewSpan.waitForText('Anneau Du Vic-bilh');
+    page.highlightedPreviewSpan.waitForText('Anneau Du Vic-bilh'); // this is a ws bug, tim is fixing
 
     page.dropdown_capitalization.click();
     page.dropdown_capitalization.eachLetter.click();

@@ -28,13 +28,16 @@ describe('DummyParent', () => {
     });
 
     it('go home2', () => {
-      fastWebpage.checkVisual();
+      fastWebpage.load();
 
-      fastWebpage.h2.click();
+      throw new Error('asdf');
+      // fastWebpage.checkVisual();
 
-      fastWebpage.h2.hover();
-      console.log('test 2');
-      AquaAssert.visualTestsPassed();
+      // fastWebpage.h2.click();
+
+      // fastWebpage.h2.hover();
+      // console.log('test 2');
+      // AquaAssert.visualTestsPassed();
     });
 
     it('go home3', () => {

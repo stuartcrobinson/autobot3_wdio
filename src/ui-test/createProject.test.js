@@ -17,7 +17,7 @@ describe('Create a project', () => {
     dashboardPage.newProjectDropdown.click();
     dashboardPage.uploadCsvDropdownOption.click();
     createAProjectUploadCsvPage.nameYourProjectField.setValue(`Autobot ${livy.specDate} ${livy.specTime}`);
-    createAProjectUploadCsvPage.checkVisual(header, sidebar);
+    createAProjectUploadCsvPage.checkVisual(header, sidebar, createAProjectUploadCsvPage.nameYourProjectField);
     createAProjectUploadCsvPage.fileUploadInput.uploadFile('./resources/eachDataType.csv');
     editorPage.waitForLoad();
     assert(editorPage.isLoaded(), 'Dashboard page should be loaded.');

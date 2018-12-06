@@ -90,6 +90,8 @@ if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
   _options.hidePassword = true;
 }
 
+_options.myRunId = 'progressFileShouldntExistAfterRun ' + _options.myRunId;
+
 global.autobotOptions = _options
 
 console.log("_options  9a8duf9a8sdf")
@@ -102,15 +104,73 @@ function getArray(str, n) {
 
 function buildSpecsArray(f, n = 1) {
 
-  let specsArray = f.trim().split(/[ ,]+/);
-  let specsArrayAtom = f.trim().split(/[ ,]+/);
-
-  for (let i = 1; i < n; i++){
-    specsArray = specsArray.concat(specsArrayAtom);
+  if (typeof f === 'object') {
+    //override default spec files option
+    f = f[f.length - 1];
   }
 
-  return specsArray;
+  let specsArray = f.trim().split(/[ ,]+/);
+
+  specsArray = specsArray.map(s => {
+    if (!s.includes('src') && !s.includes('/')) {
+      return 'src/ui-test/**/*' + s + '*';
+    }
+    else {
+      return s;
+    }
+  })
+
+  let globResultsConcatenatedArray = []
+
+
+  for (let i = 0; i < specsArray.length; i++) {
+
+    let specPattern = specsArray[i];  //might contain wildcards
+
+    let globResults = glob.sync(specPattern,
+      //   {
+      //   // root: path.resolve('src/ui-test')
+      // }
+    );
+    globResultsConcatenatedArray = globResultsConcatenatedArray.concat(globResults)
+
+  }
+  // let specsArrayAtom = f.trim().split(/[ ,]+/);
+
+  // for (let i = 1; i < n; i++) {
+  //   specsArray = specsArray.concat(specsArrayAtom);
+  // }
+
+  console.log("globResultsConcatenatedArray asdf8asudf")
+  console.log(globResultsConcatenatedArray)
+
+
+  // process.abort();
+
+  return globResultsConcatenatedArray;
 }
+
+
+
+// //TODO using glob to allow wildcards in --f input to build suite array.
+
+// if --f is an array, take only the last value.  this is the one that overwrote the default 'all-runs' (./src/ui-test/**/*.js) 
+// value used in the npm package script.
+
+/*
+take this cleaned --f value then -- a single string that might be multpile tests separated by commas or spaces
+
+and split it to get an array
+
+now, for each element of this array, get the corresponding glob result array.  
+
+concatenate all those arrays to get the final list of spec files to run.
+
+then feed that into the 'dev' suite.  or 'aquifer' suite.
+
+
+*/
+
 
 
 exports.config = {
@@ -222,7 +282,7 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: './errorShots/',
+  // screenshotPath: './errorShots/',   //commented out cos was saving useless screenshots in stupid places. hope it still works.
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.

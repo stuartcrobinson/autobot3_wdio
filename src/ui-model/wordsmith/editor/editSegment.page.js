@@ -1,5 +1,5 @@
 // @ts-check
-import { WordsmithPage } from '../../../../aqua/support/WordsmithPage';
+import { WordsmithPage } from '../WordsmithPage';
 import { EditorToolbar } from './toolbar.cont';
 
 /** Abstract class */
