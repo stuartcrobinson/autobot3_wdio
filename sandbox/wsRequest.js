@@ -1,6 +1,6 @@
 
 // @ts-check
-import { Autobot } from '../aqua/aqua';
+import { Autobot } from '../aquifer/aqua';
 
 console.log("in requests.tes.js")
 

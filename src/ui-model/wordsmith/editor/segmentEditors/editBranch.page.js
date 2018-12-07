@@ -1,6 +1,6 @@
 // @ts-check
 import { EditSegmentPage } from '../editSegment.page';
-import { UiElement } from '../../../../../aqua/support/UiElement';
+import { UiElement } from '../../../../../aquifer/support/UiElement';
 
 class BranchBox extends UiElement {
   constructor(selector) {

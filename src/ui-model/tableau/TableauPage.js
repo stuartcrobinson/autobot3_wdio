@@ -1,6 +1,6 @@
 // @ts-check
-import { Page } from '../../../aqua/support/Page';
-import { options } from '../../../aqua/aqua';
+import { Page } from '../../../aquifer/support/Page';
+import { options } from '../../../aquifer/aqua';
 
 export class TableauPage extends Page {
   constructor(urlPath) {

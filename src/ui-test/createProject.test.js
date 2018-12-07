@@ -1,8 +1,8 @@
 // @ts-check
 import assert from 'assert';
-import { AquaAssert } from '../../aqua/support/AquaAssert';
-import { Load } from '../../aqua/support/hooks';
-import { livy } from '../../aqua/support/Livy';
+import { AquaAssert } from '../../aquifer/support/AquaAssert';
+import { Load } from '../hooks';
+import { livy } from '../../aquifer/support/Livy';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
 import { header } from '../ui-model/wordsmith/misc/component/header.cont';
 import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';

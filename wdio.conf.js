@@ -1,26 +1,23 @@
+/* ************************************************************************************************************ */
+/* **** This is the WebdriverIO configuration file.  It's not using ES6 cos I couldn't figure out how. ******** */
+/* **** It's accessing external local files using the global object since it can't run ES6 code. ************** */
+/* ************************************************************************************************************ */
 var path = require('path');
 var VisualRegressionCompare = require('wdio-visual-regression-service/compare');
 var glob = require("glob")
+var yargsParse = require('yargs-parser');
+var stringArgv = require('string-argv');
+var fs = require('fs');
 
-// // beforeEach(function () {
-// //   currentTest = this.currentTest;
-// // }
+/* Store input parameters in global.options object. */
 
+const optionsFileContents = fs.existsSync('file.txt') ? yargsParse(stringArgv(fs.readFileSync('file.txt'))) : '';
+const options = { ...optionsFileContents, ...yargsParse(process.argv) }
+options.hidePassword = options.hidePassword || options.wsUrl.includes('wordsmith.automatedinsights');
+options.myRunId = 'progressFileShouldntExistAfterRun ' + options.myRunId;
+global.aquiferOptions = options
 
-// console.log('hi');
-// console.log('this awefawefawef');
-// console.log(this);
-// console.log('JSON.stringify(this) greeiugr8');
-// console.log(JSON.stringify(this));
-
-// for (const propName in this) {
-//   const propValue = this[propName];
-//   console.log(`wdio this propName: ${propName}, ${propValue}`);
-// }
-
-
-
-
+/** For wdio-visual-regression-service.  Used by aquilog.  */
 function getScreenshotName(basePath) {
   return function (context) {
     var type = context.type;
@@ -34,16 +31,15 @@ function getScreenshotName(basePath) {
     const tag = global.customScreenshotTag;
 
     const result = path.join(basePath, `${testName}_${type}_${tag}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
-    // const result = path.join(basePath, `${testName}_${type}_${browserName}_v${browserVersion}_${browserWidth}x${browserHeight}.png`);
 
-    /* Used to display the diff image in the html report. */
+    // Used to display the diff image in the html report.
     global.previousImageFileLocation = result;
 
+    /* Log the screenshot. */
 
     if (basePath.includes('screenshots/reference')) {
 
       let resultScreen = result.replace('screenshots/reference', 'screenshots/screen');
-
 
       if (global.doDeleteReferenceImage) {
         global.livy.logVisualTestReset(resultScreen);
@@ -54,8 +50,9 @@ function getScreenshotName(basePath) {
       else {
         global.livy.logVisualTestVerify(resultScreen);
       }
-
     }
+
+    /* Reset visual test reference image. */
 
     if (global.doDeleteReferenceImage && basePath.includes('screenshots/reference')) {
       if (!fs.existsSync(result)) {
@@ -65,111 +62,45 @@ function getScreenshotName(basePath) {
         fs.unlinkSync(result);
       }
     }
+
     return result;
   };
 }
 
-global.getScreenshotName = getScreenshotName;
 
-var yargsParse = require('yargs-parser');
-var stringArgv = require('string-argv');
-var fs = require('fs');
+/**
+ * Builds an array of filepaths to be used as a wdio suite, defined below.  
+ * 
+ * @param {string | Array} s from --s (for spec files) input.  Will be an array if --s was specified multiple times in which case only the last element of the array will be used.  This allows an overrideable default to be listed in the npm script.  the --s term can be a substring of a test, or multiple test substrings concatenated by comma or space.
+ * @param {number} n number of times to run all the matched spec files.  useful for test development, so you can run a test a bunch of times to make sure it's not "flaky"
+ */
+function buildSpecsArrayForWdioSuite(s, n = 1) {
 
-let _options, optionsFile;
-
-if (fs.existsSync('file.txt')) {
-  optionsFile = yargsParse(stringArgv(fs.readFileSync('file.txt')));
-}
-
-let yargsParsed = yargsParse(process.argv);
-
-_options = optionsFile
-_options = { ..._options, ...yargsParsed }
-
-if (_options.wsUrl.includes('wordsmith.automatedinsights')) {
-  _options.hidePassword = true;
-}
-
-_options.myRunId = 'progressFileShouldntExistAfterRun ' + _options.myRunId;
-
-global.autobotOptions = _options
-
-console.log("_options  9a8duf9a8sdf")
-console.log(_options)
-
-
-function getArray(str, n) {
-  return Array(n).fill(str)
-}
-
-function buildSpecsArray(f, n = 1) {
-
-  if (typeof f === 'object') {
-    //override default spec files option
-    f = f[f.length - 1];
+  if (typeof s === 'object') {
+    s = s[s.length - 1];        //override default spec files option
   }
 
-  let specsArray = f.trim().split(/[ ,]+/);
-
-  specsArray = specsArray.map(s => {
-    if (!s.includes('src') && !s.includes('/')) {
-      return 'src/ui-test/**/*' + s + '*';
-    }
-    else {
-      return s;
-    }
-  })
+  //if the spec file strings don't start with 'src/ui-test', then assume they are substrings of specs that should be searched for among file paths using wildcards & glob.
+  const specPatternsArray = s
+    .trim()
+    .split(/[ ,]+/)
+    .map(s => s.includes('src/ui-test') ? s + '*' : 'src/ui-test/**/*' + s + '*');
 
   let globResultsConcatenatedArray = []
 
 
-  for (let i = 0; i < specsArray.length; i++) {
+  for (let i = 0; i < specPatternsArray.length; i++) {
 
-    let specPattern = specsArray[i];  //might contain wildcards
+    let specPattern = specPatternsArray[i];  //might contain wildcards
 
-    let globResults = glob.sync(specPattern,
-      //   {
-      //   // root: path.resolve('src/ui-test')
-      // }
-    );
+    let globResults = glob.sync(specPattern);
     globResultsConcatenatedArray = globResultsConcatenatedArray.concat(globResults)
 
   }
-  // let specsArrayAtom = f.trim().split(/[ ,]+/);
-
-  // for (let i = 1; i < n; i++) {
-  //   specsArray = specsArray.concat(specsArrayAtom);
-  // }
-
-  console.log("globResultsConcatenatedArray asdf8asudf")
-  console.log(globResultsConcatenatedArray)
-
-
-  // process.abort();
-
   return globResultsConcatenatedArray;
 }
 
 
-
-// //TODO using glob to allow wildcards in --f input to build suite array.
-
-// if --f is an array, take only the last value.  this is the one that overwrote the default 'all-runs' (./src/ui-test/**/*.js) 
-// value used in the npm package script.
-
-/*
-take this cleaned --f value then -- a single string that might be multpile tests separated by commas or spaces
-
-and split it to get an array
-
-now, for each element of this array, get the corresponding glob result array.  
-
-concatenate all those arrays to get the final list of spec files to run.
-
-then feed that into the 'dev' suite.  or 'aquifer' suite.
-
-
-*/
 
 
 
@@ -204,20 +135,19 @@ exports.config = {
       './src/ui-test/editor/segment/branch.test.js'
     ],
     dummy: [
-      'src/ui-test/dummy.test.js',
-      'src/ui-test/dummy.test.js',
-      './src/ui-test/dummy.test.js',
+      'src/ui-test/dummy/dummy.test.js',
+      'src/ui-test/dummy/dummy.test.js',
+      'src/ui-test/dummy/dummy.test.js',
     ],
     dummies: [
-      './src/ui-test/dummy1.js',
-      './src/ui-test/dummy2.js',
-      './src/ui-test/dummy3.js',
+      'src/ui-test/dummy/dummy1.js',
+      'src/ui-test/dummy/dummy2.js',
+      'src/ui-test/dummy/dummy3.js',
     ],
     dummies2: [
-      './src/ui-test/dummy*.js'
+      'src/ui-test/dummy/dummy*.js'
     ],
-    many: getArray(_options.manySpec, _options.nRuns),
-    dev: buildSpecsArray(_options.s, _options.n)
+    dev: buildSpecsArrayForWdioSuite(options.s, options.n)
   },
   // Patterns to exclude.
   exclude: [
@@ -252,7 +182,7 @@ exports.config = {
     maxInstances: 5,
     //
     browserName: 'chrome',
-    chromeOptions: global.autobotOptions.notHeadless ? {} : {
+    chromeOptions: global.aquiferOptions.notHeadless ? {} : {
       args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
       binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
     }
@@ -409,7 +339,7 @@ exports.config = {
    * @param {Object} suite suite details
    */
   beforeSuite: function (suite) {
-    global.livy && global.livy.wdioConf_beforeSuite(suite, _options.myRunId);
+    global.livy && global.livy.wdioConf_beforeSuite(suite, options.myRunId);
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
@@ -457,7 +387,7 @@ exports.config = {
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy && global.livy.wdioConf_afterSuite(suite.err, _options.myRunId);
+    global.livy && global.livy.wdioConf_afterSuite(suite.err, options.myRunId);
   },
   /**
    * Runs after a WebdriverIO command gets executed
@@ -494,7 +424,7 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   onComplete: function (exitCode, config, capabilities) {
-    console.log(fs.readFileSync(_options.myRunId).toString())
-    fs.unlinkSync(_options.myRunId)
+    console.log(fs.readFileSync(options.myRunId).toString())
+    fs.unlinkSync(options.myRunId)
   }
 }

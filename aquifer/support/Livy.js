@@ -78,7 +78,7 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
 class Livy {
   constructor() {
     // @ts-ignore
-    const options = global.autobotOptions;
+    const options = global.aquiferOptions;
 
     this.livyDoDisplay = !options.muteConsole;
     this.doSaveEventScreenshots = !options.noPics;
@@ -611,7 +611,7 @@ class Livy {
   /** called from wdio.conf.js */
   wdioConf_after() {
     // @ts-ignore
-    if (!global.autobotOptions.muteConsole) {
+    if (!global.aquiferOptions.muteConsole) {
       console.log('\n📝 ', this.reportClickablePath, '\n');
     }
   }

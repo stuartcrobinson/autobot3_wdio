@@ -1,5 +1,5 @@
 // @ts-check
-import { Page } from '../../../aqua/support/Page';
+import { Page } from '../../../aquifer/support/Page';
 
 export const fastWebpage = new class FastWebpage extends Page {
   constructor() {

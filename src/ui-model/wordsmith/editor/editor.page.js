@@ -1,5 +1,5 @@
 // @ts-check
-import { UiElement } from '../../../../aqua/support/UiElement';
+import { UiElement } from '../../../../aquifer/support/UiElement';
 import { WordsmithPage } from '../WordsmithPage';
 import { EditorToolbar } from './toolbar.cont';
 import { sidebar } from '../misc/component/sideBar.cont';

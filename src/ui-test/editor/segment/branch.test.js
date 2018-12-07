@@ -1,8 +1,8 @@
 // @ts-check
-import { AquaAssert } from '../../../../aqua/support/AquaAssert';
-import { Load } from '../../../../aqua/support/hooks';
-import { key } from '../../../../aqua/support/Key';
-import { livy } from '../../../../aqua/support/Livy';
+import { AquaAssert } from '../../../../aquifer/support/AquaAssert';
+import { Load } from '../../../hooks';
+import { key } from '../../../../aquifer/support/Key';
+import { livy } from '../../../../aquifer/support/Livy';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { editBranchPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';

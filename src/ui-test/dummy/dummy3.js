@@ -1,5 +1,4 @@
 // @ts-check
-import { livy } from '../../aqua/support/Livy';
 
 describe('DummyParent', () => {
   describe('Dummy', () => {

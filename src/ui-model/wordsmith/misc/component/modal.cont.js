@@ -1,5 +1,5 @@
 // @ts-check
-import { UiElement } from '../../../../../aqua/support/UiElement';
+import { UiElement } from '../../../../../aquifer/support/UiElement';
 
 export const modal = new class Modal extends UiElement {
   constructor() {

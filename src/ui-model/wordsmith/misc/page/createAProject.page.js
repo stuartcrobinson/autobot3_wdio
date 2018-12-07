@@ -1,6 +1,6 @@
 // @ts-check
 import { WordsmithPage } from '../../WordsmithPage';
-import { livy } from '../../../../../aqua/support/Livy';
+import { livy } from '../../../../../aquifer/support/Livy';
 
 export const createAProjectPage = new class CreateAProject extends WordsmithPage {
   constructor(urlPath) {

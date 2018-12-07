@@ -1,8 +1,8 @@
 // @ts-check
-import { options } from '../../aqua/aqua';
+import { options } from '../../aquifer/aqua';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
-import { AquaAssert } from '../../aqua/support/AquaAssert';
+import { AquaAssert } from '../../aquifer/support/AquaAssert';
 
 describe('Login', () => {
   it('with invalid creds', () => {

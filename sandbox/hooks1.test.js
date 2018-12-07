@@ -1,8 +1,8 @@
 
 //@ts-check
 //@ts-ignore
-// require('../aqua/hooks2');
-// require('../aqua/hooks1');
+// require('../aquifer/hooks2');
+// require('../aquifer/hooks1');
 
 // console.log("hesaefasf")
 

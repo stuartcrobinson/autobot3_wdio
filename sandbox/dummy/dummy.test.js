@@ -1,15 +1,8 @@
+import { fastWebpage } from "../../src/ui-model/misc/fastWebpage.page";
+
 // @ts-check
 /* eslint guard-for-in: "off", no-restricted-syntax: "off", prefer-destructuring: "off" */
 
-import { fastWebpage } from '../ui-model/misc/fastWebpage.page';
-import { editBranchPage } from '../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
-import { key } from '../../aqua/support/Key';
-import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
-import { options } from '../../aqua/aqua';
-import { livy } from '../../aqua/support/Livy';
-import { UiElement } from '../../aqua/support/UiElement';
-import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
-import { AquaAssert } from '../../aqua/support/AquaAssert';
 
 describe('DummyParent', () => {
   describe('Dummy', () => {

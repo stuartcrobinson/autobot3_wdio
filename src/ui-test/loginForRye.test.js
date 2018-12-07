@@ -1,6 +1,6 @@
 // @ts-check
 import assert from 'assert';
-import { options } from '../../aqua/aqua';
+import { options } from '../../aquifer/aqua';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
 import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';
 

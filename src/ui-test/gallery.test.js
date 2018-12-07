@@ -1,6 +1,6 @@
 // @ts-check
-import { AquaAssert } from '../../aqua/support/AquaAssert';
-import { Load } from '../../aqua/support/hooks';
+import { AquaAssert } from '../../aquifer/support/AquaAssert';
+import { Load } from '../hooks';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
 
 

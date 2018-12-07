@@ -1,6 +1,6 @@
 // @ts-check
 import countBy from 'lodash';
-import { UiElement } from '../../../../aqua/support/UiElement';
+import { UiElement } from '../../../../aquifer/support/UiElement';
 import { WordsmithPage } from '../WordsmithPage';
 
 

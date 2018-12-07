@@ -1,7 +1,7 @@
 // @ts-check
-import { AquaAssert } from '../../../../aqua/support/AquaAssert';
-import { Load } from '../../../../aqua/support/hooks';
-import { key } from '../../../../aqua/support/Key';
+import { AquaAssert } from '../../../../aquifer/support/AquaAssert';
+import { Load } from '../../../hooks';
+import { key } from '../../../../aquifer/support/Key';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { editDataBooleanPage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataBoolean.page';
 import { editDataDatePage } from '../../../ui-model/wordsmith/editor/segmentEditors/dataEditors/editDataDate.page';

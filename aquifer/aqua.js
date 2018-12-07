@@ -133,7 +133,7 @@ export class Autobot {
 /** ****************************** config ************************************ */
 
 // @ts-ignore
-export const options = global.autobotOptions;
+export const options = global.aquiferOptions;
 
 
 /** ****** tools ****** */

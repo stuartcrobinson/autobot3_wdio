@@ -1,6 +1,6 @@
 // @ts-check
-import { options } from '../../../../../aqua/aqua';
-import { UiElement } from '../../../../../aqua/support/UiElement';
+import { options } from '../../../../../aquifer/aqua';
+import { UiElement } from '../../../../../aquifer/support/UiElement';
 import { WordsmithPage } from '../../WordsmithPage';
 import { toast } from '../component/toast.cont';
 import { dashboardPage } from './dashboard.page';
