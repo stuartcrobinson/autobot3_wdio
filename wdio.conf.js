@@ -76,28 +76,27 @@ function getScreenshotName(basePath) {
  */
 function buildSpecsArrayForWdioSuite(s, n = 1) {
 
-  if (typeof s === 'object') {
-    s = s[s.length - 1];        //override default spec files option
-  }
+  s = typeof s === 'object' ? s[s.length - 1] : s; //override default spec files option if multiple --s's passed
 
-  //if the spec file strings don't start with 'src/ui-test', then assume they are substrings of specs that should be searched for among file paths using wildcards & glob.
-  const specPatternsArray = s
-    .trim()
-    .split(/[ ,]+/)
-    .map(s => s.includes('src/ui-test') ? s + '*' : 'src/ui-test/**/*' + s + '*');
+  let specFilePaths =
+    (typeof s === 'object' ? s[s.length - 1] : s) //override default spec files option if multiple --s's passed
+      .trim()
+      .split(/[ ,]+/)
+      .concat('awe8fy9wflasidufasid7yf')    //to ensure array length is > 1 to trigger reduce
+      .map(s => s.includes('src/ui-test') ? s + '*' : 'src/ui-test/**/*' + s + '*')
+      .reduce((a, c) => typeof a === 'string' ? glob.sync(a).concat(glob.sync(c)) : a.concat(glob.sync(c)));
 
-  let globResultsConcatenatedArray = []
+  let specFilePathsRepeated = [];
+
+  Array(n).fill(1).forEach(x => { specFilePathsRepeated = specFilePathsRepeated.concat(specFilePaths) });
 
 
-  for (let i = 0; i < specPatternsArray.length; i++) {
+  // console.log("specFilePathsRepeated: awe8fawoef")
+  // console.log(specFilePathsRepeated)
 
-    let specPattern = specPatternsArray[i];  //might contain wildcards
-
-    let globResults = glob.sync(specPattern);
-    globResultsConcatenatedArray = globResultsConcatenatedArray.concat(globResults)
-
-  }
-  return globResultsConcatenatedArray;
+  // process.abort();
+  
+  return specFilePathsRepeated;
 }
 
 
@@ -116,12 +115,9 @@ exports.config = {
   //
   specs: [
     './src/ui-test/**/*.js'
-    // './src/ui-test/dummy.test.js',
-    // './src/ui-test/loginForRye.test.js'
-
-
   ],
   // define specific suites
+  // NOTE - don't use wildcards here.  it will "work" but only run the first match, i think. 
   suites: {
     login: [
       './src/ui-test/dummy.test.js',
@@ -147,7 +143,7 @@ exports.config = {
     dummies2: [
       'src/ui-test/dummy/dummy*.js'
     ],
-    dev: buildSpecsArrayForWdioSuite(options.s, options.n)
+    dev: options.s && options.suite === 'dev' ? buildSpecsArrayForWdioSuite(options.s, options.n) : []
   },
   // Patterns to exclude.
   exclude: [
@@ -346,20 +342,6 @@ exports.config = {
    * @param {Object} test test details
    */
   beforeTest: function (test) {
-
-
-
-    // console.log('hi');
-    // console.log('this awefawefawef');
-    // console.log(this);
-    // console.log('JSON.stringify(this) greeiugr8');
-    // console.log(JSON.stringify(this));
-
-    // for (const propName in this) {
-    //   const propValue = this[propName];
-    //   console.log(`this propName: ${propName}, ${propValue}`);
-    // }
-
     global.livy && global.livy.wdioConf_beforeTest(test);
 
   },

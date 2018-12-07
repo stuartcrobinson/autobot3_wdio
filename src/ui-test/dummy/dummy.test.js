@@ -1,4 +1,7 @@
-import { fastWebpage } from "../src/ui-model/misc/fastWebpage.page";
+// @ts-check
+import { fastWebpage } from '../../ui-model/misc/fastWebpage.page';
+
+// @ts-check
 
 // @ts-check
 /* eslint guard-for-in: "off", no-restricted-syntax: "off", prefer-destructuring: "off" */

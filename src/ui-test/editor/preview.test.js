@@ -1,1 +1,2 @@
-//TODO
+// @ts-check
+// TODO

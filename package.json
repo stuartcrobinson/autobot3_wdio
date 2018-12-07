@@ -12,7 +12,7 @@
     "wdioDOESNTWORK_WHYNOT_somethingAboutParametersNotReadCorrectly": "npm run lint && npm run quick",
     "wdio": "npm run lint && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\"",
     "quick": "d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\"",
-    "lint": "./node_modules/.bin/eslint --fix \"aqua/**/*.js\" \"src/**/*.js\"",
+    "lint": "./node_modules/.bin/eslint --fix \"aquifer/**/*.js\" \"src/**/*.js\"",
     "add": "node add.js",
     "dev": "npm run lint && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\" --suite dev"
   },

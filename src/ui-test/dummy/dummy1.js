@@ -1,8 +1,8 @@
 // @ts-check
 
-describe('DummyParent2', () => {
-  describe('Dummy2', () => {
-    it('go home', () => {
+describe('DummyParent1', () => {
+  describe('Dummy1', () => {
+    it('go home1', () => {
     });
 
     it('go home2', () => {
