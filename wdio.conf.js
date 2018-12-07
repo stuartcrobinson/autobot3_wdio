@@ -95,12 +95,9 @@ function buildSpecsArrayForWdioSuite(s, n = 1) {
   // console.log(specFilePathsRepeated)
 
   // process.abort();
-  
+
   return specFilePathsRepeated;
 }
-
-
-
 
 
 exports.config = {
