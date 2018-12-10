@@ -10,10 +10,7 @@ import * as os from 'os';
 import * as path from 'path';
 import rimraf from 'rimraf';
 
-
 const entities = new AllHtmlEntities();
-
-/*  TODO - this file seems terrible.  should be broken up?  */
 
 function passthrough(message) {
   return message;
@@ -26,45 +23,6 @@ function passthrough(message) {
 function convertStylesToClassValue(style) {
   return style ? style._styles.join(' ') : '';
 }
-
-// function convertNpmColorsToCss(style) {
-//   console.log('style: adf98auweof');
-//   console.log(style);
-//   console.log(style._styles);
-//   // console.log(style._styles[0]);
-//   // console.log(style._styles[1]);
-//   // style._styles.forEach(s => console.log(s));
-//   // console.log(style._styles.join(' '));
-
-//   let myStyle = style;
-//   let htmlStyle = '';
-
-//   if (!myStyle) {
-//     myStyle = passthrough;
-//   } else {
-//     const styles = myStyle._styles ? myStyle._styles : myStyle; // could be colors object or string ('emoji') // this is a mess
-
-//     if (styles.includes('red')) {
-//       htmlStyle += 'color:red;';
-//     } else if (styles.includes('green')) {
-//       htmlStyle += 'color:green;';
-//     } else if (styles.includes('blue')) {
-//       htmlStyle += 'color:blue;';
-//     } else if (styles.includes('gray')) {
-//       htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
-//     }
-//     if (styles.includes('bold')) {
-//       htmlStyle += 'font-weight:bold;';
-//     }
-//     if (styles.includes('italic')) {
-//       htmlStyle += 'font-style: italic;';
-//     }
-//     if (styles.includes('emoji')) {
-//       htmlStyle += 'font-size:11px;';
-//     }
-//   }
-//   return htmlStyle;
-// }
 
 function getEventDomFileRelPath(id) {
   return `${getEventSnapshotsDirName()}/${id}.html`;
@@ -145,121 +103,95 @@ class Livy {
     fs_extra.mkdirsSync(this.getReportDir());
     fs_extra.mkdirsSync(this.getEventScreenshotsDir());
 
-    // https://www.iconfinder.com/icons/367619/autobot_transformers_icon
-    let html = `<!doctype html>
-    <head>
-      <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
-    </head>
-    <style>
-      body {
-        background-color: #f5f5f5
-      }
-      a:link {
-        color: inherit;
-      }
-      a:visited {
-        color: inherit;
-      }
-      a:hover {
-        color: inherit;
-      }
-      a:active {
-        color: inherit;
-      }
-      a:link {
-        text-decoration: none;
-      }
-      a:visited {
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      .selector-text:hover {
-        color: darkgray;
-        background-color: azure !important;
-      }
-      .header img {
-        padding-left: 10px;
-        float: left;
-        width: 50px;
-        height: 50px;
-      }
-      .header h1 {
-        position: relative;
-        top: 8px;
-        left: 10px;
-      }
-      .monospace {font-family: monospace;}
-      input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
-      .red {color:red;}
-      .green {color:green;}
-      .blue {color:blue;}
-      .gray {color:#C8C8C8;}
-      .bold {font-weight:bold;}
-      .italic {font-style:italic;}
-      .bold {font-weight:bold;}
-      .gray {color:#C8C8C8;}
-      .emoji {font-size:11px;}
-      .gray {color:#C8C8C8;}
-      .whitespace {white-space:pre;}
-      #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
-    </style>
+    this.logRawToHtml(`
+    <!doctype html>
+      <head>
+        <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
+      </head>
+      <style>
+        body {
+          background-color: #f5f5f5
+        }
+        a:link {
+          color: inherit;
+        }
+        a:visited {
+          color: inherit;
+        }
+        a:hover {
+          color: inherit;
+        }
+        a:active {
+          color: inherit;
+        }
+        a:link {
+          text-decoration: none;
+        }
+        a:visited {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .selector-text:hover {
+          color: darkgray;
+          background-color: azure !important;
+        }
+        .header img {
+          padding-left: 10px;
+          float: left;
+          width: 50px;
+          height: 50px;
+        }
+        .header h1 {
+          position: relative;
+          top: 8px;
+          left: 10px;
+        }
+        .monospace {font-family: monospace;}
+        input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
+        .red {color:red;}
+        .green {color:green;}
+        .blue {color:blue;}
+        .gray {color:#C8C8C8;}
+        .bold {font-weight:bold;}
+        .italic {font-style:italic;}
+        .bold {font-weight:bold;}
+        .gray {color:#C8C8C8;}
+        .emoji {font-size:11px;}
+        .gray {color:#C8C8C8;}
+        .whitespace {white-space:pre;}
+        #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
+      </style>
 
-    <script>
-    function dblclickSelectorSpan(e) {
-      e.firstElementChild.style.display = 'none';
-      e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
-      e.lastElementChild.style.display = 'inline';
-      // e.lastElementChild.focus();
-      e.lastElementChild.select();
-    }
-    function blurSelectorInput(e) {
-      e.style.display = 'none';
-      e.parentElement.firstElementChild.style.display = 'inline';
-    }
-    function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
-      var elements = document.getElementsByClassName('logline');
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
-      }
-      document.images['image'].src=eventScreenshotFileRelPath;
-      document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
-    }
-  </script>
-    ${os.EOL}`;
-
-    // if (styles.includes('red')) {
-    //   htmlStyle += 'color:red;';
-    // } else if (styles.includes('green')) {
-    //   htmlStyle += 'color:green;';
-    // } else if (styles.includes('blue')) {
-    //   htmlStyle += 'color:blue;';
-    // } else if (styles.includes('gray')) {
-    //   htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
-    // }
-    // if (styles.includes('bold')) {
-    //   htmlStyle += 'font-weight:bold;';
-    // }
-    // if (styles.includes('italic')) {
-    //   htmlStyle += 'font-style: italic;';
-    // }
-    // if (styles.includes('emoji')) {
-    //   htmlStyle += 'font-size:11px;';
-    // done?TODO add class for monospace: ;font-family: monospace;
-    // done?TODO add class for input: style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;'
-
-    // html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
-    html += '<img src="" id="image"/>';
-
-    html += `
-    <div class="header">
-      <img src="../../../../autobot_icon.svg" alt="logo" />
-      <h1>${this.specFilePath}</h1>
-    </div>`;
-
-    // fs.appendFileSync(this.getFile(), html + os.EOL);
-    this.logRawToHtml(html);
+      <script>
+        function dblclickSelectorSpan(e) {
+          e.firstElementChild.style.display = 'none';
+          e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+          e.lastElementChild.style.display = 'inline';
+          // e.lastElementChild.focus();
+          e.lastElementChild.select();
+        }
+        function blurSelectorInput(e) {
+          e.style.display = 'none';
+          e.parentElement.firstElementChild.style.display = 'inline';
+        }
+        function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
+          var elements = document.getElementsByClassName('logline');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
+          }
+          document.images['image'].src=eventScreenshotFileRelPath;
+          document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
+        }
+      </script>
+      <img src="" id="image"/>
+      
+      <div class="header">
+        <img src="../../../../autobot_icon.svg" alt="logo" />
+        <h1>${this.specFilePath}</h1>
+      </div>
+      `);
   }
 
   initializeNewTestCase(testCaseTitle, testParentTitle, testCaseFullTitle, testGrandparentsTitle) {
@@ -277,9 +209,6 @@ class Livy {
     this.testCaseFullTitle = undefined;
     this.hasPrintedNontestLine = false;
   }
-
-  // //////////////////////////////////////////////
-
 
   getSpecFileName() {
     const split = this.specFilePath.split('/');
@@ -305,7 +234,6 @@ class Livy {
   getReportDir() {
     return `${this.getTimeDir()}/${this.getSpecFileDirName()}__${this.getSpecFileName()}`;
   }
-
 
   getEventScreenshotsDir() {
     return `${this.getReportDir()}/${getEventSnapshotsDirName()}`;
@@ -365,6 +293,7 @@ class Livy {
   saveScreenshot(screenshotId, screenshotFile = undefined) {
     if (this.doSaveEventScreenshots) {
       if (screenshotFile) {
+        //screenshotFile from visual regression service.  using it instead of taking new screenshot
         // screenshotFile doens't exist yet!  but it will in a second.
         // need to spin off a thread that will wait until the file exists, and then copy it.
         // or wait to copy until later??? no, this might be the last step of a test.
@@ -418,7 +347,6 @@ class Livy {
     return this.logRichMessages([{ text: message }]);
   }
 
-
   /**
    *
    * @param {Object} messageChunks an array of {text, style} objects
@@ -446,9 +374,6 @@ class Livy {
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
-    // for (let i = 0; i < messageChunks.length || 0; i++) {
-    //   const chunk = messageChunks[i];
-
     messageChunks.forEach((chunk) => {
       let style = chunk.style;
       let message = chunk.text;
@@ -459,13 +384,7 @@ class Livy {
           style = this.style.object;
         }
 
-        // const htmlStyle = convertNpmColorsToCss(style);
-
         const classValue = convertStylesToClassValue(style);
-        // style._styles.join(' ');
-
-
-        // style._styles.forEach(s => console.log(s));
 
         if (!style) {
           style = passthrough;
@@ -478,8 +397,6 @@ class Livy {
         if (message.startsWith('http')) {
           htmlBuilder += `<span class="${classValue}"><a href=${message}>${entities.encode(message)}</a></span>`;
         } else if (!message.startsWith(' excluding') && (style === this.style.selector || style === this.style.selector_red)) {
-          // done?TODO add class for monospace: ;font-family: monospace;
-          // done?TODO add class for input: style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;'
 
           htmlBuilder += `
           <span class="${classValue} monospace;"  ondblclick="dblclickSelectorSpan(this);">
@@ -493,7 +410,6 @@ class Livy {
       }
     });
     htmlBuilder += '</span><br/>';
-    // fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);
     this.logRawToHtml(htmlBuilder);
 
 
@@ -506,7 +422,7 @@ class Livy {
       } else {
         prefix = !withPrefix ? '' : `${currTime} ${colors.gray(this.getSpecFileDirName())}/${this.getSpecFileName()}>  `;
       }
-      console.log(prefix + consoleBuilder);
+      console.log(prefix + consoleBuilder);   //don't delete
     }
     return screenshotId;
   }
@@ -526,8 +442,8 @@ class Livy {
 
     const diffImageNewAbsPath = this.getDiffImageCopyAbsPath(path.parse(diffImageFilePath).base.replace(/ /g, '_'));
     const diffImageNewRelPath = getDiffImageCopyRelPath(path.parse(diffImageFilePath).base.replace(/ /g, '_'));
-    fs.copyFileSync(diffImageFilePath, diffImageNewAbsPath);
 
+    fs.copyFileSync(diffImageFilePath, diffImageNewAbsPath);
 
     this.logRichMessages([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
 
@@ -541,7 +457,6 @@ class Livy {
     this.logWithoutPrefix_toHtml(message, style);
   }
 
-
   logRawToHtml(text) {
     fs.appendFileSync(this.getFile(), text + os.EOL);
   }
@@ -554,12 +469,9 @@ class Livy {
 
   /* eslint no-param-reassign: "off" */
   logWithoutPrefix_toHtml(message, style) {
-    // const htmlStyle = convertNpmColorsToCss(style);
     const classValue = convertStylesToClassValue(style);
 
-    const html = `<span class="whitespace ${classValue}">${entities.encode(message)}</span><br/>`;
-    // fs.appendFileSync(this.getFile(), html + os.EOL);
-    this.logRawToHtml(html);
+    this.logRawToHtml(`<span class="whitespace ${classValue}">${entities.encode(message)}</span><br/>`);
   }
 
   /* eslint no-param-reassign: "off" */
@@ -567,7 +479,6 @@ class Livy {
     if (!style) {
       style = passthrough;
     }
-
     if (this.livyDoDisplay) {
       console.log(style(message));
     }
@@ -575,10 +486,7 @@ class Livy {
 
   // run this before "it"
   logTestStart() {
-    // fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
     this.logRawToHtml(`<span id=${this.getSpacelessTestCaseFullTitle()}></span>`);
-
-
     this.logHorizontalLine();
 
     this.logRichMessages([
@@ -618,7 +526,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.filler_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-    screenshotFile);
+      screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -629,7 +537,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-    screenshotFile);
+      screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -640,7 +548,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object },
       { text: this.screenshotTargetName, style: this.style.object },
       { text: this.screenshotTargetSelector, style: this.style.selector }],
-    screenshotFile);
+      screenshotFile);
   }
 
   wdioConf_beforeSuite(suite, runId) {
@@ -695,8 +603,6 @@ class Livy {
       this.logFailed(err.stack);
       console.log('\n\tTest case report:\n\t\t', this.reportClickablePathWithHash, '\n');
     }
-    // const reportClickablePath = 'file://' + path.resolve(livy.getFile()) + '#' + livy.getSpacelessTestCaseFullTitle();
-
     this.endNewTestCase();
   }
 
@@ -706,7 +612,6 @@ class Livy {
     }
   }
 }
-
 
 export const livy = new Livy();
 
