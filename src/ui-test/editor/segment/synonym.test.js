@@ -192,21 +192,16 @@ describe('Synonyms:', () => {
       reviewPage.showAllLink.click_waitForChange();
       synonyms = synonyms.concat(reviewPage.getNthSegmentSpan(2).getTexts());
     });
+
     it('check distribution', () => {
       livy.logPrefixedText('📊 Confirm reasonable synonym distribution.');
       const counts = countBy(synonyms);
-      // try {
-      // @ts-ignore
       Object.values(counts).forEach((value) => {
         console.log('value awe8fidsfusf');
         console.log(value);
         expect(value).to.be.lessThan(50);
         expect(value).to.be.greaterThan(10);
       });
-      // } catch (err) {
-      //   livy.logMessage(JSON.stringify(err));
-      //   throw new Error(`Weird synonym distribution: ${JSON.stringify(counts)}`);
-      // }
     });
   });
 });

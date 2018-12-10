@@ -19,36 +19,52 @@ function passthrough(message) {
   return message;
 }
 
-function convertNpmColorsToCss(style) {
-  let myStyle = style;
-  let htmlStyle = '';
-
-  if (!myStyle) {
-    myStyle = passthrough;
-  } else {
-    const styles = myStyle._styles ? myStyle._styles : myStyle; // could be colors object or string ('emoji') // this is a mess
-
-    if (styles.includes('red')) {
-      htmlStyle += 'color:red;';
-    } else if (styles.includes('green')) {
-      htmlStyle += 'color:green;';
-    } else if (styles.includes('blue')) {
-      htmlStyle += 'color:blue;';
-    } else if (styles.includes('gray')) {
-      htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
-    }
-    if (styles.includes('bold')) {
-      htmlStyle += 'font-weight:bold;';
-    }
-    if (styles.includes('italic')) {
-      htmlStyle += 'font-style: italic;';
-    }
-    if (styles.includes('emoji')) {
-      htmlStyle += 'font-size:11px;';
-    }
-  }
-  return htmlStyle;
+/**
+ *
+ * @param {Object} style has a parameter '_styles' which is an array of strings describing the style, like "red", or "emoji"
+ */
+function convertStylesToClassValue(style) {
+  return style ? style._styles.join(' ') : '';
 }
+
+// function convertNpmColorsToCss(style) {
+//   console.log('style: adf98auweof');
+//   console.log(style);
+//   console.log(style._styles);
+//   // console.log(style._styles[0]);
+//   // console.log(style._styles[1]);
+//   // style._styles.forEach(s => console.log(s));
+//   // console.log(style._styles.join(' '));
+
+//   let myStyle = style;
+//   let htmlStyle = '';
+
+//   if (!myStyle) {
+//     myStyle = passthrough;
+//   } else {
+//     const styles = myStyle._styles ? myStyle._styles : myStyle; // could be colors object or string ('emoji') // this is a mess
+
+//     if (styles.includes('red')) {
+//       htmlStyle += 'color:red;';
+//     } else if (styles.includes('green')) {
+//       htmlStyle += 'color:green;';
+//     } else if (styles.includes('blue')) {
+//       htmlStyle += 'color:blue;';
+//     } else if (styles.includes('gray')) {
+//       htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
+//     }
+//     if (styles.includes('bold')) {
+//       htmlStyle += 'font-weight:bold;';
+//     }
+//     if (styles.includes('italic')) {
+//       htmlStyle += 'font-style: italic;';
+//     }
+//     if (styles.includes('emoji')) {
+//       htmlStyle += 'font-size:11px;';
+//     }
+//   }
+//   return htmlStyle;
+// }
 
 function getEventDomFileRelPath(id) {
   return `${getEventSnapshotsDirName()}/${id}.html`;
@@ -59,8 +75,17 @@ function getEventSnapshotsDirName() {
   return 'eventSnapshots';
 }
 
+/** these files get copied from the visual regression service when an image test fails. */
+function getDiffImagesDirName() {
+  return 'diffImages';
+}
+
 function getEventScreenshotFileRelPath(id) {
   return `${getEventSnapshotsDirName()}/${id}.png`;
+}
+
+function getDiffImageCopyRelPath(base) {
+  return `${getDiffImagesDirName()}/${base}`;
 }
 
 /**
@@ -92,7 +117,7 @@ class Livy {
       // @ts-ignore
       selector_red: colors.dim.red,
       selector: colors.gray,
-      emoji: 'emoji',
+      emoji: { _styles: ['emoji'] },
       password: 'password',
     };
     this.screenshotTargetName = undefined;
@@ -160,12 +185,25 @@ class Livy {
         width: 50px;
         height: 50px;
       }
-      
       .header h1 {
         position: relative;
         top: 8px;
         left: 10px;
       }
+      .monospace {font-family: monospace;}
+      input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
+      .red {color:red;}
+      .green {color:green;}
+      .blue {color:blue;}
+      .gray {color:#C8C8C8;}
+      .bold {font-weight:bold;}
+      .italic {font-style:italic;}
+      .bold {font-weight:bold;}
+      .gray {color:#C8C8C8;}
+      .emoji {font-size:11px;}
+      .gray {color:#C8C8C8;}
+      .whitespace {white-space:pre;}
+      #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
     </style>
 
     <script>
@@ -181,9 +219,9 @@ class Livy {
       e.parentElement.firstElementChild.style.display = 'inline';
     }
     function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
-      var elements = document.getElementsByTagName('span');
+      var elements = document.getElementsByClassName('logline');
       for (var i = 0; i < elements.length; i++) {
-        elements[i].style.backgroundColor="inherit";
+        elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
       }
       document.images['image'].src=eventScreenshotFileRelPath;
       document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
@@ -191,7 +229,28 @@ class Livy {
   </script>
     ${os.EOL}`;
 
-    html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
+    // if (styles.includes('red')) {
+    //   htmlStyle += 'color:red;';
+    // } else if (styles.includes('green')) {
+    //   htmlStyle += 'color:green;';
+    // } else if (styles.includes('blue')) {
+    //   htmlStyle += 'color:blue;';
+    // } else if (styles.includes('gray')) {
+    //   htmlStyle += 'color:#C8C8C8;'; // lighter than gray, darker than lightgray
+    // }
+    // if (styles.includes('bold')) {
+    //   htmlStyle += 'font-weight:bold;';
+    // }
+    // if (styles.includes('italic')) {
+    //   htmlStyle += 'font-style: italic;';
+    // }
+    // if (styles.includes('emoji')) {
+    //   htmlStyle += 'font-size:11px;';
+    // done?TODO add class for monospace: ;font-family: monospace;
+    // done?TODO add class for input: style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;'
+
+    // html += '<img src="" id="image" style="position:fixed;bottom:0;right:0;width:45%;border:1px solid blue"/>';
+    html += '<img src="" id="image"/>';
 
     html += `
     <div class="header">
@@ -199,20 +258,9 @@ class Livy {
       <h1>${this.specFilePath}</h1>
     </div>`;
 
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    // fs.appendFileSync(this.getFile(), html + os.EOL);
+    this.logRawToHtml(html);
   }
-
-  // let html = '';
-  // html += `<script>${os.EOL}`;
-  // html += `function logEntryMouseover${screenshotId}() {${os.EOL}`;
-  // html += `    var elements = document.getElementsByTagName('span');${os.EOL}`;
-  // html += `    for (var i = 0; i < elements.length; i++) {${os.EOL}`;
-  // html += `        elements[i].style.backgroundColor="inherit";${os.EOL}`;
-  // html += `    }${os.EOL}`;
-  // html += `    document.images['image'].src="${getEventScreenshotFileRelPath(screenshotId)}";${os.EOL}`;
-  // html += `    document.getElementById('entrySpan${screenshotId}').style.backgroundColor="white";${os.EOL}`;
-  // html += `}${os.EOL}`;
-  // html += `</script>${os.EOL}`;
 
   initializeNewTestCase(testCaseTitle, testParentTitle, testCaseFullTitle, testGrandparentsTitle) {
     this.isInTestCase = true;
@@ -263,6 +311,10 @@ class Livy {
     return `${this.getReportDir()}/${getEventSnapshotsDirName()}`;
   }
 
+  getDiffImagesDir() {
+    return `${this.getReportDir()}/${getDiffImagesDirName()}`;
+  }
+
 
   getEventDomFileAbsPath(id) {
     return `${this.getEventScreenshotsDir()}/${id}.html`;
@@ -271,6 +323,10 @@ class Livy {
 
   getEventScreenshotFileAbsPath(id) {
     return `${this.getEventScreenshotsDir()}/${id}.png`;
+  }
+
+  getDiffImageCopyAbsPath(base) {
+    return `${this.getDiffImagesDir()}/${base}`;
   }
 
   getErrorScreenshotFileAbsPath() {
@@ -336,23 +392,6 @@ class Livy {
         browser.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId));
       }
     }
-
-    // TODO clean up livy html report javascript https://autoin.atlassian.net/browse/QS-404
-
-    // this was used back when i had a separate js function written out per log line  ':D
-    // let html = '';
-    // html += `<script>${os.EOL}`;
-    // html += `function logEntryMouseover${screenshotId}() {${os.EOL}`;
-    // html += `    var elements = document.getElementsByTagName('span');${os.EOL}`;
-    // html += `    for (var i = 0; i < elements.length; i++) {${os.EOL}`;
-    // html += `        elements[i].style.backgroundColor="inherit";${os.EOL}`;
-    // html += `    }${os.EOL}`;
-    // html += `    document.images['image'].src="${getEventScreenshotFileRelPath(screenshotId)}";${os.EOL}`;
-    // html += `    document.getElementById('entrySpan${screenshotId}').style.backgroundColor="white";${os.EOL}`;
-    // html += `}${os.EOL}`;
-    // html += `</script>${os.EOL}`;
-
-    // fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
   /**
@@ -379,6 +418,7 @@ class Livy {
     return this.logRichMessages([{ text: message }]);
   }
 
+
   /**
    *
    * @param {Object} messageChunks an array of {text, style} objects
@@ -402,12 +442,14 @@ class Livy {
     const onClickHtml = this.doSaveEventDom ? `onclick="window.open('${getEventDomFileRelPath(screenshotId)}');"` : '';
 
     let htmlBuilder = '';
-    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');" ${onClickHtml}>`;
+    htmlBuilder += `<span class="logline" id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');" ${onClickHtml}>`;
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
-    for (let i = 0; i < messageChunks.length || 0; i++) {
-      const chunk = messageChunks[i];
+    // for (let i = 0; i < messageChunks.length || 0; i++) {
+    //   const chunk = messageChunks[i];
+
+    messageChunks.forEach((chunk) => {
       let style = chunk.style;
       let message = chunk.text;
 
@@ -417,7 +459,13 @@ class Livy {
           style = this.style.object;
         }
 
-        const htmlStyle = convertNpmColorsToCss(style);
+        // const htmlStyle = convertNpmColorsToCss(style);
+
+        const classValue = convertStylesToClassValue(style);
+        // style._styles.join(' ');
+
+
+        // style._styles.forEach(s => console.log(s));
 
         if (!style) {
           style = passthrough;
@@ -428,21 +476,26 @@ class Livy {
         }
 
         if (message.startsWith('http')) {
-          htmlBuilder += `<span style="${htmlStyle}"><a href=${message}>${entities.encode(message)}</a></span>`;
+          htmlBuilder += `<span class="${classValue}"><a href=${message}>${entities.encode(message)}</a></span>`;
         } else if (!message.startsWith(' excluding') && (style === this.style.selector || style === this.style.selector_red)) {
+          // done?TODO add class for monospace: ;font-family: monospace;
+          // done?TODO add class for input: style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;'
+
           htmlBuilder += `
-          <span style="${htmlStyle};font-family: monospace;"  ondblclick="dblclickSelectorSpan(this);">
+          <span class="${classValue} monospace;"  ondblclick="dblclickSelectorSpan(this);">
               <span class='selector-text'>${entities.encode(message)}</span>
-              <input onblur="blurSelectorInput(this);" type='text' style='display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;' value='${entities.encode(message)}'>
+              <input onblur="blurSelectorInput(this);" type='text'  value='${entities.encode(message)}'>
           </span>`;
         } else {
-          htmlBuilder += `<span style="${htmlStyle}">${entities.encode(message)}</span>`;
+          htmlBuilder += `<span class="${classValue}">${entities.encode(message)}</span>`;
         }
         consoleBuilder += `${typeof style === 'function' ? style(message) : message}`;
       }
-    }
+    });
     htmlBuilder += '</span><br/>';
-    fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);
+    // fs.appendFileSync(this.getFile(), htmlBuilder + os.EOL);
+    this.logRawToHtml(htmlBuilder);
+
 
     let prefix;
 
@@ -459,24 +512,28 @@ class Livy {
   }
 
   logReportErrorToHtml(stack) {
-    let html = '';
-    html += `<span name="thisIsWhereStackGoes" style="font-family:monospace;color:red"><pre>${entities.encode(stack)}</pre></span><br/>`;
-
-
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    this.logRawToHtml(
+      `<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`,
+    );
   }
 
   logErrorImageToHtml() {
-    fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
+    this.logRawToHtml(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
   }
 
   logFailedVisualTest(diffImageFilePath, report) {
+    fs.mkdirSync(this.getDiffImagesDir());
+
+    const diffImageNewAbsPath = this.getDiffImageCopyAbsPath(path.parse(diffImageFilePath).base.replace(/ /g, '_'));
+    const diffImageNewRelPath = getDiffImageCopyRelPath(path.parse(diffImageFilePath).base.replace(/ /g, '_'));
+    fs.copyFileSync(diffImageFilePath, diffImageNewAbsPath);
+
+
     this.logRichMessages([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
 
     this.logWithoutPrefix_toHtml('Diff image: ', colors.red);
 
-    const html = `<img style="width:35%" src="${diffImageFilePath}"><br>`;
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    this.logRawToHtml(`<img style="width:35%" src="${diffImageNewRelPath}"><br>`);
   }
 
   logWithoutPrefix(message, style) {
@@ -497,10 +554,12 @@ class Livy {
 
   /* eslint no-param-reassign: "off" */
   logWithoutPrefix_toHtml(message, style) {
-    const htmlStyle = convertNpmColorsToCss(style);
+    // const htmlStyle = convertNpmColorsToCss(style);
+    const classValue = convertStylesToClassValue(style);
 
-    const html = `<span style="white-space:pre;${htmlStyle}">${entities.encode(message)}</span><br/>`;
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    const html = `<span class="whitespace ${classValue}">${entities.encode(message)}</span><br/>`;
+    // fs.appendFileSync(this.getFile(), html + os.EOL);
+    this.logRawToHtml(html);
   }
 
   /* eslint no-param-reassign: "off" */
@@ -516,7 +575,9 @@ class Livy {
 
   // run this before "it"
   logTestStart() {
-    fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
+    // fs.appendFileSync(this.getFile(), `<span id=${this.getSpacelessTestCaseFullTitle()}></span>${os.EOL}`);
+    this.logRawToHtml(`<span id=${this.getSpacelessTestCaseFullTitle()}></span>`);
+
 
     this.logHorizontalLine();
 
@@ -552,33 +613,33 @@ class Livy {
   /** Called from global in wdio.conf.js */
   logVisualTestReset(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📷 ', style: livy.style.emoji },
-      { text: 'Reset ', style: livy.style.verb_red },
-      { text: 'screenshot ', style: livy.style.filler_red },
-      { text: this.screenshotTargetName, style: livy.style.object_red },
-      { text: this.screenshotTargetSelector, style: livy.style.selector_red }],
+      { text: '📷 ', style: this.style.emoji },
+      { text: 'Reset ', style: this.style.verb_red },
+      { text: 'screenshot ', style: this.style.filler_red },
+      { text: this.screenshotTargetName, style: this.style.object_red },
+      { text: this.screenshotTargetSelector, style: this.style.selector_red }],
     screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
   logVisualTestCreate(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📷 ', style: livy.style.emoji },
-      { text: 'Save ', style: livy.style.verb_red },
-      { text: 'screenshot ', style: livy.style.object_red },
-      { text: this.screenshotTargetName, style: livy.style.object_red },
-      { text: this.screenshotTargetSelector, style: livy.style.selector_red }],
+      { text: '📷 ', style: this.style.emoji },
+      { text: 'Save ', style: this.style.verb_red },
+      { text: 'screenshot ', style: this.style.object_red },
+      { text: this.screenshotTargetName, style: this.style.object_red },
+      { text: this.screenshotTargetSelector, style: this.style.selector_red }],
     screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
   logVisualTestVerify(screenshotFile) {
     this.logScreenshottedAction([
-      { text: '📸 ', style: livy.style.emoji },
-      { text: 'Verify ', style: livy.style.verb },
-      { text: 'screenshot ', style: livy.style.object },
-      { text: this.screenshotTargetName, style: livy.style.object },
-      { text: this.screenshotTargetSelector, style: livy.style.selector }],
+      { text: '📸 ', style: this.style.emoji },
+      { text: 'Verify ', style: this.style.verb },
+      { text: 'screenshot ', style: this.style.object },
+      { text: this.screenshotTargetName, style: this.style.object },
+      { text: this.screenshotTargetSelector, style: this.style.selector }],
     screenshotFile);
   }
 
@@ -603,7 +664,6 @@ class Livy {
 
   /** called from wdio.conf.js */
   wdioConf_after() {
-    // @ts-ignore
     if (!global.aquiferOptions.muteConsole) {
       console.log('\n📝 ', this.reportClickablePath, '\n');
     }
@@ -650,5 +710,4 @@ class Livy {
 
 export const livy = new Livy();
 
-// @ts-ignore
 global.livy = livy;

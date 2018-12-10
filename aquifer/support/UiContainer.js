@@ -67,10 +67,6 @@ export class UiContainer {
 
   waitForLoad(timeoutInMillis = 12000) {
     try {
-      // console.log('this.constructor.name');
-      // console.log(this.constructor.name);
-      // console.log('this.criteriaElements');
-      // console.log(this.criteriaElements);
       for (let i = 0; i < this.criteriaElements.length; i++) {
         const element = this.criteriaElements[i];
         // @ts-ignore
@@ -112,16 +108,7 @@ export class UiContainer {
 
   // TODO refactor, i think this is waste.  artifact of different hierarchy
   getChildren(selector) {
-    // if (this.selector.startsWith('/') && selector.startsWith('/')) {
-    //   return this.findWebElements(this.selector + selector);
-    // }
-    // if (!this.selector.startsWith('/') && !selector.startsWith('/')) {
     return this.findWebElements(selector);
-    // }
-
-    // throw new Error(
-    //   `Parent and child elements must have selectors of the same type. Parent: <${this.selector}>, Child: <${selector}>.`,
-    // );
   }
 
   /**
@@ -149,22 +136,19 @@ export class UiContainer {
     let report;
     // @ts-ignore
     if (this.selector) {
-      // is an element
+      /* is an element */
 
       // @ts-ignore
       global.customScreenshotTag = filenamify(this.selector);
-      // @ts-ignore
 
       /* eslint prefer-destructuring: "off" */
       // @ts-ignore
       report = browser.checkElement(this.selector, { hide: excludedSelectors, misMatchTolerance: 0.05 })[0];
       // report = browser.checkElement(this.selector, { hide: excludedSelectors, misMatchTolerance: 0.04 })[0];
     } else {
-      // is a page
+      /* is a page */
 
-      // @ts-ignore
       global.customScreenshotTag = `${this.constructor.name}Page`;
-
 
       /* eslint prefer-destructuring: "off" */
       // @ts-ignore
@@ -173,25 +157,19 @@ export class UiContainer {
 
     // @ts-ignore
     if (!report.isWithinMisMatchTolerance) {
-      // @ts-ignore
       livy.logFailedVisualTest(global.previousImageFileLocation, report);
       // throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
-      // @ts-ignore
       livy.aVisualTestFailed = true;
     }
-    // @ts-ignore
     global.customScreenshotTag = undefined;
     livy.screenshotTargetName = undefined;
     livy.screenshotTargetSelector = undefined;
   }
 
   resetVisual(...excludedElements) {
-    // this is sloppy but i'm not sure how to determine the ref image name - stuart 11/22/2018
-
-    // @ts-ignore
+    // this is sloppy but i'm not sure how else to determine the ref image name - stuart 11/22/2018
     global.doDeleteReferenceImage = true;
     this.checkVisual(...excludedElements);
-    // @ts-ignore
     global.doDeleteReferenceImage = false;
   }
 
@@ -239,25 +217,10 @@ export class UiContainer {
     for (let i = 0; i < asdf.length; i++) {
       const inputObject = asdf[i];
       for (let j = 0; j < inputObject.n; j++) {
-        // console.log('asdf[i].k');
-        // console.log(asdf[i].k);
         browser.keys(asdf[i].k);
       }
     }
   }
-
-
-  // keys(keysToType, n = 1, doLog = true) {
-  //   this.waitForLoad();
-  //   if (doLog) {
-  //     livy.logScreenshottedAction([
-  //       { text: 'Type ', style: livy.style.verb },
-  //       { text: JSON.stringify(keysToType) + (n > 1 ? `x${n}` : ''), style: livy.style.object }]);
-  //   }
-  //   for (let i = 0; i < n; i++) {
-  //     browser.keys(keysToType);
-  //   }
-  // }
 
   sleep(timeInMilliseconds) {
     this.waitForLoad();

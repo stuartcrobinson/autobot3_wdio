@@ -493,8 +493,6 @@ export class UiElement extends UiContainer {
     for (const propName in this) {
       const propValue = this[propName];
       if (propValue instanceof UiElement) {
-        // @ts-ignore
-        // propValue.stuartname = propName;
         propValue.setName(propName);
       }
     }

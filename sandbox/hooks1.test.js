@@ -1,10 +1,5 @@
 
 //@ts-check
-//@ts-ignore
-// require('../aquifer/hooks2');
-// require('../aquifer/hooks1');
-
-// console.log("hesaefasf")
 
 describe('hooks1 describe @testtag', () => {
   describe('hooks1 describedescribe', () => {

@@ -32,7 +32,6 @@ export function httpRequestCreateProjectFromDataFile_begin_and_complete(name, fi
   const url = 'https://api.automatedinsights.com/v1.8/projects';
 
   if (!global.aquiferOptions.wsApiKey) {
-    // @ts-ignore
     global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
     // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
@@ -79,7 +78,6 @@ export function httpRequestCreateProjectFromDataObject_begin_and_complete(name, 
   const url = 'https://api.automatedinsights.com/v1.8/projects';
 
   if (!global.aquiferOptions.wsApiKey) {
-    // @ts-ignore
     global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
     // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
@@ -116,13 +114,8 @@ export function httpRequestCreateProjectFromDataFile_begin(name, file) {
  */
 export function httpRequestBegin(url, body) {
   if (!global.aquiferOptions.wsApiKey) {
-    // @ts-ignore
     global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getWebElement().getValue();
-    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
-
-  // console.log('global.aquiferOptions.wsApiKey');
-  // console.log(global.aquiferOptions.wsApiKey);
 
   const axiosConfig = {
     headers: {
