@@ -1,6 +1,6 @@
 // @ts-check
 import assert from 'assert';
-import { AquaAssert } from '../../aquifer/support/AquaAssert';
+import { AquiferAssert } from '../../aquifer/support/AquiferAssert';
 import { Load } from '../hooks';
 import { livy } from '../../aquifer/support/Livy';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
@@ -21,7 +21,7 @@ describe('Create a project', () => {
     createAProjectUploadCsvPage.fileUploadInput.uploadFile('./resources/eachDataType.csv');
     editorPage.waitForLoad();
     assert(editorPage.isLoaded(), 'Dashboard page should be loaded.');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   it('from input table', () => {
@@ -32,6 +32,6 @@ describe('Create a project', () => {
     createAProjectPage.createProjectButton.click();
     editorPage.waitForLoad();
     assert(editorPage.isLoaded(), 'Dashboard page should be loaded.');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 });

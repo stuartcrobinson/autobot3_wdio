@@ -1,5 +1,5 @@
 // @ts-check
-import { AquaAssert } from '../../../../aquifer/support/AquaAssert';
+import { AquiferAssert } from '../../../../aquifer/support/AquiferAssert';
 import { Load } from '../../../hooks';
 import { key } from '../../../../aquifer/support/Key';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
@@ -46,8 +46,8 @@ describe('Format and insert data var of type', () => {
     editDataNumberPage.segmentContainer.checkVisual();
     header.savedDiv.waitForExist(10000);
     editDataNumberPage.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), '10 000', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 
   it('Text', () => {
@@ -80,8 +80,8 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), 'anneau du vic-bilh', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 
   it('True/False', () => {
@@ -114,8 +114,8 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'TRUE', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), 'TRUE', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 
 
@@ -205,8 +205,8 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), 'two, three, or one', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 
   // TODO https://autoin.atlassian.net/browse/QS-395 test datetime data custom format
@@ -297,8 +297,8 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '1900-02-01', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), '1900-02-01', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 
 
@@ -361,7 +361,7 @@ describe('Format and insert data var of type', () => {
 
     header.savedDiv.waitForExist(10000);
     page.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), '13:45', 'last segment text');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), '13:45', 'last segment text');
+    AquiferAssert.visualTestsPassed();
   });
 });

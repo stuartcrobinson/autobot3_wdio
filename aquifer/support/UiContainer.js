@@ -177,7 +177,7 @@ export class UiContainer {
       livy.logFailedVisualTest(global.previousImageFileLocation, report);
       // throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
       // @ts-ignore
-      global.aVisualTestFailed = true;
+      livy.aVisualTestFailed = true;
     }
     // @ts-ignore
     global.customScreenshotTag = undefined;

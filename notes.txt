@@ -32,3 +32,12 @@ https://www.vice.com/en_us/article/3bjg93/professional-food-tasters
 
 ugo?
 http://intohistory.com/italian-food-taster-renaissance/
+
+,
+  "lalala": "https://stackoverflow.com/questions/38971984/how-to-add-custom-typings-in-typescript-2-0,https://medium.com/@chris_72272/migrating-to-typescript-write-a-declaration-file-for-a-third-party-npm-module-b1f75808ed2,https://ihack.us/2017/03/22/typescript-2-adding-custom-d-ts-typings-files-for-existing-javascript-modules/,
+  https://github.com/Microsoft/TypeScript/issues/15626,
+  https://github.com/Microsoft/vscode-docs/pull/991,
+  https://github.com/Microsoft/TypeScript/issues/18237,
+  https://stackoverflow.com/questions/47232014/how-to-properly-declare-a-typescript-global-type-of-a-given-module-for-ts-check,
+  https://www.typescriptlang.org/docs/handbook/namespaces.html,
+  https://www.google.com/search?q=property+does+not+exist+on+type+ts+23+39&rlz=1C5CHFA_enUS815US815&oq=property+does+not+exist+on+type+ts+23+39&aqs=chrome..69i57.13197j0j1&sourceid=chrome&ie=UTF-8"

@@ -44,7 +44,7 @@ ruleTester.run("uiContainer-child-constructor-ends-with-nameElements", rule, {
         attemptLogIn(email, password, url) {
           this.load();
           this.emailInput.setValue(email);
-          this.passwordInput.setValue(password, options.hidePassword);
+          this.passwordInput.setValue(password, global.aquiferOptions.hidePassword);
           this.logInButton.click();
         }
       
@@ -74,7 +74,7 @@ ruleTester.run("uiContainer-child-constructor-ends-with-nameElements", rule, {
           attemptLogIn(email, password, url) {
             this.load();
             this.emailInput.setValue(email);
-            this.passwordInput.setValue(password, options.hidePassword);
+            this.passwordInput.setValue(password, global.aquiferOptions.hidePassword);
             this.logInButton.click();
           }
         
@@ -106,7 +106,7 @@ ruleTester.run("uiContainer-child-constructor-ends-with-nameElements", rule, {
         attemptLogIn(email, password, url) {
           this.load();
           this.emailInput.setValue(email);
-          this.passwordInput.setValue(password, options.hidePassword);
+          this.passwordInput.setValue(password, global.aquiferOptions.hidePassword);
           this.logInButton.click();
         }
       

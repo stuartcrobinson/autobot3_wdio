@@ -9,12 +9,13 @@ var yargsParse = require('yargs-parser');
 var stringArgv = require('string-argv');
 var fs = require('fs');
 
-/* Store input parameters in global.options object. */
+/* Store input parameters in global.aquiferOptions object. */
 
 const optionsFileContents = fs.existsSync('file.txt') ? yargsParse(stringArgv(fs.readFileSync('file.txt'))) : '';
 const options = { ...optionsFileContents, ...yargsParse(process.argv) }
 options.hidePassword = options.hidePassword || options.wsUrl.includes('wordsmith.automatedinsights');
 options.myRunId = 'progressFileShouldntExistAfterRun ' + options.myRunId;
+
 global.aquiferOptions = options
 
 /** For wdio-visual-regression-service.  Used by aquilog.  */
@@ -140,7 +141,7 @@ exports.config = {
     dummies2: [
       'src/ui-test/dummy/dummy*.js'
     ],
-    dev: options.s && options.suite === 'dev' ? buildSpecsArrayForWdioSuite(options.s, options.n) : []
+    dev: global.aquiferOptions.s && global.aquiferOptions.suite === 'dev' ? buildSpecsArrayForWdioSuite(global.aquiferOptions.s, global.aquiferOptions.n) : []
   },
   // Patterns to exclude.
   exclude: [
@@ -332,14 +333,18 @@ exports.config = {
    * @param {Object} suite suite details
    */
   beforeSuite: function (suite) {
-    global.livy && global.livy.wdioConf_beforeSuite(suite, options.myRunId);
+    if (!global.livy) {
+      console.log('Logging object doesnt exist on the global var. import a page or UiElement into your test to fix this.');
+      process.abort();
+    }
+    global.livy.wdioConf_beforeSuite(suite, global.aquiferOptions.myRunId);
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
   beforeTest: function (test) {
-    global.livy && global.livy.wdioConf_beforeTest(test);
+    global.livy.wdioConf_beforeTest(test);
 
   },
   /**
@@ -359,14 +364,14 @@ exports.config = {
    * @param {Object} test test details
    */
   afterTest: function (test) {
-    global.livy && global.livy.wdioConf_afterTest(test.passed, test.err);
+    global.livy.wdioConf_afterTest(test.passed, test.err);
   },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy && global.livy.wdioConf_afterSuite(suite.err, options.myRunId);
+    global.livy.wdioConf_afterSuite(suite.err, global.aquiferOptions.myRunId);
   },
   /**
    * Runs after a WebdriverIO command gets executed
@@ -385,7 +390,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   after: function (result, capabilities, specs) {
-    global.livy && livy.wdioConf_after()
+    global.livy.wdioConf_after()
   },
   /**
    * Gets executed right after terminating the webdriver session.
@@ -394,7 +399,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    global.livy && livy.wdioConf_afterSession(config.baseUrl)
+    global.livy.wdioConf_afterSession()
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
@@ -403,7 +408,7 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   onComplete: function (exitCode, config, capabilities) {
-    console.log(fs.readFileSync(options.myRunId).toString())
-    fs.unlinkSync(options.myRunId)
+    console.log(fs.readFileSync(global.aquiferOptions.myRunId).toString())
+    fs.unlinkSync(global.aquiferOptions.myRunId)
   }
 }

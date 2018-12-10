@@ -3,6 +3,9 @@
     "lib": [
       "es2017",
       "dom"
+    ],
+    "typeRoots": [
+      "custom_typings"
     ]
   }
 }

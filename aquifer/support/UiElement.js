@@ -337,11 +337,11 @@ export class UiElement extends UiContainer {
     if (livy.doSaveEventScreenshots) {
       this.failSafeHover(timeoutMillis);
     }
-    const screenshotId = livy.logAction2(messages);
+    const screenshotId = livy.logRichMessages(messages);
 
     this.waitForExist(timeoutMillis);
 
-    livy.setMouseoverEventScreenshotFunction(screenshotId);
+    livy.saveScreenshot(screenshotId);
   }
 
   clickAndType(value) {
@@ -399,7 +399,7 @@ export class UiElement extends UiContainer {
    */
   waitForText(text, timoutMillis = 2000) {
     super.waitForLoad();
-    const screenshotId = livy.logAction2([
+    const screenshotId = livy.logRichMessages([
       { text: '🤔 ', style: livy.style.emoji },
       { text: 'Assert ', style: livy.style.verb },
       { text: this.stuartname, style: livy.style.object },
@@ -440,7 +440,7 @@ export class UiElement extends UiContainer {
     //   console.log(err);
     //   throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
     // }
-    livy.setMouseoverEventScreenshotFunction(screenshotId);
+    livy.saveScreenshot(screenshotId);
   }
 
   waitForNotExist(timeoutInMillis = 1000) {

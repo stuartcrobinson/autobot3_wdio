@@ -13,7 +13,7 @@ describe('DummyParent', () => {
       // fastWebpage.checkVisual();
       // fastWebpage.h2.hover();
       // // // @ts-ignore
-      // // global.aVisualTestFailed = true;
+      // // livy.aVisualTestFailed = true;
       // console.log('test 1');
       // AquaAssert.visualTestsPassed();
 
@@ -39,13 +39,13 @@ describe('DummyParent', () => {
 
       // fastWebpage.h2.click();
       // // // @ts-ignore
-      // // global.aVisualTestFailed = true;
+      // // livy.aVisualTestFailed = true;
       // AquaAssert.visualTestsPassed();
     });
   });
 });
 
-// loginPage.logIn(options.wsLogin, options.wsPassword, options.wsUrl);
+// loginPage.logIn(global.aquiferOptions.wsLogin, global.aquiferOptions.wsPassword, global.aquiferOptions.wsUrl);
 
 // const c = 9;
 

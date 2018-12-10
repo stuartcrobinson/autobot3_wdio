@@ -1,5 +1,5 @@
 // @ts-check
-import { AquaAssert } from '../../../../aquifer/support/AquaAssert';
+import { AquiferAssert } from '../../../../aquifer/support/AquiferAssert';
 import { Load } from '../../../hooks';
 import { key } from '../../../../aquifer/support/Key';
 import { livy } from '../../../../aquifer/support/Livy';
@@ -17,7 +17,7 @@ describe('Branches:', () => {
     editBranchPage.checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(1).trashButton.click_waitForNotExisting(); // test trash icon for single rule
     editorPage.waitForLoad();
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   it('create and delete a new rule', () => {
@@ -27,7 +27,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(2).conditionLabel.click();
     editBranchPage.scrollUp().checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(2).trashButton.click_waitForNotExisting();
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   it('fill out first rule', () => {
@@ -38,7 +38,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).elipsisDropdown_AddDescription.click_waitForNotExisting();
     editBranchPage.keys('Dangerously cheesy ™');
     editBranchPage.getNthBranchBox(1).descriptionSpan.waitForText('Dangerously cheesy ™');
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   it('add and fill out another rule - preview should update', () => {
@@ -72,13 +72,13 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).conditionTextarea.waitForText(
       editBranchPage.getNthBranchBox(2).conditionTextarea.getWebElement().getText(),
     );
-    livy.logAction2([
+    livy.logRichMessages([
       { text: '🤦 ', style: livy.style.emoji },
       { text: 'branch rule copy: not copying description ', style: livy.style.object_red },
       { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
       { text: 'https://autoin.atlassian.net/browse/WS-2282', style: livy.style.selector_red },
     ]);
-    livy.logAction2([
+    livy.logRichMessages([
       { text: '🤦 ', style: livy.style.emoji },
       { text: 'branch rule copy: not copying text ', style: livy.style.object_red },
       { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
@@ -96,7 +96,7 @@ describe('Branches:', () => {
   it('editor should show top rule text after waiting for save and closing', () => {
     header.savedDiv.waitForExist(10000);
     editBranchPage.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), 'cheez-it', 'last segment text');
   });
 
   it('open new branch from highlighted text', () => {
@@ -146,7 +146,7 @@ describe('Branches:', () => {
     // modal.checkVisual();
     // new UiElement('.modal-dialog').checkVisual();
     modal.yesButton.click_waitForNotExisting();
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   it('edited invalid branch text should be visible in editor after closing modal', () => {

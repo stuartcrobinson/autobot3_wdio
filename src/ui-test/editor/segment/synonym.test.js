@@ -1,7 +1,7 @@
 // @ts-check
 import { countBy } from 'lodash';
 import { expect } from 'chai';
-import { AquaAssert } from '../../../../aquifer/support/AquaAssert';
+import { AquiferAssert } from '../../../../aquifer/support/AquiferAssert';
 import { Load } from '../../../hooks';
 import { livy } from '../../../../aquifer/support/Livy';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
@@ -47,7 +47,7 @@ describe('Synonyms:', () => {
   it('main editor should display first synonym', () => {
     header.savedDiv.waitForExist(10000);
     editSynonymPage.doneButton.click_waitForNotExisting();
-    AquaAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
+    AquiferAssert.valueEquals(() => editorPage.getLastSegmentText(), 'pancakes', 'last segment text');
   });
   it('deleting all variations should delete the synonym ', () => {
     editorPage.segmentWithText('pancakes').click_waitForChange();
@@ -150,7 +150,7 @@ describe('Synonyms:', () => {
     editSynonymPage.highlightedPreviewSpan.waitForText('hotcakes', 2000);
     editSynonymPage.toolbar.addSynonymButton.hover();
     editSynonymPage.checkVisual(header, sidebar.liveChatLink);
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
   it('close segment editor after save and confirm main editor segment text', () => {
     header.savedDiv.waitForExist(10000);
@@ -193,7 +193,7 @@ describe('Synonyms:', () => {
       synonyms = synonyms.concat(reviewPage.getNthSegmentSpan(2).getTexts());
     });
     it('check distribution', () => {
-      livy.logMessage('📊 Confirm reasonable synonym distribution.');
+      livy.logPrefixedText('📊 Confirm reasonable synonym distribution.');
       const counts = countBy(synonyms);
       // try {
       // @ts-ignore

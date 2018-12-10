@@ -1,9 +1,7 @@
 // @ts-check
 import axios from 'axios';
 import fs from 'fs';
-import { options } from '../aqua';
 import { apiAccessPage } from '../../src/ui-model/wordsmith/misc/page/apiAccess';
-
 
 function base64_encode(file) {
   // read binary data
@@ -33,15 +31,15 @@ export function httpRequestCreateProjectFromDataFile_begin_and_complete(name, fi
 
   const url = 'https://api.automatedinsights.com/v1.8/projects';
 
-  if (!options.wsApiKey) {
+  if (!global.aquiferOptions.wsApiKey) {
     // @ts-ignore
-    options.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
-    // options.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
+    global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
+    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
 
   const axiosConfig = {
     headers: {
-      Authorization: `Bearer ${options.wsApiKey}`,
+      Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
       // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
       'User-Agent': 'Autobot',
       'Content-Type': 'application/json',
@@ -80,15 +78,15 @@ export function httpRequestCreateProjectFromDataObject_begin_and_complete(name, 
 
   const url = 'https://api.automatedinsights.com/v1.8/projects';
 
-  if (!options.wsApiKey) {
+  if (!global.aquiferOptions.wsApiKey) {
     // @ts-ignore
-    options.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
-    // options.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
+    global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
+    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
 
   const axiosConfig = {
     headers: {
-      Authorization: `Bearer ${options.wsApiKey}`,
+      Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
       // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
       'User-Agent': 'Autobot',
       'Content-Type': 'application/json',
@@ -117,18 +115,18 @@ export function httpRequestCreateProjectFromDataFile_begin(name, file) {
  * @param {Object} body
  */
 export function httpRequestBegin(url, body) {
-  if (!options.wsApiKey) {
+  if (!global.aquiferOptions.wsApiKey) {
     // @ts-ignore
-    options.wsApiKey = apiAccessPage.load().apiKeyInput.getWebElement().getValue();
-    // options.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
+    global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getWebElement().getValue();
+    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
 
-  // console.log('options.wsApiKey');
-  // console.log(options.wsApiKey);
+  // console.log('global.aquiferOptions.wsApiKey');
+  // console.log(global.aquiferOptions.wsApiKey);
 
   const axiosConfig = {
     headers: {
-      Authorization: `Bearer ${options.wsApiKey}`,
+      Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
       // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
       'User-Agent': 'Autobot',
       'Content-Type': 'application/json',

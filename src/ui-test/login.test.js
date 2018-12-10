@@ -1,15 +1,14 @@
 // @ts-check
-import { options } from '../../aquifer/aqua';
+import { AquiferAssert } from '../../aquifer/support/AquiferAssert';
 import { dashboardPage } from '../ui-model/wordsmith/misc/page/dashboard.page';
 import { loginPage } from '../ui-model/wordsmith/misc/page/login.page';
-import { AquaAssert } from '../../aquifer/support/AquaAssert';
 
 describe('Login', () => {
   it('with invalid creds', () => {
-    loginPage.attemptLogIn(options.wsLogin, `${options.wsPassword}invalid`, options.wsUrl);
+    loginPage.attemptLogIn();
     loginPage.checkVisual(loginPage.emailInput);
     loginPage.toast_invalidEmailOrPwd.close();
-    AquaAssert.visualTestsPassed();
+    AquiferAssert.visualTestsPassed();
   });
 
   describe('with valid creds', () => {
@@ -21,13 +20,13 @@ describe('Login', () => {
         dashboardPage.sidebar.settingsMenu.greetingSpan,
         dashboardPage.paginationContainer,
       );
-      AquaAssert.visualTestsPassed();
+      AquiferAssert.visualTestsPassed();
     });
 
     it('click Sign Out', () => {
       dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
       loginPage.toast_signedOutSuccessfully.checkVisual();
-      AquaAssert.visualTestsPassed();
+      AquiferAssert.visualTestsPassed();
     });
   });
 });

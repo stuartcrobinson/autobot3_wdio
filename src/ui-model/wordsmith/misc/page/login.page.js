@@ -1,5 +1,4 @@
 // @ts-check
-import { options } from '../../../../../aquifer/aqua';
 import { UiElement } from '../../../../../aquifer/support/UiElement';
 import { WordsmithPage } from '../../WordsmithPage';
 import { toast } from '../component/toast.cont';
@@ -22,7 +21,7 @@ export const loginPage = new class Login extends WordsmithPage {
   attemptLogIn(email, password, url) {
     this.load();
     this.emailInput.setValue(email);
-    this.passwordInput.setValue(password, options.hidePassword);
+    this.passwordInput.setValue(password, global.aquiferOptions.hidePassword);
     this.logInButton.click();
   }
 
@@ -34,7 +33,7 @@ export const loginPage = new class Login extends WordsmithPage {
 
   /** Logs in and waits for Dashboard page to load. */
   logIn() {
-    this.attemptLogIn(options.wsLogin, options.wsPassword, options.wsUrl);
+    this.attemptLogIn(global.aquiferOptions.wsLogin, global.aquiferOptions.wsPassword, global.aquiferOptions.wsUrl);
     dashboardPage.waitForLoad();
   }
 }();

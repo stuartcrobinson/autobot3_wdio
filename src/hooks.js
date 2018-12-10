@@ -1,12 +1,11 @@
 // @ts-check
 import { assert } from 'chai';
-import { editorPage } from './ui-model/wordsmith/editor/editor.page';
-import { loginPage } from './ui-model/wordsmith/misc/page/login.page';
-import { projectPage } from './ui-model/wordsmith/misc/page/project.page';
-import { Autobot } from '../aquifer/aqua';
 import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from '../aquifer/support/ApiStuff';
 import { livy } from '../aquifer/support/Livy';
+import { editorPage } from './ui-model/wordsmith/editor/editor.page';
 import { galleryCityGuideNarrative } from './ui-model/wordsmith/misc/page/galleryNarrative.page';
+import { loginPage } from './ui-model/wordsmith/misc/page/login.page';
+import { projectPage } from './ui-model/wordsmith/misc/page/project.page';
 
 export const defaultDataForApi = [{
   string: 'anneau du Vic-Bilh',
@@ -17,8 +16,22 @@ export const defaultDataForApi = [{
   time: '1:45:12 PM',
 }];
 
+function getProjectUrlFromName(name) {
+  return `https://wordsmith.automatedinsights.com/projects/${name}`;
+}
 
-// Hooks class
+/**
+ *
+ * @param {String} x
+ */
+function makeSlugSafeName(x) {
+  let slugSafe = x;
+  slugSafe = slugSafe.replace(/[^\w-]/g, ' ');
+  slugSafe = slugSafe.replace(/\s\s+/g, ' ');
+  slugSafe = slugSafe.replace(/ /g, '-');
+  slugSafe = slugSafe.toLowerCase();
+  return slugSafe;
+}
 
 /**
  * "Before"-level hooks.  Named by the page on which the functions end.
@@ -36,14 +49,14 @@ export class Load {
   }
 
   static newTemplateEditor(data = defaultDataForApi) {
-    const projectName = Autobot.makeSlugSafeName(`Aqua data obj ${livy.specDate} ${livy.specTime}`);
+    const projectName = makeSlugSafeName(`Aqua data obj ${livy.specDate} ${livy.specTime}`);
     loginPage.logIn();
-    livy.logAction2([
+    livy.logRichMessages([
       { text: '☁️  ', style: livy.style.emoji },
       { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
     httpRequestCreateProjectFromDataObject_begin_and_complete(projectName, data);
 
-    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName)).loadWithRetry();
+    projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
 
     // browser.url(Autobot.getProjectUrlFromName(projectName));
     // Page.load(Autobot.getProjectUrlFromName(projectName));
@@ -52,17 +65,17 @@ export class Load {
   }
 
   static newTemplateEditorUsingDataFile(file) {
-    const projectName = Autobot.makeSlugSafeName(`Aqua data file ${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
+    const projectName = makeSlugSafeName(`Aqua data file ${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
     loginPage.logIn();
 
-    livy.logAction2([
+    livy.logRichMessages([
       { text: '☁️  ', style: livy.style.emoji },
       { text: `Api use data file to create project: ${projectName}`, style: livy.style.filler }]);
     const httpRequestPromise = httpRequestCreateProjectFromDataFile_begin(projectName, file);
 
     httpRequestComplete(httpRequestPromise);
 
-    projectPage.setUrl(Autobot.getProjectUrlFromName(projectName)).loadWithRetry();
+    projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
     projectPage.createNewTemplateButton.click_waitForNotExisting();
     assert(editorPage.isLoaded(), 'Template editor page should be loaded.');
   }

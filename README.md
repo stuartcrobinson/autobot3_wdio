@@ -59,6 +59,7 @@ notes:
 - browser.scroll doesn't work.
 - you can't use ``npm install`` because it doesn't grab the autobot eslint plugin (`eslint-plugin-autobot`). 
 - it's dangerous to export instantiated UiElement objects cos something might be tagged as loadCriterion somewhere, but not everywhere it's used.
+- a spec file must import something that extends UiContainer, otherwise the logging tool will never get created.  this would be unnecessary if wdio would implement mocha's --file option.  actually maybe it's cos mocha doesn't support it for mocha's command line tool?
 
 
  

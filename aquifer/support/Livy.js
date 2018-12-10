@@ -73,15 +73,11 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
   const bitToRemove = `${parent} ${title}`;
   return fullTitle.replace(bitToRemove, '');
 };
-// @ts-ignore
 
 class Livy {
   constructor() {
-    // @ts-ignore
-    const options = global.aquiferOptions;
-
-    this.livyDoDisplay = !options.muteConsole;
-    this.doSaveEventScreenshots = !options.noPics;
+    this.livyDoDisplay = !global.aquiferOptions.muteConsole;
+    this.doSaveEventScreenshots = !global.aquiferOptions.noPics;
     this.doSaveEventDom = false;
     this.style = {
       verb: colors.italic,
@@ -99,12 +95,10 @@ class Livy {
       emoji: 'emoji',
       password: 'password',
     };
-    // console.log('doSaveEventScreenshots?');
-    // console.log(doSaveEventScreenshots);
     this.screenshotTargetName = undefined;
     this.screenshotTargetSelector = undefined;
-    // console.log('specFailed = false in constructor!!!!!');
     this.specFailed = false;
+    this.aVisualTestFailed = false;
   }
 
   /**
@@ -186,6 +180,14 @@ class Livy {
       e.style.display = 'none';
       e.parentElement.firstElementChild.style.display = 'inline';
     }
+    function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
+      var elements = document.getElementsByTagName('span');
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.backgroundColor="inherit";
+      }
+      document.images['image'].src=eventScreenshotFileRelPath;
+      document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
+    }
   </script>
     ${os.EOL}`;
 
@@ -197,11 +199,20 @@ class Livy {
       <h1>${this.specFilePath}</h1>
     </div>`;
 
-    // html += `<h1>${this.specFilePath}</h1>`;
-
     fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
+  // let html = '';
+  // html += `<script>${os.EOL}`;
+  // html += `function logEntryMouseover${screenshotId}() {${os.EOL}`;
+  // html += `    var elements = document.getElementsByTagName('span');${os.EOL}`;
+  // html += `    for (var i = 0; i < elements.length; i++) {${os.EOL}`;
+  // html += `        elements[i].style.backgroundColor="inherit";${os.EOL}`;
+  // html += `    }${os.EOL}`;
+  // html += `    document.images['image'].src="${getEventScreenshotFileRelPath(screenshotId)}";${os.EOL}`;
+  // html += `    document.getElementById('entrySpan${screenshotId}').style.backgroundColor="white";${os.EOL}`;
+  // html += `}${os.EOL}`;
+  // html += `</script>${os.EOL}`;
 
   initializeNewTestCase(testCaseTitle, testParentTitle, testCaseFullTitle, testGrandparentsTitle) {
     this.isInTestCase = true;
@@ -215,9 +226,7 @@ class Livy {
   endNewTestCase() {
     this.isInTestCase = false;
     this.testCaseTitle = undefined;
-    // this.testParentTitle = undefined;
     this.testCaseFullTitle = undefined;
-    // this.testGrandparentsTitle = undefined;
     this.hasPrintedNontestLine = false;
   }
 
@@ -270,7 +279,6 @@ class Livy {
 
   getErrorScreenshotFileRelPath() {
     return `${this.getSpacelessTestCaseFullTitle()}.png`;
-    // return `${this.testCaseFullTitle.replace(/ /g, '_')}.png`;
   }
 
   getSpacelessTestCaseFullTitle() {
@@ -293,7 +301,12 @@ class Livy {
     return `file://${path.resolve(this.getFile())}`;
   }
 
-  setMouseoverEventScreenshotFunction(screenshotId, screenshotFile = undefined) {
+  /**
+   *
+   * @param {*} screenshotId used to associate a log line with a screenshot file
+   * @param {*} screenshotFile only passed in when called from the visual regression service, so we use their image instead of taking a new one.  if undefined, then a screenshot is taken and saved here.
+   */
+  saveScreenshot(screenshotId, screenshotFile = undefined) {
     if (this.doSaveEventScreenshots) {
       if (screenshotFile) {
         // screenshotFile doens't exist yet!  but it will in a second.
@@ -319,8 +332,6 @@ class Livy {
           }
           demo();
         });
-
-        // fs.copyFileSync(screenshotFile, this.getEventScreenshotFileAbsPath(screenshotId));
       } else {
         browser.saveScreenshot(this.getEventScreenshotFileAbsPath(screenshotId));
       }
@@ -328,19 +339,20 @@ class Livy {
 
     // TODO clean up livy html report javascript https://autoin.atlassian.net/browse/QS-404
 
-    let html = '';
-    html += `<script>${os.EOL}`;
-    html += `function logEntryMouseover${screenshotId}() {${os.EOL}`;
-    html += `    var elements = document.getElementsByTagName('span');${os.EOL}`;
-    html += `    for (var i = 0; i < elements.length; i++) {${os.EOL}`;
-    html += `        elements[i].style.backgroundColor="inherit";${os.EOL}`;
-    html += `    }${os.EOL}`;
-    html += `    document.images['image'].src="${getEventScreenshotFileRelPath(screenshotId)}";${os.EOL}`;
-    html += `    document.getElementById('entrySpan${screenshotId}').style.backgroundColor="white";${os.EOL}`;
-    html += `}${os.EOL}`;
-    html += `</script>${os.EOL}`;
+    // this was used back when i had a separate js function written out per log line  ':D
+    // let html = '';
+    // html += `<script>${os.EOL}`;
+    // html += `function logEntryMouseover${screenshotId}() {${os.EOL}`;
+    // html += `    var elements = document.getElementsByTagName('span');${os.EOL}`;
+    // html += `    for (var i = 0; i < elements.length; i++) {${os.EOL}`;
+    // html += `        elements[i].style.backgroundColor="inherit";${os.EOL}`;
+    // html += `    }${os.EOL}`;
+    // html += `    document.images['image'].src="${getEventScreenshotFileRelPath(screenshotId)}";${os.EOL}`;
+    // html += `    document.getElementById('entrySpan${screenshotId}').style.backgroundColor="white";${os.EOL}`;
+    // html += `}${os.EOL}`;
+    // html += `</script>${os.EOL}`;
 
-    fs.appendFileSync(this.getFile(), html + os.EOL);
+    // fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
   /**
@@ -349,8 +361,8 @@ class Livy {
    * @param {string | undefined} screenshotFile
    */
   logScreenshottedAction(messages = [], screenshotFile = undefined) {
-    const screenshotId = this.logAction2(messages);
-    this.setMouseoverEventScreenshotFunction(screenshotId, screenshotFile);
+    const screenshotId = this.logRichMessages(messages);
+    this.saveScreenshot(screenshotId, screenshotFile);
   }
 
   /**
@@ -359,12 +371,12 @@ class Livy {
    * @param {string | undefined} screenshotFile
    */
   logScreenshottedMessage(message = '', screenshotFile = undefined) {
-    const screenshotId = this.logMessage(message);
-    this.setMouseoverEventScreenshotFunction(screenshotId, screenshotFile);
+    const screenshotId = this.logPrefixedText(message);
+    this.saveScreenshot(screenshotId, screenshotFile);
   }
 
-  logMessage(message) {
-    return this.logAction2([{ text: message }]);
+  logPrefixedText(message) {
+    return this.logRichMessages([{ text: message }]);
   }
 
   /**
@@ -372,7 +384,7 @@ class Livy {
    * @param {Object} messageChunks an array of {text, style} objects
    * @param {Boolean} withPrefix
    */
-  logAction2(messageChunks = [], withPrefix = true) {
+  logRichMessages(messageChunks = [], withPrefix = true) {
     const testDateTime = new Date();
 
     const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
@@ -390,7 +402,7 @@ class Livy {
     const onClickHtml = this.doSaveEventDom ? `onclick="window.open('${getEventDomFileRelPath(screenshotId)}');"` : '';
 
     let htmlBuilder = '';
-    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover${screenshotId}();" ${onClickHtml}>`;
+    htmlBuilder += `<span id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');" ${onClickHtml}>`;
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
@@ -446,7 +458,7 @@ class Livy {
     return screenshotId;
   }
 
-  logReportError(stack) {
+  logReportErrorToHtml(stack) {
     let html = '';
     html += `<span name="thisIsWhereStackGoes" style="font-family:monospace;color:red"><pre>${entities.encode(stack)}</pre></span><br/>`;
 
@@ -454,12 +466,12 @@ class Livy {
     fs.appendFileSync(this.getFile(), html + os.EOL);
   }
 
-  logErrorImage() {
+  logErrorImageToHtml() {
     fs.appendFileSync(this.getFile(), `<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>${os.EOL}`);
   }
 
   logFailedVisualTest(diffImageFilePath, report) {
-    this.logAction2([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
+    this.logRichMessages([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
 
     this.logWithoutPrefix_toHtml('Diff image: ', colors.red);
 
@@ -508,7 +520,7 @@ class Livy {
 
     this.logHorizontalLine();
 
-    this.logAction2([
+    this.logRichMessages([
       { text: 'Starting test:  ', style: colors.bold },
       { text: `${this.testGrandparentsTitle} `, style: colors.reset },
       { text: `${this.testParentTitle} `, style: colors.blue },
@@ -520,44 +532,24 @@ class Livy {
 
   logPassed() {
     // @ts-ignore
-    const screenshotId = this.logAction2([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
-    this.setMouseoverEventScreenshotFunction(screenshotId);
-  }
-
-
-  logReportFileToHackyFileIfNotWrittenYet(resultIcon) {
-    let fileText = '';
-    try {
-      fileText = fs.readFileSync(this.runId).toString();
-    } catch {
-      // do nothing
-    } finally {
-      console.log(`filetext: ${fileText}`);
-      if (!fileText.includes(this.reportClickablePath)) {
-        console.log(`writing ${resultIcon} to file`);
-
-        fs.appendFileSync(this.runId, `${resultIcon} ${this.reportClickablePath}${os.EOL}`);
-      }
-    }
+    const screenshotId = this.logRichMessages([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
+    this.saveScreenshot(screenshotId);
   }
 
   logFailed(stack) {
     this.specFailed = true;
 
-    // this.logReportFileToHackyFileIfNotWrittenYet('❌');
-
-    // fs.appendFileSync(this.runId, (this.specFailed ? '❌ ' : '✅ ') + this.reportClickablePath + os.EOL);
-
     // @ts-ignore
-    const screenshotId = this.logAction2([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
-    this.setMouseoverEventScreenshotFunction(screenshotId);
+    const screenshotId = this.logRichMessages([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
+    this.saveScreenshot(screenshotId);
 
-    this.logReportError(stack);
+    this.logReportErrorToHtml(stack);
 
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-    this.logErrorImage();
+    this.logErrorImageToHtml();
   }
 
+  /** Called from global in wdio.conf.js */
   logVisualTestReset(screenshotFile) {
     this.logScreenshottedAction([
       { text: '📷 ', style: livy.style.emoji },
@@ -568,6 +560,7 @@ class Livy {
     screenshotFile);
   }
 
+  /** Called from global in wdio.conf.js */
   logVisualTestCreate(screenshotFile) {
     this.logScreenshottedAction([
       { text: '📷 ', style: livy.style.emoji },
@@ -578,6 +571,7 @@ class Livy {
     screenshotFile);
   }
 
+  /** Called from global in wdio.conf.js */
   logVisualTestVerify(screenshotFile) {
     this.logScreenshottedAction([
       { text: '📸 ', style: livy.style.emoji },
@@ -599,7 +593,6 @@ class Livy {
 
     this.initialize(this.specFilePath);
     console.log('\n📝   🚧  ', this.reportClickablePath, '\n');
-    // fs.appendFileSync(runId, this.reportClickablePath + os.EOL);
   }
 
   wdioConf_beforeTest(test) {
@@ -617,7 +610,8 @@ class Livy {
   }
 
   /** called from wdio.conf.js */
-  wdioConf_afterSession(configTimestamp) {
+  wdioConf_afterSession() {
+    console.log('wdioConf_afterSession asdfasdfasf');
     fs.appendFileSync(this.runId, `${this.specFailed ? '❌ ' : '✅ '} ${this.reportClickablePath}${os.EOL}`);
 
     // so you can scroll code up so the screenshot isn't blocking it
