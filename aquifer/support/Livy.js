@@ -293,7 +293,7 @@ class Livy {
   saveScreenshot(screenshotId, screenshotFile = undefined) {
     if (this.doSaveEventScreenshots) {
       if (screenshotFile) {
-        //screenshotFile from visual regression service.  using it instead of taking new screenshot
+        // screenshotFile from visual regression service.  using it instead of taking new screenshot
         // screenshotFile doens't exist yet!  but it will in a second.
         // need to spin off a thread that will wait until the file exists, and then copy it.
         // or wait to copy until later??? no, this might be the last step of a test.
@@ -397,7 +397,6 @@ class Livy {
         if (message.startsWith('http')) {
           htmlBuilder += `<span class="${classValue}"><a href=${message}>${entities.encode(message)}</a></span>`;
         } else if (!message.startsWith(' excluding') && (style === this.style.selector || style === this.style.selector_red)) {
-
           htmlBuilder += `
           <span class="${classValue} monospace;"  ondblclick="dblclickSelectorSpan(this);">
               <span class='selector-text'>${entities.encode(message)}</span>
@@ -422,7 +421,7 @@ class Livy {
       } else {
         prefix = !withPrefix ? '' : `${currTime} ${colors.gray(this.getSpecFileDirName())}/${this.getSpecFileName()}>  `;
       }
-      console.log(prefix + consoleBuilder);   //don't delete
+      console.log(prefix + consoleBuilder); // don't delete
     }
     return screenshotId;
   }
@@ -526,7 +525,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.filler_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-      screenshotFile);
+    screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -537,7 +536,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-      screenshotFile);
+    screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -548,7 +547,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object },
       { text: this.screenshotTargetName, style: this.style.object },
       { text: this.screenshotTargetSelector, style: this.style.selector }],
-      screenshotFile);
+    screenshotFile);
   }
 
   wdioConf_beforeSuite(suite, runId) {

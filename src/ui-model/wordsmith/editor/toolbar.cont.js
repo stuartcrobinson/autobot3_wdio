@@ -29,6 +29,9 @@ class InsertDataDropdown extends UiElement {
   }
 }
 
+/**
+ * https://kittentoob.com/wp-content/uploads/2018/05/Crying-Cat.jpg
+ */
 export class EditorToolbar extends UiElement {
   constructor() {
     super('.toolbar__list');

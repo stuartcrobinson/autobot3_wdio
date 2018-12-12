@@ -11,22 +11,22 @@ describe('Login', () => {
     AquiferAssert.visualTestsPassed();
   });
 
-  // describe('with valid creds', () => {
-  //   it('click Settings', () => {
-  //     loginPage.logIn();
-  //     dashboardPage.sidebar.settingsLink.click_waitForChange();
-  //     dashboardPage.checkVisual(
-  //       dashboardPage.table,
-  //       dashboardPage.sidebar.settingsMenu.greetingSpan,
-  //       dashboardPage.paginationContainer,
-  //     );
-  //     AquiferAssert.visualTestsPassed();
-  //   });
+  describe('with valid creds', () => {
+    it('click Settings', () => {
+      loginPage.logIn();
+      dashboardPage.sidebar.settingsLink.click_waitForChange();
+      dashboardPage.checkVisual(
+        dashboardPage.table,
+        dashboardPage.sidebar.settingsMenu.greetingSpan,
+        dashboardPage.paginationContainer,
+      );
+      AquiferAssert.visualTestsPassed();
+    });
 
-  //   it('click Sign Out', () => {
-  //     dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
-  //     loginPage.toast_signedOutSuccessfully.checkVisual();
-  //     AquiferAssert.visualTestsPassed();
-  //   });
-  // });
+    it('click Sign Out', () => {
+      dashboardPage.sidebar.settingsMenu.signOutLink.click_waitForNotExisting();
+      loginPage.toast_signedOutSuccessfully.checkVisual();
+      AquiferAssert.visualTestsPassed();
+    });
+  });
 });

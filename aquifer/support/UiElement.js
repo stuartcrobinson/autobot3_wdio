@@ -57,6 +57,9 @@ export class UiElement extends UiContainer {
     return super.setName(name);
   }
 
+  /**
+   * Marks the given UiElement as being a critical component of its parent container.  Absence of this item in the DOM means the parent container is not loaded.
+   */
   tagAsLoadCriterion() {
     this.isLoadCriterion = true;
     return this;
@@ -73,6 +76,10 @@ export class UiElement extends UiContainer {
     return $$(this.selector);
   }
 
+  /**
+   * Returns a child UiElement component with the given relative selector.
+   * @param {string} selector must match parent selector style (xpath vs css-selector)
+   */
   get(selector) {
     if (this.selector.startsWith('/') && selector.startsWith('/')) {
       return new UiElement(this.selector + selector);

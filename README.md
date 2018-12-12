@@ -1,65 +1,55 @@
-# TODO - UPDATE - OUT OF DATE - https://autoin.atlassian.net/browse/QS-413
-
-HOW TO RUN:
+## HOW TO RUN:
 
 
 ``yarn install``
 
 then
 
+``yarn start --wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``
 
-``npm run wdio -- --spec src/ui-test/loginForRye.test.js --wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com``
+as in
 
+``yarn start --wsLogin srobinson@automatedinsights.com --wsPassword himom --wsUrl https://wordsmith.automatedinsights.com --s loginForRye``
 
-OR
+## If you don't want your password in your shell history
+You can save those options to ``file.txt`` in the project root directory in the same format (``--wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``).
 
+eg, with creds saved to ``file.txt``, you can just do:
 
-``echo "--wsLogin your@email.com --wsPassword y0urp4$$w0rd --wsUrl https://wordsmith.automatedinsights.com" > file.txt; npm run wdio -- --spec src/test/loginForRye.test.js --notHeadless --noPics``
+``yarn start --s Rye``
 
+## other options
 
-(alternatively, you can just save that echoed string to file.txt beforehand)
+``--s`` spec file name(s).  this does not need to be a path or full name.  ``glob`` is used to search ``src/ui-test`` for tests that match this string.  multiple tests can be specified by separating with commas or enquoting and separating with spaces, that is ``--s test1,test2,test3`` or ``--s "test1 test2, test3"``.  Capitalization matters.
 
-## options
-
+``--n`` number of times to run the given spec files.  this happens in parallel with max threads stipulated in wdio.conf.js
 
 ``--noPics`` defaults to false - setting this to true prevents screenshots from being taken per logged action.  this will make the testing report less useful, but let the tests run faster
 
 ``--notHeadless`` defaults to false - set this flag to force autobot to load a visible
 
-``--wsApiKey <your api key>`` if you don't give it your api key, it will grab it from the api_access page which will slow the tests down
+``--wsApiKey <your api key>`` some tests use the api to create a new project with specific data.  if you don't give it your api key, it will grab it from the api_access page which will slow the tests down
 
 ``--hidePassword``  this will hide all passwords in the console and logs.  by default, only prod passwords are hidden.
 
 
+## Rules
 
-as a live Ai tool, i'm imagining that we'll have a saved config file with a list of different user accounts with different permission levels for different levels of testing.
-
-the nice thing about mocha is that you can run subsets of tests using "grep."  so certain tests could be tagged to run only for admin accounts, etc.  
-
-as in 
-
-``npm run wdio -- --mochaOpts.grep "Login"``
-
-STYLE RULES
-
-implementing in autobot eslint plugin
-
-*  at some point after running x = Autobot.httpRequestCreateProject_begin(...), you must run Autobot.httpRequestComplete(x);
-*  super.nameElements(); must be called at the end of every element container constructor
+*  super.nameElements(); must be called at the end of every element container constructor (handled with eslint)
 *  do not call "browser" from tests.  must be wrapped in autobot functions for proper logging and error handling.
-* X  all files must start with //@ts-check (handled with eslint)
-*  do NOT use chai.assert - too easy to mistakenly code: `assert(x)`
-*  actually, don't `assert` at all.  each step should fail-fast. asserts are pointless clutter
-* X tests including visual tests must end with AquaAssert.visualTestsPassed() - this creates soft asserts for visual testing.  (handled with eslint)
+*  all files must start with //@ts-check (handled with eslint)
+*  don't use asserts.  every action should be fail-fast and reported clearly.
+*  tests including visual tests must end with AquiferAssert.visualTestsPassed(); - this creates soft asserts for visual testing.  (handled with eslint)
 
 
 notes:
 
+- if you start seeing errors in vscode for references to ``global`` attribute variables, just open ``.d.ts`` for a second -- that should fix things.
 - if you're using iTerm2, you can command-click on files in the stack trace to load in your defaul js editor
 - browser.scroll doesn't work.
 - you can't use ``npm install`` because it doesn't grab the autobot eslint plugin (`eslint-plugin-autobot`). 
-- it's dangerous to export instantiated UiElement objects cos something might be tagged as loadCriterion somewhere, but not everywhere it's used.
-- a spec file must import something that extends UiContainer, otherwise the logging tool will never get created.  this would be unnecessary if wdio would implement mocha's --file option.  actually maybe it's cos mocha doesn't support it for mocha's command line tool?
+- it's dangerous to ``export`` instantiated ``UiElement`` objects cos something might be tagged as loadCriterion somewhere, but shouldn't be everywhere it's used.
+- a spec file must import something that extends UiContainer, otherwise the logging tool will never get created.  this would be unnecessary if mocha supported the ``--file`` option from their command line tools hmph
 
 
  

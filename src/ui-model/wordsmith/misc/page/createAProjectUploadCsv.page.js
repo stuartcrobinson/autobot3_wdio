@@ -6,8 +6,8 @@ import { UiElement } from '../../../../../aquifer/support/UiElement';
 export const createAProjectUploadCsvPage = new class CreateAProject extends WordsmithPage {
   constructor() {
     super();
-    this.nameYourProjectField = new UiElement('#name').tagAsLoadCriterion();
-    this.fileUploadInput = new UiElement('#file-upload');
+    this.nameYourProjectField = this.get('#name').tagAsLoadCriterion();
+    this.fileUploadInput = this.get('#file-upload');
     super.nameElements();
   }
 

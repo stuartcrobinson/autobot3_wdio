@@ -9,14 +9,14 @@ export const editorPage = new class Editor extends WordsmithPage {
   constructor(urlPath) {
     super(urlPath);
     this.toolbar = new EditorToolbar().tagAsLoadCriterion();
-    this.editor = new UiElement('.editor-textarea').tagAsLoadCriterion();
+    this.editor = this.get('.editor-textarea').tagAsLoadCriterion();
     this.openPreviewButton = this.get('.btn--editor-root--preview');
     this.openToolsButton = this.get('.btn--editor-root--toolpane');
     this.previewPane = new Preview();
     this.sidebar = sidebar;
 
     /** Used for waiting for editor to load after closing segment editors. */
-    this.editorOnlyElement = new UiElement('.narrative:not(.narrative--is-segment-selected)').tagAsLoadCriterion();
+    this.editorOnlyElement = this.get('.narrative:not(.narrative--is-segment-selected)').tagAsLoadCriterion();
     super.nameElements();
   }
 

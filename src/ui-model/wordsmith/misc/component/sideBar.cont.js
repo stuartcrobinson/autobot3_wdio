@@ -19,7 +19,6 @@ class SettingsDropdownComp extends UiElement {
 export const sidebar = new class SideBarComp extends UiElement {
   constructor() {
     super('//div[@class="ws-sidebar"]');
-    // this is where we make sure the sidebar is open. if not, click the header hamburger aka sidebar trigger button
 
     this.dashboardLink = this.get("//*[*='web']");
     this.galleryLink = this.get("//*[*='view_module']");
@@ -29,11 +28,10 @@ export const sidebar = new class SideBarComp extends UiElement {
     this.liveChatLink = this.get("//*[*='chat']");
     this.settingsLink = this.get("//*[*='settings']");
 
-    /** only in Editor sidebar.  clean up sidebars organization? */
-    // this.review = this.get('//a[@data-for="Review"]');
-
     this.dataLink = this.get("//*[*='grid_on']");
     this.writeLinke = this.get("//*[*='mode_edit']");
+
+    /** only in Editor sidebar.  clean up sidebars organization? */
     this.reviewLink = this.get("//*[*='done']");
     this.downloadLink = this.get("//*[*='file_download']");
 

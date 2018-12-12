@@ -15,7 +15,6 @@ export class EditSegmentPage extends WordsmithPage {
     this.segmentContainer = this.get('.segment__container').tagAsLoadCriterion();
     this.highlightedPreviewSpan = this.get('.highlight');
     this.deleteButton = this.get('[data-test="close-button"]');
-    // this.modalYesButton = this.get('.modal-dialog-content .btn-primary'); // not within the seg editor container
 
     // note: doneButton and backButton are the same element
     this.doneButton = this.get('.btn-primary').tagAsLoadCriterion();

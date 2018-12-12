@@ -6,8 +6,8 @@ import { WordsmithPage } from '../../WordsmithPage';
 export const googlePage = new class Google extends WordsmithPage {
   constructor() {
     super();
-    this.aboutLink = new UiElement('//*[text()="About"]');
-    this.storeLink = new UiElement('//*[text()="Store"]');
+    this.aboutLink = this.get('//*[text()="About"]');
+    this.storeLink = this.get('//*[text()="Store"]');
     super.nameElements();
   }
 }();

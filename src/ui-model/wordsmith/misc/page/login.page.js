@@ -7,29 +7,22 @@ import { dashboardPage } from './dashboard.page';
 export const loginPage = new class Login extends WordsmithPage {
   constructor() {
     super();
-    this.emailInput = new UiElement('input.email').tagAsLoadCriterion();
-    this.passwordInput = new UiElement('input.password').tagAsLoadCriterion();
-    this.logInButton = new UiElement('input[value="Log In"]');
+    this.emailInput = this.get('input.email').tagAsLoadCriterion();
+    this.passwordInput = this.get('input.password').tagAsLoadCriterion();
+    this.logInButton = this.get('input[value="Log In"]');
     this.toast_signedOutSuccessfully = toast.withMessage('Signed out successfully.');
     this.toast_invalidEmailOrPwd = toast.withMessage('Invalid Email or password.');
-    this.headerLogoLink = new UiElement('.header__logo').tagAsLoadCriterion();
-    this.header = new UiElement('.header').tagAsLoadCriterion();
+    this.headerLogoLink = this.get('.header__logo').tagAsLoadCriterion();
+    this.header = this.get('.header').tagAsLoadCriterion();
     super.nameElements();
   }
 
-  // super.nameElements();
   attemptLogIn(email, password, url) {
     this.load();
     this.emailInput.setValue(email);
     this.passwordInput.setValue(password, global.aquiferOptions.hidePassword);
     this.logInButton.click();
   }
-
-  // /** Logs in and waits for Dashboard page to load. */
-  // logIn(email, password, url) {
-  //   this.attemptLogIn(email, password, url);
-  //   dashboardPage.waitForLoad();
-  // }
 
   /** Logs in and waits for Dashboard page to load. */
   logIn() {

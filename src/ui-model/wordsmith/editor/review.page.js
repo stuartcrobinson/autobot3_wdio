@@ -27,8 +27,8 @@ const textSpan = variability => (
 export const reviewPage = new class Review extends WordsmithPage {
   constructor() {
     super();
-    this.showAllLink = new UiElement('.pagination + span .page-item.show-all');
-    this.show10PerPageLink = new UiElement('.pagination-container .label + span .page-item.show-all');
+    this.showAllLink = this.get('.pagination + span .page-item.show-all');
+    this.show10PerPageLink = this.get('.pagination-container .label + span .page-item.show-all');
     this.avgWordsValueDiv = getNthRunStatValueDiv(1).tagAsLoadCriterion();
     this.maxWordsValueDiv = getNthRunStatValueDiv(2).tagAsLoadCriterion();
     this.minWordsValueDiv = getNthRunStatValueDiv(3).tagAsLoadCriterion();
@@ -41,12 +41,12 @@ export const reviewPage = new class Review extends WordsmithPage {
     this.randomizeRowsToggle = getNthToggle(2).tagAsLoadCriterion();
     this.variabilityHeatmapToggle = getNthToggle(3);
 
-    this.generate50NewRowsLink = new UiElement('h2 a');
+    this.generate50NewRowsLink = this.get('h2 a');
 
     super.nameElements();
   }
 
-  getNthSegmentSpan(n) { return new UiElement(`.editor-textarea-segment:nth-of-type(${n})`).setName(`Segment ${n}`); }
+  getNthSegmentSpan(n) { return this.get(`.editor-textarea-segment:nth-of-type(${n})`).setName(`Segment ${n}`); }
 
   poorVariabilitySpanWithText = str => textSpan('poor')(str);
 

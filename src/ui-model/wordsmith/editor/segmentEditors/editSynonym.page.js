@@ -34,7 +34,7 @@ export const editSynonymPage = new class EditSynonymPage extends EditSegmentPage
   }
 
   getNthBreadcrumbLink(n) {
-    return new UiElement(`li.synonym:nth-of-type(${n}) a`).setName(`breadcrumb link ${n}`);
+    return this.get(`li.synonym:nth-of-type(${n}) a`).setName(`breadcrumb link ${n}`);
   }
 
   getNthBreadcrumbText(n) {
