@@ -18,6 +18,10 @@ eg, with creds saved to ``file.txt``, you can just do:
 
 ``yarn start --s Rye``
 
+or run all the tests with:
+
+``yarn start``
+
 ## other options
 
 ``--s`` spec file name(s).  this does not need to be a path or full name.  ``glob`` is used to search ``src/ui-test`` for tests that match this string.  multiple tests can be specified by separating with commas or enquoting and separating with spaces, that is ``--s test1,test2,test3`` or ``--s "test1 test2, test3"``.  Capitalization matters.

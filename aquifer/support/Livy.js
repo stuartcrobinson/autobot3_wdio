@@ -578,7 +578,7 @@ class Livy {
 
   /** called from wdio.conf.js */
   wdioConf_afterSession() {
-    console.log('wdioConf_afterSession asdfasdfasf');
+    // console.log('wdioConf_afterSession asdfasdfasf');
     fs.appendFileSync(this.runId, `${this.specFailed ? '❌ ' : '✅ '} ${this.reportClickablePath}${os.EOL}`);
 
     // so you can scroll code up so the screenshot isn't blocking it

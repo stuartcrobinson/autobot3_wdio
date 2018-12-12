@@ -4,7 +4,7 @@
   "description": "wdio fresh start, going to try to use es6 in tests and wdio.conf.js file",
   "main": "index.js",
   "scripts": {
-    "start": "npm run lint && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\" --suite dev --s \"./src/ui-test/**/*.js\"",
+    "start": "npm run lint && d=$(date) && ./node_modules/.bin/wdio --myRunId \"$d\" --suite dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "hi1": "echo \"hi1\"",
     "hi2": "echo \"hi2\"",

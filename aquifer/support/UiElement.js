@@ -429,15 +429,15 @@ export class UiElement extends UiContainer {
     while (actual !== expected && new Date().getTime() - initTime < timoutMillis) {
       browser.pause(100);
       actual = this.getWebElement().getText();
-      console.log(`actual loop: ${actual}`);
-      console.log('new Date().getMilliseconds()');
-      console.log(new Date().getMilliseconds());
-      console.log('initTime');
-      console.log(initTime);
-      console.log('timoutMillis');
-      console.log(timoutMillis);
-      console.log('new Date().getMilliseconds() - initTime');
-      console.log(new Date().getMilliseconds() - initTime);
+      // console.log(`actual loop: ${actual}`);
+      // console.log('new Date().getMilliseconds()');
+      // console.log(new Date().getMilliseconds());
+      // console.log('initTime');
+      // console.log(initTime);
+      // console.log('timoutMillis');
+      // console.log(timoutMillis);
+      // console.log('new Date().getMilliseconds() - initTime');
+      // console.log(new Date().getMilliseconds() - initTime);
     }
     if (actual !== expected) {
       throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);

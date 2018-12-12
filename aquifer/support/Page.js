@@ -21,7 +21,6 @@ export class Page extends UiContainer {
     this.url = url;
     return this;
   }
-  // get pageName() { return this.constructor.name; }
 
   static load(url) {
     livy.logScreenshottedAction([
@@ -53,31 +52,14 @@ export class Page extends UiContainer {
         this.load();
         succeeded = true;
       } catch (err) {
-        // ignore
+        console.log('caught an error that might be related to ** folder saves:');
+        console.log(err);
       }
     }
-
-
-    // const that = this;
-    // try {
-    //   browser.waitUntil(() => {
-    //     let succeeded = false;
-    //     try {
-    //       that.load();
-    //       succeeded = true;
-    //     } catch (err) {
-    //       // ignore
-    //     }
-    //     return succeeded;
-    //   }, timeoutInMillis);
-    // } catch (err) {
-    //   // do nothing. hide this error
-    // }
   }
 
   /* eslint class-methods-use-this: "off" */
   get(selector) {
     return new UiElement(selector);
-    // .setPage(this); // setPage unused.  probably a bad idea.
   }
 }

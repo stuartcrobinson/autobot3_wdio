@@ -14,7 +14,7 @@ var fs = require('fs');
 const optionsFileContents = fs.existsSync('file.txt') ? yargsParse(stringArgv(fs.readFileSync('file.txt'))) : '';
 const options = { ...optionsFileContents, ...yargsParse(process.argv) }
 options.hidePassword = options.hidePassword || options.wsUrl.includes('wordsmith.automatedinsights');
-options.myRunId = 'progressFileShouldntExistAfterRun ' + options.myRunId;
+// options.myRunId = 'progressFileShouldntExistAfterRun ' + options.myRunId;
 
 global.aquiferOptions = options
 
@@ -68,36 +68,56 @@ function getScreenshotName(basePath) {
   };
 }
 
-
+/**
+ * Note: this fails when pattern starts w/ './' or '/'
+ * https://stackoverflow.com/questions/29447637/node-glob-isnt-matching-anything-if-path-starts-with-and-nocase-true-bu
+ * @param {string} pattern 
+ */
+function find(pattern) {
+  return glob.sync(pattern, { nocase: true });
+}
 /**
  * Builds an array of filepaths to be used as a wdio suite, defined below.  
  * 
  * @param {string | Array} s from --s (for spec files) input.  Will be an array if --s was specified multiple times in which case only the last element of the array will be used.  This allows an overrideable default to be listed in the npm script.  the --s term can be a substring of a test, or multiple test substrings concatenated by comma or space.
+ * Defaults to '.' which matches any test (a la '.js')
  * @param {number} n number of times to run all the matched spec files.  useful for test development, so you can run a test a bunch of times to make sure it's not "flaky"
  */
-function buildSpecsArrayForWdioSuite(s, n = 1) {
-
-  s = typeof s === 'object' ? s[s.length - 1] : s; //override default spec files option if multiple --s's passed
+function buildSpecsArrayForWdioSuite(s = '.', n = 1) {
 
   let specFilePaths =
     (typeof s === 'object' ? s[s.length - 1] : s) //override default spec files option if multiple --s's passed
       .trim()
       .split(/[ ,]+/)
       .concat('awe8fy9wflasidufasid7yf')    //to ensure array length is > 1 to trigger reduce
-      .map(s => s.includes('src/ui-test') ? s + '*' : 'src/ui-test/**/*' + s + '*')
-      .reduce((a, c) => typeof a === 'string' ? glob.sync(a).concat(glob.sync(c)) : a.concat(glob.sync(c)));
+      .map(s => s.includes('src/ui-test') ? s : 'src/ui-test/**/*' + s + '*')
+      .reduce((a, c) => typeof a === 'string' ? find(a).concat(find(c)) : a.concat(find(c)))
+      .filter(s => !s.includes('*'));
 
   let specFilePathsRepeated = [];
 
   Array(n).fill(1).forEach(x => { specFilePathsRepeated = specFilePathsRepeated.concat(specFilePaths) });
 
-
-  // console.log("specFilePathsRepeated: awe8fawoef")
-  // console.log(specFilePathsRepeated)
-
-  // process.abort();
+  if (doPrintSpecsToRun()) {
+    console.log(`Preparing to run the following spec file${specFilePaths.length > 1 ? 's' : ''}${n > 1 ? (' ' + n + ' times') : ''}:`)
+    console.log(specFilePaths);
+  }
 
   return specFilePathsRepeated;
+}
+
+const FILE_PATH_DID_PRINT_SPECS = "printedSpecsToRun" + options.myRunId;
+const FILE_PATH_PROGRESS_FILE = "progressFile" + options.myRunId;
+
+function doPrintSpecsToRun() {
+  const FILE = FILE_PATH_DID_PRINT_SPECS;
+  if (fs.existsSync(FILE)) {
+    return false;
+  }
+  else {
+    fs.writeFileSync(FILE, 'existence of this file means that specs to run were already printed in console and should not be reprinted.  this file should be deleted when all tests finish.');
+    return true;
+  }
 }
 
 
@@ -112,7 +132,7 @@ exports.config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './src/ui-test/**/*.js'
+    // './src/ui-test/**/*.js'  //note: don't use this.  gives annoying output.  use yarn start and use --s to specify tests
   ],
   // define specific suites
   // NOTE - don't use wildcards here.  it will "work" but only run the first match, i think. 
@@ -129,9 +149,9 @@ exports.config = {
       './src/ui-test/editor/segment/branch.test.js'
     ],
     dummy: [
-      'src/ui-test/dummy/dummy.test.js',
-      'src/ui-test/dummy/dummy.test.js',
-      'src/ui-test/dummy/dummy.test.js',
+      'src/ui-test/dummy/dummy.js',
+      'src/ui-test/dummy/dummy.js',
+      'src/ui-test/dummy/dummy.js',
     ],
     dummies: [
       'src/ui-test/dummy/dummy1.js',
@@ -141,7 +161,7 @@ exports.config = {
     dummies2: [
       'src/ui-test/dummy/dummy*.js'
     ],
-    dev: global.aquiferOptions.s && global.aquiferOptions.suite === 'dev' ? buildSpecsArrayForWdioSuite(global.aquiferOptions.s, global.aquiferOptions.n) : []
+    dev: global.aquiferOptions.suite === 'dev' ? buildSpecsArrayForWdioSuite(global.aquiferOptions.s, global.aquiferOptions.n) : []
   },
   // Patterns to exclude.
   exclude: [
@@ -206,7 +226,7 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  // screenshotPath: './errorShots/',   //commented out cos was saving useless screenshots in stupid places. hope it still works.
+  screenshotPath: './errorShots/',   //commented out cos was saving useless screenshots in stupid places. hope it still works.
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -337,7 +357,7 @@ exports.config = {
       console.log('Logging object doesnt exist on the global var. import a page or UiElement into your test to fix this.');
       process.abort();
     }
-    global.livy.wdioConf_beforeSuite(suite, global.aquiferOptions.myRunId);
+    global.livy.wdioConf_beforeSuite(suite, FILE_PATH_PROGRESS_FILE);
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
@@ -371,7 +391,8 @@ exports.config = {
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy.wdioConf_afterSuite(suite.err, global.aquiferOptions.myRunId);
+    console.log('wdio afterSuite')
+    global.livy.wdioConf_afterSuite(suite.err, FILE_PATH_PROGRESS_FILE);
   },
   /**
    * Runs after a WebdriverIO command gets executed
@@ -390,7 +411,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   after: function (result, capabilities, specs) {
-    global.livy.wdioConf_after()
+    global.livy && global.livy.wdioConf_after()
   },
   /**
    * Gets executed right after terminating the webdriver session.
@@ -399,7 +420,9 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    global.livy.wdioConf_afterSession()
+    console.log('wdio afterSession')
+
+    global.livy && global.livy.wdioConf_afterSession()
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.
@@ -408,7 +431,9 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    */
   onComplete: function (exitCode, config, capabilities) {
-    console.log(fs.readFileSync(global.aquiferOptions.myRunId).toString())
-    fs.unlinkSync(global.aquiferOptions.myRunId)
+    console.log(fs.readFileSync(FILE_PATH_PROGRESS_FILE).toString());
+    //TODO put these in a dir and delete the whole dir here QS-480
+    fs.unlinkSync(FILE_PATH_PROGRESS_FILE);
+    fs.unlinkSync(FILE_PATH_DID_PRINT_SPECS);
   }
 }
