@@ -1,9 +1,9 @@
-## HOW TO RUN:
+## Installation
 
 
 ``yarn install``
 
-then
+## Execution
 
 ``yarn start --wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``
 
@@ -12,6 +12,7 @@ as in
 ``yarn start --wsLogin srobinson@automatedinsights.com --wsPassword himom --wsUrl https://wordsmith.automatedinsights.com --s loginForRye``
 
 ## If you don't want your password in your shell history
+
 You can save those options to ``file.txt`` in the project root directory in the same format (``--wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``).
 
 eg, with creds saved to ``file.txt``, you can just do:
@@ -24,7 +25,7 @@ or run all the tests with:
 
 ## other options
 
-``--s`` spec file name(s).  this does not need to be a path or full name.  ``glob`` is used to search ``src/ui-test`` for tests that match this string.  multiple tests can be specified by separating with commas or enquoting and separating with spaces, that is ``--s test1,test2,test3`` or ``--s "test1 test2, test3"``.  Capitalization matters.
+``--s`` spec file name(s) [parts].  this does not need to be a path or full name.  ``glob`` is used to search ``src/ui-test`` for tests that match this string.  multiple tests can be specified by separating with commas or enquoting and separating with spaces, that is ``--s test1,test2,test3`` or ``--s "test1 test2, test3"``.  Case insensitive.  Target specs must end with ".test.js".
 
 ``--n`` number of times to run the given spec files.  this happens in parallel with max threads stipulated in wdio.conf.js
 

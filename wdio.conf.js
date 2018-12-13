@@ -8,6 +8,12 @@ var glob = require("glob")
 var yargsParse = require('yargs-parser');
 var stringArgv = require('string-argv');
 var fs = require('fs');
+var rimraf = require('rimraf')
+
+
+!fs.existsSync('tmp') && fs.mkdirSync('tmp');
+
+const POINTLESS_ANNOYING_WDIO_ERROR_SHOTS_DIR = 'tmp/errorShots'
 
 /* Store input parameters in global.aquiferOptions object. */
 
@@ -80,10 +86,10 @@ function find(pattern) {
  * Builds an array of filepaths to be used as a wdio suite, defined below.  
  * 
  * @param {string | Array} s from --s (for spec files) input.  Will be an array if --s was specified multiple times in which case only the last element of the array will be used.  This allows an overrideable default to be listed in the npm script.  the --s term can be a substring of a test, or multiple test substrings concatenated by comma or space.
- * Defaults to '.' which matches any test (a la '.js')
+ * Defaults to '.test' which matches any test (a la '*.test.js')
  * @param {number} n number of times to run all the matched spec files.  useful for test development, so you can run a test a bunch of times to make sure it's not "flaky"
  */
-function buildSpecsArrayForWdioSuite(s = '.', n = 1) {
+function buildSpecsArrayForWdioSuite(s = '.test', n = 1) {
 
   let specFilePaths =
     (typeof s === 'object' ? s[s.length - 1] : s) //override default spec files option if multiple --s's passed
@@ -99,15 +105,15 @@ function buildSpecsArrayForWdioSuite(s = '.', n = 1) {
   Array(n).fill(1).forEach(x => { specFilePathsRepeated = specFilePathsRepeated.concat(specFilePaths) });
 
   if (doPrintSpecsToRun()) {
-    console.log(`Preparing to run the following spec file${specFilePaths.length > 1 ? 's' : ''}${n > 1 ? (' ' + n + ' times') : ''}:`)
+    console.log(`🔨 Preparing to run the following spec file${specFilePaths.length > 1 ? 's' : ''}${n > 1 ? (' ' + n + ' times') : ''}:`)
     console.log(specFilePaths);
   }
 
   return specFilePathsRepeated;
 }
 
-const FILE_PATH_DID_PRINT_SPECS = "printedSpecsToRun" + options.myRunId;
-const FILE_PATH_PROGRESS_FILE = "progressFile" + options.myRunId;
+const FILE_PATH_DID_PRINT_SPECS = "tmp/printedSpecsToRun" + options.myRunId;
+const FILE_PATH_PROGRESS_FILE = "tmp/progressFile" + options.myRunId;
 
 function doPrintSpecsToRun() {
   const FILE = FILE_PATH_DID_PRINT_SPECS;
@@ -120,6 +126,14 @@ function doPrintSpecsToRun() {
   }
 }
 
+function getChromeBinaryLocation() {
+  switch (process.platform) {
+    case 'darwin':
+      return '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
+    case 'linux':
+      return '/usr/bin/google-chrome'
+  }
+}
 
 exports.config = {
   //
@@ -198,7 +212,7 @@ exports.config = {
     browserName: 'chrome',
     chromeOptions: global.aquiferOptions.notHeadless ? {} : {
       args: ['--headless', '--disable-gpu', '--window-size=1280,800'],
-      binary: '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
+      binary: getChromeBinaryLocation()
     }
   }],
   //
@@ -226,7 +240,7 @@ exports.config = {
   bail: 0,
   //
   // Saves a screenshot to a given path if a command fails.
-  screenshotPath: './errorShots/',   //commented out cos was saving useless screenshots in stupid places. hope it still works.
+  screenshotPath: POINTLESS_ANNOYING_WDIO_ERROR_SHOTS_DIR + '/',   //commented out cos was saving useless screenshots in stupid places. hope it still works.
   //
   // Set a base URL in order to shorten url command calls. If your `url` parameter starts
   // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
@@ -391,7 +405,6 @@ exports.config = {
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    console.log('wdio afterSuite')
     global.livy.wdioConf_afterSuite(suite.err, FILE_PATH_PROGRESS_FILE);
   },
   /**
@@ -401,8 +414,8 @@ exports.config = {
    * @param {Number} result 0 - command success, 1 - command error
    * @param {Object} error error object if any
    */
-  // afterCommand: function (commandName, args, result, error) {
-  // },
+  afterCommand: function (commandName, args, result, error) {
+  },
   /**
    * Gets executed after all tests are done. You still have access to all global variables from
    * the test.
@@ -420,8 +433,6 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    console.log('wdio afterSession')
-
     global.livy && global.livy.wdioConf_afterSession()
   },
   /**
@@ -435,5 +446,7 @@ exports.config = {
     //TODO put these in a dir and delete the whole dir here QS-480
     fs.unlinkSync(FILE_PATH_PROGRESS_FILE);
     fs.unlinkSync(FILE_PATH_DID_PRINT_SPECS);
+    rimraf.sync(POINTLESS_ANNOYING_WDIO_ERROR_SHOTS_DIR);
+    rimraf.sync('tmp');
   }
 }

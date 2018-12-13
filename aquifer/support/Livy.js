@@ -328,7 +328,7 @@ class Livy {
    * @param {Array | undefined} messages
    * @param {string | undefined} screenshotFile
    */
-  logScreenshottedAction(messages = [], screenshotFile = undefined) {
+  logRichMessagesWithScreenshot(messages = [], screenshotFile = undefined) {
     const screenshotId = this.logRichMessages(messages);
     this.saveScreenshot(screenshotId, screenshotFile);
   }
@@ -426,11 +426,6 @@ class Livy {
     return screenshotId;
   }
 
-  logReportErrorToHtml(stack) {
-    this.logRawToHtml(
-      `<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`,
-    );
-  }
 
   logErrorImageToHtml() {
     this.logRawToHtml(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
@@ -500,54 +495,64 @@ class Livy {
 
   logPassed() {
     // @ts-ignore
-    const screenshotId = this.logRichMessages([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
-    this.saveScreenshot(screenshotId);
+    livy.logRichMessagesWithScreenshot([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
   }
+
+
+  // /**
+  //  *
+  //  * @param {Array | undefined} messages
+  //  * @param {string | undefined} screenshotFile
+  //  */
+  // logScreenshottedAction(messages = [], screenshotFile = undefined) {
+  //   const screenshotId = this.logRichMessages(messages);
+  //   this.saveScreenshot(screenshotId, screenshotFile);
+  // }
+
 
   logFailed(stack) {
     this.specFailed = true;
 
     // @ts-ignore
-    const screenshotId = this.logRichMessages([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
-    this.saveScreenshot(screenshotId);
+    livy.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
 
-    this.logReportErrorToHtml(stack);
-
+    livy.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
+    
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
     this.logErrorImageToHtml();
   }
 
   /** Called from global in wdio.conf.js */
   logVisualTestReset(screenshotFile) {
-    this.logScreenshottedAction([
+    this.logRichMessagesWithScreenshot([
       { text: '📷 ', style: this.style.emoji },
       { text: 'Reset ', style: this.style.verb_red },
       { text: 'screenshot ', style: this.style.filler_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-    screenshotFile);
+      screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
   logVisualTestCreate(screenshotFile) {
-    this.logScreenshottedAction([
+    this.logRichMessagesWithScreenshot([
       { text: '📷 ', style: this.style.emoji },
       { text: 'Save ', style: this.style.verb_red },
       { text: 'screenshot ', style: this.style.object_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-    screenshotFile);
+      screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
   logVisualTestVerify(screenshotFile) {
-    this.logScreenshottedAction([
+    this.logRichMessagesWithScreenshot([
       { text: '📸 ', style: this.style.emoji },
       { text: 'Verify ', style: this.style.verb },
       { text: 'screenshot ', style: this.style.object },
       { text: this.screenshotTargetName, style: this.style.object },
       { text: this.screenshotTargetSelector, style: this.style.selector }],
-    screenshotFile);
+      screenshotFile);
   }
 
   wdioConf_beforeSuite(suite, runId) {

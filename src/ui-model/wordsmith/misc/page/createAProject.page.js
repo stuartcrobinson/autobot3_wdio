@@ -11,7 +11,7 @@ export const createAProjectPage = new class CreateAProject extends WordsmithPage
   }
 
   populateTable() {
-    livy.logScreenshottedAction([
+    livy.logRichMessagesWithScreenshot([
       { text: '🧙  ', style: livy.style.emoji },
       { text: 'Populate wizard table.', style: livy.style.filler },
     ]);

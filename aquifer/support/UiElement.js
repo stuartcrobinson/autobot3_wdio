@@ -2,8 +2,6 @@
 import { key } from './Key';
 import { livy } from './Livy';
 import { UiContainer } from './UiContainer';
-// import { Page } from './Page';
-
 
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
@@ -38,22 +36,7 @@ export class UiElement extends UiContainer {
     this.parentPage = undefined;
   }
 
-  // these would allow a UiElement to know their parent page.  maybe a good idea for logging ... ?
-  // /**
-  //  *
-  //  * //@param {Page} page //commented to avoid  Dependency cycle
-  //  */
-  // setPage(page) {
-  //   this.parentPage = page;
-  //   return this;
-  // }
-
-  // getPage() {
-  //   return this.parentPage;
-  // }
-
   setName(name) {
-    // this.stuartname = name;
     return super.setName(name);
   }
 
@@ -366,7 +349,6 @@ export class UiElement extends UiContainer {
     browser.keys(value);
   }
 
-
   /**
    *
    * @param {UiElement} abEl2
@@ -399,7 +381,6 @@ export class UiElement extends UiContainer {
     browser.chooseFile(this.selector, filePath);
   }
 
-
   /**
    *
    * @param {Number} timoutMillis
@@ -415,13 +396,8 @@ export class UiElement extends UiContainer {
       { text: ` ${this.selector}`, style: livy.style.selector }]);
 
     let actual;
-    // try {
     this.waitForExist();
-    console.log('here1');
-    // browser.waitUntil(() => this.getWebElement().getText() === text, timoutMillis);
-
     actual = this.getWebElement().getText();
-    console.log(`actual 1: ${actual}`);
 
     const expected = text;
 
@@ -429,24 +405,10 @@ export class UiElement extends UiContainer {
     while (actual !== expected && new Date().getTime() - initTime < timoutMillis) {
       browser.pause(100);
       actual = this.getWebElement().getText();
-      // console.log(`actual loop: ${actual}`);
-      // console.log('new Date().getMilliseconds()');
-      // console.log(new Date().getMilliseconds());
-      // console.log('initTime');
-      // console.log(initTime);
-      // console.log('timoutMillis');
-      // console.log(timoutMillis);
-      // console.log('new Date().getMilliseconds() - initTime');
-      // console.log(new Date().getMilliseconds() - initTime);
     }
     if (actual !== expected) {
       throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
     }
-    // } catch (err) {
-    //   console.log('original error:');
-    //   console.log(err);
-    //   throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
-    // }
     livy.saveScreenshot(screenshotId);
   }
 
@@ -485,9 +447,6 @@ export class UiElement extends UiContainer {
   isExisting() {
     return browser.isExisting(this.selector);
   }
-
-  // ////////from Component, rip (circ dependencies)
-
 
   /* eslint guard-for-in: "off", no-restricted-syntax: "off" */
   /**

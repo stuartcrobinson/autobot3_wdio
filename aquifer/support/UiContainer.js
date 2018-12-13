@@ -30,10 +30,9 @@ export class UiContainer {
           // @ts-ignore
           propValue.setName(propName);
         } catch (err) {
-          // do nothing.  i would love to check if propValue was instanceOf UiElement but that gives circular dependency errors
+          // do nothing. love to check if propValue was instanceOf UiElement but that requires circular dependency 
         }
       }
-      // }
     }
   }
 
@@ -204,7 +203,7 @@ export class UiContainer {
     }
 
     if (doLog) {
-      livy.logScreenshottedAction([
+      livy.logRichMessagesWithScreenshot([
         { text: '⌨  ', style: livy.style.emoji },
         { text: 'Type ', style: livy.style.verb },
         { text: outputString, style: livy.style.object }]);

@@ -16,6 +16,8 @@ log/*
 livy/*
 file.txt
 file*
+tmp
+tmp/*
 
 # for visual testing
 

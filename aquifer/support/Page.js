@@ -23,7 +23,7 @@ export class Page extends UiContainer {
   }
 
   static load(url) {
-    livy.logScreenshottedAction([
+    livy.logRichMessagesWithScreenshot([
       { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: url, style: livy.style.selector }]);
@@ -32,7 +32,7 @@ export class Page extends UiContainer {
   }
 
   load() {
-    livy.logScreenshottedAction([
+    livy.logRichMessagesWithScreenshot([
       { text: '🕸  ', style: livy.style.emoji },
       { text: 'Load ', style: livy.style.verb },
       { text: `${this.name} Page `, style: livy.style.object },
