@@ -1,15 +1,14 @@
 ## Installation
 
-
-``yarn install``
+``yarn``
 
 ## Execution
 
-``yarn start --wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``
+``yarn start --s <spec name> --wsUrl <ws base url> --wsLogin <email> --wsPassword <password> ``
 
 as in
 
-``yarn start --wsLogin srobinson@automatedinsights.com --wsPassword himom --wsUrl https://wordsmith.automatedinsights.com --s loginForRye``
+``yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
 
 ## If you don't want your password in your shell history
 
@@ -55,6 +54,109 @@ notes:
 - you can't use ``npm install`` because it doesn't grab the autobot eslint plugin (`eslint-plugin-autobot`). 
 - it's dangerous to ``export`` instantiated ``UiElement`` objects cos something might be tagged as loadCriterion somewhere, but shouldn't be everywhere it's used.
 - a spec file must import something that extends UiContainer, otherwise the logging tool will never get created.  this would be unnecessary if mocha supported the ``--file`` option from their command line tools hmph
+
+## Running from fresh linux instance (jenkins using ubuntu 16 0 4)
+https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux
+
+
+# Redhat/Centos
+
+## everything
+``sudo  yum update -y; sudo yum install git -y; curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo; curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -; sudo yum install yarn -y; sudo yum install -y nodejs; sudo yum install java-1.8.0 -y; sudo yum remove java-1.7.0-openjdk -y; ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"; eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; cat ~/.ssh/id_rsa.pub;``
+
+``ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts; git clone git@github.com:ai-wordsmith/autobot.git; cd autobot; yarn; cp selenium-standalone-default-config-updated.js node_modules/selenium-standalone/lib/default-config.js; ./node_modules/selenium-standalone/bin/selenium-standalone install; yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
+
+## forcibly update selenium-standalone to use latest selenium version to fix thread bug
+
+``cd ~/autobot``
+``cp selenium-standalone-default-config-updated.js node_modules/selenium-standalone/lib/default-config.js``
+``./node_modules/selenium-standalone/bin/selenium-standalone install``
+
+## git
+``sudo  yum update -y; sudo yum install git -y``
+
+## yarn & npm
+``curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo``
+``curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -``
+``sudo yum install yarn -y``
+``sudo yum install -y nodejs``
+
+## java
+``sudo yum install java-1.8.0 -y``
+``sudo yum remove java-1.7.0-openjdk -y``
+
+## Add SSH key
+
+``ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"``
+
+``eval "$(ssh-agent -s)"``
+
+``ssh-add ~/.ssh/id_rsa``
+
+``cat ~/.ssh/id_rsa.pub``
+
+--
+``ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"; eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; cat ~/.ssh/id_rsa.pub``
+
+
+## get code
+https://serverfault.com/questions/447028/non-interactive-git-clone-ssh-fingerprint-prompt
+
+``ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts; git clone git@github.com:ai-wordsmith/autobot.git``
+
+``cd autobot; yarn; ``
+
+## run
+``yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
+
+
+
+yum install java-1.8.0-openjdk
+??
+ 
+
+
+ # ------end------------------------------------------
+
+
+# Ubuntu
+## Add SSH key
+
+``ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"``
+
+``eval "$(ssh-agent -s)"``
+
+``ssh-add ~/.ssh/id_rsa``
+
+``cat ~/.ssh/id_rsa.pub``
+
+--
+``ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"; eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; cat ~/.ssh/id_rsa.pub``
+
+
+copy results and add to github.com > topright button > ssh... > new ssh key
+
+## Install yarn & npm
+https://yarnpkg.com/lang/en/docs/install/#debian-stable
+
+``curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -``
+
+``sudo apt-get update && sudo apt-get install yarn``
+
+``sudo apt-get install npm -y``
+
+``curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -; sudo apt-get update && sudo apt-get install yarn; sudo apt-get install npm -y``
+
+
+## Install Java
+``sudo apt-get update; sudo apt-get install default-jre -y``
+
+## get code
+https://serverfault.com/questions/447028/non-interactive-git-clone-ssh-fingerprint-prompt
+
+``ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts; git clone git@github.com:ai-wordsmith/autobot.git``
+
+``cd autobot; yarn; ``
 
 
  

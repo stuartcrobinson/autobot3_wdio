@@ -243,11 +243,9 @@ class Livy {
     return `${this.getReportDir()}/${getDiffImagesDirName()}`;
   }
 
-
   getEventDomFileAbsPath(id) {
     return `${this.getEventScreenshotsDir()}/${id}.html`;
   }
-
 
   getEventScreenshotFileAbsPath(id) {
     return `${this.getEventScreenshotsDir()}/${id}.png`;
@@ -428,7 +426,7 @@ class Livy {
 
 
   logErrorImageToHtml() {
-    this.logRawToHtml(`<img id="logErrorImage" src=${this.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
+    livy.logRawToHtml(`<img id="logErrorImage" src=${livy.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
   }
 
   logFailedVisualTest(diffImageFilePath, report) {
@@ -511,15 +509,15 @@ class Livy {
 
 
   logFailed(stack) {
-    this.specFailed = true;
+    livy.specFailed = true;
 
     // @ts-ignore
     livy.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
 
     livy.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
-    
+
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-    this.logErrorImageToHtml();
+    livy.logErrorImageToHtml();
   }
 
   /** Called from global in wdio.conf.js */
@@ -530,7 +528,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.filler_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-      screenshotFile);
+    screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -541,7 +539,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object_red },
       { text: this.screenshotTargetName, style: this.style.object_red },
       { text: this.screenshotTargetSelector, style: this.style.selector_red }],
-      screenshotFile);
+    screenshotFile);
   }
 
   /** Called from global in wdio.conf.js */
@@ -552,7 +550,7 @@ class Livy {
       { text: 'screenshot ', style: this.style.object },
       { text: this.screenshotTargetName, style: this.style.object },
       { text: this.screenshotTargetSelector, style: this.style.selector }],
-      screenshotFile);
+    screenshotFile);
   }
 
   wdioConf_beforeSuite(suite, runId) {
@@ -583,7 +581,6 @@ class Livy {
 
   /** called from wdio.conf.js */
   wdioConf_afterSession() {
-    // console.log('wdioConf_afterSession asdfasdfasf');
     fs.appendFileSync(this.runId, `${this.specFailed ? '❌ ' : '✅ '} ${this.reportClickablePath}${os.EOL}`);
 
     // so you can scroll code up so the screenshot isn't blocking it

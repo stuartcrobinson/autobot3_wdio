@@ -2,6 +2,11 @@
 
 progressFile*
 
+other
+other/*
+
+#use yarn 
+package-lock.json
 
 #very confused about why these are generated in bizarre folders under ui-test.  like one root dir is ui-test/**/*.js/ERROR_chomr
 #but those are literal dir names

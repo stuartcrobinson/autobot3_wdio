@@ -30,7 +30,7 @@ export class UiContainer {
           // @ts-ignore
           propValue.setName(propName);
         } catch (err) {
-          // do nothing. love to check if propValue was instanceOf UiElement but that requires circular dependency 
+          // do nothing. love to check if propValue was instanceOf UiElement but that requires circular dependency
         }
       }
     }

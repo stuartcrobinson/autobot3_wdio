@@ -129,9 +129,12 @@ function doPrintSpecsToRun() {
 function getChromeBinaryLocation() {
   switch (process.platform) {
     case 'darwin':
+      // return 'node_modules/chromedriver/lib/chromedriver/chromedriver';
       return '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
     case 'linux':
-      return '/usr/bin/google-chrome'
+      // return 'node_modules/chromedriver/lib/chromedriver/chromedriver'
+      return '/usr/bin/google-chrome-stable' //install using https://intoli.com/blog/installing-google-chrome-on-centos/ `curl https://intoli.com/install-google-chrome.sh | bash`
+
   }
 }
 
