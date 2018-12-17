@@ -1,7 +1,7 @@
 // @ts-check
 import { assert } from 'chai';
 import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from '../aquifer/support/ApiStuff';
-import { livy } from '../aquifer/support/Livy';
+import { log } from '../aquifer/support/AquiferLog';
 import { editorPage } from './ui-model/wordsmith/editor/editor.page';
 import { galleryCityGuideNarrative } from './ui-model/wordsmith/misc/page/galleryNarrative.page';
 import { loginPage } from './ui-model/wordsmith/misc/page/login.page';
@@ -49,11 +49,11 @@ export class Load {
   }
 
   static newTemplateEditor(data = defaultDataForApi) {
-    const projectName = makeSlugSafeName(`Aqua data obj ${livy.specDate} ${livy.specTime}`);
+    const projectName = makeSlugSafeName(`Aqua data obj ${log.specDate} ${log.specTime}`);
     loginPage.logIn();
-    livy.logRichMessages([
-      { text: '☁️  ', style: livy.style.emoji },
-      { text: `Api use data object to create project: ${projectName}`, style: livy.style.filler }]);
+    log.logRichMessages([
+      { text: '☁️  ', style: log.style.emoji },
+      { text: `Api use data object to create project: ${projectName}`, style: log.style.filler }]);
     httpRequestCreateProjectFromDataObject_begin_and_complete(projectName, data);
 
     projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
@@ -63,12 +63,12 @@ export class Load {
   }
 
   static newTemplateEditorUsingDataFile(file) {
-    const projectName = makeSlugSafeName(`Aqua data file ${livy.specDate} ${livy.specTime} ${livy.specMillis}`);
+    const projectName = makeSlugSafeName(`Aqua data file ${log.specDate} ${log.specTime} ${log.specMillis}`);
     loginPage.logIn();
 
-    livy.logRichMessages([
-      { text: '☁️  ', style: livy.style.emoji },
-      { text: `Api use data file to create project: ${projectName}`, style: livy.style.filler }]);
+    log.logRichMessages([
+      { text: '☁️  ', style: log.style.emoji },
+      { text: `Api use data file to create project: ${projectName}`, style: log.style.filler }]);
     const httpRequestPromise = httpRequestCreateProjectFromDataFile_begin(projectName, file);
 
     httpRequestComplete(httpRequestPromise);

@@ -2,7 +2,7 @@
 import { AquiferAssert } from '../../../../aquifer/support/AquiferAssert';
 import { Load } from '../../../hooks';
 import { key } from '../../../../aquifer/support/Key';
-import { livy } from '../../../../aquifer/support/Livy';
+import { log } from '../../../../aquifer/support/AquiferLog';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { editBranchPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editBranch.page';
 import { header } from '../../../ui-model/wordsmith/misc/component/header.cont';
@@ -72,17 +72,17 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).conditionTextarea.waitForText(
       editBranchPage.getNthBranchBox(2).conditionTextarea.getWebElement().getText(),
     );
-    livy.logRichMessages([
-      { text: '🤦 ', style: livy.style.emoji },
-      { text: 'branch rule copy: not copying description ', style: livy.style.object_red },
-      { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
-      { text: 'https://autoin.atlassian.net/browse/WS-2282', style: livy.style.selector_red },
+    log.logRichMessages([
+      { text: '🤦 ', style: log.style.emoji },
+      { text: 'branch rule copy: not copying description ', style: log.style.object_red },
+      { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: log.style.selector_red },
+      { text: 'https://autoin.atlassian.net/browse/WS-2282', style: log.style.selector_red },
     ]);
-    livy.logRichMessages([
-      { text: '🤦 ', style: livy.style.emoji },
-      { text: 'branch rule copy: not copying text ', style: livy.style.object_red },
-      { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: livy.style.selector_red },
-      { text: 'https://autoin.atlassian.net/browse/WS-2282', style: livy.style.selector_red },
+    log.logRichMessages([
+      { text: '🤦 ', style: log.style.emoji },
+      { text: 'branch rule copy: not copying text ', style: log.style.object_red },
+      { text: 'https://autoin.atlassian.net/browse/QS-302 ', style: log.style.selector_red },
+      { text: 'https://autoin.atlassian.net/browse/WS-2282', style: log.style.selector_red },
     ]);
     // TODO https://autoin.atlassian.net/browse/QS-302
     //   editBranchPage.getNthBranchBox(1).descriptionSpan.waitForText(

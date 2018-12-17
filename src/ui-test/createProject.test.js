@@ -2,7 +2,7 @@
 import assert from 'assert';
 import { AquiferAssert } from '../../aquifer/support/AquiferAssert';
 import { Load } from '../hooks';
-import { livy } from '../../aquifer/support/Livy';
+import { log } from '../../aquifer/support/AquiferLog';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
 import { header } from '../ui-model/wordsmith/misc/component/header.cont';
 import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';
@@ -16,7 +16,7 @@ describe('Create a project', () => {
   it('from CSV upload', () => {
     dashboardPage.newProjectDropdown.click();
     dashboardPage.uploadCsvDropdownOption.click();
-    createAProjectUploadCsvPage.nameYourProjectField.setValue(`Autobot ${livy.specDate} ${livy.specTime}`);
+    createAProjectUploadCsvPage.nameYourProjectField.setValue(`Autobot ${log.specDate} ${log.specTime}`);
     createAProjectUploadCsvPage.checkVisual(header, sidebar, createAProjectUploadCsvPage.nameYourProjectField);
     createAProjectUploadCsvPage.fileUploadInput.uploadFile('./resources/eachDataType.csv');
     editorPage.waitForLoad();

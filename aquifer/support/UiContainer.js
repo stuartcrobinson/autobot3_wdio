@@ -1,6 +1,6 @@
 // @ts-check
 import filenamify from 'filenamify';
-import { livy } from './Livy';
+import { log } from './AquiferLog';
 
 /**
  * Any class that contains custom web element objects.
@@ -129,8 +129,8 @@ export class UiContainer {
 
     const excludedSelectors = excludedElements.map(uiElement => uiElement.selector);
 
-    livy.screenshotTargetName = this.name;
-    livy.screenshotTargetSelector = excludedSelectors.length > 0 ? ` excluding: ${JSON.stringify(excludedSelectors)}` : '';
+    log.screenshotTargetName = this.name;
+    log.screenshotTargetSelector = excludedSelectors.length > 0 ? ` excluding: ${JSON.stringify(excludedSelectors)}` : '';
 
     let report;
     // @ts-ignore
@@ -156,13 +156,13 @@ export class UiContainer {
 
     // @ts-ignore
     if (!report.isWithinMisMatchTolerance) {
-      livy.logFailedVisualTest(global.previousImageFileLocation, report);
+      log.logFailedVisualTest(global.previousImageFileLocation, report);
       // throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
-      livy.aVisualTestFailed = true;
+      log.aVisualTestFailed = true;
     }
     global.customScreenshotTag = undefined;
-    livy.screenshotTargetName = undefined;
-    livy.screenshotTargetSelector = undefined;
+    log.screenshotTargetName = undefined;
+    log.screenshotTargetSelector = undefined;
   }
 
   resetVisual(...excludedElements) {
@@ -203,10 +203,10 @@ export class UiContainer {
     }
 
     if (doLog) {
-      livy.logRichMessagesWithScreenshot([
-        { text: '⌨  ', style: livy.style.emoji },
-        { text: 'Type ', style: livy.style.verb },
-        { text: outputString, style: livy.style.object }]);
+      log.logRichMessagesWithScreenshot([
+        { text: '⌨  ', style: log.style.emoji },
+        { text: 'Type ', style: log.style.verb },
+        { text: outputString, style: log.style.object }]);
     }
 
     this.waitFor();

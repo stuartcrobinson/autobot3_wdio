@@ -49,13 +49,13 @@ function getScreenshotName(basePath) {
       let resultScreen = result.replace('screenshots/reference', 'screenshots/screen');
 
       if (global.doDeleteReferenceImage) {
-        global.livy.logVisualTestReset(resultScreen);
+        global.log.logVisualTestReset(resultScreen);
       }
       else if (!fs.existsSync(result)) {
-        global.livy.logVisualTestCreate(resultScreen);
+        global.log.logVisualTestCreate(resultScreen);
       }
       else {
-        global.livy.logVisualTestVerify(resultScreen);
+        global.log.logVisualTestVerify(resultScreen);
       }
     }
 
@@ -129,12 +129,9 @@ function doPrintSpecsToRun() {
 function getChromeBinaryLocation() {
   switch (process.platform) {
     case 'darwin':
-      // return 'node_modules/chromedriver/lib/chromedriver/chromedriver';
       return '/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome';
     case 'linux':
-      // return 'node_modules/chromedriver/lib/chromedriver/chromedriver'
-      return '/usr/bin/google-chrome-stable' //install using https://intoli.com/blog/installing-google-chrome-on-centos/ `curl https://intoli.com/install-google-chrome.sh | bash`
-
+      return '/usr/bin/google-chrome-stable' 
   }
 }
 
@@ -370,18 +367,18 @@ exports.config = {
    * @param {Object} suite suite details
    */
   beforeSuite: function (suite) {
-    if (!global.livy) {
+    if (!global.log) {
       console.log('Logging object doesnt exist on the global var. import a page or UiElement into your test to fix this.');
       process.abort();
     }
-    global.livy.wdioConf_beforeSuite(suite, FILE_PATH_PROGRESS_FILE);
+    global.log.wdioConf_beforeSuite(suite, FILE_PATH_PROGRESS_FILE);
   },
   /**
    * Function to be executed before a test (in Mocha/Jasmine) or a step (in Cucumber) starts.
    * @param {Object} test test details
    */
   beforeTest: function (test) {
-    global.livy.wdioConf_beforeTest(test);
+    global.log.wdioConf_beforeTest(test);
 
   },
   /**
@@ -401,14 +398,14 @@ exports.config = {
    * @param {Object} test test details
    */
   afterTest: function (test) {
-    global.livy.wdioConf_afterTest(test.passed, test.err);
+    global.log.wdioConf_afterTest(test.passed, test.err);
   },
   /**
    * Hook that gets executed after the suite has ended
    * @param {Object} suite suite details
    */
   afterSuite: function (suite) {
-    global.livy.wdioConf_afterSuite(suite.err, FILE_PATH_PROGRESS_FILE);
+    global.log.wdioConf_afterSuite(suite.err, FILE_PATH_PROGRESS_FILE);
   },
   /**
    * Runs after a WebdriverIO command gets executed
@@ -427,7 +424,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   after: function (result, capabilities, specs) {
-    global.livy && global.livy.wdioConf_after()
+    global.log && global.log.wdioConf_after()
   },
   /**
    * Gets executed right after terminating the webdriver session.
@@ -436,7 +433,7 @@ exports.config = {
    * @param {Array.<String>} specs List of spec file paths that ran
    */
   afterSession: function (config, capabilities, specs) {
-    global.livy && global.livy.wdioConf_afterSession()
+    global.log && global.log.wdioConf_afterSession()
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit.

@@ -1,6 +1,6 @@
 // @ts-check
 import { WordsmithPage } from '../../WordsmithPage';
-import { livy } from '../../../../../aquifer/support/Livy';
+import { log } from '../../../../../aquifer/support/AquiferLog';
 
 export const createAProjectPage = new class CreateAProject extends WordsmithPage {
   constructor(urlPath) {
@@ -11,9 +11,9 @@ export const createAProjectPage = new class CreateAProject extends WordsmithPage
   }
 
   populateTable() {
-    livy.logRichMessagesWithScreenshot([
-      { text: '🧙  ', style: livy.style.emoji },
-      { text: 'Populate wizard table.', style: livy.style.filler },
+    log.logRichMessagesWithScreenshot([
+      { text: '🧙  ', style: log.style.emoji },
+      { text: 'Populate wizard table.', style: log.style.filler },
     ]);
 
     this.dataInputTable

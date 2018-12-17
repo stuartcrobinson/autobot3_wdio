@@ -16,6 +16,12 @@ function passthrough(message) {
   return message;
 }
 
+
+/** holds DOMs as well as event screenshots */
+const EVENT_SNAPSHOTS_DIR_NAME = 'eventSnapshots';
+/** these files get copied from the visual regression service when an image test fails. */
+const DIFF_IMAGES_DIR_NAME = 'diffImages';
+
 /**
  *
  * @param {Object} style has a parameter '_styles' which is an array of strings describing the style, like "red", or "emoji"
@@ -25,25 +31,14 @@ function convertStylesToClassValue(style) {
 }
 
 function getEventDomFileRelPath(id) {
-  return `${getEventSnapshotsDirName()}/${id}.html`;
+  return `${EVENT_SNAPSHOTS_DIR_NAME}/${id}.html`;
 }
-
-/** holds DOMs as well as event screenshots */
-function getEventSnapshotsDirName() {
-  return 'eventSnapshots';
-}
-
-/** these files get copied from the visual regression service when an image test fails. */
-function getDiffImagesDirName() {
-  return 'diffImages';
-}
-
 function getEventScreenshotFileRelPath(id) {
-  return `${getEventSnapshotsDirName()}/${id}.png`;
+  return `${EVENT_SNAPSHOTS_DIR_NAME}/${id}.png`;
 }
 
 function getDiffImageCopyRelPath(base) {
-  return `${getDiffImagesDirName()}/${base}`;
+  return `${DIFF_IMAGES_DIR_NAME}/${base}`;
 }
 
 /**
@@ -57,9 +52,9 @@ const getGrandparentsTitle = (fullTitle, title, parent) => {
   return fullTitle.replace(bitToRemove, '');
 };
 
-class Livy {
+class AquiferLog {
   constructor() {
-    this.livyDoDisplay = !global.aquiferOptions.muteConsole;
+    this.doPrintToConsole = !global.aquiferOptions.muteConsole;
     this.doSaveEventScreenshots = !global.aquiferOptions.noPics;
     this.doSaveEventDom = false;
     this.style = {
@@ -91,6 +86,13 @@ class Livy {
   initialize(specFile) {
     this.isInTestCase = false;
     this.hasPrintedNontestLine = false;
+
+    const randomWait = Math.random() * 100;
+
+    browser.pause(randomWait); // to prevent two parallel-running tests from starting at exactly the same time
+
+
+    console.log(`paused ms: ${randomWait}`);
 
     const testParentDateTime = new Date();
 
@@ -223,7 +225,7 @@ class Livy {
   }
 
   getDateDir() {
-    return `livy/${this.specDate}`;
+    return `log/${this.specDate}`;
   }
 
   getTimeDir() {
@@ -232,15 +234,17 @@ class Livy {
 
   /** one log file per test js file */
   getReportDir() {
-    return `${this.getTimeDir()}/${this.getSpecFileDirName()}__${this.getSpecFileName()}`;
+    let result = `${this.getTimeDir()}/${this.getSpecFileDirName()}__${this.getSpecFileName()}`;
+    result = result.replace('ui-test__', ''); // unhelpful in filename
+    return result;
   }
 
   getEventScreenshotsDir() {
-    return `${this.getReportDir()}/${getEventSnapshotsDirName()}`;
+    return `${this.getReportDir()}/${EVENT_SNAPSHOTS_DIR_NAME}`;
   }
 
   getDiffImagesDir() {
-    return `${this.getReportDir()}/${getDiffImagesDirName()}`;
+    return `${this.getReportDir()}/${DIFF_IMAGES_DIR_NAME}`;
   }
 
   getEventDomFileAbsPath(id) {
@@ -412,7 +416,7 @@ class Livy {
 
     let prefix;
 
-    if (this.livyDoDisplay) {
+    if (this.doPrintToConsole) {
       if (this.isInTestCase) {
         prefix = !withPrefix ? ''
           : `${currTime} ${colors.gray(`${this.testGrandparentsTitle} ${this.testParentTitle}`.trim())} ${this.testCaseTitle}> `;
@@ -426,7 +430,7 @@ class Livy {
 
 
   logErrorImageToHtml() {
-    livy.logRawToHtml(`<img id="logErrorImage" src=${livy.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
+    log.logRawToHtml(`<img id="logErrorImage" src=${log.getErrorScreenshotFileRelPath()} width=45%></img><br/>`);
   }
 
   logFailedVisualTest(diffImageFilePath, report) {
@@ -471,7 +475,7 @@ class Livy {
     if (!style) {
       style = passthrough;
     }
-    if (this.livyDoDisplay) {
+    if (this.doPrintToConsole) {
       console.log(style(message));
     }
   }
@@ -493,7 +497,7 @@ class Livy {
 
   logPassed() {
     // @ts-ignore
-    livy.logRichMessagesWithScreenshot([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
+    log.logRichMessagesWithScreenshot([{ text: '✅ ', style: this.style.emoji }, { text: 'PASS', style: colors.green.bold }]);
   }
 
 
@@ -509,15 +513,15 @@ class Livy {
 
 
   logFailed(stack) {
-    livy.specFailed = true;
+    log.specFailed = true;
 
     // @ts-ignore
-    livy.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
+    log.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
 
-    livy.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
+    log.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
 
     browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-    livy.logErrorImageToHtml();
+    log.logErrorImageToHtml();
   }
 
   /** Called from global in wdio.conf.js */
@@ -614,6 +618,6 @@ class Livy {
   }
 }
 
-export const livy = new Livy();
+export const log = new AquiferLog();
 
-global.livy = livy;
+global.log = log;

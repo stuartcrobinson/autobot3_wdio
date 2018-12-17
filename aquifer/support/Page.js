@@ -1,7 +1,7 @@
 // @ts-check
 import { UiContainer } from './UiContainer';
 import { UiElement } from './UiElement';
-import { livy } from './Livy';
+import { log } from './AquiferLog';
 
 /** Abstract class */
 export class Page extends UiContainer {
@@ -23,20 +23,20 @@ export class Page extends UiContainer {
   }
 
   static load(url) {
-    livy.logRichMessagesWithScreenshot([
-      { text: '🕸  ', style: livy.style.emoji },
-      { text: 'Load ', style: livy.style.verb },
-      { text: url, style: livy.style.selector }]);
+    log.logRichMessagesWithScreenshot([
+      { text: '🕸  ', style: log.style.emoji },
+      { text: 'Load ', style: log.style.verb },
+      { text: url, style: log.style.selector }]);
 
     browser.url(url);
   }
 
   load() {
-    livy.logRichMessagesWithScreenshot([
-      { text: '🕸  ', style: livy.style.emoji },
-      { text: 'Load ', style: livy.style.verb },
-      { text: `${this.name} Page `, style: livy.style.object },
-      { text: this.url, style: livy.style.selector }]);
+    log.logRichMessagesWithScreenshot([
+      { text: '🕸  ', style: log.style.emoji },
+      { text: 'Load ', style: log.style.verb },
+      { text: `${this.name} Page `, style: log.style.object },
+      { text: this.url, style: log.style.selector }]);
 
     browser.url(this.url);
     return super.waitForLoad();
