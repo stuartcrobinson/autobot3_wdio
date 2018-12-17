@@ -66,6 +66,8 @@ https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#pl
 
 ``ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts; git clone git@github.com:ai-wordsmith/autobot.git; cd autobot; yarn; cp selenium-standalone-default-config-updated.js node_modules/selenium-standalone/lib/default-config.js; ./node_modules/selenium-standalone/bin/selenium-standalone install; yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
 
+# individual steps
+
 ## forcibly update selenium-standalone to use latest selenium version to fix thread bug
 
 ``cd ~/autobot``
@@ -115,13 +117,7 @@ https://serverfault.com/questions/447028/non-interactive-git-clone-ssh-fingerpri
 ``yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
 
 
-
-yum install java-1.8.0-openjdk
-??
- 
-
-
- # ------end------------------------------------------
+ # ------end Redhat/Centos------------------------------------------
 
 
 # Ubuntu
