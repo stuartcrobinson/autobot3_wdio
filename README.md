@@ -62,7 +62,7 @@ https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#pl
 # Redhat/Centos
 
 ## everything
-``sudo  yum update -y; sudo yum install git -y; curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo; curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -; sudo yum install yarn -y; sudo yum install -y nodejs; sudo yum install java-1.8.0 -y; sudo yum remove java-1.7.0-openjdk -y; ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"; eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; cat ~/.ssh/id_rsa.pub;``
+``sudo  yum update -y; sudo yum install git -y; curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo; curl --silent --location https://rpm.nodesource.com/setup_8.x | sudo bash -; sudo yum install yarn -y; sudo yum install -y nodejs; sudo yum install java-1.8.0 -y; sudo yum remove java-1.7.0-openjdk -y; curl https://intoli.com/install-google-chrome.sh | bash; ssh-keygen -t rsa -b 4096 -C "srobinson@automatedinsights.com"; eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; cat ~/.ssh/id_rsa.pub;``
 
 ``ssh-keygen -F github.com || ssh-keyscan github.com >>~/.ssh/known_hosts; git clone git@github.com:ai-wordsmith/autobot.git; cd autobot; yarn; cp selenium-standalone-default-config-updated.js node_modules/selenium-standalone/lib/default-config.js; ./node_modules/selenium-standalone/bin/selenium-standalone install; yarn start --s loginForRye  --wsUrl https://wordsmith.automatedinsights.com --wsLogin srobinson@automatedinsights.com --wsPassword himom``
 
@@ -71,6 +71,11 @@ https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#pl
 ``cd ~/autobot``
 ``cp selenium-standalone-default-config-updated.js node_modules/selenium-standalone/lib/default-config.js``
 ``./node_modules/selenium-standalone/bin/selenium-standalone install``
+
+## install chrome
+
+``curl https://intoli.com/install-google-chrome.sh | bash``
+
 
 ## git
 ``sudo  yum update -y; sudo yum install git -y``
