@@ -1,6 +1,6 @@
 // @ts-check
 import { EditSegmentPage } from '../editSegment.page';
-import { UiElement } from '../../../../../aquifer/support/UiElement';
+import { UiElement } from '../../../../../aquifer/UiElement';
 
 // TODO - logs aren't useful that just say "textInput" - need to specify which SynonymBOx the textInput is in
 

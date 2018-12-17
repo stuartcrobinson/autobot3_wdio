@@ -1,9 +1,9 @@
 // @ts-check
 import { countBy } from 'lodash';
 import { expect } from 'chai';
-import { AquiferAssert } from '../../../../aquifer/support/AquiferAssert';
+import { AquiferAssert } from '../../../../aquifer/AquiferAssert';
 import { Load } from '../../../hooks';
-import { log } from '../../../../aquifer/support/AquiferLog';
+import { log } from '../../../../aquifer/AquiferLog';
 import { editorPage } from '../../../ui-model/wordsmith/editor/editor.page';
 import { reviewPage } from '../../../ui-model/wordsmith/editor/review.page';
 import { editSynonymPage } from '../../../ui-model/wordsmith/editor/segmentEditors/editSynonym.page';

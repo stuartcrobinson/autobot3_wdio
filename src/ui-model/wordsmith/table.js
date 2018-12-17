@@ -1,6 +1,6 @@
 // @ts-check
 import * as cheerio from 'cheerio';
-import { UiElement } from '../../../aquifer/support/UiElement';
+import { UiElement } from '../../../aquifer/UiElement';
 
 
 // TODO this is still a mess - stuart 10/30/2018
@@ -186,7 +186,6 @@ export class Table extends UiElement {
     let i = 0;
     for (; i < headers.length; i++) {
       const headerText = headers[i].getText();
-      // livy.log(headerText);
       if (colName === headers[i].getText()) {
         foundIt = true;
         break;

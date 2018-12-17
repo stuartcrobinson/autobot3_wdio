@@ -6,7 +6,7 @@ console.log("here GoogleTest afewefef")
 var _ = require('lodash');
 
 import { countBy } from 'lodash';
-import { UiElement } from '../aquifer/support/UiElement';
+import { UiElement } from '../aquifer/UiElement';
 
 
 // var ar = [6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 2, 2, 2, 2];

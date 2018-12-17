@@ -1,7 +1,9 @@
 // @ts-check
 import { assert } from 'chai';
-import { httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject_begin_and_complete } from '../aquifer/support/ApiStuff';
-import { log } from '../aquifer/support/AquiferLog';
+import {
+  httpRequestComplete, httpRequestCreateProjectFromDataFile_begin, httpRequestCreateProjectFromDataObject, httpRequestCreateProjectFromDataFile,
+} from './ApiStuff';
+import { log } from '../aquifer/AquiferLog';
 import { editorPage } from './ui-model/wordsmith/editor/editor.page';
 import { galleryCityGuideNarrative } from './ui-model/wordsmith/misc/page/galleryNarrative.page';
 import { loginPage } from './ui-model/wordsmith/misc/page/login.page';
@@ -54,7 +56,7 @@ export class Load {
     log.logRichMessages([
       { text: '☁️  ', style: log.style.emoji },
       { text: `Api use data object to create project: ${projectName}`, style: log.style.filler }]);
-    httpRequestCreateProjectFromDataObject_begin_and_complete(projectName, data);
+    httpRequestCreateProjectFromDataObject(projectName, data);
 
     projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
 
@@ -69,9 +71,8 @@ export class Load {
     log.logRichMessages([
       { text: '☁️  ', style: log.style.emoji },
       { text: `Api use data file to create project: ${projectName}`, style: log.style.filler }]);
-    const httpRequestPromise = httpRequestCreateProjectFromDataFile_begin(projectName, file);
 
-    httpRequestComplete(httpRequestPromise);
+    httpRequestCreateProjectFromDataFile(projectName, file);
 
     projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
     projectPage.createNewTemplateButton.click_waitForNotExisting();

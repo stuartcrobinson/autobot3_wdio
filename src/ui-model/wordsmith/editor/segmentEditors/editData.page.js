@@ -1,6 +1,6 @@
 // @ts-check
 import { EditSegmentPage } from '../editSegment.page';
-import { UiElement } from '../../../../../aquifer/support/UiElement';
+import { UiElement } from '../../../../../aquifer/UiElement';
 
 export class EditDataDropdown extends UiElement {
   constructor(selector) {

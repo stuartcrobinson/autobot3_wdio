@@ -1,6 +1,6 @@
 // @ts-check
 import { loginPage } from '../page/login.page';
-import { UiElement } from '../../../../../aquifer/support/UiElement';
+import { UiElement } from '../../../../../aquifer/UiElement';
 
 class SettingsDropdownComp extends UiElement {
   constructor() {

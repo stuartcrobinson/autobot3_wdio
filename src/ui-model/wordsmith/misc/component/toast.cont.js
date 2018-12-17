@@ -1,5 +1,5 @@
 // @ts-check
-import { UiElement } from '../../../../../aquifer/support/UiElement';
+import { UiElement } from '../../../../../aquifer/UiElement';
 
 
 export const toast = new class Toast extends UiElement {
@@ -11,7 +11,7 @@ export const toast = new class Toast extends UiElement {
     } else {
       super(container.selector);
     }
-    // file:///Users/stuartrobinson/repos/autobot/aquifer/support/UiElement.js
+    // file:///Users/stuartrobinson/repos/autobot/aquifer/UiElement.js
 
     this.xCloseIcon = container.get('//i[@title="Dismiss alert"]');
     this.messageSpan = container.get('//span[contains(@class="message__text"]');

@@ -30,9 +30,6 @@ function convertStylesToClassValue(style) {
   return style ? style._styles.join(' ') : '';
 }
 
-function getEventDomFileRelPath(id) {
-  return `${EVENT_SNAPSHOTS_DIR_NAME}/${id}.html`;
-}
 function getEventScreenshotFileRelPath(id) {
   return `${EVENT_SNAPSHOTS_DIR_NAME}/${id}.png`;
 }
@@ -56,7 +53,6 @@ class AquiferLog {
   constructor() {
     this.doPrintToConsole = !global.aquiferOptions.muteConsole;
     this.doSaveEventScreenshots = !global.aquiferOptions.noPics;
-    this.doSaveEventDom = false;
     this.style = {
       verb: colors.italic,
       // @ts-ignore
@@ -369,10 +365,7 @@ class AquiferLog {
 
     let consoleBuilder = '';
 
-    const onClickHtml = this.doSaveEventDom ? `onclick="window.open('${getEventDomFileRelPath(screenshotId)}');"` : '';
-
-    let htmlBuilder = '';
-    htmlBuilder += `<span class="logline" id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');" ${onClickHtml}>`;
+    let htmlBuilder = `<span class="logline" id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');">`;
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 

@@ -1,6 +1,6 @@
 // @ts-check
 import { WordsmithPage } from '../../WordsmithPage';
-import { UiElement } from '../../../../../aquifer/support/UiElement';
+import { UiElement } from '../../../../../aquifer/UiElement';
 
 
 export const createAProjectUploadCsvPage = new class CreateAProject extends WordsmithPage {

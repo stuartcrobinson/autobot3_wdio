@@ -1,7 +1,6 @@
 .vscode/
 
 progressFile*
-
 other
 other/*
 
@@ -18,8 +17,7 @@ ERROR_*
 password.txt
 log
 log/*
-livy/*
-file.txt
+args.txt
 file*
 tmp
 tmp/*

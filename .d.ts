@@ -36,7 +36,6 @@ declare module NodeJS {
     customScreenshotTag: string;
     previousImageFileLocation: string;
     doDeleteReferenceImage: boolean;
-    livy: Object; //unused now?
     log: Object;
   }
 }

@@ -1,7 +1,7 @@
 // @ts-check
 import axios from 'axios';
 import fs from 'fs';
-import { apiAccessPage } from '../../src/ui-model/wordsmith/misc/page/apiAccess';
+import { apiAccessPage } from './ui-model/wordsmith/misc/page/apiAccess';
 
 function base64_encode(file) {
   // read binary data
@@ -10,7 +10,6 @@ function base64_encode(file) {
   return Buffer.from(bitmap).toString('base64');
 }
 
-// eachDataType_date2
 function getAxiosBodyWithFileData64(projectName, file, data64) {
   return {
     data: {
@@ -24,36 +23,6 @@ function getAxiosBodyWithFileData64(projectName, file, data64) {
   };
 }
 
-export function httpRequestCreateProjectFromDataFile_begin_and_complete(name, file) {
-  const data64 = base64_encode(file);
-
-  const body = getAxiosBodyWithFileData64(name, file, data64);
-
-  const url = 'https://api.automatedinsights.com/v1.8/projects';
-
-  if (!global.aquiferOptions.wsApiKey) {
-    global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
-    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
-  }
-
-  const axiosConfig = {
-    headers: {
-      Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
-      // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
-      'User-Agent': 'Autobot',
-      'Content-Type': 'application/json',
-    },
-  };
-  axios.post(url, body, axiosConfig).then((response) => {
-    // console.log('response status: ' + response.status);
-    // do nothing
-  })
-    .catch((error) => {
-      throw new Error(error); // trace is useful this way
-    });
-}
-
-
 function getAxiosBodyWithDataObject(projectName, projectData) {
   return {
     data: {
@@ -66,37 +35,34 @@ function getAxiosBodyWithDataObject(projectName, projectData) {
   };
 }
 
-export function httpRequestCreateProjectFromDataObject_begin_and_complete(name, data) {
-  // const data64 = base64_encode(file);
-
+export function httpRequestCreateProjectFromDataObject(name, data) {
   const body = getAxiosBodyWithDataObject(name, data);
-
-  // return this.httpRequestBegin('https://api.automatedinsights.com/v1.8/projects', body);
-
-  // const body = getAxiosBodyWithFileData64(name, file, data64);
 
   const url = 'https://api.automatedinsights.com/v1.8/projects';
 
   if (!global.aquiferOptions.wsApiKey) {
     global.aquiferOptions.wsApiKey = apiAccessPage.load().apiKeyInput.getText();
-    // global.aquiferOptions.wsApiKey = global.getApiKeyFromUi(); // apiAccessPage.apiKeyInput.getText();
   }
 
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
-      // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
       'User-Agent': 'Autobot',
       'Content-Type': 'application/json',
     },
   };
   axios.post(url, body, axiosConfig).then((response) => {
-    console.log(`response status: ${response.status}`);
     // do nothing
   })
     .catch((error) => {
       throw new Error(error); // trace is useful this way
     });
+}
+
+
+export function httpRequestCreateProjectFromDataFile(name, file) {
+  const httpRequestPromise = httpRequestCreateProjectFromDataFile_begin(name, file);
+  httpRequestComplete(httpRequestPromise);
 }
 
 
@@ -120,7 +86,6 @@ export function httpRequestBegin(url, body) {
   const axiosConfig = {
     headers: {
       Authorization: `Bearer ${global.aquiferOptions.wsApiKey}`,
-      // Authorization: 'Bearer aba82e1a30db642b781bc99e23eb38c23929741ccdec16cacc196d1dcddc0ecc',
       'User-Agent': 'Autobot',
       'Content-Type': 'application/json',
     },
@@ -134,10 +99,8 @@ export function httpRequestBegin(url, body) {
    * @param {import('axios').AxiosPromise} axiosPromise
    */
 export function httpRequestComplete(axiosPromise) {
-  // does wait and does print
   browser.call(() => axiosPromise
     .then((response) => {
-      // console.log('response status: ' + response.status);
       // do nothing
     })
     .catch((error) => {

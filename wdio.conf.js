@@ -17,7 +17,7 @@ const POINTLESS_ANNOYING_WDIO_ERROR_SHOTS_DIR = 'tmp/errorShots'
 
 /* Store input parameters in global.aquiferOptions object. */
 
-const optionsFileContents = fs.existsSync('file.txt') ? yargsParse(stringArgv(fs.readFileSync('file.txt'))) : '';
+const optionsFileContents = fs.existsSync('args.txt') ? yargsParse(stringArgv(fs.readFileSync('args.txt'))) : '';
 const options = { ...optionsFileContents, ...yargsParse(process.argv) }
 options.hidePassword = options.hidePassword || options.wsUrl.includes('wordsmith.automatedinsights');
 // options.myRunId = 'progressFileShouldntExistAfterRun ' + options.myRunId;

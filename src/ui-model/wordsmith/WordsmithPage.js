@@ -1,5 +1,5 @@
 // @ts-check
-import { Page } from '../../../aquifer/support/Page';
+import { Page } from '../../../aquifer/Page';
 
 // TODO https://autoin.atlassian.net/browse/QS-396 add url paths to existing static-path-page page objects
 

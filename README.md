@@ -12,9 +12,9 @@ as in
 
 ## If you don't want your password in your shell history
 
-You can save those options to ``file.txt`` in the project root directory in the same format (``--wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``).
+You can save those options to ``args.txt`` in the project root directory in the same format (``--wsLogin <email> --wsPassword <password> --wsUrl <ws base url> --s <spec name>``).
 
-eg, with creds saved to ``file.txt``, you can just do:
+eg, with creds saved to ``args.txt``, you can just do:
 
 ``yarn start --s Rye``
 

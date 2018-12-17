@@ -1,8 +1,8 @@
 // @ts-check
 import assert from 'assert';
-import { AquiferAssert } from '../../aquifer/support/AquiferAssert';
+import { AquiferAssert } from '../../aquifer/AquiferAssert';
 import { Load } from '../hooks';
-import { log } from '../../aquifer/support/AquiferLog';
+import { log } from '../../aquifer/AquiferLog';
 import { editorPage } from '../ui-model/wordsmith/editor/editor.page';
 import { header } from '../ui-model/wordsmith/misc/component/header.cont';
 import { sidebar } from '../ui-model/wordsmith/misc/component/sideBar.cont';
