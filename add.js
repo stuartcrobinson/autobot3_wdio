@@ -12,7 +12,6 @@ else {
 
 //npm run wdio -- --suite many --manySpec src/ui-test/dummy1.js --nRuns 3
 
-var shell = require('shelljs');
 
 // shell.exec('npm run wdio -- --suite many --manySpec src/ui-test/dummy1.js --nRuns 3')
 
