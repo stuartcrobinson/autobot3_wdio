@@ -2,6 +2,8 @@
 import filenamify from 'filenamify';
 import { log } from './AquiferLog';
 
+const timeoutWdio = require('../wdio.conf').config.waitforTimeout;
+
 /**
  * Any class that contains custom web element objects.
  *
@@ -41,10 +43,6 @@ export class UiContainer {
     return this;
   }
 
-  getName() {
-    return this.stuartname;
-  }
-
   get name() { return this.stuartname; }
 
   get criteriaElements() {
@@ -64,33 +62,33 @@ export class UiContainer {
     return abElements;
   }
 
-  waitForLoad(timeoutInMillis = 12000) {
+  waitForLoad(timeout = timeoutWdio) {
     try {
       for (let i = 0; i < this.criteriaElements.length; i++) {
         const element = this.criteriaElements[i];
         // @ts-ignore
-        element.waitForExist(timeoutInMillis);
+        element.waitForExist(timeout);
       }
     } catch (error) {
-      throw new Error(`Container ${this.constructor.name} failed to load. ${error}`);
+      throw new Error(`Container ${this.constructor.name} failed to load within ${timeout} ms. ${error}`);
     }
     return this;
   }
 
-  waitFor() {
+  waitFor(timeout = timeoutWdio) {
     // @ts-ignore
     if (this.waitForExist) {
       // @ts-ignore
-      this.waitForExist();
+      this.waitForExist(timeout);
     }
-    return this.waitForLoad();
+    return this.waitForLoad(timeout);
   }
 
-  isLoaded() {
+  isLoaded(timeout = timeoutWdio) {
     for (let i = 0; i < this.criteriaElements.length; i++) {
       const element = this.criteriaElements[i];
       // @ts-ignore
-      element.getWebElement();
+      element.getWebElement(timeout);
     }
     return true;
   }
@@ -157,7 +155,6 @@ export class UiContainer {
     // @ts-ignore
     if (!report.isWithinMisMatchTolerance) {
       log.logFailedVisualTest(global.previousImageFileLocation, report);
-      // throw new AssertionError({ message: `Visual test failed: ${JSON.stringify(report)}` });
       log.aVisualTestFailed = true;
     }
     global.customScreenshotTag = undefined;
@@ -175,7 +172,7 @@ export class UiContainer {
   keys(...inputs) {
     try {
       this.waitFor();
-    } catch { let donothing; } finally { let donothing; }
+    } catch { /* do nothing */ } finally { /* do nothing */ }
 
     const asdf = [];
 
@@ -221,8 +218,8 @@ export class UiContainer {
     }
   }
 
-  sleep(timeInMilliseconds) {
-    this.waitForLoad();
-    browser.pause(timeInMilliseconds);
+  sleep(timeout = timeoutWdio) {
+    this.waitForLoad(timeout);
+    browser.pause(timeout);
   }
 }

@@ -3,6 +3,8 @@ import { key } from './Key';
 import { log } from './AquiferLog';
 import { UiContainer } from './UiContainer';
 
+const timeoutWdio = require('../wdio.conf').config.waitforTimeout;
+
 function getParentFromStack(stack) {
   const line = stack.split(' at ')[2];
   const endPart = line.split('src/support/')[1];
@@ -49,13 +51,13 @@ export class UiElement extends UiContainer {
   }
 
   /* eslint class-methods-use-this: "off" */
-  getWebElement() {
-    this.waitForExist();
+  getWebElement(timeout = timeoutWdio) {
+    this.waitForExist(timeout);
     return browser.element(this.selector);
   }
 
-  getWebElements() {
-    this.waitForExist();
+  getWebElements(timeout = timeoutWdio) {
+    this.waitForExist(timeout);
     return $$(this.selector);
   }
 
@@ -90,56 +92,53 @@ export class UiElement extends UiContainer {
   }
 
 
-  /** Returns an array of text values of all web elements matching the given UiElement's selector. */
+  /** Returns an array of text values of all web elements currently matching the given UiElement's selector. */
   getTexts() {
-    const wes = this.getWebElements();
+    const wes = this.getWebElements(0);
 
     const texts = [];
 
     wes.forEach((we) => {
       texts.push(we.getText());
     });
-
-    // console.log(`texts: ${JSON.stringify(texts)}`);
     return texts;
   }
 
-  getText() {
-    // this.ensureContainerIsLoaded();
-    return this.getWebElement().getText();
+  getText(timeout = timeoutWdio) {
+    return this.getWebElement(timeout).getText();
   }
 
-  click(doLogAndWait = true) {
+  click(doLogAndWait = true, timeout = timeoutWdio) {
     if (doLogAndWait) {
-      this.logAndWait2([
+      this.logAndWait([
         { text: '👇 ', style: log.style.emoji },
         { text: 'Click ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
-        { text: `${this.selector}`, style: log.style.selector }]);
+        { text: `${this.selector}`, style: log.style.selector }], timeout);
     }
     browser.click(this.selector);
   }
 
-  click_ifExists(doLogAndWait = true) {
+  click_ifExists(doLogAndWait = true, timeout = timeoutWdio) {
     if (this.isExisting()) {
       if (doLogAndWait) {
-        this.logAndWait2([
+        this.logAndWait([
           { text: '👇 ', style: log.style.emoji },
           { text: 'Click ', style: log.style.verb },
           { text: `${this.stuartname} `, style: log.style.object },
-          { text: `${this.selector}`, style: log.style.selector }]);
+          { text: `${this.selector}`, style: log.style.selector }], timeout);
       }
       browser.click(this.selector);
     }
   }
 
-  doubleClick(doLog = true) {
+  doubleClick(doLog = true, timeout = timeoutWdio) {
     if (doLog) {
-      this.logAndWait2([
+      this.logAndWait([
         { text: '👇👇 ', style: log.style.emoji },
         { text: 'Double-click ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
-        { text: `${this.selector}`, style: log.style.selector }]);
+        { text: `${this.selector}`, style: log.style.selector }], timeout);
     }
     browser.click(this.selector);
   }
@@ -147,67 +146,63 @@ export class UiElement extends UiContainer {
   /**
    * I think this places the mouse over the center of the element and scrolls the page so the entire element is within view.
    */
-  hover(doLog = true) {
+  hover(doLog = true, timeout = timeoutWdio) {
     if (doLog) {
-      this.logAndWait2([
+      this.logAndWait([
         { text: '🕴  ', style: log.style.emoji },
         { text: 'Hover ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
-        { text: `${this.selector}`, style: log.style.selector }]);
+        { text: `${this.selector}`, style: log.style.selector }], timeout);
     }
     browser.moveToObject(this.selector);
     return this;
   }
 
-  scroll() {
-    return this.hover(false);
+  scroll(timeout = timeoutWdio) {
+    return this.hover(false, timeout);
   }
 
-  click_waitForChange(indicatorSelector = '//body', doLog = true) {
+  click_waitForChange(indicatorSelector = '//body', doLog = true, timeout = timeoutWdio) {
     const initialIndicatorElementHtml = browser.element(indicatorSelector).getHTML();
     doLog
-      && this.logAndWait2([
+      && this.logAndWait([
         { text: '👇 ', style: log.style.emoji },
         { text: 'Click ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
         { text: 'then wait for change in ', style: log.style.filler },
         { text: indicatorSelector, style: log.style.selector },
         { text: ' target: ', style: log.style.filler },
-        { text: `${this.selector} `, style: log.style.selector },
-      ]);
+        { text: `${this.selector} `, style: log.style.selector }], timeout);
+
     browser.click(this.selector);
     const init = new Date().getTime();
-    const timeout = 2000;
     while (browser.element(indicatorSelector).getHTML() === initialIndicatorElementHtml) {
-      browser.pause(200);
+      super.sleep(200);
       if (new Date().getTime() - init > timeout) {
         throw new Error(`timeout waiting for ${indicatorSelector} to change after clicking ${this.selector}`);
       }
     }
   }
 
-  click_waitForExisting(indicatorSelector) {
+  click_waitForExisting(indicatorSelector, timeout = timeoutWdio) {
     if (browser.isExisting(indicatorSelector)) {
       throw new Error(`Element already exists: ${indicatorSelector}`);
     }
-    this.logAndWait2([
+    this.logAndWait([
       { text: '👇 ', style: log.style.emoji },
       { text: 'Click ', style: log.style.verb },
       { text: `${this.stuartname} `, style: log.style.object },
       { text: 'then wait for element to exist: ', style: log.style.filler },
       { text: indicatorSelector, style: log.style.selector },
       { text: ' target: ', style: log.style.filler },
-      { text: `${this.selector} `, style: log.style.selector },
-    ]);
+      { text: `${this.selector} `, style: log.style.selector }, timeout]);
 
     browser.click(this.selector);
 
     const init = new Date().getTime();
 
-    const timeout = 2000;
-
     while (!browser.isExisting(indicatorSelector)) {
-      browser.pause(200);
+      super.sleep(200);
 
       if (new Date().getTime() - init > timeout) {
         throw new Error(`timeout waiting for ${indicatorSelector} to exist after clicking ${this.selector}`);
@@ -218,13 +213,13 @@ export class UiElement extends UiContainer {
   /**
    * Clicks each instance of the given webelement assuming it disappears upon click.
    */
-  clickAll_disappearing() {
-    this.logAndWait2([
+  clickAll_disappearing(timeout = timeoutWdio) {
+    this.logAndWait([
       { text: '👇 ', style: log.style.emoji },
       { text: 'Click to remove all instances of ', style: log.style.verb },
       { text: `${this.stuartname} `, style: log.style.object },
-      { text: this.selector, style: log.style.selector },
-    ]);
+      { text: this.selector, style: log.style.selector }, timeout]);
+
     this.click_waitForChange('//body', false);
 
     while (this.isExisting()) {
@@ -233,116 +228,97 @@ export class UiElement extends UiContainer {
   }
 
 
-  click_waitForNotExisting(indicatorSelector = this.selector) {
+  click_waitForNotExisting(indicatorSelector = this.selector, timeout = timeoutWdio) {
     if (indicatorSelector === this.selector) {
-      this.logAndWait2([
+      this.logAndWait([
         { text: '👇 ', style: log.style.emoji },
         { text: 'Click ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
         { text: 'then wait for target to disappear ', style: log.style.filler },
-        { text: indicatorSelector, style: log.style.selector },
-      ]);
+        { text: indicatorSelector, style: log.style.selector }, timeout]);
     } else {
-      this.logAndWait2([
+      this.logAndWait([
         { text: '👇 ', style: log.style.emoji },
         { text: 'Click ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
         { text: 'then wait for element to disappear: ', style: log.style.filler },
         { text: indicatorSelector, style: log.style.selector },
         { text: ' target: ', style: log.style.filler },
-        { text: `${this.selector} `, style: log.style.selector },
-      ]);
+        { text: `${this.selector} `, style: log.style.selector }, timeout]);
     }
     browser.click(this.selector);
 
-    browser.waitUntil(() => !browser.isExisting(indicatorSelector));
+    browser.waitUntil(() => !browser.isExisting(indicatorSelector), timeout);
   }
 
-  setValue(value, maskTextInLogs = false) {
+  setValue(value, maskTextInLogs = false, timeout = timeoutWdio) {
     if (typeof value === 'number') {
       throw new Error('input can be string or array, not number');
     }
-    this.logAndWait2([
+    this.logAndWait([
       { text: '⌨  ', style: log.style.emoji },
       { text: 'Set value ', style: log.style.verb },
       { text: 'of ', style: log.style.filler },
       { text: `${this.stuartname} `, style: log.style.object },
       { text: 'to ', style: log.style.filler },
       { text: `${value} `, style: maskTextInLogs ? log.style.password : log.style.object },
-      { text: `${this.selector} `, style: log.style.selector }]);
-
-    // try {
-    //   browser.setValue(this.selector, value);
-    //   console.log('nooooooooonooooooooonooooooooonooooooooonooooooooo ');
-    // } catch (err) {
-    //   console.log('caught error: ');
-    //   console.log(err);
-    // this.click_waitForChange();
-
+      { text: `${this.selector} `, style: log.style.selector }], timeout);
 
     /* note: browser.setValue doesn't work with the WS editor in branch rules. */
 
-    this.clear(false);
+    this.clear(false, timeout);
     this.keys(value, 1, false);
-    // browser.pause(100);
-    // browser.keys(' ');
-    // browser.keys(key.BACKSPACE);
-    // browser.click(this.selector);
-    // browser.pause(100);
-    // browser.keys([value]);
-    // }
   }
 
   /**
    * Performs Command-a Delete.
    */
-  clear(doLog = true) {
+  clear(doLog = true, timeout = timeoutWdio) {
     doLog
-      && this.logAndWait2([
+      && this.logAndWait([
         { text: '✨ ', style: log.style.emoji },
         { text: 'Clear ', style: log.style.verb },
         { text: `${this.stuartname} `, style: log.style.object },
-        { text: `${this.selector} `, style: log.style.selector }]);
+        { text: `${this.selector} `, style: log.style.selector }], timeout);
 
-    this.click(false);
+    this.click(false, timeout);
     this.sleep(100);
     this.keys(key.DELETE, 20, key.BACKSPACE, 40, false);
   }
 
   /** If event screenshots are being saved, attempt to hover over an object prior to interacting with it so that the mouse-over state is captured in the image.  */
-  failSafeHover(timeoutInMillis = 5000) {
+  failSafeHover(timeout = timeoutWdio) {
     try {
-      browser.waitUntil(() => (browser.isExisting(this.selector)), timeoutInMillis);
+      browser.waitUntil(() => (browser.isExisting(this.selector)), timeout);
       browser.moveToObject(this.selector);
     } catch (err) {
-      // do nothing
+      // do nothing.
     }
   }
 
-  logAndWait2(messages) {
+  logAndWait(messages, timeout = timeoutWdio) {
     if (!this.name) {
       throw new Error(`Found ${this.constructor.name} with no name.  Make sure that the constructor for each class extending UiContainer ends with super.nameElements(). selector: ${this.selector}`);
     }
-    const timeoutMillis = 5000;
     if (log.doSaveEventScreenshots) {
-      this.failSafeHover(timeoutMillis);
+      this.failSafeHover(timeout);
     }
     const screenshotId = log.logRichMessages(messages);
 
-    this.waitForExist(timeoutMillis);
+    this.waitForExist(timeout);
 
     log.saveScreenshot(screenshotId);
   }
 
-  clickAndType(value) {
-    this.logAndWait2([
+  clickAndType(value, timeout = timeoutWdio) {
+    this.logAndWait([
       { text: '👇 ', style: log.style.emoji },
       { text: 'Click ', style: log.style.verb },
       { text: this.stuartname, style: log.style.object },
       { text: ' and ', style: log.style.filler },
       { text: 'type ', style: log.style.verb },
       { text: value, style: log.style.object },
-      { text: ` ${this.selector}`, style: log.style.selector }]);
+      { text: ` ${this.selector}`, style: log.style.selector }], timeout);
 
     browser.click(this.selector);
 
@@ -351,42 +327,38 @@ export class UiElement extends UiContainer {
 
   /**
    *
-   * @param {UiElement} abEl2
+   * @param {UiElement} destination
    */
-  dragAndDropTo(abEl2) {
-    this.logAndWait2([
+  dragAndDropTo(destination, timeout = timeoutWdio) {
+    this.logAndWait([
       { text: '🏎  ', style: log.style.emoji },
       { text: 'Drag ', style: log.style.verb },
       { text: this.stuartname, style: log.style.object },
       { text: ' to ', style: log.style.filler },
-      { text: abEl2.stuartname, style: log.style.object },
+      { text: destination.stuartname, style: log.style.object },
       { text: ' [', style: log.style.filler },
       { text: this.selector, style: log.style.selector },
       { text: '], [', style: log.style.filler },
-      { text: abEl2.selector, style: log.style.selector },
-      { text: ']', style: log.style.filler },
-    ]);
-    browser.dragAndDrop(this.selector, abEl2.selector);
+      { text: destination.selector, style: log.style.selector },
+      { text: ']', style: log.style.filler }], timeout);
+
+    browser.dragAndDrop(this.selector, destination.selector);
   }
 
-  uploadFile(filePath) {
-    this.logAndWait2([
+  uploadFile(filePath, timeout = timeoutWdio) {
+    this.logAndWait([
       { text: '📂 ', style: log.style.emoji },
       { text: 'Upload file ', style: log.style.verb },
       { text: `${filePath} `, style: log.style.object },
       { text: 'to ', style: log.style.filler },
       { text: `${this.stuartname} `, style: log.style.object },
-      { text: `${this.selector} `, style: log.style.selector }]);
+      { text: `${this.selector} `, style: log.style.selector }], timeout);
 
     browser.chooseFile(this.selector, filePath);
   }
 
-  /**
-   *
-   * @param {Number} timoutMillis
-   */
-  waitForText(text, timoutMillis = 2000) {
-    super.waitForLoad();
+  waitForText(text, timeout = timeoutWdio) {
+    super.waitForLoad(timeout);
     const screenshotId = log.logRichMessages([
       { text: '🤔 ', style: log.style.emoji },
       { text: 'Assert ', style: log.style.verb },
@@ -396,51 +368,51 @@ export class UiElement extends UiContainer {
       { text: ` ${this.selector}`, style: log.style.selector }]);
 
     let actual;
-    this.waitForExist();
-    actual = this.getWebElement().getText();
+    this.waitForExist(timeout);
+    actual = this.getWebElement(timeout).getText();
 
     const expected = text;
 
     const initTime = new Date().getTime();
-    while (actual !== expected && new Date().getTime() - initTime < timoutMillis) {
-      browser.pause(100);
-      actual = this.getWebElement().getText();
+    while (actual !== expected && new Date().getTime() - initTime < timeout) {
+      super.sleep(200);
+      actual = this.getWebElement(timeout).getText();
     }
     if (actual !== expected) {
-      throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timoutMillis} ms.  Expected: "${text}". Selector: ${this.selector}`);
+      throw new Error(`Element "${this.stuartname}"'s text is "${actual}" after ${timeout} ms.  Expected: "${text}". Selector: ${this.selector}`);
     }
     log.saveScreenshot(screenshotId);
   }
 
-  waitForNotExist(timeoutInMillis = 1000) {
+  waitForNotExist(timeout = timeoutWdio) {
     try {
-      browser.waitUntil(() => (!browser.isExisting(this.selector)), timeoutInMillis);
+      browser.waitUntil(() => (!browser.isExisting(this.selector)), timeout);
     } catch (err) {
-      throw new Error(`Error waiting for ${this.stuartname} to not exist within ${timeoutInMillis} ms. Selector: ${this.selector} `);
+      throw new Error(`Error waiting for ${this.stuartname} to not exist within ${timeout} ms. Selector: ${this.selector} `);
     }
   }
 
   /**
    * Doesn't log.
-   * @param {Number} timeoutInMillis
+   * @param {Number} timeout in milliseconds
    */
-  waitForExist(timeoutInMillis = 5000) {
+  waitForExist(timeout = timeoutWdio) {
     try {
-      browser.waitUntil(() => (browser.isExisting(this.selector)), timeoutInMillis);
+      browser.waitUntil(() => (browser.isExisting(this.selector)), timeout);
     } catch (err) {
-      throw new Error(`Error finding ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
+      throw new Error(`Error finding ${this.stuartname} within ${timeout} ms. Selector: ${this.selector} `);
     }
   }
 
   /**
    * This is not a super reliable function since selenium isn't 100% accurate at determining visibility.
-   * @param {Number} timeoutInMillis
+   * @param {Number} timeout in milliseconds
    */
-  waitForVisible(timeoutInMillis = 5000) {
+  waitForVisible(timeout = timeoutWdio) {
     try {
-      browser.waitUntil(() => (browser.isVisible(this.selector)), timeoutInMillis);
+      browser.waitUntil(() => (browser.isVisible(this.selector)), timeout);
     } catch (err) {
-      throw new Error(`Error finding visible ${this.stuartname} within ${timeoutInMillis} ms. Selector: ${this.selector} `);
+      throw new Error(`Error finding visible ${this.stuartname} within ${timeout} ms. Selector: ${this.selector} `);
     }
   }
 

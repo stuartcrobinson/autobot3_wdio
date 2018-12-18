@@ -12,10 +12,11 @@ import rimraf from 'rimraf';
 
 const entities = new AllHtmlEntities();
 
+export const A_VISUAL_TEST_FAILED = 'A visual test failed.';
+
 function passthrough(message) {
   return message;
 }
-
 
 /** holds DOMs as well as event screenshots */
 const EVENT_SNAPSHOTS_DIR_NAME = 'eventSnapshots';
@@ -83,17 +84,14 @@ class AquiferLog {
     this.isInTestCase = false;
     this.hasPrintedNontestLine = false;
 
-    const randomWait = Math.random() * 100;
+    const randomWait = Math.floor(Math.random() * 100);
 
     browser.pause(randomWait); // to prevent two parallel-running tests from starting at exactly the same time
-
-
-    console.log(`paused ms: ${randomWait}`);
 
     const testParentDateTime = new Date();
 
     this.specMillis = dateFormat(testParentDateTime, 'l');
-    this.specTime = dateFormat(testParentDateTime, 'hh:MM:ss.ltt');
+    this.specTime = dateFormat(testParentDateTime, 'hh:MM:ss.l');
     this.specDate = dateFormat(testParentDateTime, 'yyyymmdd');
 
     this.specFilePath = specFile;
@@ -350,7 +348,7 @@ class AquiferLog {
    * @param {Object} messageChunks an array of {text, style} objects
    * @param {Boolean} withPrefix
    */
-  logRichMessages(messageChunks = [], withPrefix = true) {
+  logRichMessages(messageChunks = [], withPrefix = true, withScreenshot = true) {
     const testDateTime = new Date();
 
     const currTime = dateFormat(testDateTime, 'hh:MM:sstt');
@@ -365,7 +363,12 @@ class AquiferLog {
 
     let consoleBuilder = '';
 
-    let htmlBuilder = `<span class="logline" id="entrySpan${screenshotId}" onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');">`;
+
+    const onmouseoverHtml = withScreenshot
+      ? ` onmouseover="logEntryMouseover('${screenshotId}', '${getEventScreenshotFileRelPath(screenshotId)}');"`
+      : '';
+
+    let htmlBuilder = `<span class="logline" id="entrySpan${screenshotId}" ${onmouseoverHtml}>`;
 
     htmlBuilder += withPrefix ? entities.encode(`${currDate} ${currTime}> `) : '';
 
@@ -434,7 +437,7 @@ class AquiferLog {
 
     fs.copyFileSync(diffImageFilePath, diffImageNewAbsPath);
 
-    this.logRichMessages([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }]);
+    this.logRichMessages([{ text: `Visual test failed: ${JSON.stringify(report)}`, style: colors.red }], true, false);
 
     this.logWithoutPrefix_toHtml('Diff image: ', colors.red);
 
@@ -484,7 +487,7 @@ class AquiferLog {
       { text: `${this.testParentTitle} `, style: colors.blue },
       // @ts-ignore
       { text: this.testCaseTitle, style: colors.bold.blue },
-    ], false);
+    ], false, false);
     this.logWithoutPrefix('');
   }
 
@@ -508,13 +511,20 @@ class AquiferLog {
   logFailed(stack) {
     log.specFailed = true;
 
-    // @ts-ignore
-    log.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
 
-    log.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
+    if (stack.includes(A_VISUAL_TEST_FAILED)) {
+      // @ts-ignore
+      log.logRichMessages([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }], true, false);
+      log.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
+    } else {
+      // @ts-ignore
+      log.logRichMessagesWithScreenshot([{ text: '❌ ', style: this.style.emoji }, { text: 'FAIL', style: colors.red.bold }]);
 
-    browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
-    log.logErrorImageToHtml();
+      log.logRawToHtml(`<span name="thisIsWhereStackGoes" class="monospace red"><pre>${entities.encode(stack)}</pre></span><br/>`);
+
+      browser.saveScreenshot(this.getErrorScreenshotFileAbsPath());
+      log.logErrorImageToHtml();
+    }
   }
 
   /** Called from global in wdio.conf.js */

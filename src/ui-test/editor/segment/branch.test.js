@@ -14,7 +14,7 @@ describe('Branches:', () => {
 
   it('delete a new empty branch', () => {
     editorPage.toolbar.addBranchButton.click();
-    editBranchPage.checkVisual(header, sidebar.liveChatLink);
+    editBranchPage.checkVisual(header, sidebar.liveChatLink, editBranchPage.getNthBranchBox(1).conditionTextarea); // hide flashing cursor
     editBranchPage.getNthBranchBox(1).trashButton.click_waitForNotExisting(); // test trash icon for single rule
     editorPage.waitForLoad();
     AquiferAssert.visualTestsPassed();
@@ -25,6 +25,7 @@ describe('Branches:', () => {
     editBranchPage.getNthBranchBox(1).conditionLabel.click();
     editBranchPage.addAnotherRuleLink.click();
     editBranchPage.getNthBranchBox(2).conditionLabel.click();
+    editBranchPage.getNthBranchBox(2).conditionError.waitForExist();
     editBranchPage.scrollUp().checkVisual(header, sidebar.liveChatLink);
     editBranchPage.getNthBranchBox(2).trashButton.click_waitForNotExisting();
     AquiferAssert.visualTestsPassed();

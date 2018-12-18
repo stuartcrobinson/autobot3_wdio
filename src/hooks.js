@@ -55,7 +55,7 @@ export class Load {
     loginPage.logIn();
     log.logRichMessages([
       { text: '☁️  ', style: log.style.emoji },
-      { text: `Api use data object to create project: ${projectName}`, style: log.style.filler }]);
+      { text: `Api use data object to create project: ${projectName}`, style: log.style.filler }], true, false);
     httpRequestCreateProjectFromDataObject(projectName, data);
 
     projectPage.setUrl(getProjectUrlFromName(projectName)).loadWithRetry();
@@ -70,7 +70,7 @@ export class Load {
 
     log.logRichMessages([
       { text: '☁️  ', style: log.style.emoji },
-      { text: `Api use data file to create project: ${projectName}`, style: log.style.filler }]);
+      { text: `Api use data file to create project: ${projectName}`, style: log.style.filler }], true, false);
 
     httpRequestCreateProjectFromDataFile(projectName, file);
 

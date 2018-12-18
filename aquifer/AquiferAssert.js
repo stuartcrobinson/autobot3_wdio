@@ -1,17 +1,17 @@
 // @ts-check
-import { log } from './AquiferLog';
+import { log, A_VISUAL_TEST_FAILED } from './AquiferLog';
 
-const defaultAutobotTimeoutMillis = 5000;
+const timeout = require('../wdio.conf').config.waitforTimeout;
 
 export class AquiferAssert {
   static visualTestsPassed() {
     if (log.aVisualTestFailed) {
       log.aVisualTestFailed = false;
-      throw new Error('A visual test failed.');
+      throw new Error(A_VISUAL_TEST_FAILED);
     }
   }
 
-  static valueEquals(f, value, targetDescription, timoutMillis = defaultAutobotTimeoutMillis) {
+  static valueEquals(f, value, targetDescription, timoutMillis = timeout) {
     const screenshotId = log.logRichMessages([
       { text: '🤔  ', style: log.style.emoji },
       { text: 'Assert ', style: log.style.verb },
