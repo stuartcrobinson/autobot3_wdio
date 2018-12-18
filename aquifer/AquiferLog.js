@@ -84,8 +84,7 @@ class AquiferLog {
     this.isInTestCase = false;
     this.hasPrintedNontestLine = false;
 
-    const randomWait = Math.floor(Math.random() * 100);
-
+    const randomWait = Math.floor(Math.random() * 1000);
     browser.pause(randomWait); // to prevent two parallel-running tests from starting at exactly the same time
 
     const testParentDateTime = new Date();
@@ -102,6 +101,7 @@ class AquiferLog {
     this.logRawToHtml(`
     <!doctype html>
       <head>
+        <title>${this.getSpecFileTestlessName()} - aquifer</title>
         <link rel="icon" href="../../../../aquifer/icon/favicon.png" type="image/x-icon">
       </head>
       <style>
@@ -210,6 +210,12 @@ class AquiferLog {
     const split = this.specFilePath.split('/');
 
     return split[split.length - 1].replace('.js', '');
+  }
+
+  getSpecFileTestlessName() {
+    const split = this.specFilePath.split('/');
+
+    return split[split.length - 1].replace('.test.js', '');
   }
 
   getSpecFileDirName() {
@@ -594,6 +600,11 @@ class AquiferLog {
     for (let i = 0; i < 30; i++) {
       this.logRawToHtml('</br>');
     }
+    this.logRawToHtml(`
+    <div class="header">
+      <img src="../../../../aquifer/icon/icon.svg" alt="logo" />
+      <h1>${this.specFilePath}</h1>
+    </div>`);
 
     rimraf.sync('screenshots/screen');
   }
