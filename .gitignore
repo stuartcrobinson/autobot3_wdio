@@ -3,6 +3,7 @@
 progressFile*
 other
 other/*
+aquiferlog/*
 
 #use yarn 
 package-lock.json
