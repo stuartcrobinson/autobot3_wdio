@@ -102,7 +102,7 @@ class AquiferLog {
     this.logRawToHtml(`
     <!doctype html>
       <head>
-        <link rel="icon" href="../../../../icon/autobot_favicon.png" type="image/x-icon">
+        <link rel="icon" href="../../../../aquifer/icon/favicon.png" type="image/x-icon">
       </head>
       <style>
         body {
@@ -184,7 +184,7 @@ class AquiferLog {
       <img src="" id="image"/>
       
       <div class="header">
-        <img src="../../../../icon/autobot_icon.svg" alt="logo" />
+        <img src="../../../../aquifer/icon/icon.svg" alt="logo" />
         <h1>${this.specFilePath}</h1>
       </div>
       `);

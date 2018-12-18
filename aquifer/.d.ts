@@ -1,5 +1,5 @@
 
-// //TODO aquifer typescript support
+// //TODO aquifer typescript support for separate module
 
 
 // // https://github.com/Microsoft/TypeScript/issues/15626
