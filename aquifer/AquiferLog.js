@@ -219,7 +219,7 @@ class AquiferLog {
   }
 
   getDateDir() {
-    return `log/${this.specDate}`;
+    return `aquiferlog/${this.specDate}`;
   }
 
   getTimeDir() {
