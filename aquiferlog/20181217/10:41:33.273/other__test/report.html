@@ -1,0 +1,131 @@
+
+    <!doctype html>
+      <head>
+        <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
+      </head>
+      <style>
+        body {
+          background-color: #f5f5f5
+        }
+        a:link {
+          color: inherit;
+        }
+        a:visited {
+          color: inherit;
+        }
+        a:hover {
+          color: inherit;
+        }
+        a:active {
+          color: inherit;
+        }
+        a:link {
+          text-decoration: none;
+        }
+        a:visited {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .selector-text:hover {
+          color: darkgray;
+          background-color: azure !important;
+        }
+        .header img {
+          padding-left: 10px;
+          float: left;
+          width: 50px;
+          height: 50px;
+        }
+        .header h1 {
+          position: relative;
+          top: 8px;
+          left: 10px;
+        }
+        .monospace {font-family: monospace;}
+        input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
+        .red {color:red;}
+        .green {color:green;}
+        .blue {color:blue;}
+        .gray {color:#C8C8C8;}
+        .bold {font-weight:bold;}
+        .italic {font-style:italic;}
+        .bold {font-weight:bold;}
+        .gray {color:#C8C8C8;}
+        .emoji {font-size:11px;}
+        .gray {color:#C8C8C8;}
+        .whitespace {white-space:pre;}
+        #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
+      </style>
+
+      <script>
+        function dblclickSelectorSpan(e) {
+          e.firstElementChild.style.display = 'none';
+          e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+          e.lastElementChild.style.display = 'inline';
+          // e.lastElementChild.focus();
+          e.lastElementChild.select();
+        }
+        function blurSelectorInput(e) {
+          e.style.display = 'none';
+          e.parentElement.firstElementChild.style.display = 'inline';
+        }
+        function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
+          var elements = document.getElementsByClassName('logline');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
+          }
+          document.images['image'].src=eventScreenshotFileRelPath;
+          document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
+        }
+      </script>
+      <img src="" id="image"/>
+      
+      <div class="header">
+        <img src="../../../../autobot_icon.svg" alt="logo" />
+        <h1>/Users/stuartrobinson/repos/autobot/other/test.js</h1>
+      </div>
+      
+<span id=durham!_stuff></span>
+<hr/><br/>
+<span class="logline" id="entrySpan4133290" ><span class="bold">Starting test:  </span><span class="reset"> </span><span class="blue">durham: </span><span class="bold blue">stuff</span></span><br/>
+<span class="whitespace "></span><br/>
+<span class="logline" id="entrySpan4133883"  onmouseover="logEntryMouseover('4133883', 'eventSnapshots/4133883.png');">20181217 10:41:33pm&gt; <span class="emoji">❌ </span><span class="red bold">FAIL</span></span><br/>
+<span name="thisIsWhereStackGoes" class="monospace red"><pre>TypeError: Cannot read property &apos;loadingSpinner&apos; of undefined
+    at loadingSpinner (/Users/stuartrobinson/repos/autobot/other/test.js:48:30)
+    at Array.forEach (&lt;anonymous&gt;)
+    at Context.forEach (/Users/stuartrobinson/repos/autobot/other/test.js:27:9)
+    at new Promise (&lt;anonymous&gt;)
+    at new F (/Users/stuartrobinson/repos/autobot/node_modules/core-js/library/modules/_export.js:36:28)</pre></span><br/>
+<img id="logErrorImage" src=durham!_stuff.png width=45%></img><br/>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>

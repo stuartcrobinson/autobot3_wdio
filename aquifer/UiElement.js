@@ -61,6 +61,39 @@ export class UiElement extends UiContainer {
     return $$(this.selector);
   }
 
+  getHtml(timeout = timeoutWdio) {
+    this.waitForExist(timeout);
+
+    let html;
+    let failed = true;
+    const init = new Date().getTime();
+
+    try {
+      html = this.getWebElement().getHTML();
+    } catch (err) {
+      console.log(err);
+      failed = true;
+    }
+
+
+    while (failed) {
+      super.sleep(200);
+      try {
+        html = this.getWebElement().getHTML();
+        failed = false;
+      } catch (err) {
+        console.log(err);
+
+        failed = true;
+      }
+
+      if (failed && new Date().getTime() - init > timeout) {
+        throw new Error(`timeout trying to get html for ${this.selector}`);
+      }
+    }
+    return html;
+  }
+
   /**
    * Returns a child UiElement component with the given relative selector.
    * @param {string} selector must match parent selector style (xpath vs css-selector)
@@ -94,7 +127,7 @@ export class UiElement extends UiContainer {
 
   /** Returns an array of text values of all web elements currently matching the given UiElement's selector. */
   getTexts() {
-    const wes = this.getWebElements(0);
+    const wes = this.getWebElements();
 
     const texts = [];
 

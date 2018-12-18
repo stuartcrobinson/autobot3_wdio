@@ -1,7 +1,8 @@
 // @ts-check
 import { log, A_VISUAL_TEST_FAILED } from './AquiferLog';
 
-const timeout = require('../wdio.conf').config.waitforTimeout;
+
+const timeoutWdio = require('../wdio.conf').config.waitforTimeout;
 
 export class AquiferAssert {
   static visualTestsPassed() {
@@ -11,7 +12,7 @@ export class AquiferAssert {
     }
   }
 
-  static valueEquals(f, value, targetDescription, timoutMillis = timeout) {
+  static valueEquals(f, value, targetDescription, timeout = timeoutWdio) {
     const screenshotId = log.logRichMessages([
       { text: '🤔  ', style: log.style.emoji },
       { text: 'Assert ', style: log.style.verb },
@@ -20,7 +21,7 @@ export class AquiferAssert {
       { text: value, style: log.style.object }]);
 
     try {
-      browser.waitUntil(() => f() === value, timoutMillis);
+      browser.waitUntil(() => f() === value, timeout);
     } catch (err) {
       console.log('original error:');
       console.log(err);

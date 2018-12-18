@@ -1,0 +1,165 @@
+
+    <!doctype html>
+      <head>
+        <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
+      </head>
+      <style>
+        body {
+          background-color: #f5f5f5
+        }
+        a:link {
+          color: inherit;
+        }
+        a:visited {
+          color: inherit;
+        }
+        a:hover {
+          color: inherit;
+        }
+        a:active {
+          color: inherit;
+        }
+        a:link {
+          text-decoration: none;
+        }
+        a:visited {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .selector-text:hover {
+          color: darkgray;
+          background-color: azure !important;
+        }
+        .header img {
+          padding-left: 10px;
+          float: left;
+          width: 50px;
+          height: 50px;
+        }
+        .header h1 {
+          position: relative;
+          top: 8px;
+          left: 10px;
+        }
+        .monospace {font-family: monospace;}
+        input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
+        .red {color:red;}
+        .green {color:green;}
+        .blue {color:blue;}
+        .gray {color:#C8C8C8;}
+        .bold {font-weight:bold;}
+        .italic {font-style:italic;}
+        .bold {font-weight:bold;}
+        .gray {color:#C8C8C8;}
+        .emoji {font-size:11px;}
+        .gray {color:#C8C8C8;}
+        .whitespace {white-space:pre;}
+        #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
+      </style>
+
+      <script>
+        function dblclickSelectorSpan(e) {
+          e.firstElementChild.style.display = 'none';
+          e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+          e.lastElementChild.style.display = 'inline';
+          // e.lastElementChild.focus();
+          e.lastElementChild.select();
+        }
+        function blurSelectorInput(e) {
+          e.style.display = 'none';
+          e.parentElement.firstElementChild.style.display = 'inline';
+        }
+        function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
+          var elements = document.getElementsByClassName('logline');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
+          }
+          document.images['image'].src=eventScreenshotFileRelPath;
+          document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
+        }
+      </script>
+      <img src="" id="image"/>
+      
+      <div class="header">
+        <img src="../../../../autobot_icon.svg" alt="logo" />
+        <h1>/Users/stuartrobinson/repos/autobot/other/test.js</h1>
+      </div>
+      
+<span id=durham!_stuff></span>
+<hr/><br/>
+<span class="logline" id="entrySpan2410355" ><span class="bold">Starting test:  </span><span class="reset"> </span><span class="blue">durham: </span><span class="bold blue">stuff</span></span><br/>
+<span class="whitespace "></span><br/>
+<span class="logline" id="entrySpan2410504" >20181218 12:24:10am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/102595/print>https://property.spatialest.com/nc/durham/property/102595/print</a></span></span><br/>
+<span class="logline" id="entrySpan2410972"  onmouseover="logEntryMouseover('2410972', 'eventSnapshots/2410972.png');">20181218 12:24:10am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/102595>https://property.spatialest.com/nc/durham-tax/#/parcel/102595</a></span></span><br/>
+<span class="logline" id="entrySpan2414335" >20181218 12:24:14am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/169725/print>https://property.spatialest.com/nc/durham/property/169725/print</a></span></span><br/>
+<span class="logline" id="entrySpan2414829"  onmouseover="logEntryMouseover('2414829', 'eventSnapshots/2414829.png');">20181218 12:24:14am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/169725>https://property.spatialest.com/nc/durham-tax/#/parcel/169725</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2416692" >20181218 12:24:16am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/117605/print>https://property.spatialest.com/nc/durham/property/117605/print</a></span></span><br/>
+<span class="logline" id="entrySpan2417263"  onmouseover="logEntryMouseover('2417263', 'eventSnapshots/2417263.png');">20181218 12:24:17am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/117605>https://property.spatialest.com/nc/durham-tax/#/parcel/117605</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2419340" >20181218 12:24:19am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/124095/print>https://property.spatialest.com/nc/durham/property/124095/print</a></span></span><br/>
+<span class="logline" id="entrySpan2419853"  onmouseover="logEntryMouseover('2419853', 'eventSnapshots/2419853.png');">20181218 12:24:19am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/124095>https://property.spatialest.com/nc/durham-tax/#/parcel/124095</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2422071" >20181218 12:24:22am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/159818/print>https://property.spatialest.com/nc/durham/property/159818/print</a></span></span><br/>
+<span class="logline" id="entrySpan2422574"  onmouseover="logEntryMouseover('2422574', 'eventSnapshots/2422574.png');">20181218 12:24:22am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/159818>https://property.spatialest.com/nc/durham-tax/#/parcel/159818</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2424590" >20181218 12:24:24am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/147000/print>https://property.spatialest.com/nc/durham/property/147000/print</a></span></span><br/>
+<span class="logline" id="entrySpan2425070"  onmouseover="logEntryMouseover('2425070', 'eventSnapshots/2425070.png');">20181218 12:24:25am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/147000>https://property.spatialest.com/nc/durham-tax/#/parcel/147000</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2427064" >20181218 12:24:27am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/111323/print>https://property.spatialest.com/nc/durham/property/111323/print</a></span></span><br/>
+<span class="logline" id="entrySpan2427628"  onmouseover="logEntryMouseover('2427628', 'eventSnapshots/2427628.png');">20181218 12:24:27am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/111323>https://property.spatialest.com/nc/durham-tax/#/parcel/111323</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan2430330" >20181218 12:24:30am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="gray"><a href=https://property.spatialest.com/nc/durham/property/171573/print>https://property.spatialest.com/nc/durham/property/171573/print</a></span></span><br/>
+<span class="logline" id="entrySpan2430862"  onmouseover="logEntryMouseover('2430862', 'eventSnapshots/2430862.png');">20181218 12:24:30am&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/171573>https://property.spatialest.com/nc/durham-tax/#/parcel/171573</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>

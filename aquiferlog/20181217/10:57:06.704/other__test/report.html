@@ -1,0 +1,643 @@
+
+    <!doctype html>
+      <head>
+        <link rel="icon" href="../../../../autobot_favicon.png" type="image/x-icon">
+      </head>
+      <style>
+        body {
+          background-color: #f5f5f5
+        }
+        a:link {
+          color: inherit;
+        }
+        a:visited {
+          color: inherit;
+        }
+        a:hover {
+          color: inherit;
+        }
+        a:active {
+          color: inherit;
+        }
+        a:link {
+          text-decoration: none;
+        }
+        a:visited {
+          text-decoration: none;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        .selector-text:hover {
+          color: darkgray;
+          background-color: azure !important;
+        }
+        .header img {
+          padding-left: 10px;
+          float: left;
+          width: 50px;
+          height: 50px;
+        }
+        .header h1 {
+          position: relative;
+          top: 8px;
+          left: 10px;
+        }
+        .monospace {font-family: monospace;}
+        input {display:none;font-family:inherit;font-size:inherit;height:12px;margin-left:-3px;margin-right:-4px;}
+        .red {color:red;}
+        .green {color:green;}
+        .blue {color:blue;}
+        .gray {color:#C8C8C8;}
+        .bold {font-weight:bold;}
+        .italic {font-style:italic;}
+        .bold {font-weight:bold;}
+        .gray {color:#C8C8C8;}
+        .emoji {font-size:11px;}
+        .gray {color:#C8C8C8;}
+        .whitespace {white-space:pre;}
+        #image {position:fixed;bottom:0;right:0;width:45%;border:1px solid blue;}
+      </style>
+
+      <script>
+        function dblclickSelectorSpan(e) {
+          e.firstElementChild.style.display = 'none';
+          e.lastElementChild.style.width = ((e.lastElementChild.value.length) * 8) + 'px';
+          e.lastElementChild.style.display = 'inline';
+          // e.lastElementChild.focus();
+          e.lastElementChild.select();
+        }
+        function blurSelectorInput(e) {
+          e.style.display = 'none';
+          e.parentElement.firstElementChild.style.display = 'inline';
+        }
+        function logEntryMouseover(screenshotId, eventScreenshotFileRelPath) {
+          var elements = document.getElementsByClassName('logline');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].style.backgroundColor="inherit"; //to undo highlighting of prev log line
+          }
+          document.images['image'].src=eventScreenshotFileRelPath;
+          document.getElementById('entrySpan'+screenshotId).style.backgroundColor="white";
+        }
+      </script>
+      <img src="" id="image"/>
+      
+      <div class="header">
+        <img src="../../../../autobot_icon.svg" alt="logo" />
+        <h1>/Users/stuartrobinson/repos/autobot/other/test.js</h1>
+      </div>
+      
+<span id=durham!_stuff></span>
+<hr/><br/>
+<span class="logline" id="entrySpan5706713" ><span class="bold">Starting test:  </span><span class="reset"> </span><span class="blue">durham: </span><span class="bold blue">stuff</span></span><br/>
+<span class="whitespace "></span><br/>
+<span class="logline" id="entrySpan5707222"  onmouseover="logEntryMouseover('5707222', 'eventSnapshots/5707222.png');">20181217 10:57:07pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/102595>https://property.spatialest.com/nc/durham-tax/#/parcel/102595</a></span></span><br/>
+<span class="logline" id="entrySpan5715887"  onmouseover="logEntryMouseover('5715887', 'eventSnapshots/5715887.png');">20181217 10:57:15pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/169725>https://property.spatialest.com/nc/durham-tax/#/parcel/169725</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5717729"  onmouseover="logEntryMouseover('5717729', 'eventSnapshots/5717729.png');">20181217 10:57:17pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/117605>https://property.spatialest.com/nc/durham-tax/#/parcel/117605</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5719495"  onmouseover="logEntryMouseover('5719495', 'eventSnapshots/5719495.png');">20181217 10:57:19pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/124095>https://property.spatialest.com/nc/durham-tax/#/parcel/124095</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5721269"  onmouseover="logEntryMouseover('5721269', 'eventSnapshots/5721269.png');">20181217 10:57:21pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/159818>https://property.spatialest.com/nc/durham-tax/#/parcel/159818</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5723049"  onmouseover="logEntryMouseover('5723049', 'eventSnapshots/5723049.png');">20181217 10:57:23pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/147000>https://property.spatialest.com/nc/durham-tax/#/parcel/147000</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5724827"  onmouseover="logEntryMouseover('5724827', 'eventSnapshots/5724827.png');">20181217 10:57:24pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/111323>https://property.spatialest.com/nc/durham-tax/#/parcel/111323</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5726622"  onmouseover="logEntryMouseover('5726622', 'eventSnapshots/5726622.png');">20181217 10:57:26pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/171573>https://property.spatialest.com/nc/durham-tax/#/parcel/171573</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5728433"  onmouseover="logEntryMouseover('5728433', 'eventSnapshots/5728433.png');">20181217 10:57:28pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/159482>https://property.spatialest.com/nc/durham-tax/#/parcel/159482</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5730640"  onmouseover="logEntryMouseover('5730640', 'eventSnapshots/5730640.png');">20181217 10:57:30pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/119089>https://property.spatialest.com/nc/durham-tax/#/parcel/119089</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5732339"  onmouseover="logEntryMouseover('5732339', 'eventSnapshots/5732339.png');">20181217 10:57:32pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/165987>https://property.spatialest.com/nc/durham-tax/#/parcel/165987</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5734036"  onmouseover="logEntryMouseover('5734036', 'eventSnapshots/5734036.png');">20181217 10:57:34pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/113235>https://property.spatialest.com/nc/durham-tax/#/parcel/113235</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5735734"  onmouseover="logEntryMouseover('5735734', 'eventSnapshots/5735734.png');">20181217 10:57:35pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/111231>https://property.spatialest.com/nc/durham-tax/#/parcel/111231</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5737453"  onmouseover="logEntryMouseover('5737453', 'eventSnapshots/5737453.png');">20181217 10:57:37pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/169980>https://property.spatialest.com/nc/durham-tax/#/parcel/169980</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5739156"  onmouseover="logEntryMouseover('5739156', 'eventSnapshots/5739156.png');">20181217 10:57:39pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/111130>https://property.spatialest.com/nc/durham-tax/#/parcel/111130</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5740923"  onmouseover="logEntryMouseover('5740923', 'eventSnapshots/5740923.png');">20181217 10:57:40pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/109842>https://property.spatialest.com/nc/durham-tax/#/parcel/109842</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5742659"  onmouseover="logEntryMouseover('5742659', 'eventSnapshots/5742659.png');">20181217 10:57:42pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/187681>https://property.spatialest.com/nc/durham-tax/#/parcel/187681</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5744344"  onmouseover="logEntryMouseover('5744344', 'eventSnapshots/5744344.png');">20181217 10:57:44pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/153265>https://property.spatialest.com/nc/durham-tax/#/parcel/153265</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5746097"  onmouseover="logEntryMouseover('5746097', 'eventSnapshots/5746097.png');">20181217 10:57:46pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/150126>https://property.spatialest.com/nc/durham-tax/#/parcel/150126</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5747803"  onmouseover="logEntryMouseover('5747803', 'eventSnapshots/5747803.png');">20181217 10:57:47pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/150127>https://property.spatialest.com/nc/durham-tax/#/parcel/150127</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5749521"  onmouseover="logEntryMouseover('5749521', 'eventSnapshots/5749521.png');">20181217 10:57:49pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/118037>https://property.spatialest.com/nc/durham-tax/#/parcel/118037</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5751331"  onmouseover="logEntryMouseover('5751331', 'eventSnapshots/5751331.png');">20181217 10:57:51pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/118307>https://property.spatialest.com/nc/durham-tax/#/parcel/118307</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5753042"  onmouseover="logEntryMouseover('5753042', 'eventSnapshots/5753042.png');">20181217 10:57:53pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/111107>https://property.spatialest.com/nc/durham-tax/#/parcel/111107</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5754837"  onmouseover="logEntryMouseover('5754837', 'eventSnapshots/5754837.png');">20181217 10:57:54pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/130923>https://property.spatialest.com/nc/durham-tax/#/parcel/130923</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5756608"  onmouseover="logEntryMouseover('5756608', 'eventSnapshots/5756608.png');">20181217 10:57:56pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/131020>https://property.spatialest.com/nc/durham-tax/#/parcel/131020</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5758341"  onmouseover="logEntryMouseover('5758341', 'eventSnapshots/5758341.png');">20181217 10:57:58pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/118776>https://property.spatialest.com/nc/durham-tax/#/parcel/118776</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5800062"  onmouseover="logEntryMouseover('5800062', 'eventSnapshots/5800062.png');">20181217 10:58:00pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/119151>https://property.spatialest.com/nc/durham-tax/#/parcel/119151</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5801868"  onmouseover="logEntryMouseover('5801868', 'eventSnapshots/5801868.png');">20181217 10:58:01pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/171574>https://property.spatialest.com/nc/durham-tax/#/parcel/171574</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5803692"  onmouseover="logEntryMouseover('5803692', 'eventSnapshots/5803692.png');">20181217 10:58:03pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/122431>https://property.spatialest.com/nc/durham-tax/#/parcel/122431</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5805451"  onmouseover="logEntryMouseover('5805451', 'eventSnapshots/5805451.png');">20181217 10:58:05pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/109761>https://property.spatialest.com/nc/durham-tax/#/parcel/109761</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5807233"  onmouseover="logEntryMouseover('5807233', 'eventSnapshots/5807233.png');">20181217 10:58:07pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/158497>https://property.spatialest.com/nc/durham-tax/#/parcel/158497</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5809029"  onmouseover="logEntryMouseover('5809029', 'eventSnapshots/5809029.png');">20181217 10:58:09pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/133244>https://property.spatialest.com/nc/durham-tax/#/parcel/133244</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5810796"  onmouseover="logEntryMouseover('5810796', 'eventSnapshots/5810796.png');">20181217 10:58:10pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/133246>https://property.spatialest.com/nc/durham-tax/#/parcel/133246</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5812582"  onmouseover="logEntryMouseover('5812582', 'eventSnapshots/5812582.png');">20181217 10:58:12pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/132813>https://property.spatialest.com/nc/durham-tax/#/parcel/132813</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5814293"  onmouseover="logEntryMouseover('5814293', 'eventSnapshots/5814293.png');">20181217 10:58:14pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/180688>https://property.spatialest.com/nc/durham-tax/#/parcel/180688</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5816119"  onmouseover="logEntryMouseover('5816119', 'eventSnapshots/5816119.png');">20181217 10:58:16pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/143121>https://property.spatialest.com/nc/durham-tax/#/parcel/143121</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5817909"  onmouseover="logEntryMouseover('5817909', 'eventSnapshots/5817909.png');">20181217 10:58:17pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/130354>https://property.spatialest.com/nc/durham-tax/#/parcel/130354</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5824892"  onmouseover="logEntryMouseover('5824892', 'eventSnapshots/5824892.png');">20181217 10:58:24pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/168440>https://property.spatialest.com/nc/durham-tax/#/parcel/168440</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5826764"  onmouseover="logEntryMouseover('5826764', 'eventSnapshots/5826764.png');">20181217 10:58:26pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/168442>https://property.spatialest.com/nc/durham-tax/#/parcel/168442</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5828539"  onmouseover="logEntryMouseover('5828539', 'eventSnapshots/5828539.png');">20181217 10:58:28pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/168443>https://property.spatialest.com/nc/durham-tax/#/parcel/168443</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5830302"  onmouseover="logEntryMouseover('5830302', 'eventSnapshots/5830302.png');">20181217 10:58:30pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/133424>https://property.spatialest.com/nc/durham-tax/#/parcel/133424</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5832092"  onmouseover="logEntryMouseover('5832092', 'eventSnapshots/5832092.png');">20181217 10:58:32pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/107547>https://property.spatialest.com/nc/durham-tax/#/parcel/107547</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5833915"  onmouseover="logEntryMouseover('5833915', 'eventSnapshots/5833915.png');">20181217 10:58:33pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/137456>https://property.spatialest.com/nc/durham-tax/#/parcel/137456</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5835707"  onmouseover="logEntryMouseover('5835707', 'eventSnapshots/5835707.png');">20181217 10:58:35pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/189607>https://property.spatialest.com/nc/durham-tax/#/parcel/189607</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5837499"  onmouseover="logEntryMouseover('5837499', 'eventSnapshots/5837499.png');">20181217 10:58:37pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/189605>https://property.spatialest.com/nc/durham-tax/#/parcel/189605</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5839247"  onmouseover="logEntryMouseover('5839247', 'eventSnapshots/5839247.png');">20181217 10:58:39pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/189606>https://property.spatialest.com/nc/durham-tax/#/parcel/189606</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5841035"  onmouseover="logEntryMouseover('5841035', 'eventSnapshots/5841035.png');">20181217 10:58:41pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/147291>https://property.spatialest.com/nc/durham-tax/#/parcel/147291</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5842757"  onmouseover="logEntryMouseover('5842757', 'eventSnapshots/5842757.png');">20181217 10:58:42pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/197721>https://property.spatialest.com/nc/durham-tax/#/parcel/197721</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5844575"  onmouseover="logEntryMouseover('5844575', 'eventSnapshots/5844575.png');">20181217 10:58:44pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/133245>https://property.spatialest.com/nc/durham-tax/#/parcel/133245</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5846307"  onmouseover="logEntryMouseover('5846307', 'eventSnapshots/5846307.png');">20181217 10:58:46pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/121057>https://property.spatialest.com/nc/durham-tax/#/parcel/121057</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5848143"  onmouseover="logEntryMouseover('5848143', 'eventSnapshots/5848143.png');">20181217 10:58:48pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/158251>https://property.spatialest.com/nc/durham-tax/#/parcel/158251</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5849901"  onmouseover="logEntryMouseover('5849901', 'eventSnapshots/5849901.png');">20181217 10:58:49pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/146954>https://property.spatialest.com/nc/durham-tax/#/parcel/146954</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5851693"  onmouseover="logEntryMouseover('5851693', 'eventSnapshots/5851693.png');">20181217 10:58:51pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/171749>https://property.spatialest.com/nc/durham-tax/#/parcel/171749</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5853500"  onmouseover="logEntryMouseover('5853500', 'eventSnapshots/5853500.png');">20181217 10:58:53pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/155652>https://property.spatialest.com/nc/durham-tax/#/parcel/155652</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5855291"  onmouseover="logEntryMouseover('5855291', 'eventSnapshots/5855291.png');">20181217 10:58:55pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/138184>https://property.spatialest.com/nc/durham-tax/#/parcel/138184</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5857127"  onmouseover="logEntryMouseover('5857127', 'eventSnapshots/5857127.png');">20181217 10:58:57pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/163419>https://property.spatialest.com/nc/durham-tax/#/parcel/163419</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5858831"  onmouseover="logEntryMouseover('5858831', 'eventSnapshots/5858831.png');">20181217 10:58:58pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/190820>https://property.spatialest.com/nc/durham-tax/#/parcel/190820</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5901013"  onmouseover="logEntryMouseover('5901013', 'eventSnapshots/5901013.png');">20181217 10:59:01pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/118302>https://property.spatialest.com/nc/durham-tax/#/parcel/118302</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5902747"  onmouseover="logEntryMouseover('5902747', 'eventSnapshots/5902747.png');">20181217 10:59:02pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/176390>https://property.spatialest.com/nc/durham-tax/#/parcel/176390</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5904597"  onmouseover="logEntryMouseover('5904597', 'eventSnapshots/5904597.png');">20181217 10:59:04pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/181725>https://property.spatialest.com/nc/durham-tax/#/parcel/181725</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5906405"  onmouseover="logEntryMouseover('5906405', 'eventSnapshots/5906405.png');">20181217 10:59:06pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/187538>https://property.spatialest.com/nc/durham-tax/#/parcel/187538</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
+<span class="logline" id="entrySpan5908127"  onmouseover="logEntryMouseover('5908127', 'eventSnapshots/5908127.png');">20181217 10:59:08pm&gt; <span class="emoji">🕸  </span><span class="italic">Load </span><span class="bold">TaxBillSearchResultsPage Page </span><span class="gray"><a href=https://property.spatialest.com/nc/durham-tax/#/parcel/187538>https://property.spatialest.com/nc/durham-tax/#/parcel/187538</a></span><span class="reset"> then wait for change in </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody</span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody'>
+          </span><span class="reset"> target: </span>
+          <span class="gray monospace;"  ondblclick="dblclickSelectorSpan(this);">
+              <span class='selector-text'>//tbody </span>
+              <input onblur="blurSelectorInput(this);" type='text'  value='//tbody '>
+          </span></span><br/>
